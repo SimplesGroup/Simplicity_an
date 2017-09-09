@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".MainPageEnglish">
+    <RelativeLayout
+        android:layout_above="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+
+            android:id="@+id/frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:animateLayoutChanges="true">
+
+        </FrameLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+
+            <fragment
+
+                android:layout_alignParentBottom="true"
+                android:name="simplicity_an.simplicity_an.MusicplayerBottom"
+                android:layout_width="match_parent"
+                android:id="@+id/musicbottomplayer"
+                tools:layout="@layout/musicbottomplayer"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+            </fragment>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <LinearLayout android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:orientation="horizontal"
+        android:background="#000000"
+
+        android:layout_alignParentBottom="true">
+        <ImageButton android:id="@+id/btn_versiontwocity"
+
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:src="@mipmap/city"
+            android:background="@drawable/buttonselector"
+            android:gravity="center_horizontal"
+            android:layout_weight="1"
+            />
+
+        <ImageButton android:id="@+id/btn_versiontwobeyond"
+
+            android:background="@drawable/buttonselector"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/happening"
+            android:gravity="center_horizontal"
+            />
+        <ImageButton android:id="@+id/btn_versiontwosearch"
+
+
+            android:background="@drawable/buttonselector"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/explore"
+            android:gravity="center_horizontal" />
+        <ImageButton android:id="@+id/btn_versiontwoexplore"
+
+            android:background="@drawable/buttonselector"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/entertainment"
+            android:gravity="center_horizontal"
+            />
+
+            <ImageButton android:id="@+id/btn_versiontwonotifications"
+                android:layout_weight="1"
+                android:background="@drawable/buttonselector"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/more"
+                android:gravity="center_horizontal"
+                />
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#aa000000"
+        android:id="@+id/top_layout">
+<RelativeLayout
+    android:background="@android:color/black"
+    android:padding="25dp"
+    android:layout_centerVertical="true"
+    android:layout_centerHorizontal="true"
+    android:layout_centerInParent="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/ivInstruction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:clickable="false"
+            android:minHeight="60dp"
+            android:minWidth="60dp"
+            android:paddingLeft="20dip"
+            android:scaleType="center"
+            android:src="@mipmap/swiperight" />
+<TextView
+    android:layout_below="@+id/ivInstruction"
+    android:text="Swipe Right for CITY NEWS"
+    android:textColor="@android:color/white"
+    android:textStyle="bold"
+    android:textSize="15dp"
+    android:textAlignment="center"
+    android:gravity="center_horizontal"
+    android:layout_centerHorizontal="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+    </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
