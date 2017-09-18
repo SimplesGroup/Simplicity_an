@@ -879,7 +879,6 @@ private  int currentvisiblecount;
                 }
                 mediaPlayer=new MediaPlayer();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
                 userViewHolder.title_item.setTypeface(seguiregular);
                 userViewHolder.item_type_name.setText(itemmodel.getQtype());
