@@ -8,7 +8,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -30,6 +31,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -60,12 +62,14 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
+
 /**
  * Created by kuppusamy on 9/26/2016.
  */
 public class Tabarticle extends Fragment   {
     RecyclerView recyclerview_tab_all;
-    String URL = "http://simpli-city.in/request2.php?rtype=alldata&key=simples&qtype=article";
+    String URL = "http://simpli-city.in/request2.php?rtype=ent_alldatatest&key=simples&qtype=article";
     String URLLIKES = "http://simpli-city.in/request2.php?rtype=articlelikes&key=simples";
     String URLSAVE = "http://simpli-city.in/request2.php?rtype=addfav&key=simples";
     String URLALL;
@@ -98,6 +102,8 @@ FloatingActionButton fabnews,fabplus;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     FloatingActionButton fabsearch,fabinnerplus;
     SwipeRefreshLayout swipeRefresh;
+    int like_finalvalues;
+    private OnFragmentInteractionListener  mlListener;
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !isFragmentLoaded) {
@@ -281,16 +287,13 @@ FloatingActionButton fabnews,fabplus;
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefresh.setRefreshing(true);
+                 swipeRefresh.setRefreshing(true);
                 modelList.clear();
                 recyclerview_tab_all_adapter.notifyDataSetChanged();
-
-                requestCount=1;
+                requestCount=0;
                 getData();
-                //  Toast.makeText(getActivity(),"Swipe",Toast.LENGTH_SHORT).show();
                 ( new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
+                    @Override                     public void run() {
                         swipeRefresh.setRefreshing(false);
                     }
                 }, 3000);
@@ -375,7 +378,7 @@ FloatingActionButton fabnews,fabplus;
                 public void onResponse(JSONObject response) {
                     VolleyLog.d(TAG_REQUEST, "Response: " + response.toString());
                     if (response != null) {
-                       pdialog.dismiss();
+                        dissmissDialog();
                         parseJsonFeed(response);
                     }
                 }
@@ -390,7 +393,7 @@ FloatingActionButton fabnews,fabplus;
               @Override
               public Map<String, String> getHeaders() throws AuthFailureError {
                   HashMap<String, String> headers = new HashMap<String, String>();
-                  headers.put("Content-Type", "application/json; charset=utf-8");
+
                   return headers;
               }
           };
@@ -401,9 +404,12 @@ FloatingActionButton fabnews,fabplus;
         }
         return jsonReq;
     }
+    public interface OnFragmentInteractionListener {
+        public void onFragmentInteraction(String playurl, String title,String image);
+    }
 
 
-    private void parseJsonFeed(JSONObject response) {
+    private void parseJsonFeed(JSONObject response){
         try {
             JSONArray feedArray = response.getJSONArray("result");
 
@@ -422,12 +428,39 @@ FloatingActionButton fabnews,fabplus;
                 model.setQtype(obj.getString("qtype"));
                 model.setLikescount(obj.getInt("likes_count"));
                 model.setCommentscount(obj.getInt("commentscount"));
-                model.setFavcount(obj.getInt("fav"));
                 model.setSharingurl(obj.getString("sharingurl"));
                 model.setQtypemain(obj.getString("qtypemain"));
                 model.setAds(obj.getString("ad_url"));
+                model.setEditername(obj.getString("reporter_name"));
+                model.setShortdescription(obj.getString("short_description"));
                 // model.setDislikecount(obj.getInt("dislikes_count"));
                 model.setCounttype(obj.getInt("like_type"));
+
+                model.setPlayurl(obj.getString("file"));
+                int typevalue = obj.isNull("album_count") ? null : obj
+                        .getInt("album_count");
+                model.setAlbumcount(typevalue);
+                List<ItemModel> albums = new ArrayList<>();
+                ArrayList<String> album = new ArrayList<String>();
+                try {
+                    JSONArray feedArraygallery = obj.getJSONArray("palbum");
+
+
+                    for (int k = 0; k < feedArraygallery.length(); k++) {
+
+                        JSONObject object = (JSONObject) feedArraygallery.get(k);
+                        ItemModel models = new ItemModel();
+                        models.setAlbumimage(object.getString("image"));
+                        albums.add(models);
+
+                        String images=object.getString("image");
+                        album.add(images);
+                    }
+                }catch (JSONException e){
+
+                }
+                model.setAlbumlist(albums);
+                model.setAlbum(album);
                 modelList.add(model);
 
             }
@@ -442,7 +475,6 @@ FloatingActionButton fabnews,fabplus;
             e.printStackTrace();
         }
     }
-
    /* public void onStop() {
         super.onStop();
         if (requestQueue != null) {
@@ -461,15 +493,16 @@ FloatingActionButton fabnews,fabplus;
 
     }
     @Override
-    public void onStop() {
-        super.onStop();
-        if (requestQueue != null) {
-            requestQueue.cancelAll(TAG_REQUEST);
+    public void onAttach(android.app.Activity activity) {
+        super.onAttach(activity);
+        try {
+            mlListener = (OnFragmentInteractionListener) activity;
+        } catch (ClassCastException e) {
+            // throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
         }
     }
 
-
-    class ItemModel {
+    class ItemModel{
         private int typeid;
         private String name;
         private String image;
@@ -477,19 +510,35 @@ FloatingActionButton fabnews,fabplus;
         private String pdate;
         private String description;
         private String title;
-
-        /********
-         * start the Food category names
-         ****/
+        int albumcount;
+        String playurl,albumimage;
+        private ArrayList<String> album;
+        private List<ItemModel> albumlist;
+        /******** start the Food category names****/
         private String id;
-        /********
-         * start the Food category names
-         ****/
-        private String qtype, qtypemain;
+        /******** start the Food category names****/
+        private String qtype,qtypemain;
+        String ads;
         int favcount;
         String sharingurl;
-        int likescount, dislikecount, counttype, commentscount;
-String ads;
+        int likescount,dislikecount,commentscount,counttype;
+        String shortdescription,editername;
+
+        public String getEditername() {
+            return editername;
+        }
+
+        public void setEditername(String editername) {
+            this.editername = editername;
+        }
+
+        public String getShortdescription() {
+            return shortdescription;
+        }
+
+        public void setShortdescription(String shortdescription) {
+            this.shortdescription = shortdescription;
+        }
         public String getAds() {
             return ads;
         }
@@ -497,6 +546,46 @@ String ads;
         public void setAds(String ads) {
             this.ads = ads;
         }
+        public List<ItemModel> getAlbumlist() {
+            return albumlist;
+        }
+
+        public void setAlbumlist(List<ItemModel> albumlist) {
+            this.albumlist = albumlist;
+        }
+
+        public String getAlbumimage() {
+            return albumimage;
+        }
+
+        public void setAlbumimage(String albumimage) {
+            this.albumimage = albumimage;
+        }
+
+        public String getPlayurl() {
+            return playurl;
+        }
+
+        public void setPlayurl(String playurl) {
+            this.playurl = playurl;
+        }
+
+        public ArrayList<String> getAlbum() {
+            return album;
+        }
+
+        public void setAlbum(ArrayList<String> album) {
+            this.album = album;
+        }
+
+        public int getAlbumcount() {
+            return albumcount;
+        }
+
+        public void setAlbumcount(int albumcount) {
+            this.albumcount = albumcount;
+        }
+
         public String getQtypemain() {
             return qtypemain;
         }
@@ -568,11 +657,9 @@ String ads;
         public void setTypeid(int typeid) {
             this.typeid = typeid;
         }
-
         public String getName() {
             return name;
         }
-
         public void setName(String name) {
             this.name = name;
         }
@@ -580,83 +667,79 @@ String ads;
         public String getImage() {
             return image;
         }
-
         public void setImage(String image) {
             this.image = image;
         }
-
-        public String getDescription() {
-            return description;
+        public String getDescription(){return description;}
+        public  void setDescription(String description){
+            this.description=description;
         }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public String getPdate() {
-            return pdate;
-        }
+        public String getPdate(){return  pdate;}
 
         public void setPdate(String pdate) {
             this.pdate = pdate;
         }
-
-        public String getTitle() {
-            return title;
-        }
+        public String getTitle(){return  title;}
 
         public void setTitle(String title) {
             this.title = title;
         }
 
-        /********
-         * start the Food category names
-         ****/
-        public String getId() {
-            return id;
-        }
+        /******** start the Food category names****/
+        public String getId(){return  id;}
 
         public void setId(String id) {
             this.id = id;
         }
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         dissmissDialog();
     }
-
-    static class Userviewholdertaball extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView likescount, dislikescount, commentscount, title_item, item_type_name, date;
-
-        public Button share_button, comment_button, likes_button, save_button;
+    static class Userviewholdertaball extends RecyclerView.ViewHolder implements View.OnClickListener{
+        public TextView likescount,dislikescount,commentscount,title_item,item_type_name,date;
+        TextView shortdescription,editername;
+        ImageButton share_imagebutton,like_imagebutton,comment_imagebutton,arrow_imagebutton;
+        public Button share_button,comment_button,likes_button,save_button;
         public NetworkImageView item_image;
-        public RelativeLayout listLayout, countlayout;
-
+        public RelativeLayout countlayout,listLayout;
+        ImageButton play;
         RecyclerView_OnClickListener.OnClickListener onClickListener;
-
         public Userviewholdertaball(View itemView) {
             super(itemView);
-            this.title_item = (TextView) itemView.findViewById(R.id.item_title_taball);
-            this.item_type_name = (TextView) itemView.findViewById(R.id.qtypetitle_taball);
-            this.date = (TextView) itemView.findViewById(R.id.date_taball);
-            this.likescount = (TextView) itemView.findViewById(R.id.alltab_likescount);
-
-            this.commentscount = (TextView) itemView.findViewById(R.id.alltab_commentscount);
-            this.likes_button = (Button) itemView.findViewById(R.id.taball_likes);
-            this.save_button = (Button) itemView.findViewById(R.id.taball_savepage);
-            this.share_button = (Button) itemView.findViewById(R.id.taball_sharepost);
-            this.comment_button = (Button) itemView.findViewById(R.id.taball_comment);
-            this.item_image = (NetworkImageView) itemView.findViewById(R.id.image_alltab);
-            this.listLayout = (RelativeLayout) itemView.findViewById(R.id.listlayout_taball);
-            this.countlayout = (RelativeLayout) itemView.findViewById(R.id.counts_layout);
+            this.title_item=(TextView)itemView.findViewById(R.id.item_title_taball);
+            this.  item_type_name=(TextView)itemView.findViewById(R.id.qtypetitle_taball);
+            this. date=(TextView)itemView.findViewById(R.id.date_taball);
+            this. likescount=(TextView)itemView.findViewById(R.id.alltab_likescount);
+            this.play=(ImageButton)itemView.findViewById(R.id.taball_play_pause_main);
+            this.  commentscount=(TextView)itemView.findViewById(R.id.alltab_commentscount);
+            this.  likes_button=(Button)itemView.findViewById(R.id.taball_likes);
+            this. save_button=(Button)itemView.findViewById(R.id.taball_savepage);
+            this. share_button=(Button)itemView.findViewById(R.id.taball_sharepost);
+            this. comment_button=(Button)itemView.findViewById(R.id.taball_comment);
+            this. item_image=(NetworkImageView)itemView.findViewById(R.id.image_alltab);
+            this.listLayout=(RelativeLayout) itemView.findViewById(R.id.listlayout_taball);
+            this.countlayout=(RelativeLayout)itemView.findViewById(R.id.counts_layout);
             this.likes_button.setOnClickListener(this);
             this.comment_button.setOnClickListener(this);
             this.save_button.setOnClickListener(this);
             this.share_button.setOnClickListener(this);
             this.listLayout.setOnClickListener(this);
+            this.play.setOnClickListener(this);
             this.likescount.setOnClickListener(this);
+            this.arrow_imagebutton=(ImageButton)itemView.findViewById(R.id.arrow);
+            this.editername=(TextView)itemView.findViewById(R.id.qtypetitle_sourcename);
+            this.shortdescription=(TextView)itemView.findViewById(R.id.textview_shortdescription) ;
+            this.comment_imagebutton=(ImageButton)itemView.findViewById(R.id.button_comment);
+            this.like_imagebutton=(ImageButton)itemView.findViewById(R.id.button_likes) ;
+            this.share_imagebutton=(ImageButton)itemView.findViewById(R.id.button_share) ;
+
+
+
+            this.like_imagebutton.setOnClickListener(this);
+            this.comment_imagebutton.setOnClickListener(this);
+            this.share_imagebutton.setOnClickListener(this);
         }
 
         public void onClick(View v) {
@@ -676,6 +759,91 @@ String ads;
         }
     }
 
+    static class UserViewHolderphotostories extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public TextView likescount,dislikescount,commentscount,title_item,item_type_name,date,moreimagescount_textview;
+        TextView shortdescription,editername;
+        ImageButton share_imagebutton,like_imagebutton,comment_imagebutton,arrow_imagebutton;
+        public Button share_button,comment_button,likes_button,save_button;
+        NetworkImageView   feedImageView;
+
+        NetworkImageView   feedImageView_typetwo_one,feedImageView_typetwo_two;
+        NetworkImageView   feed_typethree_ones,feed_typethree_twos,feed_typethree_threes;
+        NetworkImageView   feedImageView_typefour_one,feedImageView_typefour_two,feedImageView_typefour_three,feedImageView_typefour_four;
+
+        public RelativeLayout countlayout,listLayout;
+        // LinearLayout ;
+        RecyclerView_OnClickListener.OnClickListener onClickListener;
+
+        public UserViewHolderphotostories(View itemView) {
+            super(itemView);
+
+
+            this.title_item=(TextView)itemView.findViewById(R.id.item_title_taball);
+            this.  item_type_name=(TextView)itemView.findViewById(R.id.qtypetitle_taball);
+            this. date=(TextView)itemView.findViewById(R.id.date_taball);
+            this. likescount=(TextView)itemView.findViewById(R.id.alltab_likescount);
+            moreimagescount_textview=(TextView)itemView.findViewById(R.id.more_images);
+            this.  commentscount=(TextView)itemView.findViewById(R.id.alltab_commentscount);
+            this.  likes_button=(Button)itemView.findViewById(R.id.taball_likes);
+            this. save_button=(Button)itemView.findViewById(R.id.taball_savepage);
+            this. share_button=(Button)itemView.findViewById(R.id.taball_sharepost);
+            this. comment_button=(Button)itemView.findViewById(R.id.taball_comment);
+            this.arrow_imagebutton=(ImageButton)itemView.findViewById(R.id.arrow);
+            this.editername=(TextView)itemView.findViewById(R.id.qtypetitle_sourcename);
+            this.shortdescription=(TextView)itemView.findViewById(R.id.textview_shortdescription) ;
+            this.comment_imagebutton=(ImageButton)itemView.findViewById(R.id.button_comment);
+            this.like_imagebutton=(ImageButton)itemView.findViewById(R.id.button_likes) ;
+            this.share_imagebutton=(ImageButton)itemView.findViewById(R.id.button_share) ;
+
+
+
+            this.like_imagebutton.setOnClickListener(this);
+            this.comment_imagebutton.setOnClickListener(this);
+            this.share_imagebutton.setOnClickListener(this);
+
+
+            this.listLayout=(RelativeLayout) itemView.findViewById(R.id.listlayout_taball);
+            this.countlayout=(RelativeLayout)itemView.findViewById(R.id.counts_layout);
+            this.likes_button.setOnClickListener(this);
+            this.comment_button.setOnClickListener(this);
+            this.save_button.setOnClickListener(this);
+            this.share_button.setOnClickListener(this);
+            this.listLayout.setOnClickListener(this);
+            this.likescount.setOnClickListener(this);
+            this.  feedImageView = (NetworkImageView) itemView
+                    .findViewById(R.id.feedImage_photostory);
+
+            this. feedImageView_typetwo_one=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_type_two_one) ;
+            this. feedImageView_typetwo_two=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_type_two_two) ;
+
+            this. feed_typethree_ones=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_three_one) ;
+            this. feed_typethree_twos=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_three_two) ;
+            this.  feed_typethree_threes=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_three_three) ;
+
+
+            this. feedImageView_typefour_one=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_type_four_one) ;
+            this. feedImageView_typefour_two=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_type_four_two) ;
+            this. feedImageView_typefour_three=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_type_four_three) ;
+            this. feedImageView_typefour_four=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_type_four_four) ;
+        }
+        public void onClick(View v) {
+
+            // setting custom listener
+            if (onClickListener != null) {
+                onClickListener.OnItemClick(v, getAdapterPosition());
+
+            }
+
+        }
+
+        // Setter for listener
+        public void setClickListener(
+                RecyclerView_OnClickListener.OnClickListener onClickListener) {
+            this.onClickListener = onClickListener;
+        }
+    }
+
+
     static class LoadingViewHolder extends RecyclerView.ViewHolder {
         public ProgressBar progressBar;
 
@@ -684,26 +852,25 @@ String ads;
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar1);
         }
     }
-
-    class Recyclerviewtaballadapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    class Recyclerviewtaballadapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         LayoutInflater inflater;
 
         ImageLoader mImageLoader;
         private final int VIEW_TYPE_ITEM = 1;
-        private final int VIEW_TYPE_LOADING = 2;
-
+        private final int VIEW_TYPE_LOADING = 3;
+        MediaPlayer mediaPlayer;
         boolean loading;
         OnLoadMoreListener onLoadMoreListener;
-
+        private final int VIEW_TYPE_PHOTOSTORY = 2;
         private int visibleThreshold = 5;
         private int lastVisibleItem, totalItemCount;
         Context context;
-
+        private  int currentvisiblecount;
+        String urlaudio;
         @Override
         public int getItemCount() {
             return modelList.size();
         }
-
         public Recyclerviewtaballadapter(List<ItemModel> students, RecyclerView recyclerView) {
             modelList = students;
 
@@ -723,6 +890,7 @@ String ads;
                                 totalItemCount = linearLayoutManager.getItemCount();
                                 lastVisibleItem = linearLayoutManager
                                         .findLastVisibleItemPosition();
+                                currentvisiblecount=linearLayoutManager.findLastVisibleItemPosition();
                                 if(lastVisibleItem>=10){
                                     fabnews.setVisibility(View.VISIBLE);
                                 }else {
@@ -742,16 +910,42 @@ String ads;
             }
         }
 
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater mInflater = LayoutInflater.from ( parent.getContext () );
+            switch ( viewType ) {
+                case VIEW_TYPE_ITEM:
+                    ViewGroup vImage = (ViewGroup) mInflater.inflate ( R.layout.feed_item_versionfour, parent, false );
+                    Userviewholdertaball vhImage = new Userviewholdertaball ( vImage );
+                    return vhImage;
+                case VIEW_TYPE_PHOTOSTORY:
+                    ViewGroup vImages = (ViewGroup) mInflater.inflate ( R.layout.feed_item_versionfour_photostory, parent, false );
+                    UserViewHolderphotostories vhImages = new UserViewHolderphotostories ( vImages );
+                    return vhImages;
+              /*case VIEW_TYPE_RADIO:
+                    ViewGroup vImageradio = ( ViewGroup ) mInflater.inflate ( R.layout.feed_item_taball_radio, parent, false );
+                    Userviewholdertaball vhImageradio = new Userviewholdertaball ( vImageradio );
+                    return vhImageradio;*/
+                case VIEW_TYPE_LOADING:
+                    ViewGroup vImageloading = (ViewGroup) mInflater.inflate ( R.layout.layout_loading_item, parent, false );
+                    Userviewholdertaball vhImageloading = new Userviewholdertaball ( vImageloading );
+                    return vhImageloading;
+            }
+
+            return null;
+        }
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof Userviewholdertaball) {
 
                 final Userviewholdertaball userViewHolder = (Userviewholdertaball) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath =  "fonts/Lora-Regular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
+
                 String simplycity_title_reqular = "fonts/robotoSlabBold.ttf";
                 final Typeface seguiregular_bold = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reqular);
+                 String playfair ="fonts/playfairDisplayRegular.ttf";
+                Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), playfair);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
 
@@ -763,62 +957,72 @@ String ads;
                 userViewHolder.share_button.setText("Share");
                 userViewHolder.share_button.setTypeface(seguiregular);
                 userViewHolder.share_button.setTransformationMethod(null);
-                post_likes_count = itemmodel.getCounttype();
-                save_item_count = itemmodel.getFavcount();
-                if (itemmodel.getCounttype() == 1) {
-                    userViewHolder.likes_button.setText("Liked");
-                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
-                    userViewHolder.likes_button.setTypeface(seguiregular);
-                    userViewHolder.likes_button.setTransformationMethod(null);
-                } else {
-                    userViewHolder.likes_button.setText("Like");
+
+                save_item_count=itemmodel.getFavcount();
+                int imgResource = R.mipmap.likered;
+                String likecount=String.valueOf(itemmodel.getCounttype());
+                if(likecount.equals("0")){
+
+                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                    /*userViewHolder.likes_button.setText("Like");
+
+                    userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.like,0,0,0);
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
-                    userViewHolder.likes_button.setTypeface(seguiregular);
-                    userViewHolder.likes_button.setTransformationMethod(null);
+                    userViewHolder.likes_button.setTypeface(seguiregular);*/
+
+
+                }else {
+                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+                  /*  userViewHolder.likes_button.setTextColor(getActivity().getResources().getColor(R.color.red));
+                    userViewHolder.likes_button.setText("Liked");
+                    userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.likered,0,0,0);
+                    userViewHolder.likes_button.setTypeface(seguiregular);*/
+
                 }
 
-                if (itemmodel.getFavcount() == 1) {
+                if(itemmodel.getFavcount()==1){
                     userViewHolder.save_button.setText("Saved");
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
                     userViewHolder.save_button.setTypeface(seguiregular);
                     userViewHolder.save_button.setTransformationMethod(null);
-                } else {
+                }else {
                     userViewHolder.save_button.setText("Save");
                     userViewHolder.save_button.setTypeface(seguiregular);
                     userViewHolder.save_button.setTransformationMethod(null);
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
                 }
+                if(itemmodel.getQtypemain().equalsIgnoreCase("radio")||itemmodel.getQtypemain().equalsIgnoreCase("theatre")||itemmodel.getQtype().equals("Independent Movies")){
+                    userViewHolder.play.setVisibility(View.VISIBLE);
+                }else {
+                    userViewHolder.play.setVisibility(View.GONE);
+                }
+                userViewHolder.shortdescription.setTypeface(tf_play);
+
+                userViewHolder.editername.setTypeface(seguiregular);
+                userViewHolder.editername.setText(itemmodel.getEditername());
+                if(itemmodel.getPdate()==null||itemmodel.getPdate()==""){                      userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
 
 
+                mediaPlayer=new MediaPlayer();
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
                 userViewHolder.title_item.setTypeface(seguiregular);
-                userViewHolder.item_type_name.setText(itemmodel.getQtype());
-                userViewHolder.item_type_name.setTypeface(seguiregular_bold);
-                userViewHolder.date.setText(itemmodel.getPdate());
+                if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular_bold);
+               // userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(seguiregular);
                 userViewHolder.date.setTypeface(seguiregular);
-                if(itemmodel.getCommentscount()>0||itemmodel.getLikescount()>0){
-                    if(itemmodel.getLikescount()==0){
-                        userViewHolder.likescount.setVisibility(View.GONE);
-                    }else {
-                        userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount() +"&nbsp;"+ "Likes"));
-                    }
-                    if(itemmodel.getCommentscount()==0){
-                        userViewHolder.commentscount.setVisibility(View.GONE);
-                    }else {
-                        userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;" + "Comments"));
-                    }
-                    userViewHolder.countlayout.setVisibility(View.VISIBLE);
-
+                if(itemmodel.getLikescount()==0){                         userViewHolder.likescount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Like"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Comment"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                     }                                        if(itemmodel.getCommentscount()==0){                      userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));                 }else {                     userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                 }
+                if(itemmodel.getImage()!=null){
+                    userViewHolder.item_image.setImageUrl(itemmodel.getImage(),mImageLoader);
                 }else {
-                    userViewHolder.countlayout.setVisibility(View.GONE);
-                }
-                if (itemmodel.getImage() != null) {
-                    userViewHolder.item_image.setImageUrl(itemmodel.getImage(), mImageLoader);
-                } else {
                     userViewHolder.item_image.setVisibility(View.GONE);
                 }
+                if(itemmodel.getCommentscount()==0){
 
+                    userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));
+                }else {
+                    userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));
+                }
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 
                     @Override
@@ -829,22 +1033,670 @@ String ads;
                                 // Show a toast on clicking layout
 
 
-                                String type = ((ItemModel) modelList.get(position)).getQtype();
+                                String type = ((ItemModel) modelList.get(position)).getQtypemain();
+                                String qtype = ((ItemModel) modelList.get(position)).getQtype();
                                 String ids = ((ItemModel) modelList.get(position)).getId();
+
+
+
+                                if(type.equals("news")||type.equals("National")||type.equals("International")) {
+                                    Intent intent = new Intent(getActivity(), NewsDescription.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("article")){
+                                    Intent intent = new Intent(getActivity(), Articledescription.class);
+
+                                    intent.putExtra("ID", ids);
+                                    startActivity(intent);
+
+                                }else if (type.equals("doit")){
+                                    Intent intent = new Intent(getActivity(), DoitDescription.class);
+                                    intent.putExtra("ID", ids);
+                                    startActivity(intent);
+
+                                }else if(type.equals("farming")){
+                                    Intent intent = new Intent(getActivity(), Farmingdescription.class);
+                                    intent.putExtra("ID", ids);
+                                    startActivity(intent);
+
+                                }else if(type.equals("food")||type.equals("foodtip")){
+                                    if(qtype.equals("Food & Cooking")){
+                                        Intent intent = new Intent(getActivity(), FoodAndCookDescriptionPage.class);
+                                        intent.putExtra("ID", ids);
+                                        startActivity(intent);
+                                    }else {
+                                        Intent intent = new Intent(getActivity(), TipsDescription.class);
+                                        intent.putExtra("ID", ids);
+                                        startActivity(intent);
+                                    }
+
+                                }else if(type.equals("govt")){
+                                    Intent intent = new Intent(getActivity(), GovernmentnotificationsDescriptions.class);
+                                    intent.putExtra("ID", ids);
+                                    startActivity(intent);
+
+                                }else if(type.equals("health")){
+                                    Intent intent = new Intent(getActivity(), Healthylivingdescription.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("science")){
+                                    Intent intent = new Intent(getActivity(), ScienceandTechnologyDescription.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("sports")){
+                                    Intent intent = new Intent(getActivity(), SportsnewsDescription.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("travels")){
+                                    Intent intent = new Intent(getActivity(), TravelsDescription.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("event")){
+                                    Intent intent = new Intent(getActivity(), EventsDescription.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equalsIgnoreCase("Radio")){
+                                    Intent intent = new Intent(getActivity(), RadioNotificationplayer.class);
+                                    intent.putExtra("URL", itemmodel.getPlayurl());
+                                    intent.putExtra("TITLE", itemmodel.getTitle());
+                                    intent.putExtra("IMAGE", itemmodel.getImage());
+                                    intent.putExtra("PAGE", "story");
+                                    startActivity(intent);
+                                }else if(type.equalsIgnoreCase("Music")){
+                                    Intent intent = new Intent(getActivity(), RadioNotificationplayer.class);
+                                    intent.putExtra("URL", itemmodel.getPlayurl());
+                                    intent.putExtra("TITLE", itemmodel.getTitle());
+                                    intent.putExtra("IMAGE", itemmodel.getImage());
+                                    intent.putExtra("PAGE", "story");
+                                    startActivity(intent);
+                                }else if(type.equalsIgnoreCase("Job")){
+                                    Intent intent = new Intent(getActivity(), JobsDetailPage.class);
+                                    intent.putExtra("ID", ids);
+                                    intent.putExtra("TITLE", itemmodel.getTitle());
+
+                                    startActivity(intent);
+                                }
+                                else if(type.equalsIgnoreCase("theatre")){
+                                    Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);
+                                    intent.putExtra("ID", ids);
+                                    intent.putExtra("TITLE",itemmodel.getTitle());
+                                    intent.putExtra("URL","");
+                                    startActivity(intent);
+
+                                } else if(type.equals("lifestyle")){
+                                    Intent intent = new Intent(getActivity(), LifestyleDetail.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equalsIgnoreCase("columns")){
+                                    Intent intent = new Intent(getActivity(), Columnsdetailpage.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if (type.equals("columnist")){
+                                    Intent intent = new Intent(getActivity(), Columnistdetail.class);
+                                    intent.putExtra("ID", ids);
+                                    startActivity(intent);
+                                }
+                                else if(type.equalsIgnoreCase("education")){
+                                    Intent intent = new Intent(getActivity(), EducationDescription.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else
                                 if(itemmodel.getQtype().equals("Sponsered")||itemmodel.getQtype().equals("Sponsored")){
                                     if(itemmodel.getAds().startsWith("http://simpli")){
                                         Intent intent = new Intent(getActivity(), AdvertisementPage.class);
                                         intent.putExtra("ID", itemmodel.getAds());
                                         startActivity(intent);
                                     }else {
-                                        Intent intent = new Intent(getActivity(), AdvertisementPage.class);                                             intent.putExtra("ID", itemmodel.getAds());  startActivity(intent);
+                                        Intent intent = new Intent(getActivity(), AdvertisementPage.class);
+                                        intent.putExtra("ID", itemmodel.getAds());
+                                        startActivity(intent);
                                     }
-                            }else {
-                                    Intent intent = new Intent(getActivity(), Articledescription.class);
-                                    intent.putExtra("ID", ids);
+
+
+                                }
+                                break;
+                            case R.id.taball_play_pause_main:
+                                Log.e("CLick","MainRaio");
+
+                                if(itemmodel.getQtype().equals("Independent Movies")||itemmodel.getQtypemain().equals("theatre")){
+                                    Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);
+                                    intent.putExtra("ID", itemmodel.getId());
+                                    intent.putExtra("TITLE",itemmodel.getTitle());
+                                    intent.putExtra("URL",itemmodel.getPlayurl());
                                     startActivity(intent);
+                                }else {
+                                    urlaudio = itemmodel.getId();
+                                    onButtonPressed(itemmodel.getPlayurl(), itemmodel.getTitle(),itemmodel.getImage());
+                                    userViewHolder.play.setVisibility(View.GONE);
+                                }
+                                break;
+
+                            case R.id.alltab_likescount:
+                                FragmentTransaction ftlike = getChildFragmentManager().beginTransaction();
+                                LikeListFragment frags;
+                                frags = new LikeListFragment();
+                                Bundle argss = new Bundle();
+                                argss.putString("ID", itemmodel.getId());
+                                argss.putString("QTYPE",itemmodel.getQtypemain());
+                                frags.setArguments(argss);
+                                frags.show(ftlike, "txn_tag");
+                                break;
+
+                            case R.id.button_likes:
+                                if(myprofileid!=null) {
+                                    String backgroundImageName = String.valueOf(userViewHolder.like_imagebutton.getTag());
+                                    Log.e("RUN","with"+backgroundImageName);
+                                    if(backgroundImageName.equals("heart")){
+                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+                                        userViewHolder.like_imagebutton.setTag("heartfullred");
+                                    }else if(backgroundImageName.equals("heartfullred")) {
+                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                                        userViewHolder.like_imagebutton.setTag("heart");
+                                    }else {
+
+                                    }
+                                    StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            String res=response.toString();
+                                            res = res.replace(" ", "");
+                                            res = res.trim();
+                                            if(res.equalsIgnoreCase("yes")){
+                                                System.out.println(itemmodel.getId());
+                                                if(itemmodel.getCounttype()==1){
+                                                    like_finalvalues=itemmodel.getLikescount();
+                                                }else {
+                                                    like_finalvalues=itemmodel.getLikescount()+1;
+                                                }
+
+                                                userViewHolder.like_imagebutton.setTag("heartfullred");
+                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+
+                                            }else if(res.equalsIgnoreCase("no")){
+                                                if(itemmodel.getCounttype()==1){
+                                                    like_finalvalues=itemmodel.getLikescount()-1;
+                                                }else {
+                                                    like_finalvalues=itemmodel.getLikescount();
+                                                }
+                                                System.out.println(itemmodel.getId());
+
+                                                userViewHolder.like_imagebutton.setTag("heart");
+                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+
+                                            }
+                                            if(like_finalvalues==0||like_finalvalues==-1){
+                                                System.out.println(itemmodel.getId());
+                                                userViewHolder.    likescount.setVisibility(View.GONE);
+                                            }else {
+                                                System.out.println(itemmodel.getId());
+                                                System.out.println(like_finalvalues);
+                                                userViewHolder.    countlayout.setVisibility(View.VISIBLE);
+                                                userViewHolder.    likescount.setVisibility(View.VISIBLE);
+                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
+
+                                                like_finalvalues=0;
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+
+                                        }
+                                    }){
+                                        protected Map<String,String> getParams()throws AuthFailureError{
+                                            Map<String,String> param=new Hashtable<String, String>();
+                                            String ids=itemmodel.getId();
+                                            param.put(QID, ids);
+                                            param.put(USERID, myprofileid);
+                                            param.put(QTYPE, itemmodel.getQtypemain());
+                                            return param;
+                                        }
+                                    };
+                                    RequestQueue likesqueue=Volley.newRequestQueue(getActivity());
+                                    likes.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+                                    likesqueue.add(likes);
+
+                                }else {
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Activity, "mainversion");
+                                    editor.putString(CONTENTID, "0");
+                                    editor.commit();
+                                    Intent sign=new Intent(getActivity(),SigninpageActivity.class);
+                                    startActivity(sign);
+
                                 }
 
+
+                                break;
+                            case R.id.taball_savepage:
+                                if(myprofileid!=null) {
+
+                                    if (save_item_count == 1) {
+                                        userViewHolder.save_button.setText("Save");
+                                        userViewHolder.save_button.setTextColor(getResources().getColor(R.color.white));
+                                        userViewHolder.save_button.setTypeface(seguiregular);
+                                        userViewHolder.save_button.setTransformationMethod(null);
+                                        save_item_count--;
+
+
+
+
+
+                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLSAVE,
+                                                new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String s) {
+                                                        //Disimissing the progress dialog
+
+                                                        //Showing toast message of the response
+                                                        if (s.equalsIgnoreCase("no")) {
+                                                            //Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show() ;
+                                                        } else {
+                                                            Log.e("response:", s);
+
+                                                        }
+
+                                                    }
+                                                },
+                                                new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError volleyError) {
+                                                        //Dismissing the progress dialog
+                                                        //loading.dismiss();
+
+                                                        //Showing toast
+                                                        //  Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                                                    }
+                                                }) {
+                                            @Override
+                                            protected Map<String, String> getParams() throws AuthFailureError {
+
+                                                Map<String, String> params = new Hashtable<String, String>();
+
+                                                //Adding parameters
+
+
+
+                                                params.put(QID, itemmodel.getId());
+                                                params.put(USERID, myprofileid);
+                                                params.put(QTYPE, itemmodel.getQtypemain());
+
+
+
+                                                return params;
+                                            }
+                                        };
+
+                                        //Creating a Request Queue
+                                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+
+                                        //Adding request to the queue
+                                        requestQueue.add(stringRequest);
+
+                                    } else {
+                                        userViewHolder.save_button.setText("Save");
+                                        userViewHolder.save_button.setTextColor(getResources().getColor(R.color.red));
+                                        userViewHolder.save_button.setTypeface(seguiregular);
+                                        userViewHolder.save_button.setTransformationMethod(null);
+                                        save_item_count++;
+
+
+
+                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLSAVE,
+                                                new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String s) {
+                                                        //Disimissing the progress dialog
+
+                                                        //Showing toast message of the response
+                                                        if (s.equalsIgnoreCase("no")) {
+                                                            //Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show() ;
+                                                        } else {
+                                                            Log.e("response:", s);
+
+
+                                                        }
+
+                                                    }
+                                                },
+                                                new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError volleyError) {
+                                                        //Dismissing the progress dialog
+                                                        //loading.dismiss();
+
+                                                        //Showing toast
+                                                        //  Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                                                    }
+                                                }) {
+                                            @Override
+                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                //Converting Bitmap to String
+
+                                                //Getting Image Name
+
+                                                //Creating parameters
+                                                Map<String, String> params = new Hashtable<String, String>();
+
+                                                //Adding parameters
+
+
+
+                                                params.put(QID, itemmodel.getId());
+                                                params.put(USERID, myprofileid);
+                                                params.put(QTYPE, itemmodel.getQtypemain());
+
+
+
+                                                return params;
+                                            }
+                                        };
+
+                                        //Creating a Request Queue
+                                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+
+                                        //Adding request to the queue
+                                        requestQueue.add(stringRequest);
+                                        //Toast.makeText(getActivity(),count,Toast.LENGTH_LONG).show();
+                                    }
+                                }else {
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Activity, "mainversiontamil");
+                                    editor.putString(CONTENTID, "0");
+                                    editor.commit();
+                                    Intent signin=new Intent(getActivity(),SigninpageActivity.class);
+                                    startActivity(signin);
+
+                                }
+                                break;
+                            case R.id.button_comment:
+
+                                if(myprofileid!=null) {
+                                    FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+                                    MyDialogFragment frag;
+                                    frag = new MyDialogFragment();
+                                    Bundle args = new Bundle();
+                                    args.putString("POSTID", itemmodel.getId());
+                                    args.putString("USERID", myprofileid);
+                                    args.putString("QTYPE",itemmodel.getQtypemain());
+                                    frag.setArguments(args);
+                                    frag.show(ft, "txn_tag");
+                                }else {
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Activity, "mainversiontamil");
+                                    editor.putString(CONTENTID, "0");
+                                    editor.commit();
+                                    Intent signin=new Intent(getActivity(),SigninpageActivity.class);
+                                    startActivity(signin);
+
+                                }
+                                break;
+                            case R.id.button_share:
+                                Intent sendIntent = new Intent();
+                                sendIntent.setAction(Intent.ACTION_SEND);
+                                if(itemmodel.getSharingurl().equals("")){
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle()+ "\n" + itemmodel.getAds()+"\n"+"\n"+"\n"+"Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+                                }else {
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle() + "\n" + itemmodel.getSharingurl() + "\n" + "\n" + "\n" + "Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+                                }                                sendIntent.setType("text/plain");
+                                startActivity(Intent.createChooser(sendIntent, "Share using"));
+
+                                break;
+                        }
+                    }
+
+                });
+            }else if(holder instanceof UserViewHolderphotostories){
+
+                final UserViewHolderphotostories userViewHolder = (UserViewHolderphotostories) holder;
+
+                String simplycity_title_fontPath =  "fonts/Lora-Regular.ttf";
+                final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
+                 String playfair ="fonts/playfairDisplayRegular.ttf";
+                Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), playfair);
+                if (mImageLoader == null)
+                    mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
+
+
+                final ItemModel itemmodel = modelList.get(position);
+                userViewHolder.comment_button.setText("Comment");
+                userViewHolder.comment_button.setTypeface(seguiregular);
+                userViewHolder.comment_button.setTransformationMethod(null);
+                userViewHolder.share_button.setText("Share");
+                userViewHolder.share_button.setTypeface(seguiregular);
+                userViewHolder.share_button.setTransformationMethod(null);
+
+                save_item_count=itemmodel.getFavcount();
+                if(itemmodel.getCounttype()==1){
+
+                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+
+                    /*userViewHolder.likes_button.setText("Liked");
+                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
+                    userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.likered,0,0,0);
+                    userViewHolder.likes_button.setTypeface(seguiregular);
+                    userViewHolder.likes_button.setTransformationMethod(null);*/
+                }else {
+
+                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+
+                   /* userViewHolder.likes_button.setText("Like");
+                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
+                    userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.like,0,0,0);
+                    userViewHolder.likes_button.setTypeface(seguiregular);
+                    userViewHolder.likes_button.setTransformationMethod(null);*/
+                }
+
+                if(itemmodel.getFavcount()==1){
+                    userViewHolder.save_button.setText("Saved");
+                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
+                    userViewHolder.save_button.setTypeface(seguiregular);
+                    userViewHolder.save_button.setTransformationMethod(null);
+                }else {
+                    userViewHolder.save_button.setText("Save");
+                    userViewHolder.save_button.setTypeface(seguiregular);
+                    userViewHolder.save_button.setTransformationMethod(null);
+                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
+                }
+
+
+                userViewHolder.editername.setTypeface(seguiregular);
+                userViewHolder.editername.setText(itemmodel.getEditername());
+                userViewHolder.shortdescription.setTypeface(tf_play);
+                if(itemmodel.getPdate()==null||itemmodel.getPdate()==""){                      userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
+
+                userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
+                userViewHolder.title_item.setTypeface(seguiregular);
+                if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular);
+                //userViewHolder.date.setText(itemmodel.getPdate());
+                userViewHolder.likescount.setTypeface(seguiregular);
+                userViewHolder.date.setTypeface(seguiregular);
+                 if(itemmodel.getLikescount()==0){                         userViewHolder.likescount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Like"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Comment"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                     }                                        if(itemmodel.getCommentscount()==0){                      userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));                 }else {                     userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                 }
+
+
+
+
+                String powers = "";
+                String powerstwo = "";
+                // Chcek for empty status message
+                if (itemmodel.getAlbumcount()==0) {
+
+                    userViewHolder.feedImageView.setImageUrl(itemmodel.getImage(), mImageLoader);
+                    userViewHolder.feedImageView.setDefaultImageResId(R.mipmap.ic_launcher);
+
+                    userViewHolder.feedImageView.setVisibility(View.VISIBLE);
+
+                    userViewHolder.feedImageView_typetwo_one.setVisibility(View.GONE);
+                    userViewHolder.feedImageView_typetwo_two.setVisibility(View.GONE);
+                    userViewHolder.feed_typethree_ones.setVisibility(View.GONE);
+                    userViewHolder.feed_typethree_twos.setVisibility(View.GONE);
+                    userViewHolder.feed_typethree_threes.setVisibility(View.GONE);
+                    userViewHolder.feedImageView_typefour_one.setVisibility(View.GONE);
+                    userViewHolder.feedImageView_typefour_two.setVisibility(View.GONE);
+                    userViewHolder.feedImageView_typefour_three.setVisibility(View.GONE);
+                    userViewHolder.feedImageView_typefour_four.setVisibility(View.GONE);
+                }else if(itemmodel.getAlbumcount()==2){
+                    int j;
+
+
+                    for( j=0;j<itemmodel.getAlbum().size();j++) {
+                        powerstwo = itemmodel.getAlbum().get(j);
+
+                        if(j==0) {
+                            System.out.println("two1 -->"+itemmodel.getAlbum().get(j));
+                            userViewHolder.feedImageView_typetwo_one.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feedImageView_typetwo_one.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feedImageView_typetwo_one.setVisibility(View.VISIBLE);
+
+                        }else if(j==1) {
+                            System.out.println(" two2-->"+itemmodel.getAlbum().get(j));
+                            userViewHolder.feedImageView_typetwo_two.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feedImageView_typetwo_two.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feedImageView_typetwo_two.setVisibility(View.VISIBLE);
+
+                        }
+                        userViewHolder.feedImageView.setVisibility(View.GONE);
+
+                        userViewHolder.feed_typethree_ones.setVisibility(View.GONE);
+                        userViewHolder.feed_typethree_twos.setVisibility(View.GONE);
+                        userViewHolder.feed_typethree_threes.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typefour_one.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typefour_two.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typefour_three.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typefour_four.setVisibility(View.GONE);
+                    }
+                }else if(itemmodel.getAlbumcount()==3){
+                    int j;
+                    for( j=0;j<itemmodel.getAlbum().size();j++) {
+                        powerstwo = itemmodel.getAlbum().get(j);
+
+                        if(j==0) {
+                            System.out.println("three -->"+itemmodel.getAlbum().get(j));
+                            userViewHolder.feed_typethree_ones.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feed_typethree_ones.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feed_typethree_ones.setVisibility(View.VISIBLE);
+
+                        }else if(j==1) {
+                            System.out.println(" three2-->"+itemmodel.getAlbum().get(j));
+                            userViewHolder.feed_typethree_twos.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feed_typethree_twos.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feed_typethree_twos.setVisibility(View.VISIBLE);
+
+                        }else if (j==2) {
+                            System.out.println("three3 -->"+itemmodel.getAlbum().get(j));
+                            userViewHolder.feed_typethree_threes.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feed_typethree_threes.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feed_typethree_threes.setVisibility(View.VISIBLE);
+
+                        }
+                        userViewHolder.feedImageView_typetwo_one.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typetwo_two.setVisibility(View.GONE);
+                        userViewHolder.feedImageView.setVisibility(View.GONE);
+
+                        userViewHolder.feedImageView_typefour_one.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typefour_two.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typefour_three.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typefour_four.setVisibility(View.GONE);
+                    }
+                }else {
+
+                    int j;
+                    for (j = 0; j < itemmodel.getAlbum().size(); j++) {
+                        powerstwo = itemmodel.getAlbum().get(j);
+
+                        if (j == 0) {
+                            System.out.println("four -->" + itemmodel.getAlbum().get(j));
+                            userViewHolder.feedImageView_typefour_one.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feedImageView_typefour_one.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feedImageView_typefour_one.setVisibility(View.VISIBLE);
+
+                        } else if (j == 1) {
+                            System.out.println("four2 -->" + itemmodel.getAlbum().get(j));
+                            userViewHolder.feedImageView_typefour_two.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feedImageView_typefour_two.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feedImageView_typefour_two.setVisibility(View.VISIBLE);
+
+                        } else if (j == 2) {
+                            System.out.println("four3 -->" + itemmodel.getAlbum().get(j));
+                            userViewHolder.feedImageView_typefour_three.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feedImageView_typefour_three.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feedImageView_typefour_three.setVisibility(View.VISIBLE);
+
+                        } else if (j == 3) {
+                            System.out.println("four4 -->" + itemmodel.getAlbum().get(j));
+                            userViewHolder.feedImageView_typefour_four.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feedImageView_typefour_four.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feedImageView_typefour_four.setVisibility(View.VISIBLE);
+
+                        }
+                        userViewHolder.feedImageView_typetwo_one.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typetwo_two.setVisibility(View.GONE);
+                        userViewHolder.feed_typethree_ones.setVisibility(View.GONE);
+                        userViewHolder.feed_typethree_twos.setVisibility(View.GONE);
+                        userViewHolder.feed_typethree_threes.setVisibility(View.GONE);
+                        userViewHolder.feedImageView.setVisibility(View.GONE);
+
+
+                    }
+                }
+                int albumcountsdata=itemmodel.getAlbumcount();
+                if(albumcountsdata>4){
+                    userViewHolder.moreimagescount_textview.setVisibility(View.VISIBLE);
+                    int result=albumcountsdata-4;
+                    userViewHolder.moreimagescount_textview.setText(Html.fromHtml("+"+result+"&nbsp;"+"Images"));
+                }else {
+                    userViewHolder.moreimagescount_textview.setVisibility(View.GONE);
+                }
+
+
+
+                userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
+
+                    @Override
+                    public void OnItemClick(View view, int position) {
+                        switch (view.getId()) {
+                            case R.id.listlayout_taball:
+                                Intent photostory=new Intent(getActivity(),PhotoStoriesDetail.class);
+                                photostory.putExtra("Image", itemmodel.getId());
+                                photostory.putExtra("TITLE",itemmodel.getTitle());
+                                photostory.putExtra("DATE",itemmodel.getPdate());
+                                startActivity(photostory);
+                               /* if (itemmodel.getAlbumcount() == 0) {
+                                    Log.e("IMAGE:", itemmodel.getImage());
+
+
+                                    FragmentTransaction fts = getChildFragmentManager().beginTransaction();
+                                    MyDialogFragmentviewone frags;
+                                    frags = new MyDialogFragmentviewone();
+                                    Bundle argss = new Bundle();
+                                    argss.putString("Image", itemmodel.getImage());
+                                    argss.putString("TITLE",itemmodel.getTitle());
+                                    argss.putString("DATE",itemmodel.getPdate());
+                                    frags.setArguments(argss);
+                                    frags.show(fts, "txn_tag");
+                                } else {
+
+                                   FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+                                    MyDialogFragmentmultiple frag;
+                                    frag = new MyDialogFragmentmultiple();
+                                    Bundle args = new Bundle();
+                                    args.putString("Image", itemmodel.getId());
+                                    args.putString("TITLE",itemmodel.getTitle());
+                                    args.putString("DATE",itemmodel.getPdate());
+                                    frag.setArguments(args);
+                                    frag.show(ft, "txn_tag");
+                                }
+*/
 
 
                                 break;
@@ -858,187 +1710,22 @@ String ads;
                                 frags.setArguments(argss);
                                 frags.show(ftlike, "txn_tag");
                                 break;
-                            case R.id.taball_likes:
-                                if (myprofileid != null) {
-                                    if (post_likes_count == 1) {
-                                        userViewHolder.likes_button.setText("Like");
-                                        userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
-                                        userViewHolder.likes_button.setTypeface(seguiregular);
-                                        userViewHolder.likes_button.setTransformationMethod(null);
-                                        post_likes_count--;
-                                        // String f = itemmodel.getLikescount().toString();
-
-                                        int i = itemmodel.getLikescount();
-                                        String s = "1";
-                                        int j = Integer.parseInt(s);
-
-                                        int result = i - j;
-                                        String res = String.valueOf(result).toString();
-                                        if (result == -1||result==0) {
-                                            userViewHolder.likescount.setVisibility(View.GONE);
-                                            userViewHolder.countlayout.setVisibility(View.GONE);
-
-                                        } else {
-                                            userViewHolder.likescount.setVisibility(View.VISIBLE);
-                                            userViewHolder.countlayout.setVisibility(View.VISIBLE);
-                                            userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount() + "&nbsp;" + "likes"));
-                                        }
-                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLLIKES,
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String s) {
-                                                        //Disimissing the progress dialog
-
-                                                        //Showing toast message of the response
-                                                        if (s.equalsIgnoreCase("no")) {
-                                                            //Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show() ;
-                                                        } else {
-                                                            Log.e("response:", s);
-
-                                                        }
-
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError volleyError) {
-                                                        //Dismissing the progress dialog
-                                                        //loading.dismiss();
-
-                                                        //Showing toast
-                                                        //  Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                                                    }
-                                                }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-
-                                                Map<String, String> params = new Hashtable<String, String>();
-                                                String postid = itemmodel.getId();
-                                                //Adding parameters
-                                                if (postid != null) {
 
 
-                                                    params.put(QID, postid);
-                                                    params.put(USERID, myprofileid);
-                                                    params.put(QTYPE, itemmodel.getQtypemain());
-                                                } else {
-
-
-                                                }
-
-
-                                                return params;
-                                            }
-                                        };
-
-                                        //Creating a Request Queue
-                                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-
-                                        //Adding request to the queue
-                                        requestQueue.add(stringRequest);
-
-                                    } else {
-                                        userViewHolder.likes_button.setText("Liked");
-                                        userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
-                                        userViewHolder.likes_button.setTypeface(seguiregular);
-                                        userViewHolder.likes_button.setTransformationMethod(null);
-                                        post_likes_count++;
-
-
-                                        int i = itemmodel.getLikescount();
-                                        String s = "1";
-                                        int j = Integer.parseInt(s);
-
-                                        Integer result = i + j;
-                                        String res = result.toString();
-                                        userViewHolder.likescount.setVisibility(View.VISIBLE);
-                                        userViewHolder.countlayout.setVisibility(View.VISIBLE);
-                                        userViewHolder.likescount.setText(Html.fromHtml(res + "&nbsp;" + "Likes"));
-
-                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLLIKES,
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String s) {
-                                                        //Disimissing the progress dialog
-
-                                                        //Showing toast message of the response
-                                                        if (s.equalsIgnoreCase("no")) {
-                                                            //Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show() ;
-                                                        } else {
-                                                            Log.e("response:", s);
-
-
-                                                        }
-
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError volleyError) {
-                                                        //Dismissing the progress dialog
-                                                        //loading.dismiss();
-
-                                                        //Showing toast
-                                                        //  Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                                                    }
-                                                }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-                                                //Converting Bitmap to String
-
-                                                //Getting Image Name
-
-                                                //Creating parameters
-                                                Map<String, String> params = new Hashtable<String, String>();
-                                                String postid = itemmodel.getId();
-                                                //Adding parameters
-                                                if (postid != null) {
-
-
-                                                    params.put(QID, postid);
-                                                    params.put(USERID, myprofileid);
-                                                    params.put(QTYPE, itemmodel.getQtypemain());
-                                                } else {
-
-
-                                                }
-
-
-                                                return params;
-                                            }
-                                        };
-
-                                        //Creating a Request Queue
-                                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-
-                                        //Adding request to the queue
-                                        requestQueue.add(stringRequest);
-                                        //Toast.makeText(getActivity(),count,Toast.LENGTH_LONG).show();
-                                    }
-
-                                } else {
-                                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                                    editor.putString(Activity, "mainversion");
-                                    editor.putString(CONTENTID, "0");
-                                    editor.commit();
-                                    Intent sign = new Intent(getActivity(), SigninpageActivity.class);
-                                    startActivity(sign);
-
-                                }
-
-
-                                break;
                             case R.id.taball_savepage:
-                                if (myprofileid != null) {
+                                if(myprofileid!=null) {
 
                                     if (save_item_count == 1) {
-                                        userViewHolder.save_button.setText("Save");
+                                        userViewHolder.save_button.setText("Saved");
                                         userViewHolder.save_button.setTextColor(getResources().getColor(R.color.white));
                                         userViewHolder.save_button.setTypeface(seguiregular);
                                         userViewHolder.save_button.setTransformationMethod(null);
                                         save_item_count--;
 
 
+
+
+
                                         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLSAVE,
                                                 new Response.Listener<String>() {
                                                     @Override
@@ -1073,9 +1760,11 @@ String ads;
                                                 //Adding parameters
 
 
+
                                                 params.put(QID, itemmodel.getId());
                                                 params.put(USERID, myprofileid);
                                                 params.put(QTYPE, itemmodel.getQtypemain());
+
 
 
                                                 return params;
@@ -1089,11 +1778,12 @@ String ads;
                                         requestQueue.add(stringRequest);
 
                                     } else {
-                                        userViewHolder.save_button.setText("Saved");
+                                        userViewHolder.save_button.setText("Save");
                                         userViewHolder.save_button.setTextColor(getResources().getColor(R.color.red));
                                         userViewHolder.save_button.setTypeface(seguiregular);
                                         userViewHolder.save_button.setTransformationMethod(null);
                                         save_item_count++;
+
 
 
                                         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLSAVE,
@@ -1135,9 +1825,11 @@ String ads;
                                                 //Adding parameters
 
 
+
                                                 params.put(QID, itemmodel.getId());
                                                 params.put(USERID, myprofileid);
                                                 params.put(QTYPE, itemmodel.getQtypemain());
+
 
 
                                                 return params;
@@ -1151,43 +1843,134 @@ String ads;
                                         requestQueue.add(stringRequest);
                                         //Toast.makeText(getActivity(),count,Toast.LENGTH_LONG).show();
                                     }
-                                } else {
+                                }else {
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
                                     editor.putString(Activity, "mainversion");
                                     editor.putString(CONTENTID, "0");
                                     editor.commit();
-                                    Intent signin = new Intent(getActivity(), SigninpageActivity.class);
+                                    Intent signin=new Intent(getActivity(),SigninpageActivity.class);
                                     startActivity(signin);
 
                                 }
                                 break;
-                            case R.id.taball_comment:
+                            case R.id.button_likes:
+                                if(myprofileid!=null) {
+                                    String backgroundImageName = String.valueOf(userViewHolder.like_imagebutton.getTag());
+                                    Log.e("RUN","with"+backgroundImageName);
+                                    if(backgroundImageName.equals("heart")){
+                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+                                        userViewHolder.like_imagebutton.setTag("heartfullred");
+                                    }else if(backgroundImageName.equals("heartfullred")) {
+                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                                        userViewHolder.like_imagebutton.setTag("heart");
+                                    }else {
 
-                                if (myprofileid != null) {
-                                    FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-                                    MyDialogFragment frag;
-                                    frag = new MyDialogFragment();
-                                    Bundle args = new Bundle();
-                                    args.putString("POSTID", itemmodel.getId());
-                                    args.putString("USERID", myprofileid);
-                                    args.putString("QTYPE", itemmodel.getQtypemain());
-                                    frag.setArguments(args);
-                                    frag.show(ft, "txn_tag");
-                                } else {
+                                    }
+                                    StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            String res=response.toString();
+                                            res = res.replace(" ", "");
+                                            res = res.trim();
+                                            if(res.equalsIgnoreCase("yes")){
+                                                System.out.println(itemmodel.getId());
+                                                if(itemmodel.getCounttype()==1){
+                                                    like_finalvalues=itemmodel.getLikescount();
+                                                }else {
+                                                    like_finalvalues=itemmodel.getLikescount()+1;
+                                                }
+
+                                                userViewHolder.like_imagebutton.setTag("heartfullred");
+                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+
+                                            }else if(res.equalsIgnoreCase("no")){
+                                                if(itemmodel.getCounttype()==1){
+                                                    like_finalvalues=itemmodel.getLikescount()-1;
+                                                }else {
+                                                    like_finalvalues=itemmodel.getLikescount();
+                                                }
+                                                System.out.println(itemmodel.getId());
+
+                                                userViewHolder.like_imagebutton.setTag("heart");
+                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                                                userViewHolder.likes_button.setTypeface(seguiregular);
+                                                userViewHolder.likes_button.setTransformationMethod(null);
+                                            }
+                                            if(like_finalvalues==0||like_finalvalues==-1){
+                                                System.out.println(itemmodel.getId());
+                                                userViewHolder.    likescount.setVisibility(View.GONE);
+                                            }else {
+                                                System.out.println(itemmodel.getId());
+                                                System.out.println(like_finalvalues);
+                                                userViewHolder.    countlayout.setVisibility(View.VISIBLE);
+                                                userViewHolder.    likescount.setVisibility(View.VISIBLE);
+                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
+
+                                                like_finalvalues=0;
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+
+                                        }
+                                    }){
+                                        protected Map<String,String> getParams()throws AuthFailureError{
+                                            Map<String,String> param=new Hashtable<String, String>();
+                                            String ids=itemmodel.getId();
+                                            param.put(QID, ids);
+                                            param.put(USERID, myprofileid);
+                                            param.put(QTYPE, itemmodel.getQtypemain());
+                                            return param;
+                                        }
+                                    };
+                                    RequestQueue likesqueue=Volley.newRequestQueue(getActivity());
+                                    likes.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+                                    likesqueue.add(likes);
+
+                                }else {
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
                                     editor.putString(Activity, "mainversion");
                                     editor.putString(CONTENTID, "0");
                                     editor.commit();
-                                    Intent signin = new Intent(getActivity(), SigninpageActivity.class);
+                                    Intent sign=new Intent(getActivity(),SigninpageActivity.class);
+                                    startActivity(sign);
+
+                                }
+
+
+                                break;
+                            case R.id.button_comment:
+
+                                if(myprofileid!=null) {
+                                    FragmentTransaction ftcom = getChildFragmentManager().beginTransaction();
+                                    MyDialogFragment fragcom;
+                                    fragcom = new MyDialogFragment();
+                                    Bundle argscom = new Bundle();
+                                    argscom.putString("POSTID", itemmodel.getId());
+                                    argscom.putString("USERID", myprofileid);
+                                    argscom.putString("QTYPE",itemmodel.getQtypemain());
+                                    fragcom.setArguments(argscom);
+                                    fragcom.show(ftcom, "txn_tag");
+                                }else {
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Activity, "mainversion");
+                                    editor.putString(CONTENTID, "0");
+                                    editor.commit();
+                                    Intent signin=new Intent(getActivity(),SigninpageActivity.class);
                                     startActivity(signin);
 
                                 }
                                 break;
-                            case R.id.taball_sharepost:
+                            case R.id.button_share:
                                 Intent sendIntent = new Intent();
                                 sendIntent.setAction(Intent.ACTION_SEND);
-                                sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle()+ "\n" + itemmodel.getSharingurl()+"\n"+"\n"+"\n"+"Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
-                                sendIntent.setType("text/plain");
+                                if(itemmodel.getSharingurl().equals("")){
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle()+ "\n" + itemmodel.getAds()+"\n"+"\n"+"\n"+"Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+                                }else {
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle() + "\n" + itemmodel.getSharingurl() + "\n" + "\n" + "\n" + "Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+                                }                                sendIntent.setType("text/plain");
                                 startActivity(Intent.createChooser(sendIntent, "Share using"));
 
                                 break;
@@ -1195,40 +1978,50 @@ String ads;
                     }
 
                 });
+
+
+
+            }
+
+
+            else {
+                if (holder instanceof LoadingViewHolder) {
+                    LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
+                    loadingViewHolder.progressBar.setIndeterminate(true);
+                }
             }
         }
 
+        public void onButtonPressed(String playurl, String title,String image) {
+            if (mlListener != null) {
+                mlListener.onFragmentInteraction(playurl,title,image);
 
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            if (viewType == VIEW_TYPE_ITEM) {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.feed_item_taball, parent, false);
-                return new Userviewholdertaball(view);
-            } else if (viewType == VIEW_TYPE_LOADING) {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_loading_item, parent, false);
-                return new LoadingViewHolder(view);
             }
-            return null;
         }
+
 
         public int getItemViewType(int position) {
 
 
-            return modelList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+            ItemModel item = modelList.get(position);
+            if(item.getQtypemain().equalsIgnoreCase("photostories")){
+                return VIEW_TYPE_PHOTOSTORY;
+            }/*else if(item.getQtypemain().equalsIgnoreCase("radio")){
+           return VIEW_TYPE_RADIO;
+        }*/  else{
+                return modelList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+            }
 
         }
-
         public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
             this.onLoadMoreListener = onLoadMoreListener;
         }
-
         public void setLoaded() {
             loading = false;
         }
 
 
     }
-
     public static class MyDialogFragment extends DialogFragment {
         private String KEY_COMMENT = "comment";
         private String KEY_TYPE = "qtype";
@@ -1288,7 +2081,7 @@ String ads;
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
             qtypevalue = getArguments().getString("QTYPE");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1659,7 +2452,7 @@ String ads;
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();

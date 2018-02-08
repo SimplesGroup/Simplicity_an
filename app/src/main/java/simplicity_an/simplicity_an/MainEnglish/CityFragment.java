@@ -18,6 +18,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,17 +63,17 @@ import java.util.Map;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SimplicitySearchview;
+import simplicity_an.simplicity_an.TabAdvertorial;
 import simplicity_an.simplicity_an.TabEducation;
 import simplicity_an.simplicity_an.TabFarming;
 import simplicity_an.simplicity_an.TabFood;
+import simplicity_an.simplicity_an.TabHealth;
 import simplicity_an.simplicity_an.TabScience;
 import simplicity_an.simplicity_an.TabTravel;
 import simplicity_an.simplicity_an.Tab_All;
-import simplicity_an.simplicity_an.Tabarticle;
 import simplicity_an.simplicity_an.Tabgovt;
 import simplicity_an.simplicity_an.Tabjobs;
 import simplicity_an.simplicity_an.Tabnews;
-import simplicity_an.simplicity_an.Tabphotostories;
 import simplicity_an.simplicity_an.Tabsports;
 
 /**
@@ -115,16 +119,15 @@ public class CityFragment extends Fragment {
     public static final String GcmId = "gcmid";
     String specialdayurl="http://simpli-city.in/request2.php?rtype=specialday&key=simples&language=1";
     ImageLoader mImageLoader;
-    LinearLayout footerbar;
+
     FloatingActionButton fabplus,fabup,fabsearch,fabinnerplus;
-    LinearLayout musicplayerlayout;
-    private ImageButton play_music,fastforward,backforward,close_player;
-    TextView music_title_name;
+    String weatherdata=null;
 
     LinearLayout layout;
     private Boolean isFabOpen = false;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
-
+    String dayOfTheWeek;
+    String sMonthNamefull;
     public static CityFragment newInstance() {
         CityFragment fragment = new CityFragment();
         return fragment;
@@ -183,7 +186,7 @@ public class CityFragment extends Fragment {
         fabsearch=(FloatingActionButton)view.findViewById(R.id.fabsearch) ;
         fabinnerplus=(FloatingActionButton)view.findViewById(R.id.fabinnerplus) ;
         search=(ImageButton)view.findViewById(R.id.searchbutton);
-
+search.setVisibility(View.GONE);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -257,13 +260,15 @@ public class CityFragment extends Fragment {
                 }
             }
         }
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
         String simplycity_title_reugular= "fonts/robotoSlabBold.ttf";
         Typeface tf1 = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
+        String simplycity_title= "fonts/playfairDisplayRegular.ttf";
+        Typeface tf_pala = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
         title_coimbatore=(TextView)view.findViewById(R.id.title_versiontwo) ;
 
-        title_coimbatore.setTypeface(tf);
+        title_coimbatore.setTypeface(tf_pala);
         title_coimbatore.setText("Vanakkam Kovai");
         layout = (LinearLayout)view. findViewById(R.id.title);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)layout.getLayoutParams();
@@ -371,24 +376,8 @@ public class CityFragment extends Fragment {
         weather_update=(TextView)view. findViewById(R.id.weather_degree_versiontwo);
         weathercentre_textview=(TextView)view.findViewById(R.id.weathercenter) ;
         weathercentre_textview.setText(Html.fromHtml("&nbsp;"+"|"+"&nbsp;"));
-        StringRequest weather=new StringRequest(Request.Method.GET, WEATHER_URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if(response!=null){
-                    weather_update.setText(Html.fromHtml(response+"<sup>o</sup>"));
-                }else {
-                    weather_update.setVisibility(View.GONE);
-                }
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
-            }
-        });
-        weather.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        requestQueue.add(weather);
         Calendar calander = Calendar.getInstance();
         cDay = calander.get(Calendar.DAY_OF_MONTH);
         cMonth = calander.get(Calendar.MONTH) + 1;
@@ -400,7 +389,7 @@ public class CityFragment extends Fragment {
         cSecond = calander.get(Calendar.SECOND);
         SimpleDateFormat sdf = new SimpleDateFormat("EE");
         Date d = new Date();
-        String dayOfTheWeek = sdf.format(d);
+        dayOfTheWeek = sdf.format(d);
         SimpleDateFormat sdf1 = new SimpleDateFormat("MMM");
         Date d1 = new Date();
         String sMonthName =  sdf1.format(d1);
@@ -409,7 +398,7 @@ public class CityFragment extends Fragment {
         int mon=calander.get(Calendar.DAY_OF_MONTH);
         SimpleDateFormat fmt = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
         Date d1full = new Date();
-        String sMonthNamefull =  fmt.format(d1full);
+         sMonthNamefull =  fmt.format(d1full);
         Log.e("DAY_OF_MONTH: ", "DAY_OF_MONTH: " + calendar.get(Calendar.DAY_OF_MONTH)+sMonthName);
 
         date_text=(TextView)view.findViewById(R.id.date_versiontwo) ;
@@ -421,24 +410,50 @@ public class CityFragment extends Fragment {
         // title_coimbatore.setTypeface(tf);
         date_text.setTypeface(tf);
         weather_update.setTypeface(tf);
-        language_title.setText(Html.fromHtml("&nbsp;"+"|"+"&nbsp;"+"<b>தமிழ்</b>"+"&nbsp;"+"|"+"&nbsp;"));
+        language_title.setText(Html.fromHtml("&nbsp;"+"<b>தமிழ்</b>"+"&nbsp;"+"|"+"&nbsp;"));
 
 
-        if(dayOfTheWeek.equalsIgnoreCase("Sun")){
-            date_text.setText(Html.fromHtml("Sun"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"));
-        }else if(dayOfTheWeek.equalsIgnoreCase("Mon")){
-            date_text.setText(Html.fromHtml("Mon"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"));
-        }else if(dayOfTheWeek.equalsIgnoreCase("Tue")){
-            date_text.setText(Html.fromHtml("Tue"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"));
-        }else if (dayOfTheWeek.equalsIgnoreCase("Wed")){
-            date_text.setText(Html.fromHtml("Wed"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"));
-        }else if(dayOfTheWeek.equalsIgnoreCase("Thu")){
-            date_text.setText(Html.fromHtml("Thu"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"));
-        }else if(dayOfTheWeek.equalsIgnoreCase("Fri")){
-            date_text.setText(Html.fromHtml("Fri"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"));
-        }else if(dayOfTheWeek.equalsIgnoreCase("Sat")){
-            date_text.setText(Html.fromHtml("Sat"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"));
-        }
+        StringRequest weather=new StringRequest(Request.Method.GET, WEATHER_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+               /* if(response!=null){
+                    weather_update.setText(Html.fromHtml(response+"<sup>o</sup>"));
+                }else {
+                    weather_update.setVisibility(View.GONE);
+                }
+*/
+                weatherdata=response.toString();
+                date_text.setText(Html.fromHtml(dayOfTheWeek+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        weather.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(weather);
+
+
+    /*if(dayOfTheWeek.equalsIgnoreCase("Sun")){
+        date_text.setText(Html.fromHtml("Sun"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"&#9729;"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"+"&nbsp;"+"<b>தமிழ்</b>"+"&nbsp;"+"|"+"&nbsp;"));
+    }else if(dayOfTheWeek.equalsIgnoreCase("Mon")){
+        date_text.setText(Html.fromHtml("Mon"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"&#9729;"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"+"&nbsp;"+"<b>தமிழ்</b>"+"&nbsp;"+"|"+"&nbsp;"));
+    }else if(dayOfTheWeek.equalsIgnoreCase("Tue")){
+        date_text.setText(Html.fromHtml("Tue"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"&#9729;"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"+"&nbsp;"+"<b>தமிழ்</b>"+"&nbsp;"+"|"+"&nbsp;"));
+    }else if (dayOfTheWeek.equalsIgnoreCase("Wed")){
+        date_text.setText(Html.fromHtml("Wed"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"&#9729;"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"+"&nbsp;"+"<b>தமிழ்</b>"+"&nbsp;"+"|"+"&nbsp;"));
+    }else if(dayOfTheWeek.equalsIgnoreCase("Thu")){
+        date_text.setText(Html.fromHtml("Thu"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"&#9729;"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"+"&nbsp;"+"<b>தமிழ்</b>"+"&nbsp;"+"|"+"&nbsp;"));
+    }else if(dayOfTheWeek.equalsIgnoreCase("Fri")){
+        date_text.setText(Html.fromHtml("Fri"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"&#9729;"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"+"&nbsp;"+"<b>தமிழ்</b>"+"&nbsp;"+"|"+"&nbsp;"));
+    }else if(dayOfTheWeek.equalsIgnoreCase("Sat")){
+        date_text.setText(Html.fromHtml("Sat"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"&#9729;"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"+"&nbsp;"+"<b>தமிழ்</b>"+"&nbsp;"+"|"+"&nbsp;"));
+    }*/
+
+
+
 
        /* beyond=(ImageButton)view.findViewById(R.id.btn_versiontwobeyond);
         search=(ImageButton)view.findViewById(R.id.btn_versiontwosearch);
@@ -506,7 +521,6 @@ public class CityFragment extends Fragment {
             fabinnerplus.setBackgroundResource(R.color.theme12);
             fabsearch.setBackgroundResource(R.color.theme12);
         }
-
 
         language_title.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -927,7 +941,7 @@ Log.e("CHANGE LAMG",response.toString());
 
 
 
-        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/robotoSlabRegular.ttf");
+        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Lora-Regular.ttf");
         ViewGroup vg = (ViewGroup) mTabLayout.getChildAt(0);
         int tabsCount = vg.getChildCount();
         for (int j = 0; j < tabsCount; j++) {
@@ -1047,29 +1061,21 @@ Log.e("CHANGE LAMG",response.toString());
 
     private void setupViewPager(ViewPager mPager) {
         HealthViewPagerAdapter adapter = new HealthViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new Tab_All(), "All");
-        adapter.addFragment(new Tabnews(), "City News");
-        adapter.addFragment(new Tabarticle(), "Specials");
+
+
+        adapter.addFragment(new Tabnews(), "City");
+        adapter.addFragment(new Tab_All(), "Beyond");
         adapter.addFragment(new Tabgovt(), "Govt.Notif");
         adapter.addFragment(new Tabjobs(), "Jobs");
-
-        //adapter.addFragment(new Tabevent(), "Events");
-        adapter.addFragment(new Tabphotostories(), "Photo Stories");
-        adapter.addFragment(new TabFood(), "Food Recipe");
+        adapter.addFragment(new TabFood(), "Food");
         adapter.addFragment(new TabEducation(), "Education");
-       // adapter.addFragment(new TabRadio(), "Radio");
-
-
-        //adapter.addFragment(new simplicity_an.simplicity_an.TabMusic(), "Music");
-     //   adapter.addFragment(new TabMovies(), "Movies");
-
+        adapter.addFragment(new TabTravel(), "Travels");
         adapter.addFragment(new Tabsports(), "Sports");
         adapter.addFragment(new TabScience(), "Science");
-
         adapter.addFragment(new TabFarming(), "Farming");
-        adapter.addFragment(new simplicity_an.simplicity_an.TabHealth(), "Health");
+        adapter.addFragment(new TabHealth(), "Health");
+        adapter.addFragment(new TabAdvertorial(),"Advertorial");
 
-        adapter.addFragment(new TabTravel(), "Travels");
         mPager.setAdapter(adapter);
     }
     class HealthViewPagerAdapter extends FragmentPagerAdapter {

@@ -78,6 +78,7 @@
                         android:layout_height="wrap_content">
 
                         <LinearLayout
+                            android:layout_marginLeft="20dp"
                             android:layout_weight=".43"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content">
@@ -177,7 +178,7 @@
                     android:layout_height="wrap_content"
                     app:tabMinWidth="20dp"
 
-                    app:tabMode="fixed"
+                    app:tabMode="scrollable"
                     app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
                     app:tabGravity="center"
                     app:tabIndicatorColor="@android:color/white"
@@ -247,7 +248,7 @@
             android:layout_marginRight="1dp"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:src="@mipmap/citytamil"
+            android:src="@mipmap/newstamil"
             android:background="@drawable/buttonselector"
             android:gravity="center_horizontal"
             android:layout_weight="1"
@@ -259,7 +260,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:src="@mipmap/happeninigtamil"
+           android:src="@mipmap/eventstamil"
             android:gravity="center_horizontal"
             />
         <ImageButton android:id="@+id/btn_versiontwosearch"
@@ -269,7 +270,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:src="@mipmap/searchtamil"
+            android:src="@mipmap/explore"
             android:gravity="center_horizontal" />
         <ImageButton android:id="@+id/btn_versiontwoexplore"
             android:layout_margin="1dp"
@@ -277,7 +278,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:src="@mipmap/audiotamil"
+           android:src="@mipmap/specials"
             android:gravity="center_horizontal"
             />
         <RelativeLayout

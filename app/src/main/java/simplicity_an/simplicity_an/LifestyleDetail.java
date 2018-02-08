@@ -27,11 +27,13 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -52,6 +54,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,10 +71,11 @@ import java.util.Map;
  */
 
 public class LifestyleDetail extends AppCompatActivity {
-    TextView tv, articleoftheday, sourcelinknews, pdate, sourcelinksimplicity;//description;
+    TextView tv, articleoftheday, sourcelinknews, pdate, sourcelinksimplicity,textview_date;//description;
     NetworkImageView thump;
     WebView description;
-
+    ImageView reporter_profile_image;
+    TextView source_reporter_name,sourcereprterdivider,hashtags_title,image_description,short_description,title_category;
     String notifiid, searchnonitiid,shareurl,sharetitle;
     String bimage;
     ImageButton comment, share, menu, back,favourite;
@@ -271,6 +275,14 @@ public class LifestyleDetail extends AppCompatActivity {
 
         tv = (TextView) findViewById(R.id.textView_titlename);
         pdate = (TextView) findViewById(R.id.textView_date);
+        textview_date=(TextView) findViewById(R.id.textView_datenew);
+        source_reporter_name=(TextView)findViewById(R.id.textView_sourcename) ;
+        sourcereprterdivider=(TextView)findViewById(R.id.centerdivider);
+        hashtags_title=(TextView) findViewById(R.id.textView_hashtags);
+        reporter_profile_image=(ImageView)findViewById(R.id.profile_reporter);
+        image_description=(TextView)findViewById(R.id.textView_photodescription);
+        short_description=(TextView)findViewById(R.id.textView_shortdescription);
+        title_category=(TextView)findViewById(R.id.textView_qtypename) ;
         sourcelinknews = (TextView) findViewById(R.id.sourcelink);
         sourcelinksimplicity = (TextView) findViewById(R.id.sourcelinkredsimplicity);
         comment = (ImageButton) findViewById(R.id.btn_4);
@@ -279,13 +291,19 @@ public class LifestyleDetail extends AppCompatActivity {
         back = (ImageButton) findViewById(R.id.btn_back);
         favourite = (ImageButton) findViewById(R.id.btn_like);
         description = (WebView) findViewById(R.id.textView_desc);
-
+        description.getSettings().setLoadsImagesAutomatically(true);
+        description.getSettings().setPluginState(WebSettings.PluginState.ON);
+        description.getSettings().setAllowFileAccess(true);
+        description.getSettings().setJavaScriptEnabled(true);
         // description=(TextView)findViewById(R.id.textView_desc);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         String simplycity_title_bold= "fonts/robotoSlabBold.ttf";
         Typeface tf_bold = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
-        tv.setTypeface(tf_bold);
+         String playfair ="fonts/playfairDisplayRegular.ttf";
+        Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
+        tv.setTypeface(tf_play);
+        textview_date.setTypeface(tf);
         comment_title.setTypeface(tf);
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);
@@ -338,21 +356,7 @@ public class LifestyleDetail extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*if(searchactivity_news.equalsIgnoreCase("newssearch")){
-                    Intent searchnotification = new Intent(getApplicationContext(), NewsSearchview.class);
-                    startActivity(searchnotification);
-                    finish();
-                }
-             else   if (searchnonitiid != null) {
-                    Intent searchnotification = new Intent(getApplicationContext(), SimplicitySearchview.class);
-                    searchnotification.putExtra("IDSEARCH", searchnonitiid);
-                    startActivity(searchnotification);
-                    finish();
-                } else {
-                    Intent back = new Intent(getApplicationContext(), MainActivityVersiontwo.class);
-                    startActivity(back);
-                    finish();
-                }*/
+
                 onBackPressed();
             }
         });
@@ -571,71 +575,97 @@ public class LifestyleDetail extends AppCompatActivity {
                 thump.setDefaultImageResId(R.mipmap.ic_launcher);
                 thump.setErrorImageResId(R.drawable.iconlogo);
                 thump.setImageUrl(image, mImageLoader);
+
+                model.setShortdescription(obj.getString("short_description"));
+                model.setReporterid(obj.getString("reporter_id"));
+                model.setReportername(obj.getString("reporter_name"));
+                model.setReporterimage(obj.getString("reporter_image"));
+                model.setReporterurl(obj.getString("reporter_url"));
+                model.setPhotocreditid(obj.getString("photo_credits_id"));
+                model.setPhotocreditimage(obj.getString("photo_credits_image"));
+                model.setPhotocreditname(obj.getString("photo_credits_name"));
+                model.setPhotocrediturl(obj.getString("photo_credits_url"));
                 Log.e("DESC","hi"+sharetitle);
+                image_description.setText("");
+                if(short_description!=null){
+                    short_description.setText(obj.getString("short_description"));
+                }else {
+                    short_description.setVisibility(View.GONE);
+                }
+
+                hashtags_title.setText("");
+                //title_category.setText(obj.getString("qtype"));
+                String reporterimage=obj.getString("reporter_image");
+                if(reporterimage.equals("null")||reporterimage.equals("")){
+
+                }else {
+                    Picasso.with(getApplicationContext())
+                            .load(reporterimage)
+                            .centerCrop()
+                            .resize(40, 40)
+                            .into(reporter_profile_image);
+                }
                 String by = "By&nbsp;";
-                pdate.setText(Html.fromHtml(by) + "" + obj.getString("source") + "\n" + obj.getString("pdate"));
+               if (obj.getString("reporter_name").equals("") || obj.getString("reporter_name").equals("null")) {                     source_reporter_name.setText(Html.fromHtml(obj.getString("source")));                 } else {                     if(obj.getString("source").equals("")){                         source_reporter_name.setText(Html.fromHtml(obj.getString("reporter_name")+"&nbsp;"));                     }else {                         source_reporter_name.setText(Html.fromHtml(obj.getString("reporter_name") + "&nbsp;"+"|"+"&nbsp;"+obj.getString("source")));                     }                  }
+                pdate.setText(Html.fromHtml( obj.getString("source")));
+                textview_date.setText(obj.getString("pdate"));
                 String descrition = obj.isNull("description") ? null : obj
                         .getString("description");
                 Log.e("DESC","his"+descrition);
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
-                String fonts="<html>\n" +
+                String date="<p><font color=\"white\">"+obj.getString("pdate")+"</font></p>";
+
+                String fonts = "<html>\n" +
                         "\t<head>\n" +
                         "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" +
                         "\t\t<style>\n" +
                         "\t\t@font-face {\n" +
                         "  font-family: 'segeoui-light';\n" +
-                        " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "  font-family: 'segeoui-regular';\n" +
-                        "src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "  font-family: 'segeoui-sbold';\n" +
-                        " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Bold';\n" +
-                        "   src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "   src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Light';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Regular';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Thin';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "\t\t</style>\n" +
                         "\t</head>";
-                description.loadDataWithBaseURL("", fonts+descrition+"</head>", "text/html", "utf-8", "");
 
+                description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
                 description.setWebViewClient(new MyBrowser());
-                // description.loadUrl(fonts+descrition+"</head>");
-
                 description.setBackgroundColor(Color.TRANSPARENT);
 
-                if(obj.getString("source")!=null) {
-                    sourcelinknews.setText(Html.fromHtml("Source:"));
-                    sourcelinksimplicity.setText(Html.fromHtml("<u>" + obj.getString("source") + "</u>"));
-                }else {
 
-                }
                 final String sourcelink=obj.getString("source_link");
                 sourcelinksimplicity.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -661,16 +691,23 @@ public class LifestyleDetail extends AppCompatActivity {
                     }
                 });
 
-                if (favcount == 1) {
-                    favourite.setImageResource(R.mipmap.likered);
-                } else {
-                    favourite.setImageResource(R.mipmap.like);
-                }
+                if (favcount == 1) {                     favourite.setImageResource(R.mipmap.likered);                     favourite.setTag("heartfullred");                 } else {                    favourite.setImageResource(R.mipmap.like);                     favourite.setTag("heart");                 }
                 favourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         if(myprofileid!=null) {
+                            String backgroundImageName = String.valueOf(favourite.getTag());
+                            Log.e("RUN","with"+backgroundImageName);
+                            if(backgroundImageName.equals("heart")){
+                                favourite.setImageResource(R.mipmap.likered);
+                                favourite.setTag("heartfullred");
+                            }else if(backgroundImageName.equals("heartfullred")) {
+                                favourite.setImageResource(R.mipmap.like);
+                                favourite.setTag("heart");
+                            }else {
+
+                            }
                             StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
@@ -678,12 +715,7 @@ public class LifestyleDetail extends AppCompatActivity {
                                     res = res.replace(" ", "");
                                     res = res.trim();
                                     Log.e("LIke",res.toString());
-                                    if(res.equalsIgnoreCase("yes")){
-                                        //  System.out.println(itemmodel.getId());
-                                        favourite.setImageResource(R.mipmap.likered);
-                                    }else if(res.equalsIgnoreCase("no")){
-                                        favourite.setImageResource(R.mipmap.like);
-                                    }
+                                    if(res.equalsIgnoreCase("yes")){                                          favourite.setImageResource(R.mipmap.likered);                                         favourite.setTag("heartfullred");                                     }else if(res.equalsIgnoreCase("no")){                                        favourite.setImageResource(R.mipmap.like);                                         favourite.setTag("heart");                                     }
 
                                 }
                             }, new Response.ErrorListener() {
@@ -783,6 +815,88 @@ public class LifestyleDetail extends AppCompatActivity {
         private String id;
         private int favcount;
         private String shareurl;
+        String shortdescription,reporterid,reportername,reporterurl,reporterimage;
+        String photodescription,photocreditid,photocreditname,photocreditimage,photocrediturl;
+
+        public String getShortdescription() {
+            return shortdescription;
+        }
+
+        public void setShortdescription(String shortdescription) {
+            this.shortdescription = shortdescription;
+        }
+
+        public String getReporterid() {
+            return reporterid;
+        }
+
+        public void setReporterid(String reporterid) {
+            this.reporterid = reporterid;
+        }
+
+        public String getReportername() {
+            return reportername;
+        }
+
+        public void setReportername(String reportername) {
+            this.reportername = reportername;
+        }
+
+        public String getReporterimage() {
+            return reporterimage;
+        }
+
+        public void setReporterimage(String reporterimage) {
+            this.reporterimage = reporterimage;
+        }
+
+        public String getReporterurl() {
+            return reporterurl;
+        }
+
+        public void setReporterurl(String reporterurl) {
+            this.reporterurl = reporterurl;
+        }
+
+        public String getPhotocreditid() {
+            return photocreditid;
+        }
+
+        public void setPhotocreditid(String photocreditid) {
+            this.photocreditid = photocreditid;
+        }
+
+        public String getPhotocreditimage() {
+            return photocreditimage;
+        }
+
+        public void setPhotocreditimage(String photocreditimage) {
+            this.photocreditimage = photocreditimage;
+        }
+
+        public String getPhotocreditname() {
+            return photocreditname;
+        }
+
+        public void setPhotocreditname(String photocreditname) {
+            this.photocreditname = photocreditname;
+        }
+
+        public String getPhotocrediturl() {
+            return photocrediturl;
+        }
+
+        public void setPhotocrediturl(String photocrediturl) {
+            this.photocrediturl = photocrediturl;
+        }
+
+        public String getPhotodescription() {
+            return photodescription;
+        }
+
+        public void setPhotodescription(String photodescription) {
+            this.photodescription = photodescription;
+        }
 
         public void setFavcount(int favcount) {
             this.favcount = favcount;
@@ -1158,7 +1272,7 @@ public class LifestyleDetail extends AppCompatActivity {
 
                 final NewsDescription.UserViewHolder userViewHolder = (NewsDescription.UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
@@ -1262,7 +1376,7 @@ public class LifestyleDetail extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1629,7 +1743,7 @@ public class LifestyleDetail extends AppCompatActivity {
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();

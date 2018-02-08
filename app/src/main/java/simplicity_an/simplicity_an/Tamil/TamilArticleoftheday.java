@@ -231,7 +231,7 @@ notification=(ImageButton)findViewById(R.id.btn_artcileprofile);
         getData();
 
 
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         Toolbartitle=(TextView)findViewById(R.id.toolbar_title);
         Toolbartitle.setTypeface(tf);
@@ -975,7 +975,7 @@ private void Uloaddataserver(){
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
                 ItemModel itemmodel=modelList.get(position);
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if(mImageLoader==null)
                    mImageLoader= CustomVolleyRequest.getInstance(TamilArticleoftheday.this).getImageLoader();

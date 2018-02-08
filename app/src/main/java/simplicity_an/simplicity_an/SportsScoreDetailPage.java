@@ -96,7 +96,7 @@ TextView setone,settwo,setthree,setfour,setfive,total,teamnameone_tennis,teamnam
         teamtwo_foot_secondhalf=(TextView)findViewById(R.id.teamnametwofoot_score_twoinnings);
         teamtwo_totalgoal=(TextView)findViewById(R.id.totalfoottwo);
         /************FOOTBALL end declaration*************/
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         sportsname.setTypeface(tf);
         trophyname.setTypeface(tf);

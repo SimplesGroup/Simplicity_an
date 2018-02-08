@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,7 +63,7 @@ import java.util.Map;
  * Created by kuppusamy on 8/5/2016.
  */
 public class EducationLearningDescription extends AppCompatActivity {
-    TextView tv, articleoftheday, sourcelinknews, pdate, sourcelinksimplicity;//description;
+    TextView tv, articleoftheday, sourcelinknews, pdate, sourcelinksimplicity ,textview_date;//description;
     NetworkImageView thump;
     WebView description;
     private final String TAG_REQUEST = "MY_TAG";
@@ -205,6 +206,7 @@ public class EducationLearningDescription extends AppCompatActivity {
 
         tv = (TextView) findViewById(R.id.textView_titlename);
         pdate = (TextView) findViewById(R.id.textView_date);
+       // textview_date=(TextView) findViewById(R.id.textView_datenew);
         sourcelinknews = (TextView) findViewById(R.id.sourcelink);
         sourcelinksimplicity = (TextView) findViewById(R.id.sourcelinkredsimplicity);
         comment = (ImageButton) findViewById(R.id.btn_4);
@@ -213,16 +215,22 @@ public class EducationLearningDescription extends AppCompatActivity {
         comment = (ImageButton) findViewById(R.id.btn_4);
         back = (ImageButton) findViewById(R.id.btn_1);
         description = (WebView) findViewById(R.id.textView_desc);
+
+        description.getSettings().setLoadsImagesAutomatically(true);
+        description.getSettings().setPluginState(WebSettings.PluginState.ON);
+        description.getSettings().setAllowFileAccess(true);
+        description.getSettings().setJavaScriptEnabled(true);
+
         pdialog = new ProgressDialog(this);
         pdialog.show();
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         // description=(TextView)findViewById(R.id.textView_desc);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         tv.setTypeface(tf);
-
+       // textview_date.setTypeface(tf);
         sourcelinknews.setTypeface(tf);
         sourcelinksimplicity.setTypeface(tf);
         pdate.setTypeface(tf);
@@ -328,7 +336,7 @@ public class EducationLearningDescription extends AppCompatActivity {
                 //model.setName(obj.getString("publisher_name"));
                 model.setDescription(obj.getString("description"));
                 model.setTypeid(obj.getInt("type"));
-                model.setPdate(obj.getString("ptime"));
+                model.setPdate(obj.getString("pdate"));
                 model.setTitle(obj.getString("title"));
                 //model.setPublisher(obj.getString("pub_designation"));
                  /* get the newsnew from which website */
@@ -347,7 +355,8 @@ public class EducationLearningDescription extends AppCompatActivity {
                 thump.setImageUrl(image, mImageLoader);
                 //thump.setImageUrl(image, imageLoader);
                 String by = "By&nbsp;";
-                pdate.setText(Html.fromHtml(by) + "" + obj.getString("source") + "\n" + obj.getString("ptime"));
+                pdate.setText(Html.fromHtml( obj.getString("source")));
+               // textview_date.setText(obj.getString("pdate"));
                 String descrition = obj.isNull("description") ? null : obj
                         .getString("description");
                 //  String ss = descrition;
@@ -367,7 +376,8 @@ public class EducationLearningDescription extends AppCompatActivity {
                 description.getSettings().setJavaScriptEnabled(true);
                 // description.getSettings().setDomStorageEnabled(true);
                 // description.getSettings().setAllowFileAccess(true);
-                String fonts="<html>\n" +         "\t<head>\n" +         "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" +         "\t\t<style>\n" +         "\t\t@font-face {\n" +         "  font-family: 'segeoui-light';\n" +         " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-regular';\n" +         "src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-sbold';\n" +         " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Bold';\n" +         "   src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Light';\n" +         "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Regular';\n" +         "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Thin';\n" +         "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "\t\t</style>\n" +         "\t</head>"; description.loadDataWithBaseURL("", fonts+descrition+"</head>", "text/html", "utf-8", "");
+                String fonts="<html>\n" +         "\t<head>\n" +         "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" +         "\t\t<style>\n" +         "\t\t@font-face {\n" +         "  font-family: 'segeoui-light';\n" +         " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-regular';\n" +         "src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-sbold';\n" +         " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Bold';\n" +         "   src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Light';\n" +         "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Regular';\n" +         "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Thin';\n" +         "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "\t\t</style>\n" +         "\t</head>";
+                description.loadDataWithBaseURL("", fonts+descrition+"</head>", "text/html", "utf-8", "");
 
 
                 description.getSettings().setAllowContentAccess(true);
@@ -757,7 +767,7 @@ public class EducationLearningDescription extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1124,7 +1134,7 @@ public class EducationLearningDescription extends AppCompatActivity {
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getActivity()).getImageLoader();

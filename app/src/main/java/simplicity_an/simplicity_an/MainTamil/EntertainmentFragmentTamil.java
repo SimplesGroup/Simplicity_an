@@ -56,6 +56,10 @@ import java.util.Map;
 import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SimplicitySearchview;
+import simplicity_an.simplicity_an.Tabarticle;
+import simplicity_an.simplicity_an.Tamil.Activity.Tabcolumnisttamil;
+import simplicity_an.simplicity_an.Tamil.Activity.Tabphotostoriestamil;
+import simplicity_an.simplicity_an.Tamil.TabColumnstamil;
 import simplicity_an.simplicity_an.Tamil.TamilEntertainmentall;
 import simplicity_an.simplicity_an.Tamil.Tamilentertainmentmovies;
 import simplicity_an.simplicity_an.Tamil.Tamilentertainmentradio;
@@ -66,12 +70,12 @@ import simplicity_an.simplicity_an.Tamil.Tamilentertainmentradio;
 
 public class EntertainmentFragmentTamil extends Fragment  {
 
-    TextView notification_batge_count,date_text,weather_update,title_coimbatore,language_title,weathercentre_textview;
+    TextView date_text,weather_update,title_coimbatore,language_title,weathercentre_textview;
     RequestQueue requestQueue;
     SharedPreferences sharedpreferences;
     int cDay,cMonth,cYear,cHour,cMinute,cSecond;
     String selectedMonth,selectedYear;
-    String URLPOSTQTYPE,postid;
+    String URLPOSTQTYPE;
 
     private String KEY_QTYPE = "qtype";
     private String KEY_MYUID = "user_id";
@@ -163,7 +167,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
         fabinnerplus=(FloatingActionButton)view.findViewById(R.id.fabinnerplus) ;
 
         search=(ImageButton)view.findViewById(R.id.searchbutton);
-
+        search.setVisibility(View.GONE);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -321,7 +325,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
         Date d1full = new Date();
         String sMonthNamefull =  fmt.format(d1full);
         Log.e("DAY_OF_MONTH: ", "DAY_OF_MONTH: " + calendar.get(Calendar.DAY_OF_MONTH)+sMonthName);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
         title_coimbatore=(TextView)view.findViewById(R.id.title_versiontwo) ;
         date_text=(TextView)view.findViewById(R.id.date_versiontwo) ;
@@ -371,7 +375,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
         title_coimbatore.setTypeface(tf1);
         date_text.setTypeface(tf);
         weather_update.setTypeface(tf);
-        title_coimbatore.setText("பொழுதுபோக்கு");
+        title_coimbatore.setText("சிறப்பு தொகுப்பு  ");
         if(dayOfTheWeek.equalsIgnoreCase("Sun")){
             date_text.setText(Html.fromHtml("ஞாயிறு"+","+"&nbsp;"+sMonthNamefull));
         }else if(dayOfTheWeek.equalsIgnoreCase("Mon")){
@@ -825,7 +829,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
 
 
 
-        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/robotoSlabRegular.ttf");
+        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Lora-Regular.ttf");
         ViewGroup vg = (ViewGroup) mTabLayout.getChildAt(0);
         int tabsCount = vg.getChildCount();
         for (int j = 0; j < tabsCount; j++) {
@@ -911,10 +915,16 @@ public class EntertainmentFragmentTamil extends Fragment  {
     private void setupViewPager(ViewPager mPager) {
        HealthViewPagerAdapter adapter = new HealthViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new TamilEntertainmentall(), "அனைத்தும்");
-
-        adapter.addFragment(new Tamilentertainmentradio(), "போட்காஸ்ட்");
+        adapter.addFragment(new TabColumnstamil(), "சிறப்பு கட்டுரைகள் ");
+        adapter.addFragment(new Tabarticle(),"கட்டுரைகள்");
+        adapter.addFragment(new Tabcolumnisttamil(),"கட்டுரையாளர் ");
+        adapter.addFragment(new Tamilentertainmentmovies(), "வீடியோ ");
+        adapter.addFragment(new Tamilentertainmentradio(), "ஆடியோ ");
+        adapter.addFragment(new Tabphotostoriestamil(),"புகைப்படங்கள்  ");
        // adapter.addFragment(new Tamilentertainmentmusic(), "இசை");
-        adapter.addFragment(new Tamilentertainmentmovies(), "குறும்படம்");
+
+
+
        // adapter.addFragment(new RadioJockeyTamil(),"ரேடியோ ஜாக்கி" );
         mPager.setAdapter(adapter);
     }

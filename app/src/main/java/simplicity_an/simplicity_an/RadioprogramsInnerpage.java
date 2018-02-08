@@ -81,7 +81,7 @@ int position;
        // ItemModel itemModel=modelList.get(position);
         lLayout = new LinearLayoutManager(getApplicationContext());
         mImageLoader = VolleySingleton.getInstance().getImageLoader();
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
         mCoordinator = (CoordinatorLayout) findViewById(R.id.root_coordinator);
@@ -492,7 +492,7 @@ MediaPlayer mediaPlayer;
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 mediaPlayer=new MediaPlayer();
 

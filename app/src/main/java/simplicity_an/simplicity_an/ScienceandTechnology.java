@@ -213,7 +213,7 @@ public class ScienceandTechnology extends AppCompatActivity {
                 }
             }
         });
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         Toolbartitle=(TextView)findViewById(R.id.toolbar_title);
         Toolbartitle.setTypeface(tf);

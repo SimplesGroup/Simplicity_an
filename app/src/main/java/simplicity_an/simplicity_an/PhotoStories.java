@@ -183,7 +183,7 @@ TextView title;
 
         }
 
-        String fontPath = "fonts/robotoSlabRegular.ttf";
+        String fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(PhotoStories.this.getAssets(), fontPath);
         title=(TextView)findViewById(R.id.toolbar_title_photostory);
         title.setTypeface(tf);
@@ -1840,7 +1840,7 @@ commentsbut.setTransformationMethod(null);
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
@@ -1956,7 +1956,7 @@ commentsbut.setTransformationMethod(null);
 
                 }
             });
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
 
             Toolbartitle=(TextView)root.findViewById(R.id.toolbar_title);
 
@@ -2316,7 +2316,7 @@ commentsbut.setTransformationMethod(null);
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();

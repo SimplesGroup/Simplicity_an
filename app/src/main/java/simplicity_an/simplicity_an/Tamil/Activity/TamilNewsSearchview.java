@@ -227,7 +227,7 @@ if(searchvalue_news.equalsIgnoreCase("newssearch")){
                 onBackPressed();
             }
         });
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         Toolbartitle=(TextView)findViewById(R.id.toolbar_title_list);
         Toolbartitle.setTypeface(tf);
@@ -774,7 +774,7 @@ if(searchvalue_news.equalsIgnoreCase("newssearch")){
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();

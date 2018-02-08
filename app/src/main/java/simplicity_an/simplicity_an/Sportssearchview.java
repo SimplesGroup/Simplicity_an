@@ -60,51 +60,48 @@ import java.util.Map;
  * Created by kuppusamy on 5/12/2016.
  */
 public class Sportssearchview extends AppCompatActivity {
-     List<ItemModel> modelList=new ArrayList<ItemModel>();
-
+    List<ItemModel> modelList = new ArrayList<ItemModel>();
     ProgressDialog pdialog;
-   CoordinatorLayout mCoordinator;
+    CoordinatorLayout mCoordinator;
     //Need this to set the title of the app bar
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     RecyclerViewAdapter rcAdapter;
     String bimage;
     RecyclerView recycler;
     TextView Toolbartitle;
-    ImageButton menu,back;
-     LinearLayoutManager mLayoutManager;
+    ImageButton menu, back;
+    LinearLayoutManager mLayoutManager;
     JSONObject obj, objtwo;
     JSONArray feedArray;
-    int ii,i;
-    RequestQueue queue;final String TAG_REQUEST = "MY_TAG";
+    int ii, i;
+    RequestQueue queue;
+    final String TAG_REQUEST = "MY_TAG";
     Typeface tf;
     SearchView search;
     String search_value;
-    String URLTWO,URLSEARCH;
-
-    String urlpost="http://simpli-city.in/request2.php?key=simples&rtype=user_history";
-    String URLPOSTQTYPE,postid;
-
+    String URLTWO, URLSEARCH;
+    String urlpost = "http://simpli-city.in/request2.php?key=simples&rtype=user_history";
+    String URLPOSTQTYPE, postid;
     ImageButton notification;
-
     private String KEY_QTYPE = "qtype";
     private String KEY_MYUID = "user_id";
     private String KEY_POSTID = "id";
-    TextView toolbartitle,notification_batge_count;
-    String url_noti_count="http://simpli-city.in/request2.php?rtype=notificationcount&key=simples&user_id=";
-    String url_notification_count_valueget,myprofileid;
+    TextView toolbartitle, notification_batge_count;
+    String url_noti_count = "http://simpli-city.in/request2.php?rtype=notificationcount&key=simples&user_id=";
+    String url_notification_count_valueget, myprofileid;
     int value;
     String notification_counts;
     static NetworkInfo activeNetwork;
     SharedPreferences sharedpreferences;
     public static final String mypreference = "mypref";
-    public static final String MYUSERID= "myprofileid";
-
+    public static final String MYUSERID = "myprofileid";
     RequestQueue requestQueue;
     private int requestCount = 1;
     JsonObjectRequest jsonReq;
-    public static final String MYACTIVITYSEARCH= "myactivitysearch";
-    public static final String MYACTIVITYSEARCHVALUE= "myactivitysearchvalue";
-    String searchvalue_sports,searchvalue_sports_value;
+    public static final String MYACTIVITYSEARCH = "myactivitysearch";
+    public static final String MYACTIVITYSEARCHVALUE = "myactivitysearchvalue";
+    String searchvalue_sports, searchvalue_sports_value;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,24 +109,24 @@ public class Sportssearchview extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.sportsnewssearch);
-        notification_batge_count=(TextView)findViewById(R.id.text_batchvalue_main);
+        notification_batge_count = (TextView) findViewById(R.id.text_batchvalue_main);
         notification_batge_count.setVisibility(View.GONE);
-        sharedpreferences =  getSharedPreferences(mypreference,
+        sharedpreferences = getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
-        searchvalue_sports=sharedpreferences.getString(MYACTIVITYSEARCH,"");
-        searchvalue_sports_value=sharedpreferences.getString(MYACTIVITYSEARCHVALUE,"");
+        searchvalue_sports = sharedpreferences.getString(MYACTIVITYSEARCH, "");
+        searchvalue_sports_value = sharedpreferences.getString(MYACTIVITYSEARCHVALUE, "");
 
         if (sharedpreferences.contains(MYUSERID)) {
 
-            myprofileid=sharedpreferences.getString(MYUSERID,"");
+            myprofileid = sharedpreferences.getString(MYUSERID, "");
 
         }
-        url_notification_count_valueget=url_noti_count+myprofileid;
-        URLPOSTQTYPE=urlpost;
-        requestQueue=Volley.newRequestQueue(this);
-        if(searchvalue_sports.equalsIgnoreCase("sportssearch")){
+        url_notification_count_valueget = url_noti_count + myprofileid;
+        URLPOSTQTYPE = urlpost;
+        requestQueue = Volley.newRequestQueue(this);
+        if (searchvalue_sports.equalsIgnoreCase("sportssearch")) {
 
-            search_value=searchvalue_sports_value;
+            search_value = searchvalue_sports_value;
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.remove(MYACTIVITYSEARCH);
             editor.remove(MYACTIVITYSEARCHVALUE);
@@ -137,7 +134,7 @@ public class Sportssearchview extends AppCompatActivity {
             Search();
         }
 
-        if(myprofileid!=null) {
+        if (myprofileid != null) {
 
             JsonArrayRequest jsonReq = new JsonArrayRequest(url_notification_count_valueget, new Response.Listener<JSONArray>() {
 
@@ -153,10 +150,10 @@ public class Sportssearchview extends AppCompatActivity {
                             model.setCount(obj.getString("count"));
                             notification_counts = obj.getString("count");
                             Log.e("unrrad:", notification_counts);
-                            value= Integer.parseInt(notification_counts);
-                            if(value==0){
+                            value = Integer.parseInt(notification_counts);
+                            if (value == 0) {
                                 notification_batge_count.setVisibility(View.GONE);
-                            }else {
+                            } else {
                                 notification_batge_count.setVisibility(View.VISIBLE);
                                 notification_batge_count.setText(notification_counts);
                             }
@@ -175,20 +172,20 @@ public class Sportssearchview extends AppCompatActivity {
                 }
             });
             AppControllers.getInstance().addToRequestQueue(jsonReq);
-        }else {
+        } else {
 
         }
-        notification=(ImageButton)findViewById(R.id.btn_5);
+        notification = (ImageButton) findViewById(R.id.btn_5);
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(value==0){
-                    Intent notification_page=new Intent(Sportssearchview.this,Settings.class);
+                if (value == 0) {
+                    Intent notification_page = new Intent(Sportssearchview.this, Settings.class);
                     startActivity(notification_page);
                     finish();
-                }else {
+                } else {
                     Uloaddataservernotify();
-                    Intent notification_page=new Intent(Sportssearchview.this,Settings.class);
+                    Intent notification_page = new Intent(Sportssearchview.this, Settings.class);
                     startActivity(notification_page);
                     finish();
                 }
@@ -196,9 +193,9 @@ public class Sportssearchview extends AppCompatActivity {
         });
         mCoordinator = (CoordinatorLayout) findViewById(R.id.root_coordinator);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
-        menu=(ImageButton)findViewById(R.id.btn_3);
-        back=(ImageButton)findViewById(R.id.btn_1);
-        queue= MySingleton.getInstance(this.getApplicationContext()).
+        menu = (ImageButton) findViewById(R.id.btn_3);
+        back = (ImageButton) findViewById(R.id.btn_1);
+        queue = MySingleton.getInstance(this.getApplicationContext()).
                 getRequestQueue();
 
         menu.setOnClickListener(new View.OnClickListener() {
@@ -212,35 +209,33 @@ public class Sportssearchview extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent backsportssearch = new Intent(getApplicationContext(),MainActivityVersiontwo.class);
-                startActivity(backsportssearch);
-                finish();*/
+
                 onBackPressed();
             }
         });
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
-        Toolbartitle=(TextView)findViewById(R.id.toolbar_title_sports);
+        Toolbartitle = (TextView) findViewById(R.id.toolbar_title_sports);
         Toolbartitle.setTypeface(tf);
-        search=(SearchView)findViewById(R.id.search_sports);
+        search = (SearchView) findViewById(R.id.search_sports);
         Toolbartitle.setText("Sports");
-        recycler = (RecyclerView)findViewById(R.id.searchview_sports_recyclerview);
+        recycler = (RecyclerView) findViewById(R.id.searchview_sports_recyclerview);
         int magId = getResources().getIdentifier("android:id/search_mag_icon", null, null);
         ImageView magImage = (ImageView) search.findViewById(magId);
         magImage.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         magImage.setVisibility(View.GONE);
         int searchPlateId = search.getContext().getResources().getIdentifier("android:id/search_plate", null, null);
         View searchPlate = search.findViewById(searchPlateId);
-        if (searchPlate!=null) {
+        if (searchPlate != null) {
             searchPlate.setBackgroundColor(Color.TRANSPARENT);
-            searchPlate.setBottom(Color.WHITE);
+           // searchPlate.setBottom(Color.WHITE);
 
             int searchTextId = searchPlate.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
             TextView searchText = (TextView) searchPlate.findViewById(searchTextId);
-            if (searchText!=null) {
+            if (searchText != null) {
                 searchText.setTextColor(Color.WHITE);
                 searchText.setHintTextColor(Color.WHITE);
-                searchText.setPadding(70,0,0,0);
+                searchText.setPadding(70, 0, 0, 0);
                 //searchText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             }
         }
@@ -283,7 +278,7 @@ public class Sportssearchview extends AppCompatActivity {
         recycler.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
-        rcAdapter = new RecyclerViewAdapter(modelList,recycler);
+        rcAdapter = new RecyclerViewAdapter(modelList, recycler);
         recycler.setAdapter(rcAdapter);
         rcAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -297,39 +292,9 @@ public class Sportssearchview extends AppCompatActivity {
                     public void run() {
                         Log.e("haint", "Load More 2");
 
-                        //Remove loading item
-                        // modelList.remove(modelList.size() - 1);
-                        // rcAdapter.notifyItemRemoved(modelList.size());
-Search();
-                        //Load data
-                       /* int index = modelList.size();
-                        int end = index + 9;
 
-                        try {
+                        Search();
 
-                            for (i = index; i < end; i++) {
-                                objtwo = (JSONObject) feedArray.get(i);
-                                ItemModel modelone = new ItemModel();
-
-
-                                String image = objtwo.isNull("image") ? null : objtwo
-                                        .getString("image");
-                                modelone.setImage(image);
-
-                                // modelone.setTypeid(objtwo.getInt("type"));
-                                modelone.setPdate(objtwo.getString("pdate"));
-                                modelone.setTitle(objtwo.getString("title"));
-                                modelone.setId(objtwo.getString("id"));
-
-
-                                modelList.add(modelone);
-                            }
-                            rcAdapter.notifyDataSetChanged();
-
-                        } catch (JSONException e) {
-
-                        }
-*/
                         rcAdapter.setLoaded();
                     }
                 }, 2000);
@@ -360,7 +325,7 @@ Search();
         super.onBackPressed();
     }
 
-    private void Uloaddataservernotify(){
+    private void Uloaddataservernotify() {
         //final ProgressDialog loading = ProgressDialog.show(getApplicationContext(),"Uploading...","Please wait...",false,false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLPOSTQTYPE,
                 new Response.Listener<String>() {
@@ -369,9 +334,9 @@ Search();
                         //Disimissing the progress dialog
                         //  loading.dismiss();
                         //Showing toast message of the response
-                        if(s.equalsIgnoreCase("error")) {
-                            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show() ;
-                        }else {
+                        if (s.equalsIgnoreCase("error")) {
+                            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                        } else {
 
 
                         }
@@ -383,7 +348,7 @@ Search();
                     public void onErrorResponse(VolleyError volleyError) {
 
                     }
-                }){
+                }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 //Converting Bitmap to String
@@ -393,14 +358,14 @@ Search();
 
 
                 //Creating parameters
-                Map<String,String> params = new Hashtable<String, String>();
+                Map<String, String> params = new Hashtable<String, String>();
 
                 //Adding parameters
-                if(myprofileid!=null) {
+                if (myprofileid != null) {
 
 
                     params.put(KEY_QTYPE, "notify");
-                    params.put(KEY_POSTID,"1");
+                    params.put(KEY_POSTID, "1");
                     params.put(KEY_MYUID, myprofileid);
 
 
@@ -415,7 +380,8 @@ Search();
         //Adding request to the queue
         requestQueue.add(stringRequest);
     }
-    private void Search(){
+
+    private void Search() {
         pdialog = new ProgressDialog(this);
         pdialog.show();
         pdialog.setContentView(R.layout.custom_progressdialog);
@@ -425,9 +391,10 @@ Search();
 
 
     }
-    JsonObjectRequest getDataFromTheServer( int requestCount) {
 
-        URLSEARCH="http://simpli-city.in/request2.php?rtype=search&key=simples&qtype=sports_news&q="+search_value+"&page="+requestCount;
+    JsonObjectRequest getDataFromTheServer(int requestCount) {
+
+        URLSEARCH = "http://simpli-city.in/request2.php?rtype=search&key=simples&qtype=sports_news&q=" + search_value + "&page=" + requestCount;
 
 
         Cache cache = AppControllers.getInstance().getRequestQueue().getCache();
@@ -449,7 +416,7 @@ Search();
         } else {
             // making fresh volley request and getting json
             jsonReq = new JsonObjectRequest(Request.Method.GET,
-                    URLSEARCH,  new Response.Listener<JSONObject>() {
+                    URLSEARCH, new Response.Listener<JSONObject>() {
 
                 @Override
                 public void onResponse(JSONObject response) {
@@ -481,28 +448,28 @@ Search();
             try {
                 feedArray = response.getJSONArray("result");
 
-                    for (ii = 0; ii < feedArray.length(); ii++) {
-                        obj = (JSONObject) feedArray.get(ii);
+                for (ii = 0; ii < feedArray.length(); ii++) {
+                    obj = (JSONObject) feedArray.get(ii);
 
-                        ItemModel model = new ItemModel();
-                        //FeedItem model=new FeedItem();
-                        String image = obj.isNull("image") ? null : obj
-                                .getString("image");
-                        model.setImage(image);
-                        // model.setTypeid(obj.getInt("type"));
-                        model.setPdate(obj.getString("pdate"));
-                        model.setTitle(obj.getString("title"));
-                        model.setId(obj.getString("id"));
+                    ItemModel model = new ItemModel();
+                    //FeedItem model=new FeedItem();
+                    String image = obj.isNull("image") ? null : obj
+                            .getString("image");
+                    model.setImage(image);
+                    // model.setTypeid(obj.getInt("type"));
+                    model.setPdate(obj.getString("pdate"));
+                    model.setTitle(obj.getString("title"));
+                    model.setId(obj.getString("id"));
 
 
-                        modelList.add(model);
+                    modelList.add(model);
 
-                    }
+                }
 
-                    // notify data changes to list adapater
-                    rcAdapter.notifyDataSetChanged();
+                // notify data changes to list adapater
+                rcAdapter.notifyDataSetChanged();
 
-            }catch(JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
@@ -510,6 +477,7 @@ Search();
 
 
     }
+
     public void dissmissDialog() {
         // TODO Auto-generated method stub
         if (pdialog != null) {
@@ -520,7 +488,8 @@ Search();
         }
 
     }
-    class ItemModel{
+
+    class ItemModel {
         private int typeid;
         private String name;
         private String image;
@@ -560,61 +529,89 @@ Search();
         public void setTypeid(int typeid) {
             this.typeid = typeid;
         }
+
         public String getName() {
             return name;
         }
+
         public void setName(String name) {
             this.name = name;
         }
+
         public String getBimage() {
             return bimage;
         }
+
         public void setBimage(String bimage) {
             this.bimage = bimage;
         }
+
         public String getImage() {
             return image;
         }
+
         public void setImage(String image) {
             this.image = image;
         }
-        public String getDescription(){return description;}
-        public  void setDescription(String description){
-            this.description=description;
+
+        public String getDescription() {
+            return description;
         }
-        public String getPdate(){return  pdate;}
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getPdate() {
+            return pdate;
+        }
 
         public void setPdate(String pdate) {
             this.pdate = pdate;
         }
-        public String getTitle(){return  title;}
+
+        public String getTitle() {
+            return title;
+        }
 
         public void setTitle(String title) {
             this.title = title;
         }
-        public String getSource(){return  source;}
+
+        public String getSource() {
+            return source;
+        }
 
         public void setSource(String source) {
             this.source = source;
         }
-        public String getSourcelink(){return sourcelink;}
-        public void setSourcelink(String sourcelink){
-            this.sourcelink=sourcelink;
+
+        public String getSourcelink() {
+            return sourcelink;
         }
+
+        public void setSourcelink(String sourcelink) {
+            this.sourcelink = sourcelink;
+        }
+
         /******** start the Food category names****/
-        public String getCategory_name(){return  category_name;}
+        public String getCategory_name() {
+            return category_name;
+        }
 
         public void setCategory_name(String category_name) {
             this.category_name = category_name;
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         dissmissDialog();
     }
+
     static class UserViewHolder extends RecyclerView.ViewHolder {
-        public TextView name,date;
+        public TextView name, date;
 
 
         public NetworkImageView imageview;
@@ -628,7 +625,6 @@ Search();
 
             name = (TextView) itemView.findViewById(R.id.title_travel);
             date = (TextView) itemView.findViewById(R.id.date_simplicity);
-
 
 
         }
@@ -693,7 +689,7 @@ Search();
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
-            if(viewType == VIEW_TYPE_ITEM) {
+            if (viewType == VIEW_TYPE_ITEM) {
                 View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.feed_item_simplicity, parent, false);
                 return new UserViewHolder(view);
             } else if (viewType == VIEW_TYPE_LOADING) {
@@ -705,7 +701,6 @@ Search();
         }
 
 
-
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
@@ -713,14 +708,13 @@ Search();
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
 
 
                 ItemModel itemmodel = modelList.get(position);
-
 
 
                 userViewHolder.name.setText(itemmodel.getTitle());
@@ -740,12 +734,10 @@ Search();
         }
 
 
-
-
         public int getItemViewType(int position) {
 
 
-            return modelList.get(position) == null ? VIEW_TYPE_LOADING:VIEW_TYPE_ITEM ;
+            return modelList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
 
         }
 

@@ -63,40 +63,40 @@ public class AboutPage extends AppCompatActivity {
         citycenters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent city_notification=new Intent(getApplicationContext(), MainPageEnglish.class);
-                startActivity(city_notification);
-                finish();
+                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                entairnment.putExtra("ID","3");
+                startActivity(entairnment);
             }
         });
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent home_notification=new Intent(getApplicationContext(), MainPageEnglish.class);
-                startActivity(home_notification);
-                finish();
+                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                entairnment.putExtra("ID","4");
+                startActivity(entairnment);
             }
         });
         entertainment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent home_notification=new Intent(getApplicationContext(), MainPageEnglish.class);
-                startActivity(home_notification);
-                finish();
+                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                entairnment.putExtra("ID","2");
+                startActivity(entairnment);
             }
         });
         notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent home_notification=new Intent(getApplicationContext(), MainPageEnglish.class);
-                startActivity(home_notification);
-                finish();
+                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                entairnment.putExtra("ID","1");
+                startActivity(entairnment);
             }
         });
         pdialog = new ProgressDialog(this);
         pdialog.show();
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        String fontPathbarkendina = "fonts/robotoSlabRegular.ttf";
+        String fontPathbarkendina = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(AboutPage.this.getAssets(), fontPathbarkendina);
         requestQueue= Volley.newRequestQueue(this);
         JsonObjectRequest aboutpage=new JsonObjectRequest(Request.Method.GET, Url, new Response.Listener<JSONObject>() {

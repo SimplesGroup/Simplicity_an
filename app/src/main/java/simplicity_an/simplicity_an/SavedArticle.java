@@ -79,7 +79,7 @@ TextView title;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.notificationfavourites);
-        String fontPathbarkendina = "fonts/robotoSlabRegular.ttf";
+        String fontPathbarkendina = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), fontPathbarkendina);
         lLayout = new LinearLayoutManager(getApplicationContext());
         sharedpreferences =  getApplicationContext().getSharedPreferences(mypreference,
@@ -111,33 +111,33 @@ TextView title;
         citycenters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent city_notification=new Intent(getApplicationContext(),MainActivityVersiontwo.class);
-                startActivity(city_notification);
-                finish();
+                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                entairnment.putExtra("ID","3");
+                startActivity(entairnment);
             }
         });
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent home_notification=new Intent(getApplicationContext(),MainActivityVersiontwo.class);
-                startActivity(home_notification);
-                finish();
+                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                entairnment.putExtra("ID","4");
+                startActivity(entairnment);
             }
         });
         entertainment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent home_notification=new Intent(getApplicationContext(),EntertainmentVersiontwo.class);
-                startActivity(home_notification);
-                finish();
+                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                entairnment.putExtra("ID","2");
+                startActivity(entairnment);
             }
         });
         notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent home_notification=new Intent(getApplicationContext(), MainPageEnglish.class);
-                startActivity(home_notification);
-                finish();
+                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                entairnment.putExtra("ID","1");
+                startActivity(entairnment);
             }
         });
         queue = MySingleton.getInstance(getApplicationContext()).
@@ -567,7 +567,7 @@ TextView title;
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();

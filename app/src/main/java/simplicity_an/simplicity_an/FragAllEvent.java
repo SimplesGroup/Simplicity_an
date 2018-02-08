@@ -115,7 +115,7 @@ public class FragAllEvent extends Fragment {
             myprofileid = myprofileid.replaceAll("\\D+","");
         }
         URLPOSTQTYPE=urlpost;
-        final String fontPath = "fonts/robotoSlabRegular.ttf";
+        final String fontPath = "fonts/Lora-Regular.ttf";;
         final Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), fontPath);
 
         requestQueue = Volley.newRequestQueue(getActivity());
@@ -832,7 +832,7 @@ public class FragAllEvent extends Fragment {
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                 ItemModel itemmodel = modelList.get(position);
 

@@ -8,7 +8,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -30,6 +31,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -62,26 +64,43 @@ import java.util.Map;
 
 import simplicity_an.simplicity_an.AdvertisementPage;
 import simplicity_an.simplicity_an.AppControllers;
+import simplicity_an.simplicity_an.Columnsdetailpage;
 import simplicity_an.simplicity_an.DividerItemDecoration;
+import simplicity_an.simplicity_an.LifestyleDetail;
 import simplicity_an.simplicity_an.LikeListFragment;
+import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
 import simplicity_an.simplicity_an.MySingleton;
 import simplicity_an.simplicity_an.OnLoadMoreListener;
+import simplicity_an.simplicity_an.PhotoStoriesDetail;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.RecyclerView_OnClickListener;
 import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.SimplicitySearchview;
 import simplicity_an.simplicity_an.Tamil.Activity.AdvertisementPageTamil;
+import simplicity_an.simplicity_an.Tamil.Activity.Columnistdetailtamil;
+import simplicity_an.simplicity_an.Tamil.Activity.DoitDescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.EducationDescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.Farmingdescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.FoodAndCookDescriptionPagetamil;
+import simplicity_an.simplicity_an.Tamil.Activity.Govtdescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.Healthdescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.JobsDetailPagetamil;
 import simplicity_an.simplicity_an.Tamil.Activity.ReportNewsOrComplaintsTamil;
-import simplicity_an.simplicity_an.TravelsDescription;
+import simplicity_an.simplicity_an.Tamil.Activity.ScienceandTechnologyDescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.TamilEventsDescription;
+import simplicity_an.simplicity_an.Tamil.Activity.TamilNewsDescription;
+import simplicity_an.simplicity_an.Tamil.Activity.TamilSportsnewsDescription;
+import simplicity_an.simplicity_an.Tamil.Activity.TipsDescriptionTamil;
+import simplicity_an.simplicity_an.Tamil.Activity.TravelsDescriptiontamil;
+import simplicity_an.simplicity_an.YoutubeVideoPlayer;
 
 /**
  * Created by kuppusamy on 10/3/2016.
  */
 public class Tamiltravel extends Fragment {
     RecyclerView recyclerview_tab_all_news;
-    String URL="http://simpli-city.in/request2.php?rtype=alldata&key=simples&language=2&qtype=travels";
-    String URLLIKES="http://simpli-city.in/request2.php?rtype=articlelikes&key=simples";
-    String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
+    String URL="http://simpli-city.in/request2.php?rtype=alldatatest&key=simples&qtype=travels&language=2";
+    String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples"; 				String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
     String URLALL;
     RequestQueue requestQueue;
     private int requestCount = 1;
@@ -104,11 +123,13 @@ public class Tamiltravel extends Fragment {
     public static final String backgroundcolor = "color";
     public static final String Activity = "activity";
     public static final String CONTENTID = "contentid";
-    int post_likes_count=0,save_item_count;
+    int post_likes_count=0,save_item_count,like_finalvalues;
     private Boolean isFabOpen = false;
     FloatingActionButton fabsearch,fabinnerplus;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     SwipeRefreshLayout swipeRefresh;
+
+    OnFragmentInteractionListener mListener;
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !isFragmentLoaded ) {
@@ -267,19 +288,7 @@ public class Tamiltravel extends Fragment {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefresh.setRefreshing(true);
-                modelList.clear();
-                recyclerview_tab_all_adapter.notifyDataSetChanged();
-
-                requestCount=1;
-                getData();
-                //  Toast.makeText(getActivity(),"Swipe",Toast.LENGTH_SHORT).show();
-                ( new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeRefresh.setRefreshing(false);
-                    }
-                }, 3000);
+                 swipeRefresh.setRefreshing(true);                 modelList.clear();                 recyclerview_tab_all_adapter.notifyDataSetChanged();                  requestCount=0;                 getData();                 //  Toast.makeText(getActivity(),"Swipe",Toast.LENGTH_SHORT).show();                 ( new Handler()).postDelayed(new Runnable() {                     @Override                     public void run() {                         swipeRefresh.setRefreshing(false);                     }                 }, 3000);
 
             }
         });
@@ -402,6 +411,8 @@ public class Tamiltravel extends Fragment {
         }
         return jsonReq;
     }
+     public interface OnFragmentInteractionListener {         public void onFragmentInteraction(String playurl, String title,String image);     }
+
     private void parseJsonFeed(JSONObject response){
         try {
             JSONArray feedArray = response.getJSONArray("result");
@@ -421,12 +432,35 @@ public class Tamiltravel extends Fragment {
                 model.setQtype(obj.getString("qtype"));
                 model.setLikescount(obj.getInt("likes_count"));
                 model.setCommentscount(obj.getInt("commentscount"));
-                model.setFavcount(obj.getInt("fav"));
                 model.setSharingurl(obj.getString("sharingurl"));
                 model.setQtypemain(obj.getString("qtypemain"));
+                model.setEditername(obj.getString("reporter_name"));
+                model.setShortdescription(obj.getString("short_description"));
                 // model.setDislikecount(obj.getInt("dislikes_count"));
                 model.setCounttype(obj.getInt("like_type"));
                 model.setAds(obj.getString("ad_url"));
+                model.setPlayurl(obj.getString("file"));
+                int typevalue = obj.isNull("album_count") ? null : obj
+                        .getInt("album_count");
+                model.setAlibumcount(typevalue);
+
+                ArrayList<String> album = new ArrayList<String>();
+                try {
+                    JSONArray feedArraygallery = obj.getJSONArray("palbum");
+
+
+                    for (int k = 0; k < feedArraygallery.length(); k++) {
+
+                        JSONObject object = (JSONObject) feedArraygallery.get(k);
+
+
+                        String images=object.getString("image");
+                        album.add(images);
+                    }
+                }catch (JSONException e){
+
+                }
+                model.setAlbum(album);
                 modelList.add(model);
 
             }
@@ -467,7 +501,9 @@ public class Tamiltravel extends Fragment {
         private String pdate;
         private String description;
         private String title;
-
+        int alibumcount;
+        String playurl;
+        private ArrayList<String> album;
         /******** start the Food category names****/
         private String id;
         /******** start the Food category names****/
@@ -475,7 +511,27 @@ public class Tamiltravel extends Fragment {
         int favcount;
         String sharingurl;
         int likescount,dislikecount,counttype,commentscount;
+        public String getPlayurl() {
+            return playurl;
+        }
         String ads;
+        String shortdescription,editername;
+
+        public String getEditername() {
+            return editername;
+        }
+
+        public void setEditername(String editername) {
+            this.editername = editername;
+        }
+
+        public String getShortdescription() {
+            return shortdescription;
+        }
+
+        public void setShortdescription(String shortdescription) {
+            this.shortdescription = shortdescription;
+        }
         public String getAds() {
             return ads;
         }
@@ -483,6 +539,25 @@ public class Tamiltravel extends Fragment {
         public void setAds(String ads) {
             this.ads = ads;
         }
+        public void setPlayurl(String playurl) {
+            this.playurl = playurl;
+        }
+
+        public ArrayList<String> getAlbum() {
+            return album;
+        }
+
+        public void setAlbum(ArrayList<String> album) {
+            this.album = album;
+        }
+        public int getAlibumcount() {
+            return alibumcount;
+        }
+
+        public void setAlibumcount(int alibumcount) {
+            this.alibumcount = alibumcount;
+        }
+
         public String getQtypemain() {
             return qtypemain;
         }
@@ -596,11 +671,12 @@ public class Tamiltravel extends Fragment {
     }
     static class Userviewholdertaball extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView likescount,dislikescount,commentscount,title_item,item_type_name,date;
-
+        TextView shortdescription,editername;
+        ImageButton share_imagebutton,like_imagebutton,comment_imagebutton,arrow_imagebutton;
         public Button share_button,comment_button,likes_button,save_button;
         public NetworkImageView item_image;
         public RelativeLayout countlayout,listLayout;
-        // LinearLayout ;
+        ImageButton play;
         RecyclerView_OnClickListener.OnClickListener onClickListener;
         public Userviewholdertaball(View itemView) {
             super(itemView);
@@ -608,7 +684,7 @@ public class Tamiltravel extends Fragment {
             this.  item_type_name=(TextView)itemView.findViewById(R.id.qtypetitle_taball);
             this. date=(TextView)itemView.findViewById(R.id.date_taball);
             this. likescount=(TextView)itemView.findViewById(R.id.alltab_likescount);
-
+            this.play=(ImageButton)itemView.findViewById(R.id.taball_play_pause_main);
             this.  commentscount=(TextView)itemView.findViewById(R.id.alltab_commentscount);
             this.  likes_button=(Button)itemView.findViewById(R.id.taball_likes);
             this. save_button=(Button)itemView.findViewById(R.id.taball_savepage);
@@ -622,7 +698,21 @@ public class Tamiltravel extends Fragment {
             this.save_button.setOnClickListener(this);
             this.share_button.setOnClickListener(this);
             this.listLayout.setOnClickListener(this);
+            this.play.setOnClickListener(this);
             likescount.setOnClickListener(this);
+            this.arrow_imagebutton=(ImageButton)itemView.findViewById(R.id.arrow);
+            this.editername=(TextView)itemView.findViewById(R.id.qtypetitle_sourcename);
+            this.shortdescription=(TextView)itemView.findViewById(R.id.textview_shortdescription) ;
+            this.comment_imagebutton=(ImageButton)itemView.findViewById(R.id.button_comment);
+            this.like_imagebutton=(ImageButton)itemView.findViewById(R.id.button_likes) ;
+            this.share_imagebutton=(ImageButton)itemView.findViewById(R.id.button_share) ;
+
+
+            this.shortdescription.setOnClickListener(this);
+            this.editername.setOnClickListener(this);
+            this.like_imagebutton.setOnClickListener(this);
+            this.comment_imagebutton.setOnClickListener(this);
+            this.share_imagebutton.setOnClickListener(this);
         }
 
         public void onClick(View v) {
@@ -641,6 +731,94 @@ public class Tamiltravel extends Fragment {
             this.onClickListener = onClickListener;
         }
     }
+
+    static class UserViewHolderphotostories extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public TextView likescount,dislikescount,commentscount,title_item,item_type_name,date,moreimagescount_textview;
+        TextView shortdescription,editername;
+        ImageButton share_imagebutton,like_imagebutton,comment_imagebutton,arrow_imagebutton;
+        public Button share_button,comment_button,likes_button,save_button;
+        NetworkImageView   feedImageView;
+
+        NetworkImageView   feedImageView_typetwo_one,feedImageView_typetwo_two;
+        NetworkImageView   feed_typethree_ones,feed_typethree_twos,feed_typethree_threes;
+        NetworkImageView   feedImageView_typefour_one,feedImageView_typefour_two,feedImageView_typefour_three,feedImageView_typefour_four;
+
+        public RelativeLayout countlayout,listLayout;
+        // LinearLayout ;
+        RecyclerView_OnClickListener.OnClickListener onClickListener;
+
+        public UserViewHolderphotostories(View itemView) {
+            super(itemView);
+
+
+            this.title_item=(TextView)itemView.findViewById(R.id.item_title_taball);
+            this.  item_type_name=(TextView)itemView.findViewById(R.id.qtypetitle_taball);
+            this. date=(TextView)itemView.findViewById(R.id.date_taball);
+            this. likescount=(TextView)itemView.findViewById(R.id.alltab_likescount);
+
+            this.  commentscount=(TextView)itemView.findViewById(R.id.alltab_commentscount);
+            this.  likes_button=(Button)itemView.findViewById(R.id.taball_likes);
+            this. save_button=(Button)itemView.findViewById(R.id.taball_savepage);
+            this. share_button=(Button)itemView.findViewById(R.id.taball_sharepost);
+            this. comment_button=(Button)itemView.findViewById(R.id.taball_comment);
+            likescount.setOnClickListener(this);
+            this.listLayout=(RelativeLayout) itemView.findViewById(R.id.listlayout_taball);
+            this.countlayout=(RelativeLayout)itemView.findViewById(R.id.counts_layout);
+            this.likes_button.setOnClickListener(this);
+            this.comment_button.setOnClickListener(this);
+            this.save_button.setOnClickListener(this);
+            this.share_button.setOnClickListener(this);
+            this.listLayout.setOnClickListener(this);
+            moreimagescount_textview=(TextView)itemView.findViewById(R.id.more_images);
+            this.  feedImageView = (NetworkImageView) itemView
+                    .findViewById(R.id.feedImage_photostory);
+
+            this. feedImageView_typetwo_one=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_type_two_one) ;
+            this. feedImageView_typetwo_two=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_type_two_two) ;
+
+            this. feed_typethree_ones=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_three_one) ;
+            this. feed_typethree_twos=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_three_two) ;
+            this.  feed_typethree_threes=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_three_three) ;
+
+
+            this. feedImageView_typefour_one=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_type_four_one) ;
+            this. feedImageView_typefour_two=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_type_four_two) ;
+            this. feedImageView_typefour_three=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_type_four_three) ;
+            this. feedImageView_typefour_four=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_type_four_four) ;
+
+            this.arrow_imagebutton=(ImageButton)itemView.findViewById(R.id.arrow);
+            this.editername=(TextView)itemView.findViewById(R.id.qtypetitle_sourcename);
+            this.shortdescription=(TextView)itemView.findViewById(R.id.textview_shortdescription) ;
+            this.comment_imagebutton=(ImageButton)itemView.findViewById(R.id.button_comment);
+            this.like_imagebutton=(ImageButton)itemView.findViewById(R.id.button_likes) ;
+            this.share_imagebutton=(ImageButton)itemView.findViewById(R.id.button_share) ;
+
+
+            this.shortdescription.setOnClickListener(this);
+            this.editername.setOnClickListener(this);
+            this.like_imagebutton.setOnClickListener(this);
+            this.comment_imagebutton.setOnClickListener(this);
+            this.share_imagebutton.setOnClickListener(this);
+
+        }
+        public void onClick(View v) {
+
+            // setting custom listener
+            if (onClickListener != null) {
+                onClickListener.OnItemClick(v, getAdapterPosition());
+
+            }
+
+        }
+
+        // Setter for listener
+        public void setClickListener(
+                RecyclerView_OnClickListener.OnClickListener onClickListener) {
+            this.onClickListener = onClickListener;
+        }
+    }
+
+
     static class LoadingViewHolder extends RecyclerView.ViewHolder {
         public ProgressBar progressBar;
 
@@ -654,11 +832,11 @@ public class Tamiltravel extends Fragment {
 
         ImageLoader mImageLoader;
         private final int VIEW_TYPE_ITEM = 1;
-        private final int VIEW_TYPE_LOADING = 2;
-
+        private final int VIEW_TYPE_LOADING = 3;
+        MediaPlayer mediaPlayer;
         boolean loading;
         OnLoadMoreListener onLoadMoreListener;
-
+        private final int VIEW_TYPE_PHOTOSTORY = 2;
         private int visibleThreshold = 5;
         private int lastVisibleItem, totalItemCount;
         Context context;
@@ -704,13 +882,37 @@ public class Tamiltravel extends Fragment {
                         });
             }
         }
+
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater mInflater = LayoutInflater.from ( parent.getContext () );
+            switch ( viewType ) {
+                case VIEW_TYPE_ITEM:
+                    ViewGroup vImage = (ViewGroup) mInflater.inflate ( R.layout.feed_item_versionfour_tamil, parent, false );
+                    Userviewholdertaball vhImage = new Userviewholdertaball ( vImage );
+                    return vhImage;
+                case VIEW_TYPE_PHOTOSTORY:
+                    ViewGroup vImages = (ViewGroup) mInflater.inflate ( R.layout.feed_item_versionfour_photostory_tamil, parent, false );
+                    UserViewHolderphotostories vhImages = new UserViewHolderphotostories ( vImages );
+                    return vhImages;
+              /*case VIEW_TYPE_RADIO:
+                    ViewGroup vImageradio = ( ViewGroup ) mInflater.inflate ( R.layout.feed_item_taball_radio, parent, false );
+                    Userviewholdertaball vhImageradio = new Userviewholdertaball ( vImageradio );
+                    return vhImageradio;*/
+                case VIEW_TYPE_LOADING:
+                    ViewGroup vImageloading = (ViewGroup) mInflater.inflate ( R.layout.layout_loading_item, parent, false );
+                    Userviewholdertaball vhImageloading = new Userviewholdertaball ( vImageloading );
+                    return vhImageloading;
+            }
+
+            return null;
+        }
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof Userviewholdertaball) {
 
                 final Userviewholdertaball userViewHolder = (Userviewholdertaball) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";;
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
@@ -726,15 +928,23 @@ public class Tamiltravel extends Fragment {
                 post_likes_count=itemmodel.getCounttype();
                 save_item_count=itemmodel.getFavcount();
                 if(itemmodel.getCounttype()==1){
-                    userViewHolder.likes_button.setText("விருப்பு");
+                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+                    userViewHolder.like_imagebutton.setTag("heartfullred");
+                  /*  userViewHolder.likes_button.setText("விருப்பு");
+                    userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.likered,0,0,0);
+
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
                     userViewHolder.likes_button.setTypeface(seguiregular);
-                    userViewHolder.likes_button.setTransformationMethod(null);
+                    userViewHolder.likes_button.setTransformationMethod(null);*/
                 }else {
-                    userViewHolder.likes_button.setText("விருப்பு");
+                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                    userViewHolder.like_imagebutton.setTag("heart");
+                    /*userViewHolder.likes_button.setText("விருப்பு");
+                    userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.like,0,0,0);
+
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
                     userViewHolder.likes_button.setTypeface(seguiregular);
-                    userViewHolder.likes_button.setTransformationMethod(null);
+                    userViewHolder.likes_button.setTransformationMethod(null);*/
                 }
 
                 if(itemmodel.getFavcount()==1){
@@ -748,32 +958,30 @@ public class Tamiltravel extends Fragment {
                     userViewHolder.save_button.setTransformationMethod(null);
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
                 }
+                if(itemmodel.getQtypemain().equalsIgnoreCase("radio")){
+                    userViewHolder.play.setVisibility(View.VISIBLE);
+                }else {
+                    userViewHolder.play.setVisibility(View.GONE);
+                }
+                mediaPlayer=new MediaPlayer();
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+                String simplycity_title = "fonts/Lora-Regular.ttf";;
+                final Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
+                userViewHolder.shortdescription.setTypeface(tf_play);
 
 
+                userViewHolder.editername.setTypeface(seguiregular);
+                userViewHolder.editername.setText(itemmodel.getEditername());
+
+                if(itemmodel.getPdate()==null||itemmodel.getPdate()==""){                      userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
                 userViewHolder.title_item.setTypeface(seguiregular);
-                userViewHolder.item_type_name.setText(itemmodel.getQtype());
-                userViewHolder.item_type_name.setTypeface(seguiregular);
-                userViewHolder.date.setText(itemmodel.getPdate());
+                if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular);
+               // userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(seguiregular);
                 userViewHolder.date.setTypeface(seguiregular);
-                if(itemmodel.getCommentscount()>0||itemmodel.getLikescount()>0){
-                    if(itemmodel.getLikescount()==0){
-                        userViewHolder.likescount.setVisibility(View.GONE);
-                    }else {
-                        userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"விருப்பு"));
-
-                    }
-                    if(itemmodel.getCommentscount()==0){
-                        userViewHolder.commentscount.setVisibility(View.GONE);
-                    }else {
-                        userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"கருத்து"));
-                    }
-                    userViewHolder.countlayout.setVisibility(View.VISIBLE);
-
-                }else {
-                    userViewHolder.countlayout.setVisibility(View.GONE);
-                }
+                if(itemmodel.getLikescount()==0){                         userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"விருப்பு"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"விருப்பு"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"கருத்து"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"கருத்து"));                     }                     userViewHolder.countlayout.setVisibility(View.VISIBLE);
                 if(itemmodel.getImage()!=null){
                     userViewHolder.item_image.setImageUrl(itemmodel.getImage(),mImageLoader);
                 }else {
@@ -791,8 +999,122 @@ public class Tamiltravel extends Fragment {
 
 
                                 String type = ((ItemModel) modelList.get(position)).getQtypemain();
+                                String qtype = ((ItemModel) modelList.get(position)).getQtype();
                                 String ids = ((ItemModel) modelList.get(position)).getId();
-                                if(itemmodel.getQtype().equals("Sponsered")||itemmodel.getQtype().equals("Sponsored")){
+
+
+
+                                if(type.equals("news")||type.equals("National")||type.equals("International")) {
+                                    Intent intent = new Intent(getActivity(), TamilNewsDescription.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("article")){
+                                    Intent intent = new Intent(getActivity(), TamilArticledescription.class);
+
+                                    intent.putExtra("ID", ids);
+                                    startActivity(intent);
+
+
+                                }else if (type.equals("doit")){
+                                    Intent intent = new Intent(getActivity(), DoitDescriptiontamil.class);
+                                    intent.putExtra("ID", ids);
+                                    startActivity(intent);
+
+                                }else if(type.equals("farming")){
+                                    Intent intent = new Intent(getActivity(), Farmingdescriptiontamil.class);
+                                    intent.putExtra("ID", ids);
+                                    startActivity(intent);
+
+                                }else if(type.equals("food")||type.equals("foodtip")){
+
+                                    if(type.equals("food")){
+                                        Intent intent = new Intent(getActivity(), FoodAndCookDescriptionPagetamil.class);
+                                        intent.putExtra("ID", ids);
+                                        startActivity(intent);
+                                    }else {
+                                        Intent intent = new Intent(getActivity(), TipsDescriptionTamil.class);
+                                        intent.putExtra("ID", ids);
+                                        startActivity(intent);
+                                    }
+
+                                }else if(type.equals("govt")){
+                                    Intent intent = new Intent(getActivity(), Govtdescriptiontamil.class);
+                                    intent.putExtra("ID", ids);
+                                    startActivity(intent);
+
+                                }else if(type.equals("health")){
+                                    Intent intent = new Intent(getActivity(), Healthdescriptiontamil.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("science")){
+                                    Intent intent = new Intent(getActivity(), ScienceandTechnologyDescriptiontamil.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("sports")){
+                                    Intent intent = new Intent(getActivity(), TamilSportsnewsDescription.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("travels")){
+                                    Intent intent = new Intent(getActivity(), TravelsDescriptiontamil.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("event")){
+                                    Intent intent = new Intent(getActivity(), TamilEventsDescription.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equalsIgnoreCase("Radio")){
+                                    Intent intent = new Intent(getActivity(), RadioNotificationplayer.class);
+                                    intent.putExtra("URL", itemmodel.getPlayurl());
+                                    intent.putExtra("TITLE", itemmodel.getTitle());
+                                    intent.putExtra("IMAGE", itemmodel.getImage());
+                                    startActivity(intent);
+                                }else if(type.equalsIgnoreCase("Music")){
+                                    Intent intent = new Intent(getActivity(), RadioNotificationplayer.class);
+                                    intent.putExtra("URL", itemmodel.getPlayurl());
+                                    intent.putExtra("TITLE", itemmodel.getTitle());
+                                    intent.putExtra("IMAGE", itemmodel.getImage());
+                                    startActivity(intent);
+                                }else if(type.equalsIgnoreCase("Job")){
+                                    Intent intent = new Intent(getActivity(), JobsDetailPagetamil.class);
+                                    intent.putExtra("ID", ids);
+                                    intent.putExtra("TITLE", itemmodel.getTitle());
+
+                                    startActivity(intent);
+                                }
+                                else if(type.equalsIgnoreCase("theatre")){
+                                    Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);
+                                    intent.putExtra("ID", ids);
+                                    intent.putExtra("TITLE",itemmodel.getTitle());
+                                    intent.putExtra("URL",itemmodel.getPlayurl());
+                                    startActivity(intent);
+                                }
+                                else if(type.equalsIgnoreCase("columns")){
+                                    Intent intent = new Intent(getActivity(), Columnsdetailpage.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if (type.equals("columnist")){
+                                    Intent intent = new Intent(getActivity(), Columnistdetailtamil.class);
+                                    intent.putExtra("ID", ids);
+                                    startActivity(intent);
+                                }else if(type.equalsIgnoreCase("education")){
+                                    Intent intent = new Intent(getActivity(), EducationDescriptiontamil.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("lifestyle")){
+                                    Intent intent = new Intent(getActivity(), LifestyleDetail.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }
+                                else   if(itemmodel.getQtype().equals("Sponsered")||itemmodel.getQtype().equals("Sponsored")){
                                     if(itemmodel.getAds().startsWith("http://simpli")){
                                         Intent intent = new Intent(getActivity(), AdvertisementPageTamil.class);
                                         intent.putExtra("ID", itemmodel.getAds());
@@ -800,13 +1122,7 @@ public class Tamiltravel extends Fragment {
                                     }else {
                                         Intent intent = new Intent(getActivity(), AdvertisementPage.class);                                             intent.putExtra("ID", itemmodel.getAds());  startActivity(intent);
                                     }
-                                }else {
-                                    Intent intent = new Intent(getActivity(), TravelsDescription.class);
-                                    intent.putExtra("ID", ids);
-                                    startActivity(intent);
                                 }
-
-
                                 break;
                             case R.id.alltab_likescount:
                                 FragmentTransaction ftlike = getChildFragmentManager().beginTransaction();
@@ -818,164 +1134,98 @@ public class Tamiltravel extends Fragment {
                                 frags.setArguments(argss);
                                 frags.show(ftlike, "txn_tag");
                                 break;
-                            case R.id.taball_likes:
+                            case R.id.taball_play_pause_main:
+                                Log.e("CLick","MainRaio");
+                                if(itemmodel.getQtype().equals("Independent Movies")||itemmodel.getQtypemain().equals("theatre")){
+                                    Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);
+                                    intent.putExtra("ID", itemmodel.getId());
+                                    intent.putExtra("TITLE",itemmodel.getTitle());
+                                    intent.putExtra("URL",itemmodel.getPlayurl());
+                                    startActivity(intent);
+                                }else {
+                                    String url = itemmodel.getPlayurl();
+                                    onButtonPressed(itemmodel.getPlayurl(), itemmodel.getTitle(),itemmodel.getImage());
+                                    userViewHolder.play.setVisibility(View.GONE);
+                                }
+
+
+
+
+
+
+
+                                break;
+
+
+                            case R.id.button_likes:
                                 if(myprofileid!=null) {
-                                    if (post_likes_count == 1) {
-                                        userViewHolder.likes_button.setText("விருப்பு");
-                                        userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
-                                        userViewHolder.likes_button.setTypeface(seguiregular);
-                                        userViewHolder.likes_button.setTransformationMethod(null);
-                                        post_likes_count--;
-                                        // String f = itemmodel.getLikescount().toString();
+                                    String backgroundImageName = String.valueOf(userViewHolder.like_imagebutton.getTag());
+                                    Log.e("RUN","with"+backgroundImageName);
+                                    if(backgroundImageName.equals("heart")){
+                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+                                        userViewHolder.like_imagebutton.setTag("heartfullred");
+                                    }else if(backgroundImageName.equals("heartfullred")) {
+                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                                        userViewHolder.like_imagebutton.setTag("heart");
+                                    }else {
 
-                                        int i =  itemmodel.getLikescount();
-                                        String s = "1";
-                                        int j = Integer.parseInt(s);
-
-                                        int result = i - j;
-                                        String res = String.valueOf(result).toString();
-                                        if (result==-1||result==0) {
-                                            userViewHolder.likescount.setVisibility(View.GONE);
-                                            userViewHolder.countlayout.setVisibility(View.GONE);
-
-                                        } else {
-                                            userViewHolder.likescount.setVisibility(View.VISIBLE);
-                                            userViewHolder.countlayout.setVisibility(View.VISIBLE);
-                                            userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount() + "&nbsp;" + "விருப்பு"));
-                                        }
-                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLLIKES,
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String s) {
-                                                        //Disimissing the progress dialog
-
-                                                        //Showing toast message of the response
-                                                        if (s.equalsIgnoreCase("no")) {
-                                                            //Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show() ;
-                                                        } else {
-                                                            Log.e("response:", s);
-
-                                                        }
-
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError volleyError) {
-                                                        //Dismissing the progress dialog
-                                                        //loading.dismiss();
-
-                                                        //Showing toast
-                                                        //  Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                                                    }
-                                                }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-
-                                                Map<String, String> params = new Hashtable<String, String>();
-                                                String postid = itemmodel.getId();
-                                                //Adding parameters
-                                                if (postid != null) {
-
-
-                                                    params.put(QID, postid);
-                                                    params.put(USERID, myprofileid);
-                                                    params.put(QTYPE, itemmodel.getQtypemain());
-                                                } else {
-
-
-                                                }
-
-
-                                                return params;
-                                            }
-                                        };
-
-                                        //Creating a Request Queue
-                                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-
-                                        //Adding request to the queue
-                                        requestQueue.add(stringRequest);
-
-                                    } else {
-                                        userViewHolder.likes_button.setText("விருப்பு");
-                                        userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
-                                        userViewHolder.likes_button.setTypeface(seguiregular);
-                                        userViewHolder.likes_button.setTransformationMethod(null);
-                                        post_likes_count++;
-
-
-
-                                        int i = itemmodel.getLikescount();
-                                        String s = "1";
-                                        int j = Integer.parseInt(s);
-
-                                        Integer result = i + j;
-                                        String res = result.toString();
-                                        userViewHolder.likescount.setVisibility(View.VISIBLE);
-                                        userViewHolder.countlayout.setVisibility(View.VISIBLE);
-                                        userViewHolder.likescount.setText(Html.fromHtml(res + "&nbsp;" + "விருப்பு "));
-
-                                        StringRequest stringRequest = new StringRequest(Request.Method.POST,URLLIKES,
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String s) {
-                                                        //Disimissing the progress dialog
-
-                                                        //Showing toast message of the response
-                                                        if (s.equalsIgnoreCase("no")) {
-                                                            //Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show() ;
-                                                        } else {
-                                                            Log.e("response:", s);
-
-
-                                                        }
-
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError volleyError) {
-                                                        //Dismissing the progress dialog
-                                                        //loading.dismiss();
-
-                                                        //Showing toast
-                                                        //  Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                                                    }
-                                                }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-                                                //Converting Bitmap to String
-
-                                                //Getting Image Name
-
-                                                //Creating parameters
-                                                Map<String, String> params = new Hashtable<String, String>();
-                                                String postid = itemmodel.getId();
-                                                //Adding parameters
-                                                if (postid != null) {
-
-
-                                                    params.put(QID, postid);
-                                                    params.put(USERID, myprofileid);
-                                                    params.put(QTYPE, itemmodel.getQtypemain());
-                                                } else {
-
-
-                                                }
-
-
-                                                return params;
-                                            }
-                                        };
-
-                                        //Creating a Request Queue
-                                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-
-                                        //Adding request to the queue
-                                        requestQueue.add(stringRequest);
-                                        //Toast.makeText(getActivity(),count,Toast.LENGTH_LONG).show();
                                     }
+                                    StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            String res=response.toString();
+                                            res = res.replace(" ", "");
+                                            res = res.trim();
+                                            if(res.equalsIgnoreCase("yes")){
+                                                System.out.println(itemmodel.getId());
+                                                if(itemmodel.getCounttype()==1){
+                                                    like_finalvalues=itemmodel.getLikescount();
+                                                }else {
+                                                    like_finalvalues=itemmodel.getLikescount()+1;
+                                                }
+                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
+                                            }else if(res.equalsIgnoreCase("no")){
+                                                if(itemmodel.getCounttype()==1){
+                                                    like_finalvalues=itemmodel.getLikescount()-1;
+                                                }else {
+                                                    like_finalvalues=itemmodel.getLikescount();
+                                                }
+                                                System.out.println(itemmodel.getId());
+                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                                               userViewHolder.like_imagebutton.setTag("heart");
+                                            }
+                                            if(like_finalvalues==0||like_finalvalues==-1){
+                                                System.out.println(itemmodel.getId());
+                                                userViewHolder.    likescount.setVisibility(View.GONE);
+                                            }else {
+                                                System.out.println(itemmodel.getId());
+                                                System.out.println(like_finalvalues);
+                                                userViewHolder.    countlayout.setVisibility(View.VISIBLE);
+                                                userViewHolder.    likescount.setVisibility(View.VISIBLE);
+                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "விருப்பு"));
+
+                                                like_finalvalues=0;
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+
+                                        }
+                                    }){
+                                        protected Map<String,String> getParams()throws AuthFailureError{
+                                            Map<String,String> param=new Hashtable<String, String>();
+                                            String ids=itemmodel.getId();
+                                            param.put(QID, ids);
+                                            param.put(USERID, myprofileid);
+                                            param.put(QTYPE, itemmodel.getQtypemain());
+                                            return param;
+                                        }
+                                    };
+                                    RequestQueue likesqueue=Volley.newRequestQueue(getActivity());
+                                    likes.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+                                    likesqueue.add(likes);
 
                                 }else {
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -1130,7 +1380,7 @@ public class Tamiltravel extends Fragment {
 
                                 }
                                 break;
-                            case R.id.taball_comment:
+                            case R.id.button_comment:
 
                                 if(myprofileid!=null) {
                                     FragmentTransaction ft = getChildFragmentManager().beginTransaction();
@@ -1152,11 +1402,14 @@ public class Tamiltravel extends Fragment {
 
                                 }
                                 break;
-                            case R.id.taball_sharepost:
+                            case R.id.button_share:
                                 Intent sendIntent = new Intent();
                                 sendIntent.setAction(Intent.ACTION_SEND);
-                                sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle()+ "\n" + itemmodel.getSharingurl()+"\n"+"\n"+"\n"+"Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
-                                sendIntent.setType("text/plain");
+                                if(itemmodel.getSharingurl().equals("")){
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle()+ "\n" + itemmodel.getAds()+"\n"+"\n"+"\n"+"Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+                                }else {
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle() + "\n" + itemmodel.getSharingurl() + "\n" + "\n" + "\n" + "Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+                                }                                sendIntent.setType("text/plain");
                                 startActivity(Intent.createChooser(sendIntent, "Share using"));
 
                                 break;
@@ -1164,25 +1417,521 @@ public class Tamiltravel extends Fragment {
                     }
 
                 });
+            }else if(holder instanceof UserViewHolderphotostories){
+
+                final UserViewHolderphotostories userViewHolder = (UserViewHolderphotostories) holder;
+
+                String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";;
+                final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
+                if (mImageLoader == null)
+                    mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
+
+
+                final ItemModel itemmodel = modelList.get(position);
+                userViewHolder.comment_button.setText("கருத்து");
+                userViewHolder.comment_button.setTypeface(seguiregular);
+                userViewHolder.comment_button.setTransformationMethod(null);
+                userViewHolder.share_button.setText("பகிரவும்");
+                userViewHolder.share_button.setTypeface(seguiregular);
+                userViewHolder.share_button.setTransformationMethod(null);
+                post_likes_count=itemmodel.getCounttype();
+                save_item_count=itemmodel.getFavcount();
+                if(itemmodel.getCounttype()==1){
+                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+                    userViewHolder.like_imagebutton.setTag("heartfullred");
+                   /* userViewHolder.likes_button.setText("விருப்பு");
+                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
+                    userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.likered,0,0,0);
+                    userViewHolder.likes_button.setTypeface(seguiregular);
+                    userViewHolder.likes_button.setTransformationMethod(null);*/
+                }else {
+                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                    userViewHolder.like_imagebutton.setTag("heart");
+                    /*userViewHolder.likes_button.setText("விருப்பு");
+                    userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.like,0,0,0);
+                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
+                    userViewHolder.likes_button.setTypeface(seguiregular);
+                    userViewHolder.likes_button.setTransformationMethod(null);*/
+                }
+
+                if(itemmodel.getFavcount()==1){
+                    userViewHolder.save_button.setText("சேமிக்க");
+                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
+                    userViewHolder.save_button.setTypeface(seguiregular);
+                    userViewHolder.save_button.setTransformationMethod(null);
+                }else {
+                    userViewHolder.save_button.setText("சேமிக்க");
+                    userViewHolder.save_button.setTypeface(seguiregular);
+                    userViewHolder.save_button.setTransformationMethod(null);
+                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
+                }
+                String simplycity_title = "fonts/Lora-Regular.ttf";;
+                final Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
+                userViewHolder.shortdescription.setTypeface(tf_play);
+
+
+                userViewHolder.editername.setTypeface(seguiregular);
+                userViewHolder.editername.setText(itemmodel.getEditername());
+
+
+                if(itemmodel.getPdate()==null||itemmodel.getPdate()==""){                      userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
+                userViewHolder.title_item.setText(itemmodel.getTitle());
+                userViewHolder.title_item.setTypeface(seguiregular);
+                if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular);
+                //userViewHolder.date.setText(itemmodel.getPdate());
+                userViewHolder.likescount.setTypeface(seguiregular);
+                userViewHolder.date.setTypeface(seguiregular);
+                if(itemmodel.getLikescount()==0){                         userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"விருப்பு"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"விருப்பு"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"கருத்து"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"கருத்து"));                     }                     userViewHolder.countlayout.setVisibility(View.VISIBLE);
+
+
+
+
+
+
+                String powers = "";
+                String powerstwo = "";
+                // Chcek for empty status message
+                if (itemmodel.getAlibumcount()==0) {
+
+                    userViewHolder.feedImageView.setImageUrl(itemmodel.getImage(), mImageLoader);
+                    userViewHolder.feedImageView.setDefaultImageResId(R.mipmap.ic_launcher);
+
+                    userViewHolder.feedImageView.setVisibility(View.VISIBLE);
+
+                    userViewHolder.feedImageView_typetwo_one.setVisibility(View.GONE);
+                    userViewHolder.feedImageView_typetwo_two.setVisibility(View.GONE);
+                    userViewHolder.feed_typethree_ones.setVisibility(View.GONE);
+                    userViewHolder.feed_typethree_twos.setVisibility(View.GONE);
+                    userViewHolder.feed_typethree_threes.setVisibility(View.GONE);
+                    userViewHolder.feedImageView_typefour_one.setVisibility(View.GONE);
+                    userViewHolder.feedImageView_typefour_two.setVisibility(View.GONE);
+                    userViewHolder.feedImageView_typefour_three.setVisibility(View.GONE);
+                    userViewHolder.feedImageView_typefour_four.setVisibility(View.GONE);
+                }else if(itemmodel.getAlibumcount()==2){
+                    int j;
+
+
+                    for( j=0;j<itemmodel.getAlbum().size();j++) {
+                        powerstwo = itemmodel.getAlbum().get(j);
+                        if(j==0) {
+                            System.out.println("two1 -->"+itemmodel.getAlbum().get(j));
+                            userViewHolder.feedImageView_typetwo_one.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feedImageView_typetwo_one.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feedImageView_typetwo_one.setVisibility(View.VISIBLE);
+
+                        }else if(j==1) {
+                            System.out.println(" two2-->"+itemmodel.getAlbum().get(j));
+                            userViewHolder.feedImageView_typetwo_two.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feedImageView_typetwo_two.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feedImageView_typetwo_two.setVisibility(View.VISIBLE);
+
+                        }
+                        userViewHolder.feedImageView.setVisibility(View.GONE);
+
+                        userViewHolder.feed_typethree_ones.setVisibility(View.GONE);
+                        userViewHolder.feed_typethree_twos.setVisibility(View.GONE);
+                        userViewHolder.feed_typethree_threes.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typefour_one.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typefour_two.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typefour_three.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typefour_four.setVisibility(View.GONE);
+                    }
+                }else if(itemmodel.getAlibumcount()==3){
+                    int j;
+                    for( j=0;j<itemmodel.getAlbum().size();j++) {
+                        powerstwo = itemmodel.getAlbum().get(j);
+
+                        if(j==0) {
+                            System.out.println("three -->"+itemmodel.getAlbum().get(j));
+                            userViewHolder.feed_typethree_ones.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feed_typethree_ones.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feed_typethree_ones.setVisibility(View.VISIBLE);
+
+                        }else if(j==1) {
+                            System.out.println(" three2-->"+itemmodel.getAlbum().get(j));
+                            userViewHolder.feed_typethree_twos.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feed_typethree_twos.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feed_typethree_twos.setVisibility(View.VISIBLE);
+
+                        }else if (j==2) {
+                            System.out.println("three3 -->"+itemmodel.getAlbum().get(j));
+                            userViewHolder.feed_typethree_threes.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feed_typethree_threes.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feed_typethree_threes.setVisibility(View.VISIBLE);
+
+                        }
+                        userViewHolder.feedImageView_typetwo_one.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typetwo_two.setVisibility(View.GONE);
+                        userViewHolder.feedImageView.setVisibility(View.GONE);
+
+                        userViewHolder.feedImageView_typefour_one.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typefour_two.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typefour_three.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typefour_four.setVisibility(View.GONE);
+                    }
+                }else {
+
+                    int j;
+                    for (j = 0; j < itemmodel.getAlbum().size(); j++) {
+                        powerstwo = itemmodel.getAlbum().get(j);
+
+                        if (j == 0) {
+                            System.out.println("four -->" + itemmodel.getAlbum().get(j));
+                            userViewHolder.feedImageView_typefour_one.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feedImageView_typefour_one.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feedImageView_typefour_one.setVisibility(View.VISIBLE);
+
+                        } else if (j == 1) {
+                            System.out.println("four2 -->" + itemmodel.getAlbum().get(j));
+                            userViewHolder.feedImageView_typefour_two.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feedImageView_typefour_two.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feedImageView_typefour_two.setVisibility(View.VISIBLE);
+
+                        } else if (j == 2) {
+                            System.out.println("four3 -->" + itemmodel.getAlbum().get(j));
+                            userViewHolder.feedImageView_typefour_three.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feedImageView_typefour_three.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feedImageView_typefour_three.setVisibility(View.VISIBLE);
+
+                        } else if (j == 3) {
+                            System.out.println("four4 -->" + itemmodel.getAlbum().get(j));
+                            userViewHolder.feedImageView_typefour_four.setImageUrl(powerstwo, mImageLoader);
+                            userViewHolder.feedImageView_typefour_four.setDefaultImageResId(R.mipmap.ic_launcher);
+                            userViewHolder.feedImageView_typefour_four.setVisibility(View.VISIBLE);
+
+                        }
+                        userViewHolder.feedImageView_typetwo_one.setVisibility(View.GONE);
+                        userViewHolder.feedImageView_typetwo_two.setVisibility(View.GONE);
+                        userViewHolder.feed_typethree_ones.setVisibility(View.GONE);
+                        userViewHolder.feed_typethree_twos.setVisibility(View.GONE);
+                        userViewHolder.feed_typethree_threes.setVisibility(View.GONE);
+                        userViewHolder.feedImageView.setVisibility(View.GONE);
+
+
+                    }
+                }
+                int albumcountsdata=itemmodel.getAlibumcount();
+                if(albumcountsdata>4){
+                    userViewHolder.moreimagescount_textview.setVisibility(View.VISIBLE);
+                    int result=albumcountsdata-4;
+                    userViewHolder.moreimagescount_textview.setText(Html.fromHtml("+"+result+"&nbsp;"+"Images"));
+                }else {
+                    userViewHolder.moreimagescount_textview.setVisibility(View.GONE);
+                }
+
+
+
+
+                userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
+
+                    @Override
+                    public void OnItemClick(View view, int position) {
+                        switch (view.getId()) {
+                            case R.id.listlayout_taball:
+                                Intent photostory=new Intent(getActivity(),PhotoStoriesDetail.class);
+                                photostory.putExtra("Image", itemmodel.getId());
+                                photostory.putExtra("TITLE",itemmodel.getTitle());
+                                photostory.putExtra("DATE",itemmodel.getPdate());
+                                startActivity(photostory);
+
+                                break;
+                            case R.id.alltab_likescount:
+                                FragmentTransaction ftlike = getChildFragmentManager().beginTransaction();
+                                LikeListFragment frags;
+                                frags = new LikeListFragment();
+                                Bundle argss = new Bundle();
+                                argss.putString("ID", itemmodel.getId());
+                                argss.putString("QTYPE",itemmodel.getQtypemain());
+                                frags.setArguments(argss);
+                                frags.show(ftlike, "txn_tag");
+                                break;
+                            case R.id.button_likes:
+                                if(myprofileid!=null) {
+                                    String backgroundImageName = String.valueOf(userViewHolder.like_imagebutton.getTag());
+                                    Log.e("RUN","with"+backgroundImageName);
+                                    if(backgroundImageName.equals("heart")){
+                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+                                        userViewHolder.like_imagebutton.setTag("heartfullred");
+                                    }else if(backgroundImageName.equals("heartfullred")) {
+                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                                        userViewHolder.like_imagebutton.setTag("heart");
+                                    }else {
+
+                                    }
+                                    StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            String res=response.toString();
+                                            res = res.replace(" ", "");
+                                            res = res.trim();
+                                            if(res.equalsIgnoreCase("yes")){
+                                                System.out.println(itemmodel.getId());
+                                                if(itemmodel.getCounttype()==1){
+                                                    like_finalvalues=itemmodel.getLikescount();
+                                                }else {
+                                                    like_finalvalues=itemmodel.getLikescount()+1;
+                                                }
+                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
+                                            }else if(res.equalsIgnoreCase("no")){
+                                                if(itemmodel.getCounttype()==1){
+                                                    like_finalvalues=itemmodel.getLikescount()-1;
+                                                }else {
+                                                    like_finalvalues=itemmodel.getLikescount();
+                                                }
+                                                System.out.println(itemmodel.getId());
+                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                                               userViewHolder.like_imagebutton.setTag("heart");
+                                            }
+                                            if(like_finalvalues==0||like_finalvalues==-1){
+                                                System.out.println(itemmodel.getId());
+                                                userViewHolder.    likescount.setVisibility(View.GONE);
+                                            }else {
+                                                System.out.println(itemmodel.getId());
+                                                System.out.println(like_finalvalues);
+                                                userViewHolder.    countlayout.setVisibility(View.VISIBLE);
+                                                userViewHolder.    likescount.setVisibility(View.VISIBLE);
+                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "விருப்பு"));
+
+                                                like_finalvalues=0;
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+
+                                        }
+                                    }){
+                                        protected Map<String,String> getParams()throws AuthFailureError{
+                                            Map<String,String> param=new Hashtable<String, String>();
+                                            String ids=itemmodel.getId();
+                                            param.put(QID, ids);
+                                            param.put(USERID, myprofileid);
+                                            param.put(QTYPE, itemmodel.getQtypemain());
+                                            return param;
+                                        }
+                                    };
+                                    RequestQueue likesqueue=Volley.newRequestQueue(getActivity());
+                                    likes.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+                                    likesqueue.add(likes);
+
+                                }else {
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Activity, "mainversion");
+                                    editor.putString(CONTENTID, "0");
+                                    editor.commit();
+                                    Intent sign=new Intent(getActivity(),SigninpageActivity.class);
+                                    startActivity(sign);
+
+                                }
+
+
+                                break;
+                            case R.id.taball_savepage:
+                                if(myprofileid!=null) {
+
+                                    if (save_item_count == 1) {
+                                        userViewHolder.save_button.setText("சேமிக்க");
+                                        userViewHolder.save_button.setTextColor(getResources().getColor(R.color.white));
+                                        userViewHolder.save_button.setTypeface(seguiregular);
+                                        userViewHolder.save_button.setTransformationMethod(null);
+                                        save_item_count--;
+
+
+
+
+
+                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLSAVE,
+                                                new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String s) {
+                                                        //Disimissing the progress dialog
+
+                                                        //Showing toast message of the response
+                                                        if (s.equalsIgnoreCase("no")) {
+                                                            //Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show() ;
+                                                        } else {
+                                                            Log.e("response:", s);
+
+                                                        }
+
+                                                    }
+                                                },
+                                                new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError volleyError) {
+                                                        //Dismissing the progress dialog
+                                                        //loading.dismiss();
+
+                                                        //Showing toast
+                                                        //  Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                                                    }
+                                                }) {
+                                            @Override
+                                            protected Map<String, String> getParams() throws AuthFailureError {
+
+                                                Map<String, String> params = new Hashtable<String, String>();
+
+                                                //Adding parameters
+
+
+
+                                                params.put(QID, itemmodel.getId());
+                                                params.put(USERID, myprofileid);
+                                                params.put(QTYPE, itemmodel.getQtypemain());
+
+
+
+                                                return params;
+                                            }
+                                        };
+
+                                        //Creating a Request Queue
+                                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+
+                                        //Adding request to the queue
+                                        requestQueue.add(stringRequest);
+
+                                    } else {
+                                        userViewHolder.save_button.setText("சேமிக்க");
+                                        userViewHolder.save_button.setTextColor(getResources().getColor(R.color.red));
+                                        userViewHolder.save_button.setTypeface(seguiregular);
+                                        userViewHolder.save_button.setTransformationMethod(null);
+                                        save_item_count++;
+
+
+
+                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLSAVE,
+                                                new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String s) {
+                                                        //Disimissing the progress dialog
+
+                                                        //Showing toast message of the response
+                                                        if (s.equalsIgnoreCase("no")) {
+                                                            //Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show() ;
+                                                        } else {
+                                                            Log.e("response:", s);
+
+
+                                                        }
+
+                                                    }
+                                                },
+                                                new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError volleyError) {
+                                                        //Dismissing the progress dialog
+                                                        //loading.dismiss();
+
+                                                        //Showing toast
+                                                        //  Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                                                    }
+                                                }) {
+                                            @Override
+                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                //Converting Bitmap to String
+
+                                                //Getting Image Name
+
+                                                //Creating parameters
+                                                Map<String, String> params = new Hashtable<String, String>();
+
+                                                //Adding parameters
+
+
+
+                                                params.put(QID, itemmodel.getId());
+                                                params.put(USERID, myprofileid);
+                                                params.put(QTYPE, itemmodel.getQtypemain());
+
+
+
+                                                return params;
+                                            }
+                                        };
+
+                                        //Creating a Request Queue
+                                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+
+                                        //Adding request to the queue
+                                        requestQueue.add(stringRequest);
+                                        //Toast.makeText(getActivity(),count,Toast.LENGTH_LONG).show();
+                                    }
+                                }else {
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Activity, "mainversion");
+                                    editor.putString(CONTENTID, "0");
+                                    editor.commit();
+                                    Intent signin=new Intent(getActivity(),SigninpageActivity.class);
+                                    startActivity(signin);
+
+                                }
+                                break;
+                            case R.id.button_comment:
+
+                                if(myprofileid!=null) {
+                                    FragmentTransaction ftcom = getChildFragmentManager().beginTransaction();
+                                    MyDialogFragment fragcom;
+                                    fragcom = new MyDialogFragment();
+                                    Bundle argscom = new Bundle();
+                                    argscom.putString("POSTID", itemmodel.getId());
+                                    argscom.putString("USERID", myprofileid);
+                                    argscom.putString("QTYPE",itemmodel.getQtypemain());
+                                    fragcom.setArguments(argscom);
+                                    fragcom.show(ftcom, "txn_tag");
+                                }else {
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Activity, "mainversion");
+                                    editor.putString(CONTENTID, "0");
+                                    editor.commit();
+                                    Intent signin=new Intent(getActivity(),SigninpageActivity.class);
+                                    startActivity(signin);
+
+                                }
+                                break;
+                            case R.id.button_share:
+                                Intent sendIntent = new Intent();
+                                sendIntent.setAction(Intent.ACTION_SEND);
+                                if(itemmodel.getSharingurl().equals("")){
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle()+ "\n" + itemmodel.getAds()+"\n"+"\n"+"\n"+"Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+                                }else {
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle() + "\n" + itemmodel.getSharingurl() + "\n" + "\n" + "\n" + "Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+                                }                                sendIntent.setType("text/plain");
+                                startActivity(Intent.createChooser(sendIntent, "Share using"));
+
+                                break;
+                        }
+                    }
+
+                });
+
+
+
+            }
+
+
+            else {
+                if (holder instanceof LoadingViewHolder) {
+                    LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
+                    loadingViewHolder.progressBar.setIndeterminate(true);
+                }
             }
         }
 
 
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            if(viewType == VIEW_TYPE_ITEM) {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.feed_item_taball, parent, false);
-                return new Userviewholdertaball(view);
-            } else if (viewType == VIEW_TYPE_LOADING) {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_loading_item, parent, false);
-                return new LoadingViewHolder(view);
-            }
-            return null;
-        }
+
         public int getItemViewType(int position) {
 
 
-            return modelList.get(position) == null ? VIEW_TYPE_LOADING:VIEW_TYPE_ITEM ;
+            ItemModel item = modelList.get(position);
+            if(item.getQtypemain().equalsIgnoreCase("photostories")){
+                return VIEW_TYPE_PHOTOSTORY;
+            }/*else if(item.getQtypemain().equalsIgnoreCase("radio")){
+           return VIEW_TYPE_RADIO;
+        }*/  else{
+                return modelList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+            }
 
         }
         public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
@@ -1191,7 +1940,11 @@ public class Tamiltravel extends Fragment {
         public void setLoaded() {
             loading = false;
         }
-
+        public void onButtonPressed(String playurl, String title,String image) {
+            if (mListener != null) {
+                mListener.onFragmentInteraction(playurl,title,image);
+            }
+        }
 
     }
     public static class MyDialogFragment extends DialogFragment {
@@ -1253,7 +2006,7 @@ public class Tamiltravel extends Fragment {
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
             qtypevalue=getArguments().getString("QTYPE");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1622,7 +2375,7 @@ public class Tamiltravel extends Fragment {
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();

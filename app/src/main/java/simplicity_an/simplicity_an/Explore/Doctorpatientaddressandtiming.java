@@ -434,7 +434,7 @@ public class Doctorpatientaddressandtiming extends AppCompatActivity {
             if (holder instanceof UserviewHolder) {
                 UserviewHolder userViewHolder = (UserviewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 final Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
                 DoctorItem doctorItem=timinglist.get(position);

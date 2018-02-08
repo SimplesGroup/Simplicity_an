@@ -90,7 +90,7 @@
             android:layout_marginRight="1dp"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:src="@mipmap/city"
+            android:src="@mipmap/news"
             android:background="@drawable/buttonselector"
             android:gravity="center_horizontal"
             android:layout_weight="1"
@@ -102,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:src="@mipmap/happening"
+            android:src="@mipmap/events"
             android:gravity="center_horizontal"
             />
         <ImageButton android:id="@+id/btn_eventhome"
@@ -112,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:src="@mipmap/explore"
+            android:src="@mipmap/search"
             android:gravity="center_horizontal" />
         <ImageButton android:id="@+id/btn_eventsearch"
             android:layout_margin="1dp"
@@ -120,7 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:src="@mipmap/entertainment"
+            android:src="@mipmap/specials"
             android:gravity="center_horizontal"
             />
         <RelativeLayout

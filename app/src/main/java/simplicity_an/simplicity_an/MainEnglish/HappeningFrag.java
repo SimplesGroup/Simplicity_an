@@ -117,7 +117,7 @@ public class HappeningFrag extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.entertainmentversiontwo,container,false);
+        View view=inflater.inflate(R.layout.eventsversiontwo,container,false);
         String simplycity_title_reugular= "fonts/robotoSlabBold.ttf";
         Typeface tf1 = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
 
@@ -169,7 +169,7 @@ public class HappeningFrag extends Fragment {
         fabinnerplus=(FloatingActionButton)view.findViewById(R.id.fabinnerplus) ;
 
         search=(ImageButton)view.findViewById(R.id.searchbutton);
-
+        search.setVisibility(View.GONE);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -327,7 +327,7 @@ public class HappeningFrag extends Fragment {
         Date d1full = new Date();
         String sMonthNamefull =  fmt.format(d1full);
         Log.e("DAY_OF_MONTH: ", "DAY_OF_MONTH: " + calendar.get(Calendar.DAY_OF_MONTH)+sMonthName);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
         title_coimbatore=(TextView)view.findViewById(R.id.title_versiontwo) ;
         date_text=(TextView)view.findViewById(R.id.date_versiontwo) ;
@@ -377,7 +377,7 @@ public class HappeningFrag extends Fragment {
         title_coimbatore.setTypeface(tf);
         date_text.setTypeface(tf);
         weather_update.setTypeface(tf);
-        title_coimbatore.setText("Events in Coimbatore");
+        title_coimbatore.setText("Events");
         if(dayOfTheWeek.equalsIgnoreCase("Sun")){
             date_text.setText(Html.fromHtml("Sun"+","+"&nbsp;"+sMonthNamefull));
         }else if(dayOfTheWeek.equalsIgnoreCase("Mon")){
@@ -837,7 +837,7 @@ setupTabIcons();
 
 
 
-        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/robotoSlabRegular.ttf");
+        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Lora-Regular.ttf");
         ViewGroup vg = (ViewGroup) mTabLayout.getChildAt(0);
         int tabsCount = vg.getChildCount();
         for (int j = 0; j < tabsCount; j++) {

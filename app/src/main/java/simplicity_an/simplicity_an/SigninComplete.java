@@ -121,7 +121,7 @@ String username_edit,email_edit,phone_edit,area_edit,gender_detail,location_deta
             Log.e("IMAGEURL:",profilepicturefromfacebook);
 
         }
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
       final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         terms_condition=(RadioButton)findViewById(R.id.radio_accept_terms);
        cancel=(Button) findViewById(R.id.cancel_button_signin);

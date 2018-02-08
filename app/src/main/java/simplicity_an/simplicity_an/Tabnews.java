@@ -10,7 +10,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -63,20 +62,19 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import simplicity_an.simplicity_an.Tamil.Tamilnews;
+import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
 
 /**
  * Created by kuppusamy on 9/26/2016.
  */
 public class Tabnews extends Fragment {
     RecyclerView recyclerview_tab_all_news;
-    String URL="http://simpli-city.in/request2.php?rtype=alldata&key=simples&qtype=news";
-    String URLLIKES="http://simpli-city.in/request2.php?rtype=articlelikes&key=simples";
-    String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
+    String URL="http://simpli-city.in/request2.php?rtype=alldatatest&key=simples&qtype=news";
+    String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples"; 				String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
     String URLALL;
     RequestQueue requestQueue;
     private int requestCount = 1;
-    JsonObjectRequest jsonReq;
+
     ProgressDialog pdialog;
     protected Handler handler;
     private final String TAG_REQUEST = "MY_TAG";
@@ -103,6 +101,7 @@ public class Tabnews extends Fragment {
     FloatingActionButton fabsearch,fabinnerplus;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
 SwipeRefreshLayout swipeRefresh;
+
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !isFragmentLoaded ) {
@@ -138,7 +137,7 @@ SwipeRefreshLayout swipeRefresh;
 
     lLayout = new LinearLayoutManager(getActivity());
     recyclerview_tab_all_news = (RecyclerView) view.findViewById(R.id.tab_all_recyclerview);
-    recyclerview_tab_all_news.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+
     recyclerview_tab_all_news.setLayoutManager(lLayout);
     pdialog = new ProgressDialog(getActivity());
 
@@ -261,19 +260,17 @@ SwipeRefreshLayout swipeRefresh;
     swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            swipeRefresh.setRefreshing(true);
+             swipeRefresh.setRefreshing(true);
             modelList.clear();
             recyclerview_tab_all_adapter.notifyDataSetChanged();
-
             requestCount=1;
             getData();
-            //  Toast.makeText(getActivity(),"Swipe",Toast.LENGTH_SHORT).show();
             ( new Handler()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     swipeRefresh.setRefreshing(false);
-                }
-            }, 3000);
+
+                }                 }, 3000);
 
         }
     });
@@ -290,10 +287,10 @@ SwipeRefreshLayout swipeRefresh;
                 @Override
                 public void run() {
                     Log.e("haint", "Load More 2");
-                    getData();
+                   getData();
 
 
-                    recyclerview_tab_all_adapter.setLoaded();
+                   recyclerview_tab_all_adapter.setLoaded();
                 }
             }, 2000);
         }
@@ -304,9 +301,8 @@ SwipeRefreshLayout swipeRefresh;
 
     }
 
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(String playurl, String title);
-    }
+     public interface OnFragmentInteractionListener {
+         public void onFragmentInteraction(String playurl, String title,String image);     }
     public void animateFAB(){
 
         if(isFabOpen){
@@ -333,60 +329,42 @@ SwipeRefreshLayout swipeRefresh;
 
         }
     }
-    private void getData() {
-        //Adding the method to the queue by calling the method getDataFromServer
+    private void getData(){
         requestQueue.add(getDataFromTheServer(requestCount));
-        // getDataFromTheServer();
-        //Incrementing the request counter
         requestCount++;
     }
-    private
-    JsonObjectRequest getDataFromTheServer( int requestCount) {
-
+    JsonObjectRequest getDataFromTheServer(int requestCount){
         if(myprofileid!=null){
             URLALL=URL+"&page="+requestCount+"&user_id="+myprofileid;
             //URLALL=URL+requestCount+"&user_id="+myprofileid;
         }else {
             URLALL=URL+"&page="+requestCount;
-
+            Log.e("JSON",URLALL);
         }
 
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, URLALL, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("JSON ",response.toString());
+                if (response != null) {
+                    dissmissDialog();
 
-            // making fresh volley request and getting json
-            jsonReq = new JsonObjectRequest(Request.Method.GET,
-                    URLALL,  new Response.Listener<JSONObject>() {
-
-                @Override
-                public void onResponse(JSONObject response) {
-                    VolleyLog.d(TAG_REQUEST, "Response: " + response.toString());
-                    Log.e("RES", String.valueOf(response));
-                    if (response != null) {
-
-                        dissmissDialog();
-                        parseJsonFeed(response);
-                    }
+                    parseJsonFeed(response);
                 }
-            }, new Response.ErrorListener() {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d(TAG_REQUEST, "Error: " + error.getMessage());
-                }
-            }){
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/json; charset=utf-8");
-                    return headers;
-                }
-            };
+            }
+        });
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 4, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-            jsonReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 5, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-            requestQueue.add(jsonReq);
-
-        return jsonReq;
+        requestQueue.add(jsonObjectRequest);
+        return jsonObjectRequest;
     }
+
+
     private void parseJsonFeed(JSONObject response){
         try {
             JSONArray feedArray = response.getJSONArray("result");
@@ -395,26 +373,36 @@ SwipeRefreshLayout swipeRefresh;
                 JSONObject obj = (JSONObject) feedArray.get(i);
 
                 ItemModel model = new ItemModel();
-                //FeedItem model=new FeedItem();
-                String image = obj.isNull("image") ? null : obj
+
+            String image = obj.isNull("image") ? null : obj
                         .getString("image");
                 model.setImage(image);
 
                 model.setId(obj.getString("id"));
-                model.setPdate(obj.getString("pdate"));
+                String date = obj.isNull("pdate") ? null : obj
+                        .getString("pdate");
+                model.setPdate(date);
+
                 model.setTitle(obj.getString("title"));
                 model.setQtype(obj.getString("qtype"));
                 model.setLikescount(obj.getInt("likes_count"));
                 model.setCommentscount(obj.getInt("commentscount"));
-                model.setFavcount(obj.getInt("fav"));
+
                 model.setSharingurl(obj.getString("sharingurl"));
                 model.setQtypemain(obj.getString("qtypemain"));
                 model.setAds(obj.getString("ad_url"));
-                // model.setDislikecount(obj.getInt("dislikes_count"));
+                String reportername = obj.isNull("reporter_name") ? null : obj
+                        .getString("reporter_name");
+                model.setEditername(reportername);
+
+                String shortdesc = obj.isNull("short_description") ? null : obj
+                        .getString("short_description");
+                model.setShortdescription(shortdesc);
+
                 model.setCounttype(obj.getInt("like_type"));
 
                 model.setPlayurl(obj.getString("file"));
-                int typevalue = obj.isNull("album_count") ? null : obj
+               int typevalue = obj.isNull("album_count") ? null : obj
                         .getInt("album_count");
                 model.setAlbumcount(typevalue);
                 List<ItemModel> albums = new ArrayList<>();
@@ -452,12 +440,12 @@ SwipeRefreshLayout swipeRefresh;
             e.printStackTrace();
         }
     }
-   public void onStop() {
+   /*public void onStop() {
         super.onStop();
         if (requestQueue != null) {
             requestQueue.cancelAll(TAG_REQUEST);
         }
-    }
+    }*/
    public void onAttach(android.app.Activity activity) {
        super.onAttach(activity);
        try {
@@ -498,6 +486,23 @@ SwipeRefreshLayout swipeRefresh;
         int favcount;
         String sharingurl;
         int likescount,dislikecount,commentscount,counttype;
+        String shortdescription,editername;
+
+        public String getEditername() {
+            return editername;
+        }
+
+        public void setEditername(String editername) {
+            this.editername = editername;
+        }
+
+        public String getShortdescription() {
+            return shortdescription;
+        }
+
+        public void setShortdescription(String shortdescription) {
+            this.shortdescription = shortdescription;
+        }
 
         public String getAds() {
             return ads;
@@ -659,8 +664,9 @@ SwipeRefreshLayout swipeRefresh;
     }
     static class Userviewholdertaball extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView likescount,dislikescount,commentscount,title_item,item_type_name,date;
-
+        TextView shortdescription,editername;
         public Button share_button,comment_button,likes_button,save_button;
+        ImageButton share_imagebutton,like_imagebutton,comment_imagebutton,arrow_imagebutton;
         public NetworkImageView item_image;
         public RelativeLayout countlayout,listLayout;
         ImageButton play;
@@ -671,12 +677,19 @@ SwipeRefreshLayout swipeRefresh;
             this.  item_type_name=(TextView)itemView.findViewById(R.id.qtypetitle_taball);
             this. date=(TextView)itemView.findViewById(R.id.date_taball);
             this. likescount=(TextView)itemView.findViewById(R.id.alltab_likescount);
+            this.arrow_imagebutton=(ImageButton)itemView.findViewById(R.id.arrow);
+            this.editername=(TextView)itemView.findViewById(R.id.qtypetitle_sourcename);
+            this.shortdescription=(TextView)itemView.findViewById(R.id.textview_shortdescription) ;
             this.play=(ImageButton)itemView.findViewById(R.id.taball_play_pause_main);
             this.  commentscount=(TextView)itemView.findViewById(R.id.alltab_commentscount);
             this.  likes_button=(Button)itemView.findViewById(R.id.taball_likes);
             this. save_button=(Button)itemView.findViewById(R.id.taball_savepage);
             this. share_button=(Button)itemView.findViewById(R.id.taball_sharepost);
             this. comment_button=(Button)itemView.findViewById(R.id.taball_comment);
+            this.comment_imagebutton=(ImageButton)itemView.findViewById(R.id.button_comment);
+            this.like_imagebutton=(ImageButton)itemView.findViewById(R.id.button_likes) ;
+            this.share_imagebutton=(ImageButton)itemView.findViewById(R.id.button_share) ;
+
             this. item_image=(NetworkImageView)itemView.findViewById(R.id.image_alltab);
             this.listLayout=(RelativeLayout) itemView.findViewById(R.id.listlayout_taball);
             this.countlayout=(RelativeLayout)itemView.findViewById(R.id.counts_layout);
@@ -687,6 +700,10 @@ SwipeRefreshLayout swipeRefresh;
             this.listLayout.setOnClickListener(this);
             this.play.setOnClickListener(this);
             this.likescount.setOnClickListener(this);
+
+            this.like_imagebutton.setOnClickListener(this);
+            this.comment_imagebutton.setOnClickListener(this);
+            this.share_imagebutton.setOnClickListener(this);
         }
 
         public void onClick(View v) {
@@ -710,6 +727,8 @@ SwipeRefreshLayout swipeRefresh;
         public TextView likescount,dislikescount,commentscount,title_item,item_type_name,date,moreimagescount_textview;
 
         public Button share_button,comment_button,likes_button,save_button;
+        TextView shortdescription,editername;
+        ImageButton share_imagebutton,like_imagebutton,comment_imagebutton,arrow_imagebutton;
         NetworkImageView   feedImageView;
 
         NetworkImageView   feedImageView_typetwo_one,feedImageView_typetwo_two;
@@ -734,6 +753,12 @@ SwipeRefreshLayout swipeRefresh;
             this. save_button=(Button)itemView.findViewById(R.id.taball_savepage);
             this. share_button=(Button)itemView.findViewById(R.id.taball_sharepost);
             this. comment_button=(Button)itemView.findViewById(R.id.taball_comment);
+            this.arrow_imagebutton=(ImageButton)itemView.findViewById(R.id.arrow);
+            this.editername=(TextView)itemView.findViewById(R.id.qtypetitle_sourcename);
+            this.shortdescription=(TextView)itemView.findViewById(R.id.textview_shortdescription) ;
+            this.comment_imagebutton=(ImageButton)itemView.findViewById(R.id.button_comment);
+            this.like_imagebutton=(ImageButton)itemView.findViewById(R.id.button_likes) ;
+            this.share_imagebutton=(ImageButton)itemView.findViewById(R.id.button_share) ;
 
             this.listLayout=(RelativeLayout) itemView.findViewById(R.id.listlayout_taball);
             this.countlayout=(RelativeLayout)itemView.findViewById(R.id.counts_layout);
@@ -743,6 +768,12 @@ SwipeRefreshLayout swipeRefresh;
             this.share_button.setOnClickListener(this);
             this.listLayout.setOnClickListener(this);
             this.likescount.setOnClickListener(this);
+
+
+            this.like_imagebutton.setOnClickListener(this);
+            this.comment_imagebutton.setOnClickListener(this);
+            this.share_imagebutton.setOnClickListener(this);
+
             this.  feedImageView = (NetworkImageView) itemView
                     .findViewById(R.id.feedImage_photostory);
 
@@ -847,11 +878,11 @@ SwipeRefreshLayout swipeRefresh;
             LayoutInflater mInflater = LayoutInflater.from ( parent.getContext () );
             switch ( viewType ) {
                 case VIEW_TYPE_ITEM:
-                    ViewGroup vImage = (ViewGroup) mInflater.inflate ( R.layout.feed_item_taball, parent, false );
+                    ViewGroup vImage = (ViewGroup) mInflater.inflate ( R.layout.feed_item_versionfour, parent, false );
                    Userviewholdertaball vhImage = new Userviewholdertaball( vImage );
                     return vhImage;
                 case VIEW_TYPE_PHOTOSTORY:
-                    ViewGroup vImages = (ViewGroup) mInflater.inflate ( R.layout.feed_item_versiontwo_photo, parent, false );
+                    ViewGroup vImages = (ViewGroup) mInflater.inflate ( R.layout.feed_item_versionfour_photostory, parent, false );
                     UserViewHolderphotostories vhImages = new UserViewHolderphotostories( vImages );
                     return vhImages;
               /*case VIEW_TYPE_RADIO:
@@ -872,18 +903,19 @@ SwipeRefreshLayout swipeRefresh;
 
                 final Userviewholdertaball userViewHolder = (Userviewholdertaball) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
 
-                String simplycity_title_reqular = "fonts/robotoSlabBold.ttf";
+                String simplycity_title_reqular = "fonts/Lora-Regular.ttf";;
                 final Typeface seguiregular_bold = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reqular);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
 
-
+                String simplycity_title = "fonts/Lora-Regular.ttf";
+                final Typeface pala = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
                 final ItemModel itemmodel = modelList.get(position);
                 userViewHolder.comment_button.setText("Comment");
-                userViewHolder.comment_button.setTypeface(seguiregular);
+                userViewHolder.comment_button.setTypeface(seguiregular_bold);
                 userViewHolder.comment_button.setTransformationMethod(null);
                 userViewHolder.share_button.setText("Share");
                 userViewHolder.share_button.setTypeface(seguiregular);
@@ -891,16 +923,9 @@ SwipeRefreshLayout swipeRefresh;
 
                 save_item_count=itemmodel.getFavcount();
                 if(itemmodel.getCounttype()==1){
-                    userViewHolder.likes_button.setText("Liked");
-                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
-                    userViewHolder.likes_button.setTypeface(seguiregular);
-                    userViewHolder.likes_button.setTransformationMethod(null);
-                }else {
-                    userViewHolder.likes_button.setText("Like");
-                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
-                    userViewHolder.likes_button.setTypeface(seguiregular);
-                    userViewHolder.likes_button.setTransformationMethod(null);
-                }
+                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+                    userViewHolder.like_imagebutton.setTag("heartfullred");
+                    /* userViewHolder.likes_button.setText("Liked");                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));                     userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.likered,0,0,0);                     userViewHolder.likes_button.setTypeface(seguiregular);                     userViewHolder.likes_button.setTransformationMethod(null);*/                 }else {                     userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);                     userViewHolder.like_imagebutton.setTag("heart");                     /*userViewHolder.likes_button.setText("Like");                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));                     userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.like,0,0,0);                     userViewHolder.likes_button.setTypeface(seguiregular);                     userViewHolder.likes_button.setTransformationMethod(null);*/                 }
 
                 if(itemmodel.getFavcount()==1){
                     userViewHolder.save_button.setText("Saved");
@@ -918,32 +943,28 @@ SwipeRefreshLayout swipeRefresh;
                 }else {
                     userViewHolder.play.setVisibility(View.GONE);
                 }
+                userViewHolder.shortdescription.setTypeface(pala);
+              if(itemmodel.getPdate()==null||itemmodel.getPdate()==""){                      userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
+
+                userViewHolder.editername.setTypeface(seguiregular);
+                userViewHolder.editername.setText(itemmodel.getEditername());
+                userViewHolder.shortdescription.setTypeface(pala);
                 mediaPlayer=new MediaPlayer();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
                 userViewHolder.title_item.setTypeface(seguiregular);
-                userViewHolder.item_type_name.setText(itemmodel.getQtype());
-                userViewHolder.item_type_name.setTypeface(seguiregular_bold);
-                userViewHolder.date.setText(itemmodel.getPdate());
-                userViewHolder.likescount.setTypeface(seguiregular);
+                if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular_bold);
+                //userViewHolder.date.setText(itemmodel.getPdate());
+                userViewHolder.likescount.setTypeface(seguiregular_bold);
+                userViewHolder.commentscount.setTypeface(seguiregular_bold);
                 userViewHolder.date.setTypeface(seguiregular);
-                if(itemmodel.getCommentscount()>0||itemmodel.getLikescount()>0){
-                    if(itemmodel.getLikescount()==0){
-                        userViewHolder.likescount.setVisibility(View.GONE);
-                    }else {
-                        userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Likes"));
+                if(itemmodel.getLikescount()==0){                         userViewHolder.likescount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Like"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Comment"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                     }                                        if(itemmodel.getCommentscount()==0){                      userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));                 }else {                     userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                 }
+                if(itemmodel.getCommentscount()==0){
 
-                    }
-                    if(itemmodel.getCommentscount()==0){
-                        userViewHolder.commentscount.setVisibility(View.GONE);
-                    }else {
-                        userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));
-                    }
-                    userViewHolder.countlayout.setVisibility(View.VISIBLE);
-
+                    userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));
                 }else {
-                    userViewHolder.countlayout.setVisibility(View.GONE);
+                    userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));
                 }
                 if(itemmodel.getImage()!=null){
                     userViewHolder.item_image.setImageUrl(itemmodel.getImage(),mImageLoader);
@@ -1045,13 +1066,17 @@ SwipeRefreshLayout swipeRefresh;
                             | Intent.FLAG_ACTIVITY_CLEAR_TASK);*/
                                     startActivity(intent);
                                 }else if(type.equalsIgnoreCase("Radio")){
-                                    //Intent intent = new Intent(getActivity(), Radioplayeractivity.class);
-                                    // intent.putExtra("ID", ids);
-                    /*intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                            | Intent.FLAG_ACTIVITY_CLEAR_TASK);*/
-                                    //startActivity(intent);
+                                    Intent intent = new Intent(getActivity(), RadioNotificationplayer.class);
+                                    intent.putExtra("URL", itemmodel.getPlayurl());
+                                    intent.putExtra("TITLE", itemmodel.getTitle());
+                                    intent.putExtra("IMAGE", itemmodel.getImage());
+                                    startActivity(intent);
                                 }else if(type.equalsIgnoreCase("Music")){
-
+                                    Intent intent = new Intent(getActivity(), RadioNotificationplayer.class);
+                                    intent.putExtra("URL", itemmodel.getPlayurl());
+                                    intent.putExtra("TITLE", itemmodel.getTitle());
+                                    intent.putExtra("IMAGE", itemmodel.getImage());
+                                    startActivity(intent);
                                 }else if(type.equalsIgnoreCase("Job")){
                                     Intent intent = new Intent(getActivity(), JobsDetailPage.class);
                                     intent.putExtra("ID", ids);
@@ -1070,15 +1095,19 @@ SwipeRefreshLayout swipeRefresh;
                                 } else if(type.equals("lifestyle")){
                                     Intent intent = new Intent(getActivity(), LifestyleDetail.class);
                                     intent.putExtra("ID", ids);
-                    /*intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                            | Intent.FLAG_ACTIVITY_CLEAR_TASK);*/
+                                    startActivity(intent);
+                                }else if(type.equalsIgnoreCase("columns")){
+                                    Intent intent = new Intent(getActivity(), Columnsdetailpage.class);
+                                    intent.putExtra("ID", ids);
+                                    startActivity(intent);
+                                }else if (type.equals("columnist")){
+                                    Intent intent = new Intent(getActivity(), Columnistdetail.class);
+                                    intent.putExtra("ID", ids);
                                     startActivity(intent);
                                 }
                                 else if(type.equalsIgnoreCase("education")){
                                     Intent intent = new Intent(getActivity(), EducationDescription.class);
                                     intent.putExtra("ID", ids);
-                    /*intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                            | Intent.FLAG_ACTIVITY_CLEAR_TASK);*/
                                     startActivity(intent);
                                 }else
                                 if(itemmodel.getQtype().equals("Sponsered")||itemmodel.getQtype().equals("Sponsored")){
@@ -1092,10 +1121,7 @@ SwipeRefreshLayout swipeRefresh;
                                         startActivity(intent);
                                     }
 
-                    /*intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                            | Intent.FLAG_ACTIVITY_CLEAR_TASK);*/
 
-                                        /*Intent intent = new Intent(getActivity(), AdvertisementPage.class);                                             intent.putExtra("ID", itemmodel.getAds());  startActivity(intent);*/
                                 }
                                 break;
                             case R.id.taball_play_pause_main:
@@ -1109,7 +1135,7 @@ SwipeRefreshLayout swipeRefresh;
                                     startActivity(intent);
                                 }else {
                                     urlaudio = itemmodel.getId();
-                                    onButtonPressed(itemmodel.getPlayurl(), itemmodel.getTitle());
+                                    onButtonPressed(itemmodel.getPlayurl(), itemmodel.getTitle(),itemmodel.getImage());
                                     userViewHolder.play.setVisibility(View.GONE);
                                 }
                                 break;
@@ -1125,9 +1151,18 @@ SwipeRefreshLayout swipeRefresh;
                                 frags.show(ftlike, "txn_tag");
                                 break;
 
-                            case R.id.taball_likes:
+                            case R.id.button_likes:
                                 if(myprofileid!=null) {
+                                    String backgroundImageName = String.valueOf(userViewHolder.like_imagebutton.getTag());
+                                    Log.e("RUN","with"+backgroundImageName);
+                                    if(backgroundImageName.equals("heart")){
+                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+                                        userViewHolder.like_imagebutton.setTag("heartfullred");
+                                    }else if(backgroundImageName.equals("heartfullred")) {
+                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                                    }else {
 
+                                    }
                                     StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
@@ -1142,10 +1177,13 @@ SwipeRefreshLayout swipeRefresh;
                                                     like_finalvalues=itemmodel.getLikescount()+1;
                                                 }
 
-                                                userViewHolder.likes_button.setText("Liked");
-                                                userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
+                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+                                                userViewHolder.like_imagebutton.setTag("heartfullred");
+                                                /*userViewHolder.likes_button.setText("Liked");
+                                                userViewHolder.likes_button.setTextColor(getActivity().getResources().getColor(R.color.red));
+                                                userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.likered,0,0,0);
                                                 userViewHolder.likes_button.setTypeface(seguiregular);
-                                                userViewHolder.likes_button.setTransformationMethod(null);
+                                                userViewHolder.likes_button.setTransformationMethod(null);*/
                                             }else if(res.equalsIgnoreCase("no")){
                                                 if(itemmodel.getCounttype()==1){
                                                     like_finalvalues=itemmodel.getLikescount()-1;
@@ -1153,11 +1191,12 @@ SwipeRefreshLayout swipeRefresh;
                                                     like_finalvalues=itemmodel.getLikescount();
                                                 }
                                                 System.out.println(itemmodel.getId());
-
-                                                userViewHolder.likes_button.setText("Like");
-
+                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                                                userViewHolder.like_imagebutton.setTag("heart");
+                                                /*userViewHolder.likes_button.setText("Like");
+                                                userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.like,0,0,0);
                                                 userViewHolder.likes_button.setTypeface(seguiregular);
-                                                userViewHolder.likes_button.setTransformationMethod(null);
+                                                userViewHolder.likes_button.setTransformationMethod(null);*/
                                             }
                                             if(like_finalvalues==0||like_finalvalues==-1){
                                                 System.out.println(itemmodel.getId());
@@ -1345,7 +1384,7 @@ SwipeRefreshLayout swipeRefresh;
 
                                 }
                                 break;
-                            case R.id.taball_comment:
+                            case R.id.button_comment:
 
                                 if(myprofileid!=null) {
                                     FragmentTransaction ft = getChildFragmentManager().beginTransaction();
@@ -1367,13 +1406,15 @@ SwipeRefreshLayout swipeRefresh;
 
                                 }
                                 break;
-                            case R.id.taball_sharepost:
+                            case R.id.button_share:
                                 Intent sendIntent = new Intent();
                                 sendIntent.setAction(Intent.ACTION_SEND);
-                                sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle()+ "\n" + itemmodel.getSharingurl()+"\n"+"\n"+"\n"+"Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
-                                sendIntent.setType("text/plain");
+                                if(itemmodel.getSharingurl().equals("")){
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle()+ "\n" + itemmodel.getAds()+"\n"+"\n"+"\n"+"Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+                                }else {
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle() + "\n" + itemmodel.getSharingurl() + "\n" + "\n" + "\n" + "Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+                                }                                sendIntent.setType("text/plain");
                                 startActivity(Intent.createChooser(sendIntent, "Share using"));
-
                                 break;
                         }
                     }
@@ -1383,7 +1424,7 @@ SwipeRefreshLayout swipeRefresh;
 
                 final UserViewHolderphotostories userViewHolder = (UserViewHolderphotostories) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
@@ -1399,15 +1440,21 @@ SwipeRefreshLayout swipeRefresh;
 
                 save_item_count=itemmodel.getFavcount();
                 if(itemmodel.getCounttype()==1){
-                    userViewHolder.likes_button.setText("Liked");
+
+                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+
+                   /* userViewHolder.likes_button.setText("Liked");
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
+                    userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.likered,0,0,0);
                     userViewHolder.likes_button.setTypeface(seguiregular);
-                    userViewHolder.likes_button.setTransformationMethod(null);
+                    userViewHolder.likes_button.setTransformationMethod(null);*/
                 }else {
-                    userViewHolder.likes_button.setText("Like");
+                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                   /* userViewHolder.likes_button.setText("Like");
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
+                    userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.like,0,0,0);
                     userViewHolder.likes_button.setTypeface(seguiregular);
-                    userViewHolder.likes_button.setTransformationMethod(null);
+                    userViewHolder.likes_button.setTransformationMethod(null);*/
                 }
 
                 if(itemmodel.getFavcount()==1){
@@ -1422,36 +1469,18 @@ SwipeRefreshLayout swipeRefresh;
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
                 }
 
+                if(itemmodel.getPdate()==null||itemmodel.getPdate()==""){                      userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
 
+                userViewHolder.editername.setTypeface(seguiregular);
+                userViewHolder.editername.setText(itemmodel.getEditername());
 
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
                 userViewHolder.title_item.setTypeface(seguiregular);
-                userViewHolder.item_type_name.setText(itemmodel.getQtype());
-                userViewHolder.item_type_name.setTypeface(seguiregular);
-                userViewHolder.date.setText(itemmodel.getPdate());
-                userViewHolder.likescount.setTypeface(seguiregular);
+                if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular);
+               // userViewHolder.date.setText(itemmodel.getPdate());
+               // userViewHolder.likescount.setTypeface(seguiregular);
                 userViewHolder.date.setTypeface(seguiregular);
-                if(itemmodel.getCommentscount()>0||itemmodel.getLikescount()>0){
-                    if(itemmodel.getLikescount()==0){
-                        userViewHolder.likescount.setVisibility(View.GONE);
-                    }else {
-                        userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));
-
-                    }
-                    if(itemmodel.getCommentscount()==0){
-                        userViewHolder.commentscount.setVisibility(View.GONE);
-                    }else {
-                        userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comment"));
-                    }
-                    userViewHolder.countlayout.setVisibility(View.VISIBLE);
-
-                }else {
-                    userViewHolder.countlayout.setVisibility(View.GONE);
-                }
-
-
-
-
+               if(itemmodel.getLikescount()==0){                         userViewHolder.likescount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Like"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Comment"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                     }                                        if(itemmodel.getCommentscount()==0){                      userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));                 }else {                     userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                 }
 
 
 
@@ -1782,8 +1811,18 @@ SwipeRefreshLayout swipeRefresh;
 
                                 }
                                 break;
-                            case R.id.taball_likes:
+                            case R.id.button_likes:
                                 if(myprofileid!=null) {
+                                    String backgroundImageName = String.valueOf(userViewHolder.like_imagebutton.getTag());
+                                    Log.e("RUN","with"+backgroundImageName);
+                                    if(backgroundImageName.equals("heart")){
+                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+                                        userViewHolder.like_imagebutton.setTag("heartfullred");
+                                    }else if(backgroundImageName.equals("heartfullred")) {
+                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                                    }else {
+
+                                    }
                                     StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
@@ -1798,10 +1837,7 @@ SwipeRefreshLayout swipeRefresh;
                                                     like_finalvalues=itemmodel.getLikescount()+1;
                                                 }
 
-                                                userViewHolder.likes_button.setText("Liked");
-                                                userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
-                                                userViewHolder.likes_button.setTypeface(seguiregular);
-                                                userViewHolder.likes_button.setTransformationMethod(null);
+                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
                                             }else if(res.equalsIgnoreCase("no")){
                                                 if(itemmodel.getCounttype()==1){
                                                     like_finalvalues=itemmodel.getLikescount()-1;
@@ -1809,11 +1845,7 @@ SwipeRefreshLayout swipeRefresh;
                                                     like_finalvalues=itemmodel.getLikescount();
                                                 }
                                                 System.out.println(itemmodel.getId());
-
-                                                userViewHolder.likes_button.setText("Like");
-
-                                                userViewHolder.likes_button.setTypeface(seguiregular);
-                                                userViewHolder.likes_button.setTransformationMethod(null);
+                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart); 				userViewHolder.like_imagebutton.setTag("heart");
                                             }
                                             if(like_finalvalues==0||like_finalvalues==-1){
                                                 System.out.println(itemmodel.getId());
@@ -1860,7 +1892,7 @@ SwipeRefreshLayout swipeRefresh;
 
 
                                 break;
-                            case R.id.taball_comment:
+                            case R.id.button_comment:
 
                                 if(myprofileid!=null) {
                                     FragmentTransaction ftcom = getChildFragmentManager().beginTransaction();
@@ -1882,10 +1914,14 @@ SwipeRefreshLayout swipeRefresh;
 
                                 }
                                 break;
-                            case R.id.taball_sharepost:
+                            case R.id.button_share:
                                 Intent sendIntent = new Intent();
                                 sendIntent.setAction(Intent.ACTION_SEND);
-                                sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle()+ "\n" + itemmodel.getSharingurl()+"\n"+"\n"+"\n"+"Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+                                if(itemmodel.getSharingurl().equals("")){
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle()+ "\n" + itemmodel.getAds()+"\n"+"\n"+"\n"+"Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+                                }else {
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle() + "\n" + itemmodel.getSharingurl() + "\n" + "\n" + "\n" + "Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+                                }
                                 sendIntent.setType("text/plain");
                                 startActivity(Intent.createChooser(sendIntent, "Share using"));
 
@@ -1908,12 +1944,7 @@ SwipeRefreshLayout swipeRefresh;
             }
         }
 
-        public void onButtonPressed(String playurl, String title) {
-            if (mListener != null) {
-                mListener.onFragmentInteraction(playurl,title);
-
-            }
-        }
+        public void onButtonPressed(String playurl, String title,String image) {             if (mListener != null) {                 mListener.onFragmentInteraction(playurl,title,image);              }         }
 
 
         public int getItemViewType(int position) {
@@ -1997,7 +2028,7 @@ SwipeRefreshLayout swipeRefresh;
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
             qtypevalue=getArguments().getString("QTYPE");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -2366,7 +2397,7 @@ SwipeRefreshLayout swipeRefresh;
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();

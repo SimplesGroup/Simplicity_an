@@ -107,7 +107,7 @@ public class RadioPlaylisttamil extends AppCompatActivity {
             myprofileid = myprofileid.replaceAll("\\D+","");
         }
         URLTWO=URL+myprofileid;
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         lLayout = new LinearLayoutManager(this);
         queue = MySingleton.getInstance(this).
@@ -589,7 +589,7 @@ public class RadioPlaylisttamil extends AppCompatActivity {
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader =  MySingleton.getInstance(getApplicationContext()).getImageLoader();

@@ -162,7 +162,7 @@ requestQueue=Volley.newRequestQueue(this);
         }else {
             URLTWO=URL+notifiid;
         }
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         director.setTypeface(tf);
         screenplay.setTypeface(tf);
@@ -772,7 +772,7 @@ if(feedArraygallery!=null) {
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1139,7 +1139,7 @@ if(feedArraygallery!=null) {
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();

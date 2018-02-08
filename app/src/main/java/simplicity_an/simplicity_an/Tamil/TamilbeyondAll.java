@@ -70,8 +70,7 @@ import simplicity_an.simplicity_an.SigninpageActivity;
 public class TamilbeyondAll extends Fragment {
     RecyclerView recyclerview_tab_all_news;
     String URL="http://simpli-city.in/request2.php?rtype=othernews&key=simples&language=2";
-    String URLLIKES="http://simpli-city.in/request2.php?rtype=articlelikes&key=simples";
-    String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
+    String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples"; 				String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
     String URLALL;
     RequestQueue requestQueue;
     private int requestCount = 1;
@@ -245,7 +244,6 @@ public class TamilbeyondAll extends Fragment {
                 model.setQtype(obj.getString("qtype"));
                 model.setLikescount(obj.getInt("likes_count"));
                 model.setCommentscount(obj.getInt("commentscount"));
-                model.setFavcount(obj.getInt("fav"));
                 model.setSharingurl(obj.getString("sharingurl"));
                 model.setQtypemain(obj.getString("qtypemain"));
                 // model.setDislikecount(obj.getInt("dislikes_count"));
@@ -520,7 +518,7 @@ public class TamilbeyondAll extends Fragment {
 
                 final Userviewholdertaball userViewHolder = (Userviewholdertaball) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
@@ -567,23 +565,7 @@ public class TamilbeyondAll extends Fragment {
                 userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(seguiregular);
                 userViewHolder.date.setTypeface(seguiregular);
-                if(itemmodel.getCommentscount()>0||itemmodel.getLikescount()>0){
-                    if(itemmodel.getLikescount()==0){
-                        userViewHolder.likescount.setVisibility(View.GONE);
-                    }else {
-                        userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"விருப்பு"));
-
-                    }
-                    if(itemmodel.getCommentscount()==0){
-                        userViewHolder.commentscount.setVisibility(View.GONE);
-                    }else {
-                        userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"கருத்து"));
-                    }
-                    userViewHolder.countlayout.setVisibility(View.VISIBLE);
-
-                }else {
-                    userViewHolder.countlayout.setVisibility(View.GONE);
-                }
+                if(itemmodel.getLikescount()==0){                         userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"விருப்பு"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"விருப்பு"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"கருத்து"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"கருத்து"));                     }                     userViewHolder.countlayout.setVisibility(View.VISIBLE);
                 if(itemmodel.getImage()!=null){
                     userViewHolder.item_image.setImageUrl(itemmodel.getImage(),mImageLoader);
                 }else {
@@ -1045,7 +1027,7 @@ public class TamilbeyondAll extends Fragment {
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
             qtypevalue=getArguments().getString("QTYPE");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1414,7 +1396,7 @@ public class TamilbeyondAll extends Fragment {
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();

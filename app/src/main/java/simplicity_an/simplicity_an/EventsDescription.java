@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -18,7 +17,6 @@ import android.os.Handler;
 import android.provider.CalendarContract;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +30,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -75,13 +74,13 @@ import java.util.Map;
  * Created by kuppusamy on 2/12/2016.
  */
 public class EventsDescription extends AppCompatActivity {
-    TextView title, eventdetail, eventdetaildata;
+    TextView title, title_qype,eventdetail, eventdetaildata;
     TextView venuedetails, timing, timingdetails, date, datedetails;
     TextView contactname, contactnamedetails, phone, phonenumberdetails, email, emaildetails, venue_text, location_text, website_text, location_details, website_details;
     NetworkImageView thump;
     WebView description;
-    Button booknow, remindme;
-    ImageButton comment, share, menu, back, favourite;
+    Button booknow;
+    ImageButton comment, share, menu, back, favourite, remindme;
     String titl, bitmap, venue, locations;
     String entrytype, entryfees;
     ProgressDialog pdialog;
@@ -110,7 +109,7 @@ public class EventsDescription extends AppCompatActivity {
 
 
     List<ItemModels> commentlist = new ArrayList<ItemModels>();
-    RecyclerViewAdapter rcAdapter;
+
 
     private int requestCount = 1;
     JsonObjectRequest jsonReq;
@@ -260,32 +259,31 @@ public class EventsDescription extends AppCompatActivity {
         queue = simplicity_an.simplicity_an.MySingleton.getInstance(this.getApplicationContext()).
                 getRequestQueue();
 
-        booknow = (Button) findViewById(R.id.booknow);
+        booknow = (Button) findViewById(R.id.booknow_button);
         scrollView = (ScrollView) findViewById(R.id.scroll);
 
 
         commentbox = (LinearLayout) findViewById(R.id.comments_versiontwo);
-        comment_title = (TextView) findViewById(R.id.comments_title);
-        loadmore_title = (TextView) findViewById(R.id.loadmore);
-        commentbox_editext = (EditText) findViewById(R.id.comment_description);
-        post = (Button) findViewById(R.id.post_button);
-        recycler_comment = (RecyclerView) findViewById(R.id.commentpagelist_recyclerview);
-
-        // recycler_comment.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
-
-        recycler_comment.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
 
-        title = (TextView) findViewById(R.id.titlelabel);
-        eventdetail = (TextView) findViewById(R.id.eventdetaillebel);
+
+
+
+        title = (TextView) findViewById(R.id.textView_titlename);
+        title_qype=(TextView)findViewById(R.id.textView_qtypename) ;
+
         eventdetaildata = (TextView) findViewById(R.id.eventdetaildata);
         description = (WebView) findViewById(R.id.webview_eventdescription);
+        description.getSettings().setLoadsImagesAutomatically(true);
+        description.getSettings().setPluginState(WebSettings.PluginState.ON);
+        description.getSettings().setAllowFileAccess(true);
+        description.getSettings().setJavaScriptEnabled(true);
         venue_text = (TextView) findViewById(R.id.text_eventvenue);
         location_text = (TextView) findViewById(R.id.text_eventlocation);
         website_text = (TextView) findViewById(R.id.text_eventwebsite);
         location_details = (TextView) findViewById(R.id.text_eventlocation_details);
         website_details = (TextView) findViewById(R.id.text_eventwebsite_details);
-        eventdetail = (TextView) findViewById(R.id.eventdetaillebel);
+
         eventdetaildata = (TextView) findViewById(R.id.eventdetaildata);
         venuedetails = (TextView) findViewById(R.id.text_eventvenue_details);
         timing = (TextView) findViewById(R.id.text_timing_event);
@@ -293,8 +291,7 @@ public class EventsDescription extends AppCompatActivity {
         date = (TextView) findViewById(R.id.text_date_event);
         datedetails = (TextView) findViewById(R.id.text_date_event_data);
         contactname = (TextView) findViewById(R.id.text_eventontactname);
-        remindme = (Button) findViewById(R.id.remindme);
-        remindme.setText("Remind Me");
+
         contactnamedetails = (TextView) findViewById(R.id.text_eventontactname_details);
         phone = (TextView) findViewById(R.id.text_eventphonenumber);
         phonenumberdetails = (TextView) findViewById(R.id.text_eventphonenumber_details);
@@ -302,29 +299,34 @@ public class EventsDescription extends AppCompatActivity {
         emaildetails = (TextView) findViewById(R.id.text_eventemail_details);
 
         description = (WebView) findViewById(R.id.webview_eventdescription);
-
+        description.getSettings().setLoadsImagesAutomatically(true);
+        description.getSettings().setPluginState(WebSettings.PluginState.ON);
+        description.getSettings().setAllowFileAccess(true);
+        description.getSettings().setJavaScriptEnabled(true);
         comment = (ImageButton) findViewById(R.id.btn_4);
         share = (ImageButton) findViewById(R.id.btn_share);
         menu = (ImageButton) findViewById(R.id.btn_3);
         back = (ImageButton) findViewById(R.id.btn_back);
+        remindme=(ImageButton)findViewById(R.id.btn_remider);
         favourite = (ImageButton) findViewById(R.id.btn_like);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
-        String simplycity_title_bold = "fonts/robotoSlabBold.ttf";
+        String simplycity_title_bold = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_bold = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
-        comment_title.setTypeface(tf);
-        loadmore_title.setTypeface(tf);
-        post.setTypeface(tf);
+
+
+
         venue_text.setTypeface(tf);
         location_text.setTypeface(tf);
         website_text.setTypeface(tf);
         venue_text.setText("Venue:");
         location_text.setText("Location:");
         website_text.setText("Website:");
-        remindme.setTypeface(tf);
-        eventdetail.setTypeface(tf);
+
+
         title.setTypeface(tf_bold);
+        title_qype.setTypeface(tf);
         eventdetaildata.setTypeface(tf);
         venuedetails.setTypeface(tf);
         timing.setTypeface(tf);
@@ -335,7 +337,7 @@ public class EventsDescription extends AppCompatActivity {
         datedetails.setTypeface(tf);
         contactname.setTypeface(tf);
         contactname.setText("Name:");
-        commentbox_editext.setHint("Comments Here");
+        booknow.setTypeface(tf);
         contactnamedetails.setTypeface(tf);
         email.setTypeface(tf);
         email.setText("Email:");
@@ -414,21 +416,7 @@ public class EventsDescription extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*if(searchactivity_event.equalsIgnoreCase("eventsearch")){
-                    Intent searchnotification = new Intent(getApplicationContext(), EventSearchview.class);
-                    startActivity(searchnotification);
-                    finish();
-                }
-                else   if (searchnonitiid != null) {
-                    Intent searchnotification = new Intent(getApplicationContext(), SimplicitySearchview.class);
-                    searchnotification.putExtra("IDSEARCH", searchnonitiid);
-                    startActivity(searchnotification);
-                    finish();
-                } else {
-                    Intent backeventdesc = new Intent(getApplicationContext(), MainActivityVersiontwo.class);
-                    startActivity(backeventdesc);
-                    finish();
-                }*/
+
                 onBackPressed();
 
             }
@@ -441,145 +429,8 @@ public class EventsDescription extends AppCompatActivity {
                 finish();
             }
         });
-        if (myprofileid != null) {
-            // URLTWO_comment=URLCOMMENT+notifiid;
-            //comment_title.setText("Post your Comment Here - ");
-            post.setText("Post");
-
-            commentbox.setVisibility(View.VISIBLE);
-
-            post.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(commentbox_editext.getWindowToken(), 0);
-                    //Showing the progress dialog
-                    //final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlpost,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String s) {
-                                    //Disimissing the progress dialog
-                                    //  loading.dismiss();
-                                    //Showing toast message of the response
-                                    if (s.equalsIgnoreCase("error")) {
-                                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-                                    } else {
-                                        //MyDialogFragment.this.dismiss();
-                                        commentbox_editext.setText("");
-                                        AddnewCommnent();
-                                        scrollView.post(new Runnable() {
-                                            public void run() {
-                                                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                                            }
-                                        });
-                                    }
-
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError volleyError) {
-                                    //Dismissing the progress dialog
-                                    //  loading.dismiss();
-
-                                    //Showing toast
-                                    // Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                                }
-                            }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            //Converting Bitmap to String
 
 
-                            //Getting Image Name
-                            description_comment = commentbox_editext.getText().toString().trim();
-
-                            //Creating parameters
-                            Map<String, String> params = new Hashtable<String, String>();
-
-                            //Adding parameters
-
-                            params.put(KEY_COMMENT, description_comment);
-                            params.put(KEY_TYPE, "event");
-                            params.put(KEY_POSTID, notifiid);
-                            params.put(KEY_MYUID, myprofileid);
-
-                            return params;
-                        }
-                    };
-
-                    //Creating a Request Queue
-                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-
-                    //Adding request to the queue
-                    requestQueue.add(stringRequest);
-                    //queue.add(stringRequest);
-                }
-
-            });
-            rcAdapter = new RecyclerViewAdapter(commentlist, recycler_comment);
-            recycler_comment.setAdapter(rcAdapter);
-            getData();
-            rcAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-                @Override
-                public void onLoadMore() {
-                    Log.e("haint", "Load More");
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.e("haint", "Load More 2");
-
-
-                            getData();
-
-
-                            rcAdapter.setLoaded();
-                        }
-                    }, 2000);
-                }
-            });
-
-            loadmore_title.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    MyDialogFragment frag;
-                    frag = new MyDialogFragment();
-                    Bundle args = new Bundle();
-                    args.putString("POSTID", notifiid);
-                    args.putString("USERID", myprofileid);
-                    frag.setArguments(args);
-                    frag.show(ft, "txn_tag");
-                }
-            });
-
-        } else {
-            commentbox.setVisibility(View.GONE);
-        }
-        comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (myprofileid != null) {
-                    android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    MyDialogFragment frag;
-                    frag = new MyDialogFragment();
-                    Bundle args = new Bundle();
-                    args.putString("POSTID", notifiid);
-                    args.putString("USERID", myprofileid);
-                    frag.setArguments(args);
-                    frag.show(ft, "txn_tag");
-                } else {
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(Activity, "eventdesc");
-                    editor.putString(CONTENTID, notifiid);
-                    editor.commit();
-                    Intent signin = new Intent(EventsDescription.this, SigninpageActivity.class);
-                    startActivity(signin);
-                    finish();
-                }
-            }
-        });
 
 
         remindme.setOnClickListener(new View.OnClickListener() {
@@ -618,15 +469,14 @@ public class EventsDescription extends AppCompatActivity {
     }
 
     public void AddnewCommnent() {
-        int curSize = rcAdapter.getItemCount();
+
         ItemModels models = new ItemModels();
         models.setName(my_profilename);
         models.setProfilepic(my_profileimage);
         models.setComment(description_comment);
         commentlist.add(models);
         recycler_comment.setVisibility(View.VISIBLE);
-        rcAdapter.notifyDataSetChanged();
-        rcAdapter.notifyItemRangeInserted(curSize, commentlist.size());
+
     }
 
     private void parseJsonFeed(JSONObject response) {
@@ -689,33 +539,38 @@ public class EventsDescription extends AppCompatActivity {
                 event_startdate = obj.getString("event_start_date");
                 event_enddate = obj.getString("event_end_date");
 
-                if (organizedby != null) {
-                    eventdetaildata.setText("Organized by:" + organizedby);
+                if (organizedby.equals("")||organizedby.equals("null")) {
 
-                } else {
-                    eventdetaildata.setVisibility(View.GONE);
-                }
-                if (entrytype != null) {
-                    if (obj.getString("etype").contentEquals("paid")) {
-                        eventdetaildata.setText("Entry Type:" + entrytype + "\n" + "Entry Fee:" + obj.getString("emt"));
+                    if (entrytype != null) {
+                        if (obj.getString("etype").contentEquals("paid")) {
+                            eventdetaildata.setText(Html.fromHtml("Entry Type"+"&nbsp;"+ ":"+ "&nbsp;"+entrytype + "\n" + "Entry Fee" + obj.getString("emt")));
+                        } else {
+                            eventdetaildata.setText(Html.fromHtml("Entry Type"+"&nbsp;"+":" +"&nbsp;"+ entrytype));
+                        }
                     } else {
-                        eventdetaildata.setText("Entry Type:" + entrytype);
+                        eventdetaildata.setVisibility(View.GONE);
                     }
                 } else {
-                    eventdetaildata.setVisibility(View.GONE);
+                    eventdetaildata.setVisibility(View.VISIBLE);
+
+                    if (entrytype != null) {
+                        if (obj.getString("etype").contentEquals("paid")) {
+                            eventdetaildata.setText(Html.fromHtml("Organized by"+"&nbsp;"+":"+"&nbsp;" + organizedby+"\n"+"Entry Type"+"&nbsp;"+":"+"&nbsp;"  + entrytype + "\n" + "Entry Fee"+"&nbsp;"+":"+"&nbsp;"  + obj.getString("emt")));
+                        } else {
+                            eventdetaildata.setText(Html.fromHtml("Organized by"+"&nbsp;"+":"+"&nbsp;"  + organizedby+"\n"+"Entry Type"+"&nbsp;"+":"+"&nbsp;"  + entrytype));
+                        }
+                    } else {
+                        eventdetaildata.setVisibility(View.GONE);
+                    }
+
                 }
+
                 String descrition = obj.isNull("description") ? null : obj
                         .getString("description");
                 String ss = descrition;
                 String s = ss;
-                // s = s.replace("\"", "'");
-                s = s.replace("\\", "");
 
-                // description.setText(Html.fromHtml(s));
-
-                //description.loadData(String.format(descrip), "text/html", "utf-8");
-                //description.loadData(descrip,"text/html","utf-8");
-                String fonts = "<html>\n" + "\t<head>\n" + "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" + "\t\t<style>\n" + "\t\t@font-face {\n" + "  font-family: 'segeoui-light';\n" + " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" + "  font-style: normal;\n" + "}\n" + "\n" + "@font-face {\n" + "  font-family: 'segeoui-regular';\n" + "src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" + "  font-style: normal;\n" + "}\n" + "\n" + "@font-face {\n" + "  font-family: 'segeoui-sbold';\n" + " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" + "  font-style: normal;\n" + "}\n" + "\n" + "@font-face {\n" + "    font-family: 'RobotoSlab-Bold';\n" + "   src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" + "    font-style: normal;\n" + "}\n" + "@font-face {\n" + "    font-family: 'RobotoSlab-Light';\n" + "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" + "    font-style: normal;\n" + "}\n" + "@font-face {\n" + "    font-family: 'RobotoSlab-Regular';\n" + "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" + "    font-style: normal;\n" + "}\n" + "@font-face {\n" + "    font-family: 'RobotoSlab-Thin';\n" + "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" + "    font-style: normal;\n" + "}\n" + "\t\t</style>\n" + "\t</head>";
+                String fonts = "<html>\n" + "\t<head>\n" + "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" + "\t\t<style>\n" + "\t\t@font-face {\n" + "  font-family: 'segeoui-light';\n" + " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "  font-style: normal;\n" + "}\n" + "\n" + "@font-face {\n" + "  font-family: 'segeoui-regular';\n" + "src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "  font-style: normal;\n" + "}\n" + "\n" + "@font-face {\n" + "  font-family: 'segeoui-sbold';\n" + " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "  font-style: normal;\n" + "}\n" + "\n" + "@font-face {\n" + "    font-family: 'RobotoSlab-Bold';\n" + "   src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "    font-style: normal;\n" + "}\n" + "@font-face {\n" + "    font-family: 'RobotoSlab-Light';\n" + "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "    font-style: normal;\n" + "}\n" + "@font-face {\n" + "    font-family: 'RobotoSlab-Regular';\n" + "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "    font-style: normal;\n" + "}\n" + "@font-face {\n" + "    font-family: 'RobotoSlab-Thin';\n" + "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "    font-style: normal;\n" + "}\n" + "\t\t</style>\n" + "\t</head>";
                 description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
                 // description.setBackgroundColor(0x0a000000);
                 description.setBackgroundColor(Color.TRANSPARENT);
@@ -780,14 +635,21 @@ public class EventsDescription extends AppCompatActivity {
                 sharetitle = obj.getString("title");
 
 
-                if (favcount == 1) {
-                    favourite.setImageResource(R.mipmap.likered);
-                } else {
-                    favourite.setImageResource(R.mipmap.like);
-                }
+                if (favcount == 1) {                     favourite.setImageResource(R.mipmap.likered);                     favourite.setTag("heartfullred");                 } else {                    favourite.setImageResource(R.mipmap.like);                     favourite.setTag("heart");                 }
                 favourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        String backgroundImageName = String.valueOf(favourite.getTag());
+                        Log.e("RUN","with"+backgroundImageName);
+                        if(backgroundImageName.equals("heart")){
+                            favourite.setImageResource(R.mipmap.likered);
+                            favourite.setTag("heartfullred");
+                        }else if(backgroundImageName.equals("heartfullred")) {
+                            favourite.setImageResource(R.mipmap.like);
+                            favourite.setTag("heart");
+                        }else {
+
+                        }
                         if (myprofileid != null) {
                             StringRequest likes = new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
@@ -796,12 +658,7 @@ public class EventsDescription extends AppCompatActivity {
                                     res = res.replace(" ", "");
                                     res = res.trim();
                                     Log.e("LIke", res.toString());
-                                    if (res.equalsIgnoreCase("yes")) {
-                                        //  System.out.println(itemmodel.getId());
-                                        favourite.setImageResource(R.mipmap.likered);
-                                    } else if (res.equalsIgnoreCase("no")) {
-                                        favourite.setImageResource(R.mipmap.like);
-                                    }
+                                    if(res.equalsIgnoreCase("yes")){                                          favourite.setImageResource(R.mipmap.likered);                                         favourite.setTag("heartfullred");                                     }else if(res.equalsIgnoreCase("no")){                                        favourite.setImageResource(R.mipmap.like);                                         favourite.setTag("heart");                                     }
 
                                 }
                             }, new Response.ErrorListener() {
@@ -869,6 +726,8 @@ public class EventsDescription extends AppCompatActivity {
                         startActivity(intent);
     }
 });
+
+
 
                 modelList.add(model);
 
@@ -1064,113 +923,8 @@ public class EventsDescription extends AppCompatActivity {
     }
 
 
-    private void getData() {
-        //Adding the method to the queue by calling the method getDataFromServer
-        requestQueue.add(getDataFromTheServer(requestCount));
-        // getDataFromTheServer();
-        //Incrementing the request counter
-        requestCount++;
-    }
-
-    private JsonObjectRequest getDataFromTheServer(int requestCount) {
-
-        URLTWO_comment = URLCOMMENT +notifiid+"&page="+ requestCount;
 
 
-        Cache cache = AppControllers.getInstance().getRequestQueue().getCache();
-        Cache.Entry entry = cache.get(URLTWO_comment);
-        if (entry != null) {
-            // fetch the data from cache
-            try {
-                String data = new String(entry.data, "UTF-8");
-                try {
-                    pdialog.dismiss();
-                    // dissmissDialog();
-                    parseJsonFeedTwo(new JSONObject(data));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            // making fresh volley request and getting json
-            jsonReq = new JsonObjectRequest(Request.Method.GET,
-                    URLTWO_comment, new Response.Listener<JSONObject>() {
-
-                @Override
-                public void onResponse(JSONObject response) {
-                    VolleyLog.d(TAG_REQUEST, "Response: " + response.toString());
-                    if (response != null) {
-                        pdialog.dismiss();
-                        //   dissmissDialog();
-                        parseJsonFeedTwo(response);
-                    }
-                }
-            }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d(TAG_REQUEST, "Error: " + error.getMessage());
-                }
-            });
-
-            // Adding request to volley request queue
-            jsonReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-            requestQueue.add(jsonReq);
-        }
-        return jsonReq;
-    }
-    private void parseJsonFeedTwo(JSONObject response) {
-        try {
-            feedArray = response.getJSONArray("result");
-
-
-            for (ii = 0; ii < feedArray.length(); ii++) {
-                obj = (JSONObject) feedArray.get(ii);
-
-                ItemModels model = new ItemModels();
-                //FeedItem model=new FeedItem();
-                String image = obj.isNull("thumb") ? null : obj
-                        .getString("thumb");
-                model.setProfilepic(image);
-                model.setComment(obj.getString("comment"));
-                model.setPadate(obj.getString("pdate"));
-                model.setName(obj.getString("name"));
-                model.setId(obj.getString("id"));
-                if(feedArray.length()==0){
-
-                    recycler_comment.setVisibility(View.GONE);
-                }else {
-                    recycler_comment.setVisibility(View.VISIBLE);
-
-                }
-                if(feedArray.length()==0){
-                    loadmore_title.setVisibility(View.GONE);
-                }else {
-                    if(feedArray.length()>4){
-                        loadmore_title.setText("Load More");
-                    }else {
-                        loadmore_title.setVisibility(View.GONE);
-                    }
-                }
-
-                commentlist.add(model);
-
-            }
-
-            // notify data changes to list adapater
-            rcAdapter.notifyDataSetChanged();
-
-            // notify data changes to list adapater
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
     class  ItemModels{
         private String id,comment,padate,name,profilepic;
 
@@ -1216,595 +970,10 @@ public class EventsDescription extends AppCompatActivity {
 
     }
 
-    class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-        private LayoutInflater inflater;
 
-        ImageLoader mImageLoader;
-        private final int VIEW_TYPE_ITEM = 1;
-        private final int VIEW_TYPE_LOADING = 2;
 
-        private boolean loading;
-        private OnLoadMoreListener onLoadMoreListener;
 
-        private int visibleThreshold = 5;
-        private int lastVisibleItem, totalItemCount;
-        Context context;
 
-        public RecyclerViewAdapter(List<ItemModels> students, RecyclerView recyclerView) {
-            commentlist = students;
 
-            if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
 
-                final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView
-                        .getLayoutManager();
-
-
-                recyclerView
-                        .addOnScrollListener(new RecyclerView.OnScrollListener() {
-                            @Override
-                            public void onScrolled(RecyclerView recyclerView,
-                                                   int dx, int dy) {
-                                super.onScrolled(recyclerView, dx, dy);
-
-                                totalItemCount = linearLayoutManager.getItemCount();
-                                lastVisibleItem = linearLayoutManager
-                                        .findLastVisibleItemPosition();
-                                if (!loading
-                                        && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
-                                    // End has been reached
-                                    // Do something
-                                    if (onLoadMoreListener != null) {
-                                        onLoadMoreListener.onLoadMore();
-                                    }
-                                    loading = true;
-                                }
-                            }
-                        });
-            }
-        }
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
-            if (viewType == VIEW_TYPE_ITEM) {
-                View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.feed_item_comment_all, parent, false);
-                return new UserViewHolder(view);
-            } else if (viewType == VIEW_TYPE_LOADING) {
-                View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_loading_item, parent, false);
-                return new LoadingViewHolder(view);
-            }
-            return null;
-
-        }
-
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-            if (holder instanceof UserViewHolder) {
-
-                final UserViewHolder userViewHolder = (UserViewHolder) holder;
-
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
-                Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
-                if (mImageLoader == null)
-                    mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getApplicationContext()).getImageLoader();
-
-
-                ItemModels itemmodel = commentlist.get(position);
-
-
-                userViewHolder.name.setText(itemmodel.getName());
-                userViewHolder.name.setTypeface(seguiregular);
-                userViewHolder.commentsdecription.setText(itemmodel.getComment());
-                userViewHolder.imageview.setDefaultImageResId(R.drawable.iconlogo);
-                userViewHolder.imageview.setErrorImageResId(R.drawable.iconlogo);
-
-                userViewHolder.imageview.setImageUrl(itemmodel.getProfilepic(), mImageLoader);
-                // userViewHolder.im.setVisibility(View.VISIBLE);
-
-            } else if (holder instanceof LoadingViewHolder) {
-                LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
-                loadingViewHolder.progressBar.setIndeterminate(true);
-            }
-
-        }
-
-        public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
-            this.onLoadMoreListener = onLoadMoreListener;
-        }
-
-
-        public int getItemViewType(int position) {
-
-
-            return commentlist.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
-
-        }
-
-        public void setLoaded() {
-            loading = false;
-        }
-
-        public int getItemCount() {
-            return commentlist.size();
-        }
-    }
-
-
-
-
-
-
-    public static class MyDialogFragment extends DialogFragment {
-        private String KEY_COMMENT = "comment";
-        private String KEY_TYPE = "qtype";
-        private String KEY_MYUID = "user_id";
-        private String KEY_POSTID = "id";
-        String URLCOMMENT = "http://simpli-city.in/request2.php?rtype=viewcomment&key=simples&qtype=event&id=";
-        String urlpost = "http://simpli-city.in/request2.php?rtype=comments&key=simples";
-        EditText commentbox;
-        Button post_review;
-        ImageButton close_back;
-
-        JSONObject obj, objtwo;
-        JSONArray feedArray;
-        int ii, i;
-        TextView titles;
-        CoordinatorLayout mCoordinator;
-        private final String TAG_REQUEST = "MY_TAG";
-        List<ItemModels> commentlist = new ArrayList<ItemModels>();
-        //Need this to set the title of the app bar
-        CollapsingToolbarLayout mCollapsingToolbarLayout;
-        RecyclerViewAdapter rcAdapter;
-        ProgressDialog pdialog;
-        RequestQueue requestQueue;
-        private int requestCount = 1;
-        JsonObjectRequest jsonReq;
-        String URLTWO;
-        String bimage;
-        RecyclerView recycler;
-        LinearLayoutManager mLayoutManager;
-        String postid, myuserid;
-
-        public MyDialogFragment() {
-
-        }
-
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setStyle(DialogFragment.STYLE_NORMAL, R.style.MY_DIALOG);
-        }
-
-        @Override
-        public void onStart() {
-            super.onStart();
-            Dialog d = getDialog();
-            if (d != null) {
-                int width = ViewGroup.LayoutParams.MATCH_PARENT;
-                int height = ViewGroup.LayoutParams.MATCH_PARENT;
-                d.getWindow().setLayout(width, height);
-            }
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View root = inflater.inflate(R.layout.commenteventfragment, container, false);
-            titles = (TextView) root.findViewById(R.id.comments_title);
-            requestQueue = Volley.newRequestQueue(getActivity());
-            postid = getArguments().getString("POSTID");
-            myuserid = getArguments().getString("USERID");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
-            Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
-            commentbox = (EditText) root.findViewById(R.id.comment_description);
-            post_review = (Button) root.findViewById(R.id.post_button);
-            close_back = (ImageButton) root.findViewById(R.id.btn_back_comment_review);
-           // mCoordinator = (CoordinatorLayout) root.findViewById(R.id.root_coordinator);             mCollapsingToolbarLayout = (CollapsingToolbarLayout) root.findViewById(R.id.collapsing_toolbar_layout);
-            recycler = (RecyclerView) root.findViewById(R.id.commentpagelist_recyclerview);
-            recycler.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-            recycler.setHasFixedSize(true);
-            recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recycler.setNestedScrollingEnabled(false);
-            pdialog = new ProgressDialog(getActivity());
-            pdialog.show();
-            pdialog.setContentView(R.layout.custom_progressdialog);
-            pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            titles.setTypeface(tf);
-            titles.setText("Comments");
-            post_review.setTypeface(tf);
-            post_review.setText("POST");
-            close_back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MyDialogFragment.this.dismiss();
-                }
-            });
-            post_review.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    //Showing the progress dialog
-                    //final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlpost,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String s) {
-                                    //Disimissing the progress dialog
-                                    //  loading.dismiss();
-                                    //Showing toast message of the response
-                                    if (s.equalsIgnoreCase("error")) {
-                                        Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
-                                    } else {
-                                        MyDialogFragment.this.dismiss();
-
-                                    }
-
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError volleyError) {
-                                    //Dismissing the progress dialog
-                                    //  loading.dismiss();
-
-                                    //Showing toast
-                                    // Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                                }
-                            }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            //Converting Bitmap to String
-
-
-                            //Getting Image Name
-                            String description = commentbox.getText().toString().trim();
-
-                            //Creating parameters
-                            Map<String, String> params = new Hashtable<String, String>();
-
-                            //Adding parameters
-                            if (postid != null) {
-                                if (description != null) {
-                                    params.put(KEY_COMMENT, description);
-                                    params.put(KEY_TYPE, "event");
-                                    params.put(KEY_POSTID, postid);
-                                    params.put(KEY_MYUID, myuserid);
-                                }
-
-                            }
-                            return params;
-                        }
-                    };
-
-                    //Creating a Request Queue
-                    RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-
-                    //Adding request to the queue
-                    requestQueue.add(stringRequest);
-                    //queue.add(stringRequest);
-                }
-
-            });
-
-            rcAdapter = new RecyclerViewAdapter(commentlist,recycler);
-            recycler.setAdapter(rcAdapter);
-            getData();
-            rcAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-                @Override
-                public void onLoadMore() {
-                    Log.e("haint", "Load More");
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.e("haint", "Load More 2");
-
-
-                            getData();
-
-
-                            rcAdapter.setLoaded();
-                        }
-                    }, 2000);
-                }
-            });
-
-            return root;
-        }
-
-        public void dissmissDialog() {
-            // TODO Auto-generated method stub
-            if (pdialog != null) {
-                if (pdialog.isShowing()) {
-                    pdialog.dismiss();
-                }
-                pdialog = null;
-            }
-
-        }
-
-        public void onDestroy() {
-            super.onDestroy();
-            dissmissDialog();
-        }
-
-        static class UserViewHolder extends RecyclerView.ViewHolder {
-            public TextView name, locations,commentsdecription;
-
-
-            public NetworkImageView imageview;
-
-            public UserViewHolder(View itemView) {
-                super(itemView);
-
-                // im = (ImageView) itemView.findViewById(R.id.imageViewlitle);
-
-                imageview = (NetworkImageView) itemView.findViewById(R.id.thumbnailfoodcategory);
-
-
-                name = (TextView) itemView.findViewById(R.id.name);
-                locations = (TextView) itemView.findViewById(R.id.location);
-
-                commentsdecription = (TextView) itemView.findViewById(R.id.all_page_descriptions);
-            }
-        }
-
-        static class LoadingViewHolder extends RecyclerView.ViewHolder {
-            public ProgressBar progressBar;
-
-            public LoadingViewHolder(View itemView) {
-                super(itemView);
-                progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar1);
-            }
-        }
-
-        private void getData() {
-            //Adding the method to the queue by calling the method getDataFromServer
-            requestQueue.add(getDataFromTheServer(requestCount));
-            // getDataFromTheServer();
-            //Incrementing the request counter
-            requestCount++;
-        }
-
-        private JsonObjectRequest getDataFromTheServer(int requestCount) {
-
-            URLTWO = URLCOMMENT +postid+"&page="+ requestCount;
-
-
-            Cache cache = AppControllers.getInstance().getRequestQueue().getCache();
-            Cache.Entry entry = cache.get(URLTWO);
-            if (entry != null) {
-                // fetch the data from cache
-                try {
-                    String data = new String(entry.data, "UTF-8");
-                    try {
-                        // dissmissDialog();
-                        parseJsonFeed(new JSONObject(data));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-
-            } else {
-                // making fresh volley request and getting json
-                jsonReq = new JsonObjectRequest(Request.Method.GET,
-                        URLTWO, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        VolleyLog.d(TAG_REQUEST, "Response: " + response.toString());
-                        if (response != null) {
-                            //   dissmissDialog();
-                            parseJsonFeed(response);
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d(TAG_REQUEST, "Error: " + error.getMessage());
-                    }
-                });
-
-                // Adding request to volley request queue
-                jsonReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-                requestQueue.add(jsonReq);
-            }
-            return jsonReq;
-        }
-
-        private void parseJsonFeed(JSONObject response) {
-            try {
-                feedArray = response.getJSONArray("result");
-
-
-                for (ii = 0; ii < feedArray.length(); ii++) {
-                    obj = (JSONObject) feedArray.get(ii);
-
-                    ItemModels model = new ItemModels();
-                    //FeedItem model=new FeedItem();
-                    String image = obj.isNull("thumb") ? null : obj
-                            .getString("thumb");
-                    model.setProfilepic(image);
-                    model.setComment(obj.getString("comment"));
-                    model.setPadate(obj.getString("pdate"));
-                    model.setName(obj.getString("name"));
-                    model.setId(obj.getString("id"));
-
-
-                    commentlist.add(model);
-
-                }
-
-                // notify data changes to list adapater
-                rcAdapter.notifyDataSetChanged();
-
-                // notify data changes to list adapater
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        class  ItemModels{
-            private String id,comment,padate,name,profilepic;
-
-            public String getComment() {
-                return comment;
-            }
-
-            public void setComment(String comment) {
-                this.comment = comment;
-            }
-
-            public String getId() {
-                return id;
-            }
-
-            public void setId(String id) {
-                this.id = id;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public String getPadate() {
-                return padate;
-            }
-
-            public void setPadate(String padate) {
-                this.padate = padate;
-            }
-
-            public String getProfilepic() {
-                return profilepic;
-            }
-
-            public void setProfilepic(String profilepic) {
-                this.profilepic = profilepic;
-            }
-
-        }
-        class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-            private LayoutInflater inflater;
-
-            ImageLoader mImageLoader;
-            private final int VIEW_TYPE_ITEM = 1;
-            private final int VIEW_TYPE_LOADING = 2;
-            private final int VIEW_TYPE_FEATURE = 0;
-            private boolean loading;
-            private OnLoadMoreListener onLoadMoreListener;
-
-            private int visibleThreshold = 5;
-            private int lastVisibleItem, totalItemCount;
-            Context context;
-
-            public RecyclerViewAdapter(List<ItemModels> students, RecyclerView recyclerView) {
-                commentlist = students;
-
-                if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
-
-                    final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView
-                            .getLayoutManager();
-
-
-                    recyclerView
-                            .addOnScrollListener(new RecyclerView.OnScrollListener() {
-                                @Override
-                                public void onScrolled(RecyclerView recyclerView,
-                                                       int dx, int dy) {
-                                    super.onScrolled(recyclerView, dx, dy);
-
-                                    totalItemCount = linearLayoutManager.getItemCount();
-                                    lastVisibleItem = linearLayoutManager
-                                            .findLastVisibleItemPosition();
-                                    if (!loading
-                                            && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
-                                        // End has been reached
-                                        // Do something
-                                        if (onLoadMoreListener != null) {
-                                            onLoadMoreListener.onLoadMore();
-                                        }
-                                        loading = true;
-                                    }
-                                }
-                            });
-                }
-            }
-
-            @Override
-            public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
-                if (viewType == VIEW_TYPE_ITEM) {
-                    View view = LayoutInflater.from(getActivity()).inflate(R.layout.feed_item_comment_all, parent, false);
-                    return new UserViewHolder(view);
-                } else if (viewType == VIEW_TYPE_LOADING) {
-                    View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_loading_item, parent, false);
-                    return new LoadingViewHolder(view);
-                }
-                return null;
-
-            }
-
-
-            @Override
-            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-                if (holder instanceof UserViewHolder) {
-
-                    final UserViewHolder userViewHolder = (UserViewHolder) holder;
-
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
-                    Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
-                    if (mImageLoader == null)
-                        mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getActivity()).getImageLoader();
-
-
-                    ItemModels itemmodel = commentlist.get(position);
-
-
-                    userViewHolder.name.setText(itemmodel.getName());
-                    userViewHolder.name.setTypeface(seguiregular);
-                    userViewHolder.commentsdecription.setText(itemmodel.getComment());
-                    userViewHolder.imageview.setDefaultImageResId(R.drawable.iconlogo);
-                    userViewHolder.imageview.setErrorImageResId(R.drawable.iconlogo);
-
-                    userViewHolder.imageview.setImageUrl(itemmodel.getProfilepic(), mImageLoader);
-                    // userViewHolder.im.setVisibility(View.VISIBLE);
-
-                } else if (holder instanceof LoadingViewHolder) {
-                    LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
-                    loadingViewHolder.progressBar.setIndeterminate(true);
-                }
-
-            }
-
-            public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
-                this.onLoadMoreListener = onLoadMoreListener;
-            }
-
-
-            public int getItemViewType(int position) {
-
-
-                return commentlist.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
-
-            }
-
-            public void setLoaded() {
-                loading = false;
-            }
-
-            public int getItemCount() {
-                return commentlist.size();
-            }
-        }
-    }
 }

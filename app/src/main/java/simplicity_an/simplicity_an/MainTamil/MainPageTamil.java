@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,18 +16,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.onesignal.OneSignal;
 
-import simplicity_an.simplicity_an.Explore.ExploreMain;
-import simplicity_an.simplicity_an.MainEnglish.CityFragment;
-import simplicity_an.simplicity_an.MainEnglish.EntertainmentFragment;
 import simplicity_an.simplicity_an.MainEnglish.HappeningFrag;
-import simplicity_an.simplicity_an.MainEnglish.MainFrag;
-import simplicity_an.simplicity_an.MainEnglish.SettingsFragment;
 import simplicity_an.simplicity_an.MusicplayerBottom;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.Tamil.TamilEntertainmentall;
@@ -43,32 +35,29 @@ import simplicity_an.simplicity_an.Tamil.Tamilnews;
  * Created by kuppusamy on 5/18/2017.
  */
 
-public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFragmentInteractionListener,TamilRadio.OnFragmentInteractionListener, TamilEntertainmentall.OnFragmentInteractionListener,Tamilentertainmentmusic.OnFragmentInteractionListener,Tamilentertainmentradio.OnFragmentInteractionListener{
+public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFragmentInteractionListener,TamilRadio.OnFragmentInteractionListener, TamilEntertainmentall.OnFragmentInteractionListener,Tamilentertainmentmusic.OnFragmentInteractionListener,Tamilentertainmentradio.OnFragmentInteractionListener,Tamilnews.OnFragmentInteractionListener{
     ImageButton city,happening,search,audio_video,settings;
-    CoordinatorLayout mCoordinator;
-    //Need this to set the title of the app bar
-    CollapsingToolbarLayout mCollapsingToolbarLayout;
-    LinearLayout footerbar;
-    private ImageButton play_music,fastforward,backforward,close_player;
-    TextView music_title_name;
     SharedPreferences sharedpreferences;
     public static final String backgroundcolor = "color";
-    String activity,contentid,colorcodes;
+    String colorcodes;
     public static final String mypreference = "mypref";
-    String myprofileid,cartcounts;
+    String myprofileid;
     public static final String MYUSERID= "myprofileid";
     public static final String GcmId = "gcmid";
     String playerid;
     String id,radio_title,radio_url;
     RelativeLayout topLevelLayout;
-    private static int SPLASH_TIME_OUT = 4000;
+
+
+    boolean doubleBackToExitPressedOnce = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.mainpageenglish);
+        setContentView(R.layout.mainpagetamilmain);
         sharedpreferences =  getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
         if (sharedpreferences.contains(MYUSERID)) {
@@ -83,7 +72,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
         radio_url=get.getStringExtra("URL");
 //Check();
 
-        Instructions();
+
         OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
             @Override
             public void idsAvailable(String userId, String registrationId) {
@@ -104,33 +93,11 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
         audio_video=(ImageButton)findViewById(R.id.btn_versiontwoexplore);
         settings=(ImageButton)findViewById(R.id.btn_versiontwonotifications);
         topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
-      topLevelLayout.setVisibility(View.VISIBLE);
-        topLevelLayout.setOnTouchListener(new View.OnTouchListener(){
+      topLevelLayout.setVisibility(View.GONE);
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                topLevelLayout.setVisibility(View.INVISIBLE);
-                return false;
-            }
 
-        });
-        new Handler().postDelayed(new Runnable() {
 
-            /*
-             * Showing splash screen with a timer. This will be useful when you
-             * want to show case your app logo / company
-             */
 
-            @Override
-            public void run() {
-                try{
-                    topLevelLayout.setVisibility(View.GONE);
-                }catch (Exception e){
-
-                }
-
-            }
-        }, SPLASH_TIME_OUT);
         city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -234,13 +201,13 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                 city.setBackgroundResource(R.color.mytransparent);
                 audio_video.setBackgroundResource(R.color.mytransparent);
                 settings.setBackgroundResource(R.color.mytransparent);
-                Intent in = new Intent(getApplicationContext(), ExploreMain.class);
-                    startActivity(in);
-               /* FragmentManager fragmentManager= getSupportFragmentManager();
+            /*    Intent in = new Intent(getApplicationContext(), ExploreMain.class);
+                    startActivity(in);*/
+              FragmentManager fragmentManager= getSupportFragmentManager();
                 MainFragTamil fragments = new MainFragTamil();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frame_layout, fragments);
-                fragmentTransaction.commit();*/
+                fragmentTransaction.commit();
                 if (colorcodes.length() == 0) {
 
                 } else {
@@ -374,11 +341,11 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                 }
             }
         });
-        if(radio_url!=null){
+        /*if(radio_url!=null){
             onFragmentInteraction(radio_url,radio_title);
         }else {
 
-        }
+        }*/
         if(id!=null){
             changefrag();
         }else {
@@ -450,22 +417,10 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
     }
 
 
-    private void  Instructions(){
 
-      /*  topLevelLayout.setOnTouchListener(new View.OnTouchListener(){
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                topLevelLayout.setVisibility(View.INVISIBLE);
-                return false;
-            }
-
-        });*/
-
-    }
-    public void onFragmentInteraction(String playurl, String title) {
+    public void onFragmentInteraction(String playurl, String title,String image) {
         MusicplayerBottom secondFragment = (MusicplayerBottom) getSupportFragmentManager().findFragmentById(R.id.musicbottomplayer);
-        secondFragment.PlaySong(playurl, title );
+        secondFragment.PlaySong(playurl, title ,image );
     }
 
     public void Check(){
@@ -482,7 +437,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
             audio_video.setBackgroundResource(R.color.mytransparent);
             city.setBackgroundResource(R.color.mytransparent);
             FragmentManager fragmentManager = getSupportFragmentManager();
-            SettingsFragment fragment = new SettingsFragment();
+            CityFragmentTamil fragment = new CityFragmentTamil();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frame_layout, fragment);
             fragmentTransaction.commit();
@@ -605,10 +560,123 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     }
                 }
             }
-        }else {
+        }else if(id.equals("4")){
+            happening.setBackgroundResource(R.color.mytransparent);
+            city.setBackgroundResource(R.color.mytransparent);
+            audio_video.setBackgroundResource(R.color.mytransparent);
+            settings.setBackgroundResource(R.color.mytransparent);
+            Fragment selectedFragment = null;
+            selectedFragment = MainFragTamil.newInstance();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, selectedFragment);
+            transaction.commit();
+            if(colorcodes.length()==0){
+
+            }else {
+                if(colorcodes.equalsIgnoreCase("004")){
+                    Log.e("Msg","hihihi");
+                }else {
+                    if(colorcodes.equalsIgnoreCase("#383838")){
+                        search.setBackgroundResource(R.color.theme1button);
+                    }else if(colorcodes.equalsIgnoreCase("#59247c")){
+                        search.setBackgroundResource(R.color.theme2);
+                    }else if(colorcodes.equalsIgnoreCase("#1d487a")){
+                        search.setBackgroundResource(R.color.theme3);
+                    }else if(colorcodes.equalsIgnoreCase("#7A4100")){
+                        search.setBackgroundResource(R.color.theme4);
+                    }else if(colorcodes.equalsIgnoreCase("#6E0138")){
+                        search.setBackgroundResource(R.color.theme5);
+                    }else if(colorcodes.equalsIgnoreCase("#00BFD4")){
+                        search.setBackgroundResource(R.color.theme6);
+                    }else if(colorcodes.equalsIgnoreCase("#185546")){
+                        search.setBackgroundResource(R.color.theme7);
+                    }else if(colorcodes.equalsIgnoreCase("#D0A06F")){
+                        search.setBackgroundResource(R.color.theme8);
+                    }else if(colorcodes.equalsIgnoreCase("#82C6E6")){
+                        search.setBackgroundResource(R.color.theme9);
+                    }else if(colorcodes.equalsIgnoreCase("#339900")){
+                        search.setBackgroundResource(R.color.theme10);
+                    }else if(colorcodes.equalsIgnoreCase("#CC9C00")){
+                        search.setBackgroundResource(R.color.theme11);
+                    }else if(colorcodes.equalsIgnoreCase("#00B09B")){
+                        search.setBackgroundResource(R.color.theme12);
+                    }
+                }
+            }
+        }
+        else if(id.equals("5")){
+            happening.setBackgroundResource(R.color.mytransparent);
+            search.setBackgroundResource(R.color.mytransparent);
+            audio_video.setBackgroundResource(R.color.mytransparent);
+            settings.setBackgroundResource(R.color.mytransparent);
+            Fragment selectedFragment = null;
+            selectedFragment = SettingsFragmentTamil.newInstance();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, selectedFragment);
+            transaction.commit();
+            if(colorcodes.length()==0){
+
+            }else {
+                if(colorcodes.equalsIgnoreCase("004")){
+                    Log.e("Msg","hihihi");
+                }else {
+                    if(colorcodes.equalsIgnoreCase("#383838")){
+                        city.setBackgroundResource(R.color.theme1button);
+                    }else if(colorcodes.equalsIgnoreCase("#59247c")){
+                        city.setBackgroundResource(R.color.theme2);
+                    }else if(colorcodes.equalsIgnoreCase("#1d487a")){
+                        city.setBackgroundResource(R.color.theme3);
+                    }else if(colorcodes.equalsIgnoreCase("#7A4100")){
+                        city.setBackgroundResource(R.color.theme4);
+                    }else if(colorcodes.equalsIgnoreCase("#6E0138")){
+                        city.setBackgroundResource(R.color.theme5);
+                    }else if(colorcodes.equalsIgnoreCase("#00BFD4")){
+                        city.setBackgroundResource(R.color.theme6);
+                    }else if(colorcodes.equalsIgnoreCase("#185546")){
+                        city.setBackgroundResource(R.color.theme7);
+                    }else if(colorcodes.equalsIgnoreCase("#D0A06F")){
+                        city.setBackgroundResource(R.color.theme8);
+                    }else if(colorcodes.equalsIgnoreCase("#82C6E6")){
+                        city.setBackgroundResource(R.color.theme9);
+                    }else if(colorcodes.equalsIgnoreCase("#339900")){
+                        city.setBackgroundResource(R.color.theme10);
+                    }else if(colorcodes.equalsIgnoreCase("#CC9C00")){
+                        city.setBackgroundResource(R.color.theme11);
+                    }else if(colorcodes.equalsIgnoreCase("#00B09B")){
+                        city.setBackgroundResource(R.color.theme12);
+                    }
+                }
+            }
+        }
+        else {
 
         }
     }
 
+
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
+            startActivity(intent);
+            finish();
+            System.exit(0);
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
 
 }

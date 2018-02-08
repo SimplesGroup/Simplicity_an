@@ -52,7 +52,7 @@ public class RentalsRecordDetail extends AppCompatActivity {
         Intent get=getIntent();
         String title=get.getStringExtra("TITLE");
         String id=get.getStringExtra("ID");
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         sharedpreferences =  getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);

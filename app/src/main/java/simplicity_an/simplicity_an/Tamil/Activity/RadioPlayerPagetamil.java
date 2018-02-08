@@ -140,7 +140,7 @@ menu.setOnClickListener(new View.OnClickListener() {
             mgr.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
         }
 
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         timebalanceseekbar=(TextView)findViewById(R.id.songDuration);
         timecurrentseekbar=(TextView)findViewById(R.id.songDurationfullleft);

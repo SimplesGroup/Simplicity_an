@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -62,7 +61,9 @@ import java.util.Map;
 
 import simplicity_an.simplicity_an.AdvertisementPage;
 import simplicity_an.simplicity_an.AppControllers;
+import simplicity_an.simplicity_an.Columnsdetailpage;
 import simplicity_an.simplicity_an.DividerItemDecoration;
+import simplicity_an.simplicity_an.LifestyleDetail;
 import simplicity_an.simplicity_an.LikeListFragment;
 import simplicity_an.simplicity_an.MySingleton;
 import simplicity_an.simplicity_an.OnLoadMoreListener;
@@ -71,8 +72,21 @@ import simplicity_an.simplicity_an.RecyclerView_OnClickListener;
 import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.SimplicitySearchview;
 import simplicity_an.simplicity_an.Tamil.Activity.AdvertisementPageTamil;
+import simplicity_an.simplicity_an.Tamil.Activity.Columnistdetailtamil;
+import simplicity_an.simplicity_an.Tamil.Activity.DoitDescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.EducationDescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.Farmingdescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.FoodAndCookDescriptionPagetamil;
+import simplicity_an.simplicity_an.Tamil.Activity.Govtdescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.Healthdescriptiontamil;
 import simplicity_an.simplicity_an.Tamil.Activity.ReportNewsOrComplaintsTamil;
-import simplicity_an.simplicity_an.Theatre;
+import simplicity_an.simplicity_an.Tamil.Activity.ScienceandTechnologyDescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.TamilEventsDescription;
+import simplicity_an.simplicity_an.Tamil.Activity.TamilNewsDescription;
+import simplicity_an.simplicity_an.Tamil.Activity.TamilSportsnewsDescription;
+import simplicity_an.simplicity_an.Tamil.Activity.TipsDescriptionTamil;
+import simplicity_an.simplicity_an.Tamil.Activity.TravelsDescriptiontamil;
+import simplicity_an.simplicity_an.YoutubeVideoPlayer;
 
 /**
  * Created by kuppusamy on 10/3/2016.
@@ -80,8 +94,7 @@ import simplicity_an.simplicity_an.Theatre;
 public class TamilMovies extends Fragment {
     RecyclerView recyclerview_tab_all_news;
     String URL="http://simpli-city.in/request2.php?rtype=alldata&key=simples&language=2&qtype=theatre";
-    String URLLIKES="http://simpli-city.in/request2.php?rtype=articlelikes&key=simples";
-    String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
+    String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples"; 				String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
     String URLALL;
     RequestQueue requestQueue;
     private int requestCount = 1;
@@ -105,7 +118,7 @@ public class TamilMovies extends Fragment {
 
     public static final String Activity = "activity";
     public static final String CONTENTID = "contentid";
-    int post_likes_count=0,save_item_count;
+    int post_likes_count=0,save_item_count,like_finalvalues;
     private Boolean isFabOpen = false;
     FloatingActionButton fabsearch,fabinnerplus;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
@@ -268,19 +281,7 @@ public class TamilMovies extends Fragment {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefresh.setRefreshing(true);
-                modelList.clear();
-                recyclerview_tab_all_adapter.notifyDataSetChanged();
-
-                requestCount=1;
-                getData();
-                //  Toast.makeText(getActivity(),"Swipe",Toast.LENGTH_SHORT).show();
-                ( new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeRefresh.setRefreshing(false);
-                    }
-                }, 3000);
+                 swipeRefresh.setRefreshing(true);                 modelList.clear();                 recyclerview_tab_all_adapter.notifyDataSetChanged();                  requestCount=0;                 getData();                 //  Toast.makeText(getActivity(),"Swipe",Toast.LENGTH_SHORT).show();                 ( new Handler()).postDelayed(new Runnable() {                     @Override                     public void run() {                         swipeRefresh.setRefreshing(false);                     }                 }, 3000);
 
             }
         });
@@ -420,7 +421,6 @@ public class TamilMovies extends Fragment {
                 model.setQtype(obj.getString("qtype"));
                 model.setLikescount(obj.getInt("likes_count"));
                 model.setCommentscount(obj.getInt("commentscount"));
-                model.setFavcount(obj.getInt("fav"));
                 model.setSharingurl(obj.getString("sharingurl"));
                 model.setQtypemain(obj.getString("qtypemain"));
                 // model.setDislikecount(obj.getInt("dislikes_count"));
@@ -709,7 +709,7 @@ public class TamilMovies extends Fragment {
 
                 final Userviewholdertaball userViewHolder = (Userviewholdertaball) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
@@ -727,11 +727,13 @@ public class TamilMovies extends Fragment {
                 if(itemmodel.getCounttype()==1){
                     userViewHolder.likes_button.setText("விருப்பு");
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
+                    userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.likered,0,0,0);
                     userViewHolder.likes_button.setTypeface(seguiregular);
                     userViewHolder.likes_button.setTransformationMethod(null);
                 }else {
                     userViewHolder.likes_button.setText("விருப்பு");
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
+                    userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.like,0,0,0);
                     userViewHolder.likes_button.setTypeface(seguiregular);
                     userViewHolder.likes_button.setTransformationMethod(null);
                 }
@@ -756,23 +758,7 @@ public class TamilMovies extends Fragment {
                 userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(seguiregular);
                 userViewHolder.date.setTypeface(seguiregular);
-                if(itemmodel.getCommentscount()>0||itemmodel.getLikescount()>0){
-                    if(itemmodel.getLikescount()==0){
-                        userViewHolder.likescount.setVisibility(View.GONE);
-                    }else {
-                        userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"விருப்பு"));
-
-                    }
-                    if(itemmodel.getCommentscount()==0){
-                        userViewHolder.commentscount.setVisibility(View.GONE);
-                    }else {
-                        userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"கருத்து"));
-                    }
-                    userViewHolder.countlayout.setVisibility(View.VISIBLE);
-
-                }else {
-                    userViewHolder.countlayout.setVisibility(View.GONE);
-                }
+                if(itemmodel.getLikescount()==0){                         userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"விருப்பு"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"விருப்பு"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"கருத்து"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"கருத்து"));                     }                     userViewHolder.countlayout.setVisibility(View.VISIBLE);
                 if(itemmodel.getImage()!=null){
                     userViewHolder.item_image.setImageUrl(itemmodel.getImage(),mImageLoader);
                 }else {
@@ -787,23 +773,117 @@ public class TamilMovies extends Fragment {
                             case R.id.listlayout_taball:
 
                                 // Show a toast on clicking layout
-
-
-                                String type = ((ItemModel) modelList.get(position)).getQtype();
+                                String type = ((ItemModel) modelList.get(position)).getQtypemain();
+                                String qtype = ((ItemModel) modelList.get(position)).getQtype();
                                 String ids = ((ItemModel) modelList.get(position)).getId();
-                                if(itemmodel.getQtype().equals("Sponsered")||itemmodel.getQtype().equals("Sponsored")){
+
+
+
+                                if(type.equals("news")||type.equals("National")||type.equals("International")) {
+                                    Intent intent = new Intent(getActivity(), TamilNewsDescription.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("article")){
+                                    Intent intent = new Intent(getActivity(), TamilArticledescription.class);
+
+                                    intent.putExtra("ID", ids);
+                                    startActivity(intent);
+
+
+                                }else if (type.equals("doit")){
+                                    Intent intent = new Intent(getActivity(), DoitDescriptiontamil.class);
+                                    intent.putExtra("ID", ids);
+                                    startActivity(intent);
+
+                                }else if(type.equals("farming")){
+                                    Intent intent = new Intent(getActivity(), Farmingdescriptiontamil.class);
+                                    intent.putExtra("ID", ids);
+                                    startActivity(intent);
+
+                                }else if(type.equals("food")||type.equals("foodtip")){
+
+                                    if(type.equals("food")){
+                                        Intent intent = new Intent(getActivity(), FoodAndCookDescriptionPagetamil.class);
+                                        intent.putExtra("ID", ids);
+                                        startActivity(intent);
+                                    }else {
+                                        Intent intent = new Intent(getActivity(), TipsDescriptionTamil.class);
+                                        intent.putExtra("ID", ids);
+                                        startActivity(intent);
+                                    }
+
+                                }else if(type.equals("govt")){
+                                    Intent intent = new Intent(getActivity(), Govtdescriptiontamil.class);
+                                    intent.putExtra("ID", ids);
+                                    startActivity(intent);
+
+                                }else if(type.equals("health")){
+                                    Intent intent = new Intent(getActivity(), Healthdescriptiontamil.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("science")){
+                                    Intent intent = new Intent(getActivity(), ScienceandTechnologyDescriptiontamil.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("sports")){
+                                    Intent intent = new Intent(getActivity(), TamilSportsnewsDescription.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("travels")){
+                                    Intent intent = new Intent(getActivity(), TravelsDescriptiontamil.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("event")){
+                                    Intent intent = new Intent(getActivity(), TamilEventsDescription.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equalsIgnoreCase("columns")){
+                                    Intent intent = new Intent(getActivity(), Columnsdetailpage.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if (type.equals("columnist")){
+                                    Intent intent = new Intent(getActivity(), Columnistdetailtamil.class);
+                                    intent.putExtra("ID", ids);
+                                    startActivity(intent);
+                                }
+                                else if(type.equalsIgnoreCase("education")){
+                                    Intent intent = new Intent(getActivity(), EducationDescriptiontamil.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equals("lifestyle")){
+                                    Intent intent = new Intent(getActivity(), LifestyleDetail.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }else if(type.equalsIgnoreCase("theatre")){
+                                    Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);
+                                    intent.putExtra("ID", ids);
+                                    intent.putExtra("TITLE",itemmodel.getTitle());
+                                    intent.putExtra("URL","");
+                                    startActivity(intent);
+
+                                }
+                                else   if(itemmodel.getQtype().equals("Sponsered")||itemmodel.getQtype().equals("Sponsored")){
                                     if(itemmodel.getAds().startsWith("http://simpli")){
                                         Intent intent = new Intent(getActivity(), AdvertisementPageTamil.class);
                                         intent.putExtra("ID", itemmodel.getAds());
                                         startActivity(intent);
                                     }else {
-                                        Intent intent = new Intent(getActivity(), AdvertisementPage.class);                                             intent.putExtra("ID", itemmodel.getAds());  startActivity(intent);
+                                        Intent intent = new Intent(getActivity(), AdvertisementPage.class);
+                                        intent.putExtra("ID", itemmodel.getAds());
+                                        startActivity(intent);
                                     }
-                                }else {
-                                    Intent intent = new Intent(getActivity(), Theatre.class);
-                                    intent.putExtra("ID", ids);
-                                    startActivity(intent);
                                 }
+
+
 
 
                                 break;
@@ -819,162 +899,70 @@ public class TamilMovies extends Fragment {
                                 break;
                             case R.id.taball_likes:
                                 if(myprofileid!=null) {
-                                    if (post_likes_count == 1) {
-                                        userViewHolder.likes_button.setText("விருப்பு");
-                                        userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
-                                        userViewHolder.likes_button.setTypeface(seguiregular);
-                                        userViewHolder.likes_button.setTransformationMethod(null);
-                                        post_likes_count--;
-                                        // String f = itemmodel.getLikescount().toString();
+                                    StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            String res=response.toString();
+                                            res = res.replace(" ", "");
+                                            res = res.trim();
+                                            if(res.equalsIgnoreCase("yes")){
+                                                System.out.println(itemmodel.getId());
+                                                if(itemmodel.getCounttype()==1){
+                                                    like_finalvalues=itemmodel.getLikescount();
+                                                }else {
+                                                    like_finalvalues=itemmodel.getLikescount()+1;
+                                                }
 
-                                        int i =  itemmodel.getLikescount();
-                                        String s = "1";
-                                        int j = Integer.parseInt(s);
+                                                userViewHolder.likes_button.setText("விருப்பு");
+                                                userViewHolder.likes_button.setTextColor(getActivity().getResources().getColor(R.color.red));
+                                                userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.likered,0,0,0);
+                                                userViewHolder.likes_button.setTypeface(seguiregular);
+                                                userViewHolder.likes_button.setTransformationMethod(null);
+                                            }else if(res.equalsIgnoreCase("no")){
+                                                if(itemmodel.getCounttype()==1){
+                                                    like_finalvalues=itemmodel.getLikescount()-1;
+                                                }else {
+                                                    like_finalvalues=itemmodel.getLikescount();
+                                                }
+                                                System.out.println(itemmodel.getId());
 
-                                        int result = i - j;
-                                        String res = String.valueOf(result).toString();
-                                        if (result==-1||result==0) {
-                                            userViewHolder.likescount.setVisibility(View.GONE);
-                                            userViewHolder.countlayout.setVisibility(View.GONE);
+                                                userViewHolder.likes_button.setText("விருப்பு");
+                                                userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.like,0,0,0);
+                                                userViewHolder.likes_button.setTypeface(seguiregular);
+                                                userViewHolder.likes_button.setTransformationMethod(null);
+                                            }
+                                            if(like_finalvalues==0||like_finalvalues==-1){
+                                                System.out.println(itemmodel.getId());
+                                                userViewHolder.    likescount.setVisibility(View.GONE);
+                                            }else {
+                                                System.out.println(itemmodel.getId());
+                                                System.out.println(like_finalvalues);
+                                                userViewHolder.    countlayout.setVisibility(View.VISIBLE);
+                                                userViewHolder.    likescount.setVisibility(View.VISIBLE);
+                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "விருப்பு"));
 
-                                        } else {
-                                            userViewHolder.likescount.setVisibility(View.VISIBLE);
-                                            userViewHolder.countlayout.setVisibility(View.VISIBLE);
-                                            userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount() + "&nbsp;" + "விருப்பு"));
+                                                like_finalvalues=0;
+                                            }
                                         }
-                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLLIKES,
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String s) {
-                                                        //Disimissing the progress dialog
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
 
-                                                        //Showing toast message of the response
-                                                        if (s.equalsIgnoreCase("no")) {
-                                                            //Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show() ;
-                                                        } else {
-                                                            Log.e("response:", s);
+                                        }
+                                    }){
+                                        protected Map<String,String> getParams()throws AuthFailureError{
+                                            Map<String,String> param=new Hashtable<String, String>();
+                                            String ids=itemmodel.getId();
+                                            param.put(QID, ids);
+                                            param.put(USERID, myprofileid);
+                                            param.put(QTYPE, itemmodel.getQtypemain());
+                                            return param;
+                                        }
+                                    };
+                                    RequestQueue likesqueue=Volley.newRequestQueue(getActivity());
+                                    likes.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-                                                        }
-
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError volleyError) {
-                                                        //Dismissing the progress dialog
-                                                        //loading.dismiss();
-
-                                                        //Showing toast
-                                                        //  Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                                                    }
-                                                }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-
-                                                Map<String, String> params = new Hashtable<String, String>();
-                                                String postid = itemmodel.getId();
-                                                //Adding parameters
-                                                if (postid != null) {
-
-
-                                                    params.put(QID, postid);
-                                                    params.put(USERID, myprofileid);
-                                                    params.put(QTYPE, itemmodel.getQtypemain());
-                                                } else {
-
-
-                                                }
-
-
-                                                return params;
-                                            }
-                                        };
-
-                                        //Creating a Request Queue
-                                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-
-                                        //Adding request to the queue
-                                        requestQueue.add(stringRequest);
-
-                                    } else {
-                                        userViewHolder.likes_button.setText("விருப்பு");
-                                        userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
-                                        userViewHolder.likes_button.setTypeface(seguiregular);
-                                        userViewHolder.likes_button.setTransformationMethod(null);
-                                        post_likes_count++;
-
-
-
-                                        int i = itemmodel.getLikescount();
-                                        String s = "1";
-                                        int j = Integer.parseInt(s);
-
-                                        Integer result = i + j;
-                                        String res = result.toString();
-                                        userViewHolder.likescount.setVisibility(View.VISIBLE);
-                                        userViewHolder.countlayout.setVisibility(View.VISIBLE);
-                                        userViewHolder.likescount.setText(Html.fromHtml(res + "&nbsp;" + "விருப்பு "));
-
-                                        StringRequest stringRequest = new StringRequest(Request.Method.POST,URLLIKES,
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String s) {
-                                                        //Disimissing the progress dialog
-
-                                                        //Showing toast message of the response
-                                                        if (s.equalsIgnoreCase("no")) {
-                                                            //Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show() ;
-                                                        } else {
-                                                            Log.e("response:", s);
-
-
-                                                        }
-
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError volleyError) {
-                                                        //Dismissing the progress dialog
-                                                        //loading.dismiss();
-
-                                                        //Showing toast
-                                                        //  Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                                                    }
-                                                }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-                                                //Converting Bitmap to String
-
-                                                //Getting Image Name
-
-                                                //Creating parameters
-                                                Map<String, String> params = new Hashtable<String, String>();
-                                                String postid = itemmodel.getId();
-                                                //Adding parameters
-                                                if (postid != null) {
-
-
-                                                    params.put(QID, postid);
-                                                    params.put(USERID, myprofileid);
-                                                    params.put(QTYPE, itemmodel.getQtypemain());
-                                                } else {
-
-
-                                                }
-
-
-                                                return params;
-                                            }
-                                        };
-
-                                        //Creating a Request Queue
-                                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-
-                                        //Adding request to the queue
-                                        requestQueue.add(stringRequest);
-                                        //Toast.makeText(getActivity(),count,Toast.LENGTH_LONG).show();
-                                    }
+                                    likesqueue.add(likes);
 
                                 }else {
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -1154,8 +1142,11 @@ public class TamilMovies extends Fragment {
                             case R.id.taball_sharepost:
                                 Intent sendIntent = new Intent();
                                 sendIntent.setAction(Intent.ACTION_SEND);
-                                 sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle()+ "\n" + itemmodel.getSharingurl()+"\n"+"\n"+"\n"+"Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
-                                sendIntent.setType("text/plain");
+                                if(itemmodel.getSharingurl().equals("")){
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle()+ "\n" + itemmodel.getAds()+"\n"+"\n"+"\n"+"Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+                                }else {
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, itemmodel.getTitle() + "\n" + itemmodel.getSharingurl() + "\n" + "\n" + "\n" + "Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+                                }                                sendIntent.setType("text/plain");
                                 startActivity(Intent.createChooser(sendIntent, "Share using"));
 
                                 break;
@@ -1252,7 +1243,7 @@ public class TamilMovies extends Fragment {
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
             qtypevalue=getArguments().getString("QTYPE");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1621,7 +1612,7 @@ public class TamilMovies extends Fragment {
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();

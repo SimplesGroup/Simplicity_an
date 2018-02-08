@@ -30,6 +30,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import java.util.Hashtable;
 import java.util.Map;
 
+import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
+
 public class GoogleSignintwo extends AppCompatActivity implements  GoogleApiClient.OnConnectionFailedListener {
 
 
@@ -55,7 +57,7 @@ public class GoogleSignintwo extends AppCompatActivity implements  GoogleApiClie
     private String KEY_NAME = "name";
     private String KEY_EMAIL= "email";
     private String KEY_GENDER = "gender";
-
+    public static final String Language = "lamguage";
     private String KEY_PROFILEIMAGE = "image";
     String contentid;
 String UPLOAD_CHECK_USER="http://simpli-city.in/request2.php?rtype=checkuser&key=simples";
@@ -66,7 +68,7 @@ String activity,gcmids;
     public static final String USERMAILID= "myprofileemail";
     public static final String USEREMAIL= "myprofileemail";
 ProgressDialog pdialog;
-    String username,userimage,user_email;
+    String username,userimage,user_email,language_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,7 @@ ProgressDialog pdialog;
         sharedpreferences = getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
         gcmids=sharedpreferences.getString(GcmId,"");
+        language_data=sharedpreferences.getString(Language,"");
         Log.e("GCMID:",gcmids);
         if (sharedpreferences.contains(Activity)) {
 
@@ -173,8 +176,13 @@ Log.e("UserID","empstart"+response.toString());
                                         // Toast.makeText(SigninComplete.this, sharedpreferences.getString(GcmId,""), Toast.LENGTH_SHORT).show();
                                     }
                                     Log.e("EMAIL,","data"+user_email+userimage+username);
-                                    Intent main=new Intent(getApplicationContext(),MainPageEnglish.class);
-                                    startActivity(main);
+                                    if(language_data.equals("English")) {
+                                        Intent main = new Intent(getApplicationContext(), MainPageEnglish.class);
+                                        startActivity(main);
+                                    }else {
+                                        Intent main = new Intent(getApplicationContext(), MainPageTamil.class);
+                                        startActivity(main);
+                                    }
                                 }
 
                             }
@@ -256,8 +264,13 @@ Log.e("UserID","empty"+res);
                         String emails=array[3].toString();
                         editor.putString(USERMAILID,array[3].toString().trim());
                         editor.commit();
-                        Intent main=new Intent(getApplicationContext(),MainPageEnglish.class);
-                        startActivity(main);
+                        if(language_data.equals("English")) {
+                            Intent main = new Intent(getApplicationContext(), MainPageEnglish.class);
+                            startActivity(main);
+                        }else {
+                            Intent main = new Intent(getApplicationContext(), MainPageTamil.class);
+                            startActivity(main);
+                        }
                     }
 
 
@@ -272,9 +285,8 @@ Log.e("UserID","empty"+res);
             }){
                 protected Map<String,String> getParams() throws AuthFailureError{
                     Map<String ,String> params=new Hashtable<String, String>();
-Log.e("Email",acct.getEmail());
+Log.e("Email",gcmids);
                     params.put(EMAILID_CHECK,acct.getEmail());
-
                     params.put(KEY_GCM,gcmids);
                     return params;
                 }

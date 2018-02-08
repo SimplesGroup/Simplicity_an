@@ -93,7 +93,7 @@ TextView toolbartitle,notification_batge_count;
 requestQueue=Volley.newRequestQueue(this);
 		String fontPathbarkendina = "fonts/Barkentina.otf";
 		barkentina = Typeface.createFromAsset(MainActivity.this.getAssets(), fontPathbarkendina);
-		String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+		String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
 		Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
 		toolbartitle=(TextView)findViewById(R.id.simplicitynewtitle);

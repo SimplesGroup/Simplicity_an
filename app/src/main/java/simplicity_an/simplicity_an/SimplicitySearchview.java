@@ -782,7 +782,7 @@ private String video;
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPaths = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPaths = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPaths);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(SimplicitySearchview.this).getImageLoader();

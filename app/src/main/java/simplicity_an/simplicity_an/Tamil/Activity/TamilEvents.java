@@ -48,14 +48,12 @@ import java.util.Map;
 
 import simplicity_an.simplicity_an.AddNewEvent;
 import simplicity_an.simplicity_an.AppControllers;
-import simplicity_an.simplicity_an.Explore.ExploreMain;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.MySingleton;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Tamil.FragPoojaTamil;
 import simplicity_an.simplicity_an.Tamil.FragmenteventTomorrowTamil;
-import simplicity_an.simplicity_an.Tamil.TamilEntertainment;
 
 /**
  * Created by kuppusamy on 2/11/2016.
@@ -165,7 +163,7 @@ public class TamilEvents extends AppCompatActivity {
         }else {
 
         }
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         mCoordinator = (CoordinatorLayout) findViewById(R.id.root_coordinator);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
@@ -177,8 +175,9 @@ back=(ImageButton)findViewById(R.id.btn_eventback);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent search_intent = new Intent(getApplicationContext(), TamilEntertainment.class);
-                startActivity(search_intent);
+                Intent entairnment=new Intent(getApplicationContext(), MainPageTamil.class);
+                entairnment.putExtra("ID","2");
+                startActivity(entairnment);
                 overridePendingTransition(R.anim.righttoleft, R.anim.righttoleft);
             }
         });
@@ -196,8 +195,9 @@ back.setOnClickListener(new View.OnClickListener() {
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent menuevent=new Intent(getApplicationContext(),ExploreMain.class);
-                startActivity(menuevent);
+                Intent entairnment=new Intent(getApplicationContext(), MainPageTamil.class);
+                entairnment.putExtra("ID","4");
+                startActivity(entairnment);
                 overridePendingTransition(R.anim.righttoleft, R.anim.righttoleft);
             }
         });
@@ -206,8 +206,9 @@ back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                    Intent notification_page=new Intent(TamilEvents.this,MainPageTamil.class);
-                    startActivity(notification_page);
+                Intent entairnment=new Intent(getApplicationContext(), MainPageTamil.class);
+                entairnment.putExtra("ID","1");
+                startActivity(entairnment);
                 overridePendingTransition(R.anim.righttoleft, R.anim.righttoleft);
 
             }
@@ -228,11 +229,11 @@ addnewevent.setOnClickListener(new View.OnClickListener() {
         }
     }
 });
-        back.setImageResource(R.mipmap.citytamil);
+       /* back.setImageResource(R.mipmap.citytamil);
         addnewevent.setImageResource(R.mipmap.happeninigtamil);
         menu.setImageResource(R.mipmap.exploretamil);
         search.setImageResource(R.mipmap.audiotamil);
-        notification.setImageResource(R.mipmap.moretamil);
+        notification.setImageResource(R.mipmap.moretamil);*/
 
         if(colorcodes.equalsIgnoreCase("#383838")){
             addnewevent.setBackgroundResource(R.color.theme1button);

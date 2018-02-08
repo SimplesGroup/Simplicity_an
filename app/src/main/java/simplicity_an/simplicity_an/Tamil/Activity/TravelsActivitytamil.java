@@ -79,7 +79,7 @@ public class TravelsActivitytamil extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.travelsactivity);
-        String fontPath = "fonts/robotoSlabRegular.ttf";
+        String fontPath = "fonts/Lora-Regular.ttf";;
        // RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
         notification_batge_count=(TextView)findViewById(R.id.text_batchvalue_main);
         notification_batge_count.setVisibility(View.GONE);

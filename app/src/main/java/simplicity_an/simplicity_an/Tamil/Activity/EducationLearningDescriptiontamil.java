@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -222,13 +223,17 @@ public class EducationLearningDescriptiontamil extends AppCompatActivity {
         comment = (ImageButton) findViewById(R.id.btn_4);
         back = (ImageButton) findViewById(R.id.btn_1);
         description = (WebView) findViewById(R.id.textView_desc);
+        description.getSettings().setLoadsImagesAutomatically(true);
+        description.getSettings().setPluginState(WebSettings.PluginState.ON);
+        description.getSettings().setAllowFileAccess(true);
+        description.getSettings().setJavaScriptEnabled(true);
         pdialog = new ProgressDialog(this);
         pdialog.show();
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         // description=(TextView)findViewById(R.id.textView_desc);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         tv.setTypeface(tf);
 
@@ -343,7 +348,7 @@ public class EducationLearningDescriptiontamil extends AppCompatActivity {
                 //model.setName(obj.getString("publisher_name"));
                 model.setDescription(obj.getString("description"));
                 model.setTypeid(obj.getInt("type"));
-                model.setPdate(obj.getString("ptime"));
+                model.setPdate(obj.getString("pdate"));
                 model.setTitle(obj.getString("title"));
                 //model.setPublisher(obj.getString("pub_designation"));
                  /* get the newsnew from which website */
@@ -362,7 +367,7 @@ public class EducationLearningDescriptiontamil extends AppCompatActivity {
                 thump.setImageUrl(image, mImageLoader);
                 //thump.setImageUrl(image, imageLoader);
                 String by = "By&nbsp;";
-                pdate.setText(Html.fromHtml(by) + "" + obj.getString("source") + "\n" + obj.getString("ptime"));
+                pdate.setText(Html.fromHtml(by) + "" + obj.getString("source") + "\n" + obj.getString("pdate"));
                 String descrition = obj.isNull("description") ? null : obj
                         .getString("description");
                 //  String ss = descrition;
@@ -772,7 +777,7 @@ public class EducationLearningDescriptiontamil extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1139,7 +1144,7 @@ public class EducationLearningDescriptiontamil extends AppCompatActivity {
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();

@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -21,10 +19,10 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.onesignal.OneSignal;
 
-import simplicity_an.simplicity_an.Explore.ExploreMain;
 import simplicity_an.simplicity_an.MainEnglish.CityFragment;
 import simplicity_an.simplicity_an.MainEnglish.EntertainmentFragment;
 import simplicity_an.simplicity_an.MainEnglish.HappeningFrag;
@@ -35,7 +33,7 @@ import simplicity_an.simplicity_an.MainEnglish.SettingsFragment;
  * Created by kuppusamy on 5/18/2017.
  */
 
-public class MainPageEnglish extends AppCompatActivity implements Tab_All.OnFragmentInteractionListener,TabRadio.OnFragmentInteractionListener,TabMusic.OnFragmentInteractionListener, TabEntertainmentAll.OnFragmentInteractionListener,TabEntertainmentMusic.OnFragmentInteractionListener,TabentertainmentRadio.OnFragmentInteractionListener{
+public class MainPageEnglish extends AppCompatActivity implements Tab_All.OnFragmentInteractionListener,TabRadio.OnFragmentInteractionListener,TabMusic.OnFragmentInteractionListener, TabEntertainmentAll.OnFragmentInteractionListener,TabEntertainmentMusic.OnFragmentInteractionListener,TabentertainmentRadio.OnFragmentInteractionListener,Tabnews.OnFragmentInteractionListener{
     ImageButton city,happening,search,audio_video,settings,explore;
 
     LinearLayout footerbar;
@@ -52,6 +50,9 @@ public class MainPageEnglish extends AppCompatActivity implements Tab_All.OnFrag
     String id,radio_title,radio_url;
     RelativeLayout topLevelLayout;
     private static int SPLASH_TIME_OUT = 4000;
+
+    boolean doubleBackToExitPressedOnce = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +95,7 @@ public class MainPageEnglish extends AppCompatActivity implements Tab_All.OnFrag
         audio_video=(ImageButton)findViewById(R.id.btn_versiontwoexplore);
         settings=(ImageButton)findViewById(R.id.btn_versiontwonotifications);
 topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
-        topLevelLayout.setOnTouchListener(new View.OnTouchListener(){
+       /* topLevelLayout.setOnTouchListener(new View.OnTouchListener(){
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -106,10 +107,10 @@ topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
       topLevelLayout.setVisibility(View.VISIBLE);
         new Handler().postDelayed(new Runnable() {
 
-            /*
+            *//*
              * Showing splash screen with a timer. This will be useful when you
              * want to show case your app logo / company
-             */
+             *//*
 
             @Override
             public void run() {
@@ -120,7 +121,7 @@ topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
                 }
 
             }
-        }, SPLASH_TIME_OUT);
+        }, SPLASH_TIME_OUT);*/
         city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -224,13 +225,13 @@ topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
                     city.setBackgroundResource(R.color.mytransparent);
                     audio_video.setBackgroundResource(R.color.mytransparent);
                     settings.setBackgroundResource(R.color.mytransparent);
-              Intent in = new Intent(getApplicationContext(), ExploreMain.class);
-                    startActivity(in);
-         /*   android.app.FragmentManager fragmentManager = getFragmentManager();
+             /* Intent in = new Intent(getApplicationContext(), ExploreMain.class);
+                    startActivity(in);*/
+
                 MainFrag fragment = new MainFrag();
-                android.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frame_layout, fragment);
-                fragmentTransaction.commit();*/
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, fragment);
+                transaction.commit();
                     if (colorcodes.length() == 0) {
 
                     } else {
@@ -364,11 +365,11 @@ topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
                 }
             }
         });
-if(radio_url!=null){
+/*if(radio_url!=null){
     onFragmentInteraction(radio_url,radio_title);
 }else {
 
-}
+}*/
         if(id!=null){
             changefrag();
         }else {
@@ -453,9 +454,9 @@ if(radio_url!=null){
         });*/
 
     }
-    public void onFragmentInteraction(String playurl, String title) {
+    public void onFragmentInteraction(String playurl, String title,String image) {
         MusicplayerBottom secondFragment = (MusicplayerBottom) getSupportFragmentManager().findFragmentById(R.id.musicbottomplayer);
-        secondFragment.PlaySong(playurl, title );
+        secondFragment.PlaySong(playurl, title ,image);
     }
 
     public void Check(){
@@ -472,7 +473,7 @@ if(radio_url!=null){
             audio_video.setBackgroundResource(R.color.mytransparent);
             city.setBackgroundResource(R.color.mytransparent);
             FragmentManager fragmentManager = getSupportFragmentManager();
-            SettingsFragment fragment = new SettingsFragment();
+            CityFragment fragment = new CityFragment();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frame_layout, fragment);
             fragmentTransaction.commit();
@@ -595,9 +596,123 @@ if(radio_url!=null){
                     }
                 }
             }
-        }else {
+        }else if(id.equals("4")){
+            happening.setBackgroundResource(R.color.mytransparent);
+            city.setBackgroundResource(R.color.mytransparent);
+            audio_video.setBackgroundResource(R.color.mytransparent);
+            settings.setBackgroundResource(R.color.mytransparent);
+            Fragment selectedFragment = null;
+            selectedFragment = MainFrag.newInstance();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, selectedFragment);
+            transaction.commit();
+            if(colorcodes.length()==0){
+
+            }else {
+                if(colorcodes.equalsIgnoreCase("004")){
+                    Log.e("Msg","hihihi");
+                }else {
+                    if(colorcodes.equalsIgnoreCase("#383838")){
+                       search.setBackgroundResource(R.color.theme1button);
+                    }else if(colorcodes.equalsIgnoreCase("#59247c")){
+                        search.setBackgroundResource(R.color.theme2);
+                    }else if(colorcodes.equalsIgnoreCase("#1d487a")){
+                        search.setBackgroundResource(R.color.theme3);
+                    }else if(colorcodes.equalsIgnoreCase("#7A4100")){
+                        search.setBackgroundResource(R.color.theme4);
+                    }else if(colorcodes.equalsIgnoreCase("#6E0138")){
+                        search.setBackgroundResource(R.color.theme5);
+                    }else if(colorcodes.equalsIgnoreCase("#00BFD4")){
+                        search.setBackgroundResource(R.color.theme6);
+                    }else if(colorcodes.equalsIgnoreCase("#185546")){
+                        search.setBackgroundResource(R.color.theme7);
+                    }else if(colorcodes.equalsIgnoreCase("#D0A06F")){
+                        search.setBackgroundResource(R.color.theme8);
+                    }else if(colorcodes.equalsIgnoreCase("#82C6E6")){
+                        search.setBackgroundResource(R.color.theme9);
+                    }else if(colorcodes.equalsIgnoreCase("#339900")){
+                        search.setBackgroundResource(R.color.theme10);
+                    }else if(colorcodes.equalsIgnoreCase("#CC9C00")){
+                        search.setBackgroundResource(R.color.theme11);
+                    }else if(colorcodes.equalsIgnoreCase("#00B09B")){
+                        search.setBackgroundResource(R.color.theme12);
+                    }
+                }
+            }
+        }
+        else if(id.equals("5")){
+            happening.setBackgroundResource(R.color.mytransparent);
+            search.setBackgroundResource(R.color.mytransparent);
+            audio_video.setBackgroundResource(R.color.mytransparent);
+            settings.setBackgroundResource(R.color.mytransparent);
+            Fragment selectedFragment = null;
+            selectedFragment = SettingsFragment.newInstance();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, selectedFragment);
+            transaction.commit();
+            if(colorcodes.length()==0){
+
+            }else {
+                if(colorcodes.equalsIgnoreCase("004")){
+                    Log.e("Msg","hihihi");
+                }else {
+                    if(colorcodes.equalsIgnoreCase("#383838")){
+                        city.setBackgroundResource(R.color.theme1button);
+                    }else if(colorcodes.equalsIgnoreCase("#59247c")){
+                        city.setBackgroundResource(R.color.theme2);
+                    }else if(colorcodes.equalsIgnoreCase("#1d487a")){
+                        city.setBackgroundResource(R.color.theme3);
+                    }else if(colorcodes.equalsIgnoreCase("#7A4100")){
+                        city.setBackgroundResource(R.color.theme4);
+                    }else if(colorcodes.equalsIgnoreCase("#6E0138")){
+                        city.setBackgroundResource(R.color.theme5);
+                    }else if(colorcodes.equalsIgnoreCase("#00BFD4")){
+                        city.setBackgroundResource(R.color.theme6);
+                    }else if(colorcodes.equalsIgnoreCase("#185546")){
+                        city.setBackgroundResource(R.color.theme7);
+                    }else if(colorcodes.equalsIgnoreCase("#D0A06F")){
+                        city.setBackgroundResource(R.color.theme8);
+                    }else if(colorcodes.equalsIgnoreCase("#82C6E6")){
+                        city.setBackgroundResource(R.color.theme9);
+                    }else if(colorcodes.equalsIgnoreCase("#339900")){
+                        city.setBackgroundResource(R.color.theme10);
+                    }else if(colorcodes.equalsIgnoreCase("#CC9C00")){
+                        city.setBackgroundResource(R.color.theme11);
+                    }else if(colorcodes.equalsIgnoreCase("#00B09B")){
+                        city.setBackgroundResource(R.color.theme12);
+                    }
+                }
+            }
+        }
+        else {
 
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            //super.onBackPressed();
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
+            startActivity(intent);
+            finish();
+            System.exit(0);
+            return ;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 
 

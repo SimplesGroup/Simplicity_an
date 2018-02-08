@@ -241,7 +241,7 @@ public class JobsActivitytamil extends AppCompatActivity {
         }
         getData();
         nameslabel_coimbatore=(TextView)findViewById(R.id.namelabel_jobscoimbatore);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         nameslabel_coimbatore.setTypeface(tf);
         mCoordinator = (CoordinatorLayout) findViewById(R.id.root_coordinator);

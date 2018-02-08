@@ -135,35 +135,41 @@ mImageLoader= MySingleton.getInstance(getApplicationContext()).getImageLoader();
         city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                entairnment.putExtra("ID","5");
+                startActivity(entairnment);
             }
         });
         happening.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent happening=new Intent(getApplicationContext(),Events.class);
-                startActivity(happening);
+                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                entairnment.putExtra("ID","3");
+                startActivity(entairnment);
             }
         });
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent happening=new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(happening);
+                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                entairnment.putExtra("ID","4");
+                startActivity(entairnment);
             }
         });
         audiovideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent happening=new Intent(getApplicationContext(),EntertainmentVersiontwo.class);
-                startActivity(happening);
+                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                entairnment.putExtra("ID","2");
+                startActivity(entairnment);
             }
         });
         more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent happening=new Intent(getApplicationContext(),Settings.class);
-                startActivity(happening);
+                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                entairnment.putExtra("ID","1");
+                startActivity(entairnment);
             }
         });
         camera.setOnClickListener(new View.OnClickListener() {

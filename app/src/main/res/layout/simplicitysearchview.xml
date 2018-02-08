@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:src="@mipmap/happening"
+            android:src="@mipmap/events"
             android:gravity="center_horizontal"
             />
         <ImageButton android:id="@+id/btn_versiontwosearch"
@@ -112,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:src="@mipmap/entertainment"
+            android:src="@mipmap/specials"
             android:gravity="center_horizontal"
             />
         <RelativeLayout

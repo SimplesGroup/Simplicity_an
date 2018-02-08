@@ -110,7 +110,7 @@ public class DirectoriesItemListActivity extends AppCompatActivity {
             }
         });
 
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         Toolbartitle=(TextView)findViewById(R.id.toolbar_title_list);
         Toolbartitle.setTypeface(tf);

@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -28,11 +27,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -52,6 +53,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,7 +68,6 @@ import java.util.Map;
 import simplicity_an.simplicity_an.AdvertisementPage;
 import simplicity_an.simplicity_an.AppControllers;
 import simplicity_an.simplicity_an.DividerItemDecoration;
-import simplicity_an.simplicity_an.EducationDescription;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.MySingleton;
 import simplicity_an.simplicity_an.OnLoadMoreListener;
@@ -78,8 +79,11 @@ import simplicity_an.simplicity_an.SigninpageActivity;
  * Created by kuppusamy on 8/4/2016.
  */
 public class EducationDescriptiontamil extends AppCompatActivity {
-    TextView tv, articleoftheday, sourcelinknews, pdate, sourcelinksimplicity;//description;
+    TextView tv,  sourcelinknews, pdate, sourcelinksimplicity;
     NetworkImageView thump;
+    ImageView reporter_profile_image;
+    TextView source_reporter_name,sourcereprterdivider,hashtags_title,image_description,short_description,title_category,textview_date;
+
     WebView description;
     private final String TAG_REQUEST = "MY_TAG";
     String searchnonitiid;
@@ -148,7 +152,7 @@ public class EducationDescriptiontamil extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.educationnewsdescription);
+        setContentView(R.layout.newsdescriptiontamil);
         queue = MySingleton.getInstance(this.getApplicationContext()).
                 getRequestQueue();
         sharedpreferences =  getSharedPreferences(mypreference,
@@ -255,6 +259,14 @@ public class EducationDescriptiontamil extends AppCompatActivity {
 
         tv = (TextView) findViewById(R.id.textView_titlename);
         pdate = (TextView) findViewById(R.id.textView_date);
+        source_reporter_name=(TextView)findViewById(R.id.textView_sourcename) ;
+        textview_date=(TextView) findViewById(R.id.textView_datenew);
+        sourcereprterdivider=(TextView)findViewById(R.id.centerdivider);
+        hashtags_title=(TextView) findViewById(R.id.textView_hashtags);
+        reporter_profile_image=(ImageView)findViewById(R.id.profile_reporter);
+        image_description=(TextView)findViewById(R.id.textView_photodescription);
+        short_description=(TextView)findViewById(R.id.textView_shortdescription);
+        title_category=(TextView)findViewById(R.id.textView_qtypename) ;
         sourcelinknews = (TextView) findViewById(R.id.sourcelink);
         sourcelinksimplicity = (TextView) findViewById(R.id.sourcelinkredsimplicity);
         comment = (ImageButton) findViewById(R.id.btn_4);
@@ -263,16 +275,26 @@ public class EducationDescriptiontamil extends AppCompatActivity {
         back = (ImageButton) findViewById(R.id.btn_back);
         favourite = (ImageButton) findViewById(R.id.btn_2);
         description = (WebView) findViewById(R.id.textView_desc);
+        description.getSettings().setLoadsImagesAutomatically(true);
+        description.getSettings().setPluginState(WebSettings.PluginState.ON);
+        description.getSettings().setAllowFileAccess(true);
+        description.getSettings().setJavaScriptEnabled(true);
         pdialog = new ProgressDialog(this);
         pdialog.show();
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        // description=(TextView)findViewById(R.id.textView_desc);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
-        tv.setTypeface(tf);
 
+        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";;
+        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
+        String playfair = "fonts/robotoSlabRegular.ttf";
+        Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
+
+        tv.setTypeface(tf_play);
+        hashtags_title.setTypeface(tf);
+        short_description.setTypeface(tf);
+        textview_date.setTypeface(tf);
+        title_category.setTypeface(tf);
         sourcelinknews.setTypeface(tf);
         sourcelinksimplicity.setTypeface(tf);
         pdate.setTypeface(tf);
@@ -481,8 +503,20 @@ public class EducationDescriptiontamil extends AppCompatActivity {
 
                 model.setDescription(obj.getString("description"));
                 model.setTypeid(obj.getInt("type"));
-                model.setPdate(obj.getString("ptime"));
+                model.setPdate(obj.getString("pdate"));
                 model.setTitle(obj.getString("title"));
+
+                model.setShortdescription(obj.getString("short_description"));
+                model.setReporterid(obj.getString("reporter_id"));
+                model.setReportername(obj.getString("reporter_name"));
+                model.setReporterimage(obj.getString("reporter_image"));
+                model.setReporterurl(obj.getString("reporter_url"));
+                model.setPhotocreditid(obj.getString("photo_credits_id"));
+                model.setPhotocreditimage(obj.getString("photo_credits_image"));
+                model.setPhotocreditname(obj.getString("photo_credits_name"));
+                model.setPhotocrediturl(obj.getString("photo_credits_url"));
+
+
 
                 model.setSource(obj.getString("source"));
                 tv.setText(Html.fromHtml(obj.getString("title")));
@@ -496,8 +530,30 @@ public class EducationDescriptiontamil extends AppCompatActivity {
                 thump.setErrorImageResId(R.drawable.iconlogo);
                 thump.setImageUrl(image, mImageLoader);
                 String by = "By&nbsp;";
-                pdate.setText(Html.fromHtml(by) + "" + obj.getString("source") + "\n" + obj.getString("pdate"));
 
+                image_description.setText("");
+                short_description.setText(obj.getString("short_description"));
+                hashtags_title.setText("");
+                title_category.setText(obj.getString("qtype"));
+                String reporterimage=obj.getString("reporter_image");
+                if(reporterimage.equals("null")||reporterimage.equals("")){
+
+                }else {
+                    Picasso.with(getApplicationContext())
+                            .load(reporterimage)
+                            .centerCrop()
+                            .resize(40, 40)
+                            .into(reporter_profile_image);
+                }
+
+               if (obj.getString("reporter_name").equals("") || obj.getString("reporter_name").equals("null")) {                     source_reporter_name.setText(Html.fromHtml(obj.getString("source")));                 } else {                     if(obj.getString("source").equals("")){                         source_reporter_name.setText(Html.fromHtml(obj.getString("reporter_name")+"&nbsp;"));                     }else {                         source_reporter_name.setText(Html.fromHtml(obj.getString("reporter_name") + "&nbsp;"+"|"+"&nbsp;"+obj.getString("source")));                     }                  }
+                pdate.setText(Html.fromHtml( obj.getString("source")));
+                textview_date.setText(obj.getString("pdate"));
+                if(short_description!=null){
+                    short_description.setText(obj.getString("short_description"));
+                }else {
+                    short_description.setVisibility(View.GONE);
+                }
                /* if(obj.getString("source")==""||obj.getString("source").equalsIgnoreCase("null")){
                     pdate.setText(  obj.getString("pdate"));
                 }else {
@@ -506,7 +562,7 @@ public class EducationDescriptiontamil extends AppCompatActivity {
 
                 String descrition = obj.isNull("description") ? null : obj
                         .getString("description");
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 String fonts="<html>\n" +
                         "\t<head>\n" +
@@ -583,16 +639,23 @@ public class EducationDescriptiontamil extends AppCompatActivity {
                     }
                 });
 
-                if (favcount == 1) {
-                    favourite.setImageResource(R.mipmap.likered);
-                } else {
-                    favourite.setImageResource(R.mipmap.like);
-                }
+                if (favcount == 1) {                     favourite.setImageResource(R.mipmap.likered);                     favourite.setTag("heartfullred");                 } else {                    favourite.setImageResource(R.mipmap.like);                     favourite.setTag("heart");                 }
                 favourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         if(myprofileid!=null) {
+                            String backgroundImageName = String.valueOf(favourite.getTag());
+                            Log.e("RUN","with"+backgroundImageName);
+                            if(backgroundImageName.equals("heart")){
+                                favourite.setImageResource(R.mipmap.likered);
+                                favourite.setTag("heartfullred");
+                            }else if(backgroundImageName.equals("heartfullred")) {
+                                favourite.setImageResource(R.mipmap.like);
+                                favourite.setTag("heart");
+                            }else {
+
+                            }
                             StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
@@ -600,12 +663,7 @@ public class EducationDescriptiontamil extends AppCompatActivity {
                                     res = res.replace(" ", "");
                                     res = res.trim();
                                     Log.e("LIke",res.toString());
-                                    if(res.equalsIgnoreCase("yes")){
-                                        //  System.out.println(itemmodel.getId());
-                                        favourite.setImageResource(R.mipmap.likered);
-                                    }else if(res.equalsIgnoreCase("no")){
-                                        favourite.setImageResource(R.mipmap.like);
-                                    }
+                                    if(res.equalsIgnoreCase("yes")){                                          favourite.setImageResource(R.mipmap.likered);                                         favourite.setTag("heartfullred");                                     }else if(res.equalsIgnoreCase("no")){                                        favourite.setImageResource(R.mipmap.like);                                         favourite.setTag("heart");                                     }
 
                                 }
                             }, new Response.ErrorListener() {
@@ -722,7 +780,88 @@ public class EducationDescriptiontamil extends AppCompatActivity {
 
         private int favcount;
         private String shareurl;
+        String shortdescription,reporterid,reportername,reporterurl,reporterimage;
+        String photodescription,photocreditid,photocreditname,photocreditimage,photocrediturl;
 
+        public String getShortdescription() {
+            return shortdescription;
+        }
+
+        public void setShortdescription(String shortdescription) {
+            this.shortdescription = shortdescription;
+        }
+
+        public String getReporterid() {
+            return reporterid;
+        }
+
+        public void setReporterid(String reporterid) {
+            this.reporterid = reporterid;
+        }
+
+        public String getReportername() {
+            return reportername;
+        }
+
+        public void setReportername(String reportername) {
+            this.reportername = reportername;
+        }
+
+        public String getReporterimage() {
+            return reporterimage;
+        }
+
+        public void setReporterimage(String reporterimage) {
+            this.reporterimage = reporterimage;
+        }
+
+        public String getReporterurl() {
+            return reporterurl;
+        }
+
+        public void setReporterurl(String reporterurl) {
+            this.reporterurl = reporterurl;
+        }
+
+        public String getPhotocreditid() {
+            return photocreditid;
+        }
+
+        public void setPhotocreditid(String photocreditid) {
+            this.photocreditid = photocreditid;
+        }
+
+        public String getPhotocreditimage() {
+            return photocreditimage;
+        }
+
+        public void setPhotocreditimage(String photocreditimage) {
+            this.photocreditimage = photocreditimage;
+        }
+
+        public String getPhotocreditname() {
+            return photocreditname;
+        }
+
+        public void setPhotocreditname(String photocreditname) {
+            this.photocreditname = photocreditname;
+        }
+
+        public String getPhotocrediturl() {
+            return photocrediturl;
+        }
+
+        public void setPhotocrediturl(String photocrediturl) {
+            this.photocrediturl = photocrediturl;
+        }
+
+        public String getPhotodescription() {
+            return photodescription;
+        }
+
+        public void setPhotodescription(String photodescription) {
+            this.photodescription = photodescription;
+        }
         public void setFavcount(int favcount) {
             this.favcount = favcount;
         }
@@ -1098,7 +1237,7 @@ public class EducationDescriptiontamil extends AppCompatActivity {
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
@@ -1201,7 +1340,7 @@ public class EducationDescriptiontamil extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1568,7 +1707,7 @@ public class EducationDescriptiontamil extends AppCompatActivity {
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();

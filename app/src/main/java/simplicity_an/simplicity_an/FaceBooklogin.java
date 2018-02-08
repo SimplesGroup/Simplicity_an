@@ -38,6 +38,8 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
+import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
+
 /**
  * Created by kuppusamy on 4/7/2016.
  */
@@ -59,7 +61,8 @@ ProgressDialog pdialog;
     public static final String USERIMAGE= "myprofileimage";
     public static final String USEREMAIL= "myprofileemail";
     public static final String USERMAILID= "myprofileemail";
-    String text,emaildata,profileimage,activity,gcmids,gendervalue;
+    public static final String Language = "lamguage";
+    String text,emaildata,profileimage,activity,gcmids,gendervalue,language_data;
 
     String UPLOAD_URL="http://simpli-city.in/request2.php?rtype=login&key=simples";
 
@@ -81,6 +84,7 @@ ProgressDialog pdialog;
                 Context.MODE_PRIVATE);
         requestQueue=Volley.newRequestQueue(this);
         gcmids=sharedpreferences.getString(GcmId,"");
+        language_data=sharedpreferences.getString(Language,"");
         if (sharedpreferences.contains(Activity)) {
             activity=sharedpreferences.getString(Activity,"");
             Log.e("GCMID:",activity);
@@ -167,8 +171,13 @@ ProgressDialog pdialog;
                                                     String emails=array[3].toString();
                                                     editor.putString(USERMAILID,array[3].toString().trim());
                                                     editor.commit();
-                                                    Intent main=new Intent(getApplicationContext(),MainPageEnglish.class);
-                                                    startActivity(main);
+                                                    if(language_data.equals("English")) {
+                                                        Intent main = new Intent(getApplicationContext(), MainPageEnglish.class);
+                                                        startActivity(main);
+                                                    }else {
+                                                        Intent main = new Intent(getApplicationContext(), MainPageTamil.class);
+                                                        startActivity(main);
+                                                    }
                                                 }
 
 
@@ -374,8 +383,13 @@ ProgressDialog pdialog;
                                         String emails=array[3].toString();
                                         editor.putString(USERMAILID,array[3].toString().trim());
                                         editor.commit();
-                                        Intent main=new Intent(getApplicationContext(),MainPageEnglish.class);
-                                        startActivity(main);
+                                        if(language_data.equals("English")) {
+                                            Intent main = new Intent(getApplicationContext(), MainPageEnglish.class);
+                                            startActivity(main);
+                                        }else {
+                                            Intent main = new Intent(getApplicationContext(), MainPageTamil.class);
+                                            startActivity(main);
+                                        }
                                     }
 
                                    /* if(activity.equalsIgnoreCase("articledesc")){
@@ -530,8 +544,13 @@ ProgressDialog pdialog;
                                         Intent main=new Intent(getApplicationContext(),MainActivityVersiontwo.class);
                                         startActivity(main);
                                     }*/
-                                    Intent main=new Intent(getApplicationContext(),MainPageEnglish.class);
-                                    startActivity(main);
+                                    /*if(language_data.equals("English")) {
+                                        Intent main = new Intent(getApplicationContext(), MainPageEnglish.class);
+                                        startActivity(main);
+                                    }else {
+                                        Intent main = new Intent(getApplicationContext(), MainPageTamil.class);
+                                        startActivity(main);
+                                    }*/
                                 }
                             }
                         }, new Response.ErrorListener() {

@@ -241,7 +241,7 @@ public class AdvertisementPageTamil extends AppCompatActivity {
         //  recycler_comment.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
 
         recycler_comment.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         String simplycity_title_fontPathone = "fonts/robotoSlabBold.ttf";
         Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPathone);
@@ -523,11 +523,7 @@ public class AdvertisementPageTamil extends AppCompatActivity {
                 description.setBackgroundColor(Color.TRANSPARENT);
 
                 modelList.add(model);
-                if (favcount == 1) {
-                    favourite.setImageResource(R.mipmap.likered);
-                } else {
-                    favourite.setImageResource(R.mipmap.like);
-                }
+                if (favcount == 1) {                     favourite.setImageResource(R.mipmap.likered);                     favourite.setTag("heartfullred");                 } else {                    favourite.setImageResource(R.mipmap.like);                     favourite.setTag("heart");                 }
                 favourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -540,12 +536,7 @@ public class AdvertisementPageTamil extends AppCompatActivity {
                                     res = res.replace(" ", "");
                                     res = res.trim();
                                     Log.e("LIke", res.toString());
-                                    if (res.equalsIgnoreCase("yes")) {
-                                        //  System.out.println(itemmodel.getId());
-                                        favourite.setImageResource(R.mipmap.likered);
-                                    } else if (res.equalsIgnoreCase("no")) {
-                                        favourite.setImageResource(R.mipmap.like);
-                                    }
+                                    if(res.equalsIgnoreCase("yes")){                                          favourite.setImageResource(R.mipmap.likered);                                         favourite.setTag("heartfullred");                                     }else if(res.equalsIgnoreCase("no")){                                        favourite.setImageResource(R.mipmap.like);                                         favourite.setTag("heart");                                     }
 
                                 }
                             }, new Response.ErrorListener() {
@@ -1042,7 +1033,7 @@ public class AdvertisementPageTamil extends AppCompatActivity {
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getApplicationContext()).getImageLoader();
@@ -1167,7 +1158,7 @@ public class AdvertisementPageTamil extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1536,7 +1527,7 @@ public class AdvertisementPageTamil extends AppCompatActivity {
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getActivity()).getImageLoader();

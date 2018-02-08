@@ -409,7 +409,7 @@ nextpage.setOnClickListener(new View.OnClickListener() {
             if (holder instanceof UserviewHolder) {
                 final UserviewHolder userViewHolder = (UserviewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 final Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
                 DoctorItem doctorItem=illnesslist.get(position);

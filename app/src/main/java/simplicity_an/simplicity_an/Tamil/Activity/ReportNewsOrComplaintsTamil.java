@@ -51,13 +51,9 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Map;
 
-import simplicity_an.simplicity_an.EntertainmentVersiontwo;
-import simplicity_an.simplicity_an.Events;
-import simplicity_an.simplicity_an.MainTamil.*;
+import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.MySingleton;
 import simplicity_an.simplicity_an.R;
-
-import simplicity_an.simplicity_an.SimplicitySearchview;
 
 /**
  * Created by kuppusamy on 3/24/2017.
@@ -148,35 +144,41 @@ city.setImageResource(R.mipmap.citytamil);
         city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                Intent entairnment=new Intent(getApplicationContext(), MainPageTamil.class);
+                entairnment.putExtra("ID","5");
+                startActivity(entairnment);
             }
         });
         happening.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent happening=new Intent(getApplicationContext(),Events.class);
-                startActivity(happening);
+                Intent entairnment=new Intent(getApplicationContext(), MainPageTamil.class);
+                entairnment.putExtra("ID","3");
+                startActivity(entairnment);
             }
         });
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent happening=new Intent(getApplicationContext(),SimplicitySearchview.class);
-                startActivity(happening);
+                Intent entairnment=new Intent(getApplicationContext(), MainPageTamil.class);
+                entairnment.putExtra("ID","4");
+                startActivity(entairnment);
             }
         });
         audiovideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent happening=new Intent(getApplicationContext(),simplicity_an.simplicity_an.MainTamil.MainPageTamil.class);
-                startActivity(happening);
+                Intent entairnment=new Intent(getApplicationContext(), MainPageTamil.class);
+                entairnment.putExtra("ID","2");
+                startActivity(entairnment);
             }
         });
         more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent happening=new Intent(getApplicationContext(), simplicity_an.simplicity_an.MainTamil.MainPageTamil.class);
-                startActivity(happening);
+                Intent entairnment=new Intent(getApplicationContext(), MainPageTamil.class);
+                entairnment.putExtra("ID","1");
+                startActivity(entairnment);
             }
         });
         camera.setOnClickListener(new View.OnClickListener() {

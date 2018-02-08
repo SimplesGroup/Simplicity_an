@@ -102,7 +102,7 @@ public class WreddingShopsDetail extends AppCompatActivity {
         title=get.getStringExtra("TITLE");
         Log.e("ID",id+"pdetailpage");
         URL=URLPRODUCTLIST+cat_id+"&id="+id;
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         sharedpreferences =  getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);

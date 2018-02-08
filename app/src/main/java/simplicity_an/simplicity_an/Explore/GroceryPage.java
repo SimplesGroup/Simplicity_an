@@ -94,7 +94,7 @@ public class GroceryPage extends AppCompatActivity {
         }else if(id.equalsIgnoreCase("13")){
             URL=URLJEWEL;
         }
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         sharedpreferences =  getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
@@ -479,7 +479,7 @@ public class GroceryPage extends AppCompatActivity {
             if(holder instanceof UserViewHolder) {
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 final Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = CustomVolleyRequest.getInstance(getApplicationContext()).getImageLoader();

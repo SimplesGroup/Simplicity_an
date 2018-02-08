@@ -105,7 +105,7 @@ ImageButton menus,back,addnewevent;
             myprofileid=sharedpreferences.getString(MYUSERID,"");
             myprofileid = myprofileid.replaceAll("\\D+","");
         }
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
         entrytypelist.add("Paid");

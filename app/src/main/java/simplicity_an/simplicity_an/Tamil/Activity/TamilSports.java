@@ -160,7 +160,7 @@ public class TamilSports extends AppCompatActivity {
 
         }
         mCoordinator = (CoordinatorLayout) findViewById(R.id.root_coordinator);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
         menu=(ImageButton)findViewById(R.id.btn_sportshome);

@@ -89,7 +89,7 @@ public class RentalsRecordListPage extends AppCompatActivity {
         String title=get.getStringExtra("TITLE");
         String id=get.getStringExtra("ID");
         URL=URLPRODUCTLIST+id;
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         sharedpreferences =  getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
@@ -444,7 +444,7 @@ public class RentalsRecordListPage extends AppCompatActivity {
             if(holder instanceof UserViewHolder){
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 final Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = CustomVolleyRequest.getInstance(getApplicationContext()).getImageLoader();

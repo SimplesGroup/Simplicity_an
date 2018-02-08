@@ -121,7 +121,7 @@ public class HappeningFragTamil extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.entertainmentnewtamil,container,false);
+        View view=inflater.inflate(R.layout.eventsversiontwo,container,false);
         sharedpreferences = getActivity(). getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
 
@@ -166,7 +166,7 @@ public class HappeningFragTamil extends Fragment {
         fabsearch=(FloatingActionButton)view.findViewById(R.id.fabsearch) ;
         fabinnerplus=(FloatingActionButton)view.findViewById(R.id.fabinnerplus) ;
         search=(ImageButton)view.findViewById(R.id.searchbutton);
-
+        search.setVisibility(View.GONE);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,14 +238,14 @@ public class HappeningFragTamil extends Fragment {
                 }
             }
         }
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
         String simplycity_title_reugular= "fonts/robotoSlabBold.ttf";
         Typeface tf1 = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
         title_coimbatore=(TextView)view.findViewById(R.id.title_versiontwo) ;
 
         title_coimbatore.setTypeface(tf1);
-        title_coimbatore.setText("கோவை நிகழ்வுகள்");
+        title_coimbatore.setText(" நிகழ்வுகள்");
         layout = (LinearLayout)view. findViewById(R.id.title);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)layout.getLayoutParams();
         params.setMargins(0, 170, 0, 0);
@@ -909,7 +909,7 @@ public class HappeningFragTamil extends Fragment {
 
 
 
-        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/robotoSlabRegular.ttf");
+        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Lora-Regular.ttf");
         ViewGroup vg = (ViewGroup) mTabLayout.getChildAt(0);
         int tabsCount = vg.getChildCount();
         for (int j = 0; j < tabsCount; j++) {

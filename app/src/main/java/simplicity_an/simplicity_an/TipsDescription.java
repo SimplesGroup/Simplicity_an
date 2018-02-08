@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -28,6 +27,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -307,7 +307,7 @@ public class TipsDescription extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         String simplycity_title_bold= "fonts/robotoSlabBold.ttf";
         Typeface tf_bold = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
@@ -315,6 +315,10 @@ public class TipsDescription extends AppCompatActivity {
         date=(TextView)findViewById(R.id.author);
         fooditemimage=(NetworkImageView)findViewById(R.id.thumbnailone);
         desc=(WebView)findViewById(R.id.textView_desc);
+        desc.getSettings().setLoadsImagesAutomatically(true);
+        desc.getSettings().setPluginState(WebSettings.PluginState.ON);
+        desc.getSettings().setAllowFileAccess(true);
+        desc.getSettings().setJavaScriptEnabled(true);
         titleofrecipie.setTypeface(tf_bold);
         date.setTypeface(tf);
         comment_title.setTypeface(tf);
@@ -528,40 +532,40 @@ public class TipsDescription extends AppCompatActivity {
                         "\t\t<style>\n" +
                         "\t\t@font-face {\n" +
                         "  font-family: 'segeoui-light';\n" +
-                        " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "  font-family: 'segeoui-regular';\n" +
-                        "src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "  font-family: 'segeoui-sbold';\n" +
-                        " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Bold';\n" +
-                        "   src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "   src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Light';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Regular';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Thin';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "\t\t</style>\n" +
@@ -589,15 +593,22 @@ public class TipsDescription extends AppCompatActivity {
 
                     }
                 });
-                if (favcount == 1) {
-                    favourite.setImageResource(R.mipmap.likered);
-                } else {
-                   favourite.setImageResource(R.mipmap.like);
-                }
+                 if (favcount == 1) {                     favourite.setImageResource(R.mipmap.likered);                     favourite.setTag("heartfullred");                 } else {                    favourite.setImageResource(R.mipmap.like);                     favourite.setTag("heart");                 }
                 favourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(myprofileid!=null) {
+                            String backgroundImageName = String.valueOf(favourite.getTag());
+                            Log.e("RUN","with"+backgroundImageName);
+                            if(backgroundImageName.equals("heart")){
+                                favourite.setImageResource(R.mipmap.likered);
+                                favourite.setTag("heartfullred");
+                            }else if(backgroundImageName.equals("heartfullred")) {
+                                favourite.setImageResource(R.mipmap.like);
+                                favourite.setTag("heart");
+                            }else {
+
+                            }
                             StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
@@ -605,12 +616,7 @@ public class TipsDescription extends AppCompatActivity {
                                     res = res.replace(" ", "");
                                     res = res.trim();
                                     Log.e("LIke",res.toString());
-                                    if(res.equalsIgnoreCase("yes")){
-                                        //  System.out.println(itemmodel.getId());
-                                        favourite.setImageResource(R.mipmap.likered);
-                                    }else if(res.equalsIgnoreCase("no")){
-                                       favourite.setImageResource(R.mipmap.like);
-                                    }
+                                   if(res.equalsIgnoreCase("yes")){                                          favourite.setImageResource(R.mipmap.likered);                                         favourite.setTag("heartfullred");                                     }else if(res.equalsIgnoreCase("no")){                                        favourite.setImageResource(R.mipmap.like);                                         favourite.setTag("heart");                                     }
 
                                 }
                             }, new Response.ErrorListener() {
@@ -1042,7 +1048,7 @@ public class TipsDescription extends AppCompatActivity {
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
@@ -1146,7 +1152,7 @@ public class TipsDescription extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1513,7 +1519,7 @@ public class TipsDescription extends AppCompatActivity {
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();

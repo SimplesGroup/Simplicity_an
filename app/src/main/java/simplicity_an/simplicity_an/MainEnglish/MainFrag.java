@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +19,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +50,6 @@ import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.RadioActivity;
 import simplicity_an.simplicity_an.ScienceandTechnology;
 import simplicity_an.simplicity_an.SimplicitySearchview;
-import simplicity_an.simplicity_an.SimplicitySearchviews;
 import simplicity_an.simplicity_an.Sports;
 import simplicity_an.simplicity_an.Theatre;
 import simplicity_an.simplicity_an.TravelsActivity;
@@ -59,7 +58,7 @@ import simplicity_an.simplicity_an.TravelsActivity;
  * Created by kuppusamy on 5/19/2017.
  */
 
-public class MainFrag extends android.app.Fragment {
+public class MainFrag extends Fragment {
     SharedPreferences sharedpreferences;
     String myuserids;
     public static final String GcmId = "gcmid";
@@ -116,7 +115,7 @@ public class MainFrag extends android.app.Fragment {
         requestQueue= Volley.newRequestQueue(getActivity());
         String fontPathbarkendina = "fonts/Barkentina.otf";
         barkentina = Typeface.createFromAsset(getActivity().getAssets(), fontPathbarkendina);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
 
         toolbartitle=(TextView)view.findViewById(R.id.simplicitynewtitle);

@@ -2,17 +2,17 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "26.0.1"
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "simplicity_an.simplicity_an"
         manifestPlaceholders = [
                 onesignal_app_id               : "1484e7d1-6b1c-44f4-8618-64724f6251dd",
                 onesignal_google_project_number: "534790179677"]
-        minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 27
-        versionName "3.9"
+        minSdkVersion 17
+        targetSdkVersion 26
+        versionCode 33
+        versionName "4.3.1"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -26,6 +26,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
@@ -33,21 +35,19 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.onesignal:OneSignal:3.+@aar'
+    compile 'com.onesignal:OneSignal:3.5.3'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.google.android.gms:play-services-auth:10.0.1'
     compile 'com.google.android.gms:play-services-gcm:10.0.1'
-    compile 'com.facebook.android:facebook-android-sdk:4.+'
-    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.facebook.android:facebook-android-sdk:4.26.0'
     compile files('libs/YouTubeAndroidPlayerApi.jar')
-
 }
 apply plugin: 'com.google.gms.google-services'

@@ -104,7 +104,7 @@ TextView advanceamount_textview,qtytype_textview,refillprice_textview;
         String id=get.getStringExtra("ID");
         Log.e("ID",id+"pdetailpage");
         URL=URLPRODUCTLIST+id;
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         sharedpreferences =  getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);

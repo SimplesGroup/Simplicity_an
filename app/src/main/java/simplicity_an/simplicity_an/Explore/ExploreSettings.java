@@ -159,7 +159,7 @@ RequestQueue requestQueue;
 
 
 
-        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/robotoSlabRegular.ttf");
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/Lora-Regular.ttf'");
         ViewGroup vg = (ViewGroup) mTabLayout.getChildAt(0);
         int tabsCount = vg.getChildCount();
         for (int j = 0; j < tabsCount; j++) {

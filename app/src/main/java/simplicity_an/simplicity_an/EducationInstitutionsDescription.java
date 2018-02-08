@@ -267,9 +267,9 @@ public class EducationInstitutionsDescription extends AppCompatActivity {
         menu = (ImageButton) findViewById(R.id.btn_3);
         back = (ImageButton) findViewById(R.id.btn_1);
         favourite = (ImageButton) findViewById(R.id.btn_2);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
-        String simplycity_title_fontPathone = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPathone = "fonts/Lora-Regular.ttf";;
         Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPathone);
         pdialog = new ProgressDialog(this);
         pdialog.show();
@@ -1050,7 +1050,7 @@ auditorium_label.setText("Auditorium");
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1417,7 +1417,7 @@ auditorium_label.setText("Auditorium");
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getActivity()).getImageLoader();

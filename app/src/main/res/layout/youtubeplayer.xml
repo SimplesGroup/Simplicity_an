@@ -4,23 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/youtubelayout"
-    android:orientation="vertical"
-    >
 
-    <com.google.android.youtube.player.YouTubePlayerView
-        android:id="@+id/youtube_view"
+    >
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
+<WebView
+    android:id="@+id/webView"
+
+    android:padding="10dp"
+    android:minHeight="350dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+</WebView>
+
 
     <TextView
+        android:layout_below="@+id/webView"
         android:layout_marginTop="15dp"
         android:layout_marginRight="7dp"
-        android:layout_below="@+id/youtube_view"
         android:layout_marginLeft="10dp"
         android:textColor="@android:color/white"
         android:textSize="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/video_titles"/>
-
+    </LinearLayout>
 </RelativeLayout>

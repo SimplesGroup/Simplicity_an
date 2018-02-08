@@ -144,7 +144,7 @@ RequestQueue requestQueue_directories;
             }
         });
         Toolbartitle = (TextView) findViewById(R.id.toolbar_title_sub_detail_directory);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         Toolbartitle.setText(MainCatname + "-" + subcatname);
         Toolbartitle.setTypeface(tf);

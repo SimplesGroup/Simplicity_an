@@ -5,16 +5,17 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.CalendarContract;
-import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,12 +26,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,106 +54,123 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by kuppusamy on 2/3/2017.
+ * Created by Kuppusamy on 11/12/2017.
  */
-public class TestDesc extends AppCompatActivity {
-    NetworkImageView images;
-    TextView title,eventdetail,eventdetaildata;
-    TextView venuedetails,timing,timingdetails,date,datedetails;
-    TextView contactname,contactnamedetails,phone,phonenumberdetails,email,emaildetails,venue_text,location_text,website_text,location_details,website_details;
+
+public class Columnistdetail extends AppCompatActivity {
+    TextView tv,articleoftheday,authorname,pdate,sourcelinknews,sourcelinksimplicity,textview_date;//description;
     NetworkImageView thump;
     WebView description;
-    Button booknow,remindme;
-    ImageButton comment,share,menu,back,favourite;
-    String titl,bitmap,venue,locations;
-    String entrytype,entryfees;
-    ProgressDialog pdialog;
-    long startTime,endTime;
-    Calendar cal;
-    private List<ItemModel> modelList=new ArrayList<ItemModel>();
-    private String URL="http://simpli-city.in/request2.php?rtype=event&key=simples&id=";
-    String URLTWO;
-    private final String TAG_REQUEST = "MY_TAG";
-    String event_title,event_place,event_startdate,event_enddate;
-    String URLFAV="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
-    String notifiid,myprofileid,shareurl,sharetitle;
-    private String KEY_MYUID = "user_id";
-    private String KEY_POSTID = "qid";
-    private String KEY_QTYPE= "qtype";
+    ImageView reporter_profile_image;
+    TextView source_reporter_name,sourcereprterdivider,hashtags_title,image_description,short_description,title_category;
 
-    int post_likes_count,favcount;
-    RequestQueue queue,requestQueue;
-    SharedPreferences sharedpreferences;
+
+    ImageButton comment,share,menu,back,favourite;
+    String notifiid,shareurl,sharetitle;
+    int favcount;
+    RequestQueue queue;
+    List<ItemModel> modelList=new ArrayList<ItemModel>();
+    String URL="http://simpli-city.in/request2.php?key=simples&rtype=columnist&id=";
+    String URLTWO;
+    String URLFAV="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
+
+
+    int post_likes_count;
+    String sourcelink,myprofileid,my_profilename,my_profileimage;
+
+    SharedPreferences sharedpreferences,shredpreferencemyactivity;
     public static final String mypreference = "mypref";
+    public static final String myACTIVITY = "myactivity";
     public static final String MYUSERID= "myprofileid";
+    public static final String USERNAME= "myprofilename";
+    public static final String USERIMAGE= "myprofileimage";
     public static final String Activity = "activity";
     public static final String CONTENTID = "contentid";
+    String contentid,activity,searchnonitiid,searchactivity_article;
     public static final String MYACTIVITYSEARCH= "myactivitysearch";
-    String contentid,activity,searchnonitiid,searchactivity_event;
-
-
-    List<ItemModels> commentlist = new ArrayList<ItemModels>();
-    RecyclerViewAdapter rcAdapter;
-
-    private int requestCount = 1;
-    JsonObjectRequest jsonReq;
-    String URLTWO_comment;
-    String URLCOMMENT = "http://simpli-city.in/request2.php?rtype=viewcomment&key=simples&qtype=event&id=";
-    String urlpost = "http://simpli-city.in/request2.php?rtype=comments&key=simples";
-
-    RecyclerView recycler;
-    LinearLayoutManager mLayoutManager;
-    String postid, myuserid;
+    public static final String MYACTIVITYSEARCHVALUE= "myactivitysearchvalue";
+    public static final String backgroundcolor = "color";
     LinearLayout commentbox;
     TextView comment_title,loadmore_title;
     EditText commentbox_editext;
     Button post;
     RecyclerView recycler_comment;
+    private String KEY_QTYPE="qtype";
+    private String KEY_COMMENT = "comment";
+    private String KEY_TYPE = "qtype";
+    private String KEY_MYUID = "user_id";
+    private String KEY_POSTID = "id";
+    String URLCOMMENT = "http://simpli-city.in/request2.php?rtype=viewcomment&key=simples&qtype=columnist&id=";
+    String urlpost = "http://simpli-city.in/request2.php?rtype=comments&key=simples";
+    String URLLIKES="http://simpli-city.in/request2.php?rtype=articlelikes&key=simples";
+    public static final String USERID="user_id";
+    public static final String QID="qid";
+    public static final String QTYPE="qtype";
     JSONObject obj, objtwo;
     JSONArray feedArray;
     int ii, i;
-    private String KEY_COMMENT = "comment";
-    private String KEY_TYPE = "qtype";
+    TextView titles;
+    CoordinatorLayout mCoordinator;
+    private final String TAG_REQUEST = "MY_TAG";
+    List<ItemModels> commentlist = new ArrayList<ItemModels>();
+    //Need this to set the title of the app bar
+    CollapsingToolbarLayout mCollapsingToolbarLayout;
+    RecyclerViewAdapter rcAdapter;
+    ProgressDialog pdialog;
+    RequestQueue requestQueue;
+    private int requestCount = 1;
+    JsonObjectRequest jsonReq;
+    String URLTWO_comment;
+    String bimage;
+    RecyclerView recycler;
+    LinearLayoutManager mLayoutManager;
+    String postid, myuserid,colorcodes;
+    String description_comment;
+    ScrollView scrollView;
+    RelativeLayout mainlayout;
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.eventsdesc);
-        images=(NetworkImageView)findViewById(R.id.photo_image);
-        ImageLoader mImageLoader ;
-
-        mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
-      //images.setImageUrl("http://simpli-city.in/vdfdhfv78lmdsvmg5todlsh4jffgskjb2947qnt/images/event/692355822first%20sports%20day%20celebration.jpg",mImageLoader);
-
+        setContentView(R.layout.newsdescription);
         sharedpreferences =  getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
-        searchactivity_event=sharedpreferences.getString(MYACTIVITYSEARCH,"");
-        contentid=sharedpreferences.getString(CONTENTID,"");
-        activity=sharedpreferences.getString(Activity,"");
+        searchactivity_article=sharedpreferences.getString(MYACTIVITYSEARCH,"");
+
         if (sharedpreferences.contains(MYUSERID)) {
 
             myprofileid=sharedpreferences.getString(MYUSERID,"");
             myprofileid = myprofileid.replaceAll("\\D+","");
+            contentid=sharedpreferences.getString(CONTENTID,"");
+            activity=sharedpreferences.getString(Activity,"");
         }
-        requestQueue= Volley.newRequestQueue(this);
+        if (sharedpreferences.contains(USERNAME)) {
 
+            my_profilename=sharedpreferences.getString(USERNAME,"");
+
+        }
+        if (sharedpreferences.contains(USERIMAGE)) {
+
+            my_profileimage=sharedpreferences.getString(USERIMAGE,"");
+
+        }
+
+        requestQueue = Volley.newRequestQueue(this);
         if(activity==null){
             Intent getnotifi=getIntent();
             notifiid=getnotifi.getStringExtra("ID");
@@ -155,7 +179,7 @@ public class TestDesc extends AppCompatActivity {
             Log.e("ID",notifiid);
 
         } else {
-            if(activity.equalsIgnoreCase("eventdesc")){
+            if(activity.equalsIgnoreCase("articledesc")){
                 notifiid=contentid;
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.remove(Activity);
@@ -171,22 +195,97 @@ public class TestDesc extends AppCompatActivity {
             }
         }
 
+
+
         if(myprofileid!=null){
             URLTWO=URL+notifiid+"&user_id="+myprofileid;
         }else {
             URLTWO=URL+notifiid;
         }
-        queue = MySingleton.getInstance(this.getApplicationContext()).
-                getRequestQueue();
-       /* comment=(ImageButton)findViewById(R.id.btn_4);
-        share=(ImageButton)findViewById(R.id.btn_5);
-        menu=(ImageButton)findViewById(R.id.btn_3);
-        back=(ImageButton)findViewById(R.id.btn_1);
-        favourite=(ImageButton)findViewById(R.id.btn_2);*/
-        booknow=(Button)findViewById(R.id.booknow);
+        colorcodes=sharedpreferences.getString(backgroundcolor,"");
 
+        mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
+        if(colorcodes.length()==0){
+            int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+            GradientDrawable gd = new GradientDrawable(
+                    GradientDrawable.Orientation.TOP_BOTTOM,
+                    colors);
+            gd.setCornerRadius(0f);
 
+            mainlayout.setBackgroundDrawable(gd);
 
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(backgroundcolor, "#383838");
+            editor.commit();
+        }else {
+            if(colorcodes.equalsIgnoreCase("004")){
+                Log.e("Msg","hihihi"+colorcodes);
+                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+                mainlayout.setBackgroundDrawable(gd);
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#383838");
+                editor.commit();
+            }else {
+
+                if(colorcodes!=null){
+                    int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                    GradientDrawable gd = new GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM,
+                            colors);
+                    gd.setCornerRadius(0f);
+
+                    mainlayout.setBackgroundDrawable(gd);
+                }else {
+                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                    GradientDrawable gd = new GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM,
+                            colors);
+                    gd.setCornerRadius(0f);
+
+                    mainlayout.setBackgroundDrawable(gd);
+
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(backgroundcolor, "#383838");
+
+                    editor.commit();
+                }
+            }
+        }
+        tv = (TextView) findViewById(R.id.textView_titlename);
+        sourcelinknews = (TextView) findViewById(R.id.sourcelink);
+        sourcelinksimplicity = (TextView) findViewById(R.id.sourcelinkredsimplicity);
+
+        source_reporter_name=(TextView)findViewById(R.id.textView_sourcename) ;
+        sourcereprterdivider=(TextView)findViewById(R.id.centerdivider);
+        hashtags_title=(TextView) findViewById(R.id.textView_hashtags);
+        reporter_profile_image=(ImageView)findViewById(R.id.profile_reporter);
+        image_description=(TextView)findViewById(R.id.textView_photodescription);
+        short_description=(TextView)findViewById(R.id.textView_shortdescription);
+        title_category=(TextView)findViewById(R.id.textView_qtypename) ;
+
+        pdate = (TextView) findViewById(R.id.textView_date);
+        textview_date=(TextView) findViewById(R.id.textView_datenew);
+       /* articleoftheday = (TextView) findViewById(R.id.articleof);
+        articleoftheday.setPadding(7, 25, 7, 4);*/
+        // authorname = (TextView) findViewById(R.id.author);
+        comment = (ImageButton) findViewById(R.id.btn_4);
+        share = (ImageButton) findViewById(R.id.btn_share);
+        menu = (ImageButton) findViewById(R.id.btn_3);
+        back = (ImageButton) findViewById(R.id.btn_back);
+        favourite = (ImageButton) findViewById(R.id.btn_like);
+        description = (WebView) findViewById(R.id.textView_desc);
+        description.getSettings().setLoadsImagesAutomatically(true);
+        description.getSettings().setPluginState(WebSettings.PluginState.ON);
+        description.getSettings().setAllowFileAccess(true);
+        description.getSettings().setJavaScriptEnabled(true);
 
         commentbox=(LinearLayout)findViewById(R.id.comments_versiontwo) ;
         comment_title=(TextView)findViewById(R.id.comments_title);
@@ -195,206 +294,145 @@ public class TestDesc extends AppCompatActivity {
         post=(Button)findViewById(R.id.post_button) ;
         recycler_comment=(RecyclerView)findViewById(R.id.commentpagelist_recyclerview) ;
 
-        recycler_comment.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
+        scrollView=(ScrollView)findViewById(R.id.scroll);
+        //  recycler_comment.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
 
         recycler_comment.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
-
-
-        title=(TextView)findViewById(R.id.titlelabel);
-        eventdetail=(TextView)findViewById(R.id.eventdetaillebel);
-        eventdetaildata=(TextView)findViewById(R.id.eventdetaildata);
-        description=(WebView)findViewById(R.id.webview_eventdescription);
-      venue_text=(TextView)findViewById(R.id.text_eventvenue);
-        location_text=(TextView)findViewById(R.id.text_eventlocation);
-        website_text=(TextView)findViewById(R.id.text_eventwebsite);
-        location_details=(TextView)findViewById(R.id.text_eventlocation_details);
-        website_details=(TextView)findViewById(R.id.text_eventwebsite_details);
-        eventdetail=(TextView)findViewById(R.id.eventdetaillebel);
-        eventdetaildata=(TextView)findViewById(R.id.eventdetaildata);
-        venuedetails=(TextView)findViewById(R.id.text_eventvenue_details);
-        timing=(TextView)findViewById(R.id.text_timing_event);
-        timingdetails=(TextView)findViewById(R.id.text_timing_event_data);
-        date=(TextView)findViewById(R.id.text_date_event);
-        datedetails=(TextView)findViewById(R.id.text_date_event_data);
-        contactname=(TextView)findViewById(R.id.text_eventontactname);
-        remindme=(Button)findViewById(R.id.remindme);
-        remindme.setText("Remind Me");
-        contactnamedetails=(TextView)findViewById(R.id.text_eventontactname_details);
-        phone=(TextView)findViewById(R.id.text_eventphonenumber);
-        phonenumberdetails=(TextView)findViewById(R.id.text_eventphonenumber_details);
-       email=(TextView)findViewById(R.id.text_eventemail);
-        emaildetails=(TextView)findViewById(R.id.text_eventemail_details);
-
-        description=(WebView)findViewById(R.id.webview_eventdescription);
-
-        comment=(ImageButton)findViewById(R.id.btn_4);
-        share=(ImageButton)findViewById(R.id.btn_5);
-        menu=(ImageButton)findViewById(R.id.btn_3);
-        back=(ImageButton)findViewById(R.id.btn_1);
-        favourite=(ImageButton)findViewById(R.id.btn_2);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
+        String simplycity_title_fontPathone = "fonts/robotoSlabBold.ttf";
+        Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPathone);
+         String playfair ="fonts/playfairDisplayRegular.ttf";
+        Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
+        tv.setTypeface(tf_play);
+        textview_date.setTypeface(tf);
+        sourcelinknews.setTypeface(tf);
+        sourcelinksimplicity.setTypeface(tf);
         comment_title.setTypeface(tf);
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);
-        venue_text.setTypeface(tf);
-        location_text.setTypeface(tf);
-        website_text.setTypeface(tf);
-        venue_text.setText("Venue:");
-        location_text.setText("Location:");
-        website_text.setText("Website:");
-        remindme.setTypeface(tf);
-        eventdetail.setTypeface(tf);
-        title.setTypeface(tf);
-        eventdetaildata.setTypeface(tf);
-       venuedetails.setTypeface(tf);
-       timing.setTypeface(tf);
-        timing.setText("Timing");
-       timingdetails.setTypeface(tf);
-      date.setTypeface(tf);
-        date.setText("Date");
-      datedetails.setTypeface(tf);
-        contactname.setTypeface(tf);
-        contactname.setText("Name:");
+        commentbox_editext.setHint("Comments Here");
 
-        contactnamedetails.setTypeface(tf);
-        email.setTypeface(tf);
-        email.setText("Email:");
-        emaildetails.setTypeface(tf);
-        phone.setTypeface(tf);
-        phone.setText("Phone:");
-        location_details.setTypeface(tf);
-        website_details.setTypeface(tf);
-        phonenumberdetails.setTypeface(tf);
-
+        //articleoftheday.setTypeface(tf_regular);
+        hashtags_title.setTypeface(tf_regular);
+        source_reporter_name.setTypeface(tf_regular);
+//        authorname.setTypeface(tf_regular);
+       // pdate.setTypeface(tf);
+        thump = (NetworkImageView) findViewById(R.id.thumbnailone);
         pdialog = new ProgressDialog(this);
         pdialog.show();
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        if(notifiid!=null) {
-            JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
+
+        //if(notifiid!=null) {
+        JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
 
 
-                public void onResponse(JSONObject response) {
+            public void onResponse(JSONObject response) {
 
-                    //VolleyLog.d(TAG, "Response: " + response.toString());
-                    if (response != null) {
-                        pdialog.dismiss();
-                        //dissmissDialog();
-                        parseJsonFeed(response);
-                    }
+                //VolleyLog.d(TAG, "Response: " + response.toString());
+                if (response != null) {
+                    pdialog.dismiss();
+                    //dissmissDialog();
+                    parseJsonFeed(response);
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-                }
-            });
-            jsonreq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            //AppControllers.getInstance().addToRequestQueue(jsonreq);
-            requestQueue.add(jsonreq);
-        }
+            }
+        });
+        jsonreq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(jsonreq);
+
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(searchactivity_event.equalsIgnoreCase("eventsearch")){
-                    Intent searchnotification = new Intent(getApplicationContext(), EventSearchview.class);
-                    startActivity(searchnotification);
-                    finish();
-                }
-                else   if (searchnonitiid != null) {
-                    Intent searchnotification = new Intent(getApplicationContext(), SimplicitySearchview.class);
-                    searchnotification.putExtra("IDSEARCH", searchnonitiid);
-                    startActivity(searchnotification);
-                    finish();
-                } else {
-                    Intent backeventdesc = new Intent(getApplicationContext(), MainActivityVersiontwo.class);
-                    startActivity(backeventdesc);
-                    finish();
-                }
+                onBackPressed();
 
             }
         });
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent menueventdesc = new Intent(getApplicationContext(), MainActivityVersiontwo.class);
-                startActivity(menueventdesc);
+                Intent menu_article = new Intent(getApplicationContext(), MainPageEnglish.class);
+                startActivity(menu_article);
                 finish();
             }
         });
-       if(myprofileid!=null){
+        if(myprofileid!=null){
             // URLTWO_comment=URLCOMMENT+notifiid;
-            comment_title.setText("Post your Comment Here - ");
+            //comment_title.setText("Post your Comment Here - ");
             post.setText("Post");
-
+            loadmore_title.setText("Load More");
             commentbox.setVisibility(View.VISIBLE);
 
             post.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(commentbox_editext.getWindowToken(), 0);
 
-                    //Showing the progress dialog
-                    //final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlpost,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String s) {
-                                    //Disimissing the progress dialog
-                                    //  loading.dismiss();
-                                    //Showing toast message of the response
-                                    if (s.equalsIgnoreCase("error")) {
-                                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-                                    } else {
-                                        //MyDialogFragment.this.dismiss();
-                                        Toast.makeText(getApplicationContext(), "Posted", Toast.LENGTH_LONG).show();
-                                        getData();
-                                    }
+                    try {
+
+                        StringRequest comment_post_request=new StringRequest(Request.Method.POST, urlpost, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.e("Res",response.toString().trim());
+                                //Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+                                //Disimissing the progress dialog
+                                //  loading.dismiss();
+                                //Showing toast message of the response
+                                if (response.equalsIgnoreCase("error")) {
+                                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                                } else {
+                                    //MyDialogFragment.this.dismiss();
+                                    // Toast.makeText(getApplicationContext(), "Posted", Toast.LENGTH_LONG).show();
+                                    //getData();
+                                    commentbox_editext.setText("");
+                                    AddnewCommnent();
+                                    scrollView.post(new Runnable() {
+                                        public void run() {
+                                            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                                        }
+                                    });
 
                                 }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError volleyError) {
-                                    //Dismissing the progress dialog
-                                    //  loading.dismiss();
-
-                                    //Showing toast
-                                    // Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                                }
-                            }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            //Converting Bitmap to String
-
-
-                            //Getting Image Name
-                            String description = commentbox_editext.getText().toString().trim();
-
-                            //Creating parameters
-                            Map<String, String> params = new Hashtable<String, String>();
-
-                            //Adding parameters
-                            if (postid != null) {
-                                if (description != null) {
-                                    params.put(KEY_COMMENT, description);
-                                    params.put(KEY_TYPE, "event");
-                                    params.put(KEY_POSTID, postid);
-                                    params.put(KEY_MYUID, myuserid);
-                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
 
                             }
-                            return params;
-                        }
-                    };
+                        }){
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                description_comment = commentbox_editext.getText().toString().trim();
 
-                    //Creating a Request Queue
-                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                                //Creating parameters
+                                Map<String, String> param = new Hashtable<String, String>();
+                                String keytepe="article";
+                                Log.e("qty",keytepe);
+                                //Adding parameters
 
-                    //Adding request to the queue
-                    requestQueue.add(stringRequest);
-                    //queue.add(stringRequest);
+                                param.put(KEY_COMMENT, description_comment);
+                                param.put("qtype","columnist");
+                                param.put(KEY_POSTID, notifiid);
+                                param.put(KEY_MYUID, myprofileid);
+
+
+
+                                return param;
+                            }
+                        };
+                        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                        requestQueue.add(comment_post_request);
+                    }catch (Exception e){
+
+                    }
+
                 }
 
             });
@@ -423,7 +461,7 @@ public class TestDesc extends AppCompatActivity {
             loadmore_title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     MyDialogFragment frag;
                     frag = new MyDialogFragment();
                     Bundle args = new Bundle();
@@ -437,11 +475,12 @@ public class TestDesc extends AppCompatActivity {
         }else {
             commentbox.setVisibility(View.GONE);
         }
+
         comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(myprofileid!=null) {
-                    android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     MyDialogFragment frag;
                     frag = new MyDialogFragment();
                     Bundle args = new Bundle();
@@ -451,316 +490,225 @@ public class TestDesc extends AppCompatActivity {
                     frag.show(ft, "txn_tag");
                 }else {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(Activity, "eventdesc");
+                    editor.putString(Activity, "articledesc");
                     editor.putString(CONTENTID, notifiid);
                     editor.commit();
-                    Intent signin=new Intent(TestDesc.this,SigninpageActivity.class);
+                    Intent signin=new Intent(getApplicationContext(),SigninpageActivity.class);
                     startActivity(signin);
                     finish();
                 }
             }
         });
 
-
-      remindme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_INSERT);
-                intent.setType("vnd.android.cursor.item/event");
-                cal = Calendar.getInstance();
-                try {
-                    Date date = new SimpleDateFormat("MMMM dd, yyyy").parse(event_startdate);
-                    startTime=date.getTime();
-                    //startTime=date.setHours(4);
-
-
-                }
-                catch(Exception e){ }
-                try {
-                    Date date = new SimpleDateFormat("MMMM dd, yyyy").parse(event_enddate);
-                    endTime=date.getTime();
-                }
-                catch(Exception e){ }
-
-                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime);
-                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime);
-
-                intent.putExtra(CalendarContract.Events.TITLE, event_title);
-                //intent.putExtra(CalendarContract.Events.DESCRIPTION,  "This is a sample description");
-                intent.putExtra(CalendarContract.Events.EVENT_LOCATION, event_place);
-                intent.putExtra(CalendarContract.Events.RRULE, "FREQ=YEARLY");
-
-                startActivity(intent);
-            }
-        });
-
-
     }
-    protected void onStop () {
-        super.onStop();
-        if (requestQueue != null) {
-            requestQueue.cancelAll(TAG_REQUEST);
-        }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
+
+
     private void parseJsonFeed(JSONObject response) {
-        ImageLoader  mImageLoader ;
-
-        mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
+        ImageLoader mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getApplicationContext()).getImageLoader();
         try {
             JSONArray feedArray = response.getJSONArray("result");
-
+Log.e("DATA",feedArray.toString());
             for (int i = 0; i < feedArray.length(); i++) {
-                JSONObject obj = (JSONObject) feedArray.get(i);
-                ItemModel model=new ItemModel();
-                //FeedItem model=new FeedItem();
-                String image = obj.isNull("thumb") ? null : obj
-                        .getString("thumb");
+                final JSONObject obj = (JSONObject) feedArray.get(i);
+
+
+                ItemModel model = new ItemModel();
+
+                String image = obj.isNull("image") ? null : obj
+                        .getString("image");
                 model.setImage(image);
-                String venue = obj.isNull("venue") ? null : obj
-                        .getString("venue");
-                model.setVenue(venue);
-                String locations = obj.isNull("location") ? null : obj
-                        .getString("location");
-                model.setLocation(locations);
-                String contactwebsite = obj.isNull("contact_website") ? null : obj
-                        .getString("contact_website");
-                model.setContactwebsite(contactwebsite);
-                String organizedby = obj.isNull("organized_by") ? null : obj
-                        .getString("organized_by");
-                model.setContactwebsite(organizedby);
-                String entrytype = obj.isNull("etype") ? null : obj
-                        .getString("etype");
-                model.setEtype(entrytype);
-                String entryfees = obj.isNull("emt") ? null : obj
-                        .getString("emt");
-                model.setEmt(entryfees);
-                // bimage=obj.isNull("bimage")?null:obj.getString("bimage");
-                // model.setBimage(bimage);
-                // model.setName(obj.getString("pub_by"));
+                String profileimage = obj.isNull("profile_image") ? null : obj
+                        .getString("profile_image");
+                model.setProfileimage(profileimage);
+
+
+                model.setName(obj.getString("publisher_name"));
                 model.setDescription(obj.getString("description"));
-                model.setTypeid(obj.getInt("type"));
-                model.setPdate(obj.getString("pdate"));
+
+                //model.setPdate(obj.getString("pdate"));
                 model.setTitle(obj.getString("title"));
-                model.setEventstartdate(obj.getString("event_start_date"));
-                model.setEventenddate(obj.getString("event_end_date"));
-                model.setContactname(obj.getString("contact_name"));
-                model.setVenue(obj.getString("venue"));
-                model.setLocation(obj.getString("location"));
-                model.setTiming(obj.getString("timing"));
-                model.setOrganizedby(obj.getString("organized_by"));
-                model.setEtype(obj.getString("etype"));
-                model.setEmt(obj.getString("emt"));
-                model.setContactphone(obj.getString("contact_phone"));
-                model.setContactemail(obj.getString("contact_email"));
-                model.setContactwebsite(obj.getString("contact_website"));
 
-               images.setImageUrl(image,mImageLoader);
-                //  Picasso.with(getApplicationContext()).load(obj.getString("image")).into(thump);
-              title.setText(Html.fromHtml(obj.getString("title")));
-              event_title=obj.getString("title");
-               event_place=obj.getString("venue");
-                event_startdate=obj.getString("event_start_date");
-                event_enddate=obj.getString("event_end_date");
+                model.setSource(obj.getString("source"));
 
-               if (organizedby != null) {
-                    eventdetaildata.setText("Organized by:" + organizedby);
-
-                } else {
-                    eventdetaildata.setVisibility(View.GONE);
-                }
-                if (entrytype != null) {
-                    if (obj.getString("etype").contentEquals("paid") ) {
-                        eventdetaildata.setText("Entry Type:" + entrytype + "\n" + "Entry Fee:" +obj.getString("emt"));
-                    } else {
-                        eventdetaildata.setText("Entry Type:" + entrytype);
-                    }
-                } else {
-                    eventdetaildata.setVisibility(View.GONE);
-                }
-                String descrition = obj.isNull("description") ? null : obj
-                        .getString("description");
-                String ss = descrition;
-                String s = ss;
-                // s = s.replace("\"", "'");
-                s = s.replace("\\", "");
-
-                // description.setText(Html.fromHtml(s));
-
-                //description.loadData(String.format(descrip), "text/html", "utf-8");
-                //description.loadData(descrip,"text/html","utf-8");
-               String fonts="<html>\n" +         "\t<head>\n" +         "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" +         "\t\t<style>\n" +         "\t\t@font-face {\n" +         "  font-family: 'segeoui-light';\n" +         " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-regular';\n" +         "src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-sbold';\n" +         " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Bold';\n" +         "   src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Light';\n" +         "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Regular';\n" +         "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Thin';\n" +         "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "\t\t</style>\n" +         "\t</head>"; description.loadDataWithBaseURL("", fonts+descrition+"</head>", "text/html", "utf-8", "");
-                // description.setBackgroundColor(0x0a000000);
-                description.setBackgroundColor(Color.TRANSPARENT);
-
-             venuedetails.setText(venue );
-              location_details.setText(obj.getString("location"));
-                website_details.setText(obj.getString("contact_website"));
-                timing.setText("Timing");
-                date.setText("Date");
-                timingdetails.setText(obj.getString("timing"));
-                datedetails.setText(obj.getString("pdate"));
-                contactname.setText("Name:");
-                phone.setText("Phone:");
-                email.setText("Email:");
-                contactnamedetails.setText(obj.getString("contact_name"));
-                emaildetails.setText(obj.getString("contact_email"));
-                phonenumberdetails.setText(obj.getString("contact_phone"));
-                model.setFavcount(obj.getInt("fav_count"));
+                model.setId(obj.getString("id"));
+                tv.setText(Html.fromHtml(obj.getString("title")));
+               model.setFavcount(obj.getInt("fav_count"));
                 model.setShareurl(obj.getString("sharingurl"));
                 favcount=obj.getInt("fav_count");
                 post_likes_count=obj.getInt("fav_count");
                 shareurl=obj.getString("sharingurl");
                 sharetitle=obj.getString("title");
+                thump.setDefaultImageResId(R.mipmap.ic_launcher);
+                thump.setErrorImageResId(R.mipmap.ic_launcher);
+                thump.setImageUrl(image, mImageLoader);
 
-
-
-                if (favcount == 1) {
-                    favourite.setImageResource(R.drawable.favred);
-                } else {
-                    favourite.setImageResource(R.drawable.favtwo);
+                model.setShortdescription(obj.getString("short_description"));
+                model.setReporterid(obj.getString("reporter_id"));
+                model.setReportername(obj.getString("reporter_name"));
+                model.setReporterimage(obj.getString("reporter_image"));
+                model.setReporterurl(obj.getString("reporter_url"));
+                model.setPhotocreditid(obj.getString("photo_credits_id"));
+                model.setPhotocreditimage(obj.getString("photo_credits_image"));
+                model.setPhotocreditname(obj.getString("photo_credits_name"));
+                model.setPhotocrediturl(obj.getString("photo_credits_url"));
+                //thump.setImageUrl(image, imageLoader);
+                image_description.setText("");
+                if(short_description!=null){
+                    short_description.setText(obj.getString("short_description"));
+                }else {
+                    short_description.setVisibility(View.GONE);
                 }
+                hashtags_title.setText("");
+                title_category.setText(obj.getString("qtype"));
+                String reporterimage=obj.getString("reporter_image");
+                if(reporterimage.equals("null")||reporterimage.equals("")){
+
+                }else {
+                    Picasso.with(getApplicationContext())
+                            .load(reporterimage)
+                            .centerCrop()
+                            .resize(40, 40)
+                            .into(reporter_profile_image);
+                }
+                String by = "By&nbsp;";
+               if (obj.getString("reporter_name").equals("") || obj.getString("reporter_name").equals("null")) {                     source_reporter_name.setText(Html.fromHtml(obj.getString("source")));                 } else {                     if(obj.getString("source").equals("")){                         source_reporter_name.setText(Html.fromHtml(obj.getString("reporter_name")+"&nbsp;"));                     }else {                         source_reporter_name.setText(Html.fromHtml(obj.getString("reporter_name") + "&nbsp;"+"|"+"&nbsp;"+obj.getString("source")));                     }                  }
+                pdate.setText(Html.fromHtml( obj.getString("source")));
+                textview_date.setText(obj.getString("pdate"));
+
+                //  pdate.setText(obj.getString("pdate"));
+                String descrition = obj.isNull("description") ? null : obj
+                        .getString("description");
+                String ss = descrition;
+
+
+
+                String s = ss;
+                // s = s.replace("\"", "'");
+                s = s.replace("\\", "");
+
+
+                String fonts = "<html>\n" +
+                        "\t<head>\n" +
+                        "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" +
+                        "\t\t<style>\n" +
+                        "\t\t@font-face {\n" +
+                        "  font-family: 'segeoui-light';\n" +
+                        " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
+                        "  font-style: normal;\n" +
+                        "}\n" +
+                        "\n" +
+                        "@font-face {\n" +
+                        "  font-family: 'segeoui-regular';\n" +
+                        " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
+                        "  font-style: normal;\n" +
+                        "}\n" +
+                        "\n" +
+                        "@font-face {\n" +
+                        "  font-family: 'segeoui-sbold';\n" +
+                        " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
+                        "  font-style: normal;\n" +
+                        "}\n" +
+                        "\n" +
+                        "@font-face {\n" +
+                        "    font-family: 'RobotoSlab-Bold';\n" +
+                        "   src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
+                        "    font-style: normal;\n" +
+                        "}\n" +
+                        "@font-face {\n" +
+                        "    font-family: 'RobotoSlab-Light';\n" +
+                        "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
+                        "    font-style: normal;\n" +
+                        "}\n" +
+                        "@font-face {\n" +
+                        "    font-family: 'RobotoSlab-Regular';\n" +
+                        "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
+                        "    font-style: normal;\n" +
+                        "}\n" +
+                        "@font-face {\n" +
+                        "    font-family: 'RobotoSlab-Thin';\n" +
+                        "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
+                        "    font-style: normal;\n" +
+                        "}\n" +
+                        "\t\t</style>\n" +
+                        "\t</head>";
+                String date = "<p><font color=\"white\">" + obj.getString("pdate") + "</font></p>";
+                description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
+                description.setWebViewClient(new MyBrowser());
+                description.setBackgroundColor(Color.TRANSPARENT);
+                modelList.add(model);
+                if (favcount == 1) {                     favourite.setImageResource(R.mipmap.likered);                     favourite.setTag("heartfullred");                 } else {                    favourite.setImageResource(R.mipmap.like);                     favourite.setTag("heart");                 }
                 favourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        String backgroundImageName = String.valueOf(favourite.getTag());
+                        Log.e("RUN","with"+backgroundImageName);
+                        if(backgroundImageName.equals("heart")){
+                            favourite.setImageResource(R.mipmap.likered);
+                            favourite.setTag("heartfullred");
+                        }else if(backgroundImageName.equals("heartfullred")) {
+                            favourite.setImageResource(R.mipmap.like);
+                            favourite.setTag("heart");
+                        }else {
+
+                        }
                         if(myprofileid!=null) {
+                            StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    String res=response.toString();
+                                    res = res.replace(" ", "");
+                                    res = res.trim();
+                                    Log.e("LIke",res.toString());
+                                    if(res.equalsIgnoreCase("yes")){                                          favourite.setImageResource(R.mipmap.likered);                                         favourite.setTag("heartfullred");                                     }else if(res.equalsIgnoreCase("no")){                                        favourite.setImageResource(R.mipmap.like);                                         favourite.setTag("heart");                                     }
 
-                            if (post_likes_count == 1) {
-                                favourite.setImageResource(R.drawable.favtwo);
-                                post_likes_count--;
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
 
+                                }
+                            }){
+                                protected Map<String,String> getParams()throws AuthFailureError{
+                                    Map<String,String> param=new Hashtable<String, String>();
 
-
-
-
-                                StringRequest stringRequest = new StringRequest(Request.Method.POST, URLFAV,
-                                        new Response.Listener<String>() {
-                                            @Override
-                                            public void onResponse(String s) {
-                                                //Disimissing the progress dialog
-
-                                                //Showing toast message of the response
-                                                if (s.equalsIgnoreCase("no")) {
-                                                    //Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show() ;
-                                                } else {
-                                                    Log.e("response:", s);
-
-                                                }
-
-                                            }
-                                        },
-                                        new Response.ErrorListener() {
-                                            @Override
-                                            public void onErrorResponse(VolleyError volleyError) {
-                                                //Dismissing the progress dialog
-                                                //loading.dismiss();
-
-                                                //Showing toast
-                                                //  Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                                            }
-                                        }) {
-                                    @Override
-                                    protected Map<String, String> getParams() throws AuthFailureError {
-
-                                        Map<String, String> params = new Hashtable<String, String>();
-                                        String postid = notifiid;
-                                        //Adding parameters
-                                        if (postid != null) {
+                                    String postid = notifiid;
+                                    //Adding parameters
+                                    param.put(QID, postid);
+                                    param.put(USERID, myprofileid);
+                                    param.put(QTYPE, "columnist");
+                                   /* if (postid != null) {
 
 
-                                            params.put(KEY_POSTID, postid);
-                                            params.put(KEY_MYUID, myprofileid);
-                                            params.put(KEY_QTYPE, "event");
-                                        } else {
+                                        param.put(QID, ids);
+                                        param.put(USERID, myprofileid);
+                                        param.put(QTYPE, itemmodel.getQtypemain());
+                                    } else {
 
 
-                                        }
+                                    }*/
+                                    return param;
+                                }
+                            };
+                            RequestQueue likesqueue=Volley.newRequestQueue(getApplicationContext());
+                            likes.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+                            likesqueue.add(likes);
 
-                                        return params;
-                                    }
-                                };
-
-                                //Creating a Request Queue
-                                RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-
-                                //Adding request to the queue
-                                requestQueue.add(stringRequest);
-
-                            } else {
-                                favourite.setImageResource(R.drawable.favred);
-                                post_likes_count++;
-
-
-
-                                StringRequest stringRequest = new StringRequest(Request.Method.POST, URLFAV,
-                                        new Response.Listener<String>() {
-                                            @Override
-                                            public void onResponse(String s) {
-                                                //Disimissing the progress dialog
-
-                                                //Showing toast message of the response
-                                                if (s.equalsIgnoreCase("no")) {
-                                                    //Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show() ;
-                                                } else {
-                                                    Log.e("response:", s);
-
-
-                                                }
-
-                                            }
-                                        },
-                                        new Response.ErrorListener() {
-                                            @Override
-                                            public void onErrorResponse(VolleyError volleyError) {
-                                                //Dismissing the progress dialog
-                                                //loading.dismiss();
-
-                                                //Showing toast
-                                                //  Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                                            }
-                                        }) {
-                                    @Override
-                                    protected Map<String, String> getParams() throws AuthFailureError {
-                                        //Converting Bitmap to String
-
-                                        //Getting Image Name
-
-                                        //Creating parameters
-                                        Map<String, String> params = new Hashtable<String, String>();
-                                        String postid = notifiid;
-                                        //Adding parameters
-                                        if (postid != null) {
-
-
-                                            params.put(KEY_POSTID, postid);
-                                            params.put(KEY_MYUID, myprofileid);
-                                            params.put(KEY_QTYPE, "event");
-                                        } else {
-
-
-                                        }
-
-
-                                        return params;
-                                    }
-                                };
-
-                                //Creating a Request Queue
-                                RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-
-                                //Adding request to the queue
-                                requestQueue.add(stringRequest);
-                                //Toast.makeText(getActivity(),count,Toast.LENGTH_LONG).show();
-                            }
                         }else {
                             SharedPreferences.Editor editor = sharedpreferences.edit();
-                            editor.putString(Activity, "eventdesc");
-                            editor.putString(CONTENTID, notifiid);
+                            editor.putString(Activity, "mainversion");
+                            editor.putString(CONTENTID, "0");
                             editor.commit();
-                            Intent signin=new Intent(getApplicationContext(),SigninpageActivity.class);
-                            startActivity(signin);
-                            finish();
+                            Intent sign=new Intent(getApplicationContext(),SigninpageActivity.class);
+                            startActivity(sign);
+
                         }
+
                     }
                 });
                 share.setOnClickListener(new View.OnClickListener() {
@@ -768,51 +716,144 @@ public class TestDesc extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent sendIntent = new Intent();
                         sendIntent.setAction(Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_TEXT, sharetitle+ "\n" + shareurl);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, sharetitle+ "\n" + shareurl+"\n"+"\n"+"\n"+"Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
                         sendIntent.setType("text/plain");
                         startActivity(Intent.createChooser(sendIntent, "Share using"));
 
                     }
                 });
-
-
-                modelList.add(model);
-
-
-
-
-
             }
 
             // notify data changes to list adapater
-            //rcAdapter.notifyDataSetChanged();
+            // rcAdapter.notifyDataSetChanged();
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-    class ItemModel{
+    private class MyBrowser extends WebViewClient {
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            // ((EditText) getActionBar().getCustomView().findViewById(R.id.editText)).setText(url);
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            Log.e("URLs",url.toString());
+            if(url.startsWith("http://simpli")){
+                Intent ads=new Intent(getApplicationContext(),AdvertisementPage.class);
+                ads.putExtra("ID",url);
+                startActivity(ads);
+            }else {
+                Intent ads=new Intent(getApplicationContext(),AdvertisementPage.class);
+                ads.putExtra("ID",url);
+                startActivity(ads);
+                // view.loadUrl(url);
+            }
+            //
+
+            return true;
+        }
+    }
+    class ItemModel {
         private int typeid;
         private String name;
-        private String image;
+        private String image,profileimage;
         private String bimage;
         private String pdate;
         private String description;
         private String title;
-        private String eventstartdate;
-        private String eventenddate;
-        private String venue;
-        private String location;
-        private String timing;
-        private String contactname;
-        private String contactemail;
-        private String contactwebsite;
-        private String contactphone;
-        private String etype;
-        private String emt;
-        private String organizedby;
+        private String publisher;
+        private String company;
+        /******** start the Food category names****/
+        private String source;
+        private String source_link;
+        String id;
         private int favcount;
         private String shareurl;
+        String shortdescription,reporterid,reportername,reporterurl,reporterimage;
+        String photodescription,photocreditid,photocreditname,photocreditimage,photocrediturl;
 
+        public String getShortdescription() {
+            return shortdescription;
+        }
+
+        public void setShortdescription(String shortdescription) {
+            this.shortdescription = shortdescription;
+        }
+
+        public String getReporterid() {
+            return reporterid;
+        }
+
+        public void setReporterid(String reporterid) {
+            this.reporterid = reporterid;
+        }
+
+        public String getReportername() {
+            return reportername;
+        }
+
+        public void setReportername(String reportername) {
+            this.reportername = reportername;
+        }
+
+        public String getReporterimage() {
+            return reporterimage;
+        }
+
+        public void setReporterimage(String reporterimage) {
+            this.reporterimage = reporterimage;
+        }
+
+        public String getReporterurl() {
+            return reporterurl;
+        }
+
+        public void setReporterurl(String reporterurl) {
+            this.reporterurl = reporterurl;
+        }
+
+        public String getPhotocreditid() {
+            return photocreditid;
+        }
+
+        public void setPhotocreditid(String photocreditid) {
+            this.photocreditid = photocreditid;
+        }
+
+        public String getPhotocreditimage() {
+            return photocreditimage;
+        }
+
+        public void setPhotocreditimage(String photocreditimage) {
+            this.photocreditimage = photocreditimage;
+        }
+
+        public String getPhotocreditname() {
+            return photocreditname;
+        }
+
+        public void setPhotocreditname(String photocreditname) {
+            this.photocreditname = photocreditname;
+        }
+
+        public String getPhotocrediturl() {
+            return photocrediturl;
+        }
+
+        public void setPhotocrediturl(String photocrediturl) {
+            this.photocrediturl = photocrediturl;
+        }
+
+        public String getPhotodescription() {
+            return photodescription;
+        }
+
+        public void setPhotodescription(String photodescription) {
+            this.photodescription = photodescription;
+        }
         public void setFavcount(int favcount) {
             this.favcount = favcount;
         }
@@ -825,34 +866,34 @@ public class TestDesc extends AppCompatActivity {
             return shareurl;
         }
 
+        public String getProfileimage() {
+            return profileimage;
+        }
 
+        public void setProfileimage(String profileimage) {
+            this.profileimage = profileimage;
+        }
 
         public void setShareurl(String shareurl) {
             this.shareurl = shareurl;
         }
 
-        public String getOrganizedby(){return organizedby;}
-        public void setOrganizedby(String organizedby){this.organizedby=organizedby;}
-        public String getEmt(){return emt;}
-        public void setEmt(String emt){this.emt=emt;}
-        public String getEtype(){return etype;}
-        public void setEtype(String etype){this.etype=etype;}
-        public String getVenue(){return venue;}
-        public void setVenue(String venue){this.venue=venue;}
-        public String getLocation(){return location;}
-        public void setLocation(String location){this.location=location;}
-        public String getTiming(){return timing;}
-        public void setTiming(String timing){this.timing=timing;}
-        public String getContactname(){return contactname;}
-        public void setContactname(String contactname){this.contactname=contactname;}
-        public String getContactemail(){return contactemail;}
-        public void setContactemail(String contactemail){this.contactemail=contactemail;}
-        public String getContactwebsite(){return contactwebsite;}
-        public void setContactwebsite(String contactwebsite){this.contactwebsite=contactwebsite;}
-        public String getContactphone(){return contactphone;}
-        public void setContactphone(String contactphone){this.contactphone=contactphone;}
-        /******** start the Food category names****/
-        private String category_name;
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getSource() {
+            return source;
+        }
+
+        public void setSource(String source) {
+            this.source = source;
+        }
+
         /******** start the Food category names****/
 
         public int getTypeid() {
@@ -862,54 +903,81 @@ public class TestDesc extends AppCompatActivity {
         public void setTypeid(int typeid) {
             this.typeid = typeid;
         }
+
         public String getName() {
             return name;
         }
+
         public void setName(String name) {
             this.name = name;
         }
+
         public String getBimage() {
             return bimage;
         }
+
         public void setBimage(String bimage) {
             this.bimage = bimage;
         }
+
         public String getImage() {
             return image;
         }
+
         public void setImage(String image) {
             this.image = image;
         }
-        public String getDescription(){return description;}
-        public  void setDescription(String description){
-            this.description=description;
+
+        public String getDescription() {
+            return description;
         }
-        public String getPdate(){return  pdate;}
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getPdate() {
+            return pdate;
+        }
 
         public void setPdate(String pdate) {
             this.pdate = pdate;
         }
-        public String getTitle(){return  title;}
+
+        public String getTitle() {
+            return title;
+        }
 
         public void setTitle(String title) {
             this.title = title;
         }
-        public String getEventstartdate(){return  eventstartdate;}
 
-        public void setEventstartdate(String eventstartdate) {
-            this.eventstartdate = eventstartdate;
+        public String getPublisher() {
+            return publisher;
         }
-        public String getEventenddate(){return eventenddate;}
-        public void setEventenddate(String eventenddate){
-            this.eventenddate=eventenddate;
+
+        public void setPublisher(String publisher) {
+            this.publisher = publisher;
         }
+
+        public String getCompany() {
+            return company;
+        }
+
+        public void setCompany(String company) {
+            this.company = company;
+        }
+
         /******** start the Food category names****/
-        public String getCategory_name(){return  category_name;}
+        public String getSource_link() {
+            return source_link;
+        }
 
-        public void setCategory_name(String category_name) {
-            this.category_name = category_name;
+        public void setSource_link(String source_link) {
+            this.source_link = source_link;
         }
     }
+
 
     static class UserViewHolder extends RecyclerView.ViewHolder {
         public TextView name, locations,commentsdecription;
@@ -1163,10 +1231,10 @@ public class TestDesc extends AppCompatActivity {
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
-                    mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
+                    mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getApplicationContext()).getImageLoader();
 
 
                 ItemModels itemmodel = commentlist.get(position);
@@ -1203,14 +1271,31 @@ public class TestDesc extends AppCompatActivity {
         public void setLoaded() {
             loading = false;
         }
+        public void onItemDismiss(int position) {
+            if(position!=-1 && position<commentlist.size())
+            {
+                commentlist.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, getItemCount());
+            }
+        }
 
         public int getItemCount() {
             return commentlist.size();
         }
     }
 
-
-
+    public void AddnewCommnent(){
+        int curSize = rcAdapter.getItemCount();
+        ItemModels models=new ItemModels();
+        models.setName(my_profilename);
+        models.setProfilepic(my_profileimage);
+        models.setComment(description_comment);
+        commentlist.add(models);
+        recycler_comment.setVisibility(View.VISIBLE);
+        rcAdapter.notifyDataSetChanged();
+        rcAdapter.notifyItemRangeInserted(curSize, commentlist.size());
+    }
 
 
 
@@ -1219,7 +1304,7 @@ public class TestDesc extends AppCompatActivity {
         private String KEY_TYPE = "qtype";
         private String KEY_MYUID = "user_id";
         private String KEY_POSTID = "id";
-        String URLCOMMENT = "http://simpli-city.in/request2.php?rtype=viewcomment&key=simples&qtype=event&id=";
+        String URLCOMMENT = "http://simpli-city.in/request2.php?rtype=viewcomment&key=simples&qtype=columnist&id=";
         String urlpost = "http://simpli-city.in/request2.php?rtype=comments&key=simples";
         EditText commentbox;
         Button post_review;
@@ -1267,22 +1352,22 @@ public class TestDesc extends AppCompatActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View root = inflater.inflate(R.layout.commenteventfragment, container, false);
+            View root = inflater.inflate(R.layout.commentsreview, container, false);
             titles = (TextView) root.findViewById(R.id.comments_title);
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
             close_back = (ImageButton) root.findViewById(R.id.btn_back_comment_review);
-           // mCoordinator = (CoordinatorLayout) root.findViewById(R.id.root_coordinator);             mCollapsingToolbarLayout = (CollapsingToolbarLayout) root.findViewById(R.id.collapsing_toolbar_layout);
+            // mCoordinator = (CoordinatorLayout) root.findViewById(R.id.root_coordinator);             mCollapsingToolbarLayout = (CollapsingToolbarLayout) root.findViewById(R.id.collapsing_toolbar_layout);
             recycler = (RecyclerView) root.findViewById(R.id.commentpagelist_recyclerview);
             recycler.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-            recycler.setHasFixedSize(true);
+
             recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recycler.setNestedScrollingEnabled(false);
+
             pdialog = new ProgressDialog(getActivity());
             pdialog.show();
             pdialog.setContentView(R.layout.custom_progressdialog);
@@ -1344,7 +1429,7 @@ public class TestDesc extends AppCompatActivity {
                             if (postid != null) {
                                 if (description != null) {
                                     params.put(KEY_COMMENT, description);
-                                    params.put(KEY_TYPE, "event");
+                                    params.put(KEY_TYPE, "columnist");
                                     params.put(KEY_POSTID, postid);
                                     params.put(KEY_MYUID, myuserid);
                                 }
@@ -1507,7 +1592,7 @@ public class TestDesc extends AppCompatActivity {
                             .getString("thumb");
                     model.setProfilepic(image);
                     model.setComment(obj.getString("comment"));
-                    model.setPadate(obj.getString("pdate"));
+                  //  model.setPadate(obj.getString("pdate"));
                     model.setName(obj.getString("name"));
                     model.setId(obj.getString("id"));
 
@@ -1639,10 +1724,10 @@ public class TestDesc extends AppCompatActivity {
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
-                        mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
+                        mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getActivity()).getImageLoader();
 
 
                     ItemModels itemmodel = commentlist.get(position);

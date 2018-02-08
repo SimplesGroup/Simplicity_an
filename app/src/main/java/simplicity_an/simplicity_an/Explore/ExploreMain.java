@@ -92,7 +92,7 @@ public class ExploreMain extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.exploremain);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         sharedpreferences =  getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
@@ -531,7 +531,7 @@ LinearLayout explore_item_layout;
 if(holder instanceof UserViewHolder){
     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
     final Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
     if (mImageLoader == null)
         mImageLoader = CustomVolleyRequest.getInstance(getApplicationContext()).getImageLoader();

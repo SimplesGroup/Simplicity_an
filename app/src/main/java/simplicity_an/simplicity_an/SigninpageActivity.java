@@ -79,7 +79,7 @@ public class SigninpageActivity extends android.app.Activity {
         }else if(activity_name.equals("rentals")){
             layout.setBackgroundResource(R.drawable.custombgtwo);
         }*/
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
         closebutton=(Button)findViewById(R.id.close_button_sign);

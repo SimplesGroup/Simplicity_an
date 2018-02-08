@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -24,6 +23,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -145,152 +145,12 @@ RequestQueue requestQueue;
             my_profileimage=sharedpreferences.getString(USERIMAGE,"");
 
         }
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
 requestQueue=Volley.newRequestQueue(getActivity());
-        commentbox=(LinearLayout)view.findViewById(R.id.comments_versiontwo) ;
-        comment_title=(TextView)view.findViewById(R.id.comments_title);
-        loadmore_title=(TextView)view.findViewById(R.id.loadmore);
-        commentbox_editext=(EditText)getActivity().findViewById(R.id.comment_descriptionsjob);
-        post=(Button)view.findViewById(R.id.post_button) ;
-        recycler_comment=(RecyclerView)view.findViewById(R.id.commentpagelist_recyclerview) ;
 
 
-        commentbox_editext.setHint("Comments Here");
-        recycler_comment.setLayoutManager(new LinearLayoutManager(getActivity()));
-        comment=(ImageButton)getActivity().findViewById(R.id.btn_4);
-        comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(myprofileid!=null) {
-                    FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-                    MyDialogFragment frag;
-                    frag = new MyDialogFragment();
-                    Bundle args = new Bundle();
-                    args.putString("POSTID", notifiid);
-                    args.putString("USERID", myprofileid);
-                    frag.setArguments(args);
-                    frag.show(ft, "txn_tag");
-                }else {
-                    Intent signin=new Intent(getActivity(),SigninpageActivity.class);
-                    startActivity(signin);
-                   getActivity(). finish();
-                }
-            }
-        });
-        comment_title.setTypeface(tf);
-        loadmore_title.setTypeface(tf);
-        post.setTypeface(tf);
-        if(myprofileid!=null){
-            // URLTWO_comment=URLCOMMENT+notifiid;
-            comment_title.setText("Post your Comment Here - ");
-            post.setText("Post");
 
-            commentbox.setVisibility(View.VISIBLE);
-
-            post.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    //Showing the progress dialog
-                    //final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlpost,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String s) {
-                                    //Disimissing the progress dialog
-                                    //  loading.dismiss();
-                                    //Showing toast message of the response
-                                    if (s.equalsIgnoreCase("error")) {
-                                        Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
-                                    } else {
-                                        //MyDialogFragment.this.dismiss();
-                                        Toast.makeText(getActivity(), "Posted", Toast.LENGTH_LONG).show();
-                                        AddnewCommnent();
-                                    }
-
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError volleyError) {
-                                    //Dismissing the progress dialog
-                                    //  loading.dismiss();
-
-                                    //Showing toast
-                                    // Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                                }
-                            }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            //Converting Bitmap to String
-
-
-                            //Getting Image Name
-                            description_comment = commentbox_editext.getText().toString().trim();
-
-                            //Creating parameters
-                            Map<String, String> params = new Hashtable<String, String>();
-
-                            //Adding parameters
-
-                                    params.put(KEY_COMMENT, description_comment);
-                                    params.put(KEY_TYPE, "job");
-                                    params.put(KEY_POSTID, notifiid);
-                                    params.put(KEY_MYUID, myprofileid);
-
-                            return params;
-                        }
-                    };
-
-                    //Creating a Request Queue
-                    RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-
-                    //Adding request to the queue
-                    requestQueue.add(stringRequest);
-                    //queue.add(stringRequest);
-                }
-
-            });
-            rcAdapter = new RecyclerViewAdapter(commentlist,recycler_comment);
-            recycler_comment.setAdapter(rcAdapter);
-            getData();
-            rcAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-                @Override
-                public void onLoadMore() {
-                    Log.e("haint", "Load More");
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.e("haint", "Load More 2");
-
-
-                            getData();
-
-
-                            rcAdapter.setLoaded();
-                        }
-                    }, 2000);
-                }
-            });
-
-            loadmore_title.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-                    MyDialogFragment frag;
-                    frag = new MyDialogFragment();
-                    Bundle args = new Bundle();
-                    args.putString("POSTID", notifiid);
-                    args.putString("USERID", myprofileid);
-                    frag.setArguments(args);
-                    frag.show(ft, "txn_tag");
-                }
-            });
-
-        }else {
-            commentbox.setVisibility(View.GONE);
-        }
 
 
       jobtypelabel=(TextView)view.findViewById(R.id.jobtype_label);
@@ -309,8 +169,15 @@ requestQueue=Volley.newRequestQueue(getActivity());
         venue=(TextView)view.findViewById(R.id.venue);
         emailabel=(TextView)view.findViewById(R.id.emaillabel);
         jobdescrion_web=(WebView)view.findViewById(R.id.webView_jobdescription);
+        jobdescrion_web.getSettings().setLoadsImagesAutomatically(true);
+        jobdescrion_web.getSettings().setPluginState(WebSettings.PluginState.ON);
+        jobdescrion_web.getSettings().setAllowFileAccess(true);
+        jobdescrion_web.getSettings().setJavaScriptEnabled(true);
         job_address_web=(WebView)view.findViewById(R.id.webView_venuedetails);
-
+       job_address_web.getSettings().setLoadsImagesAutomatically(true);
+        job_address_web.getSettings().setPluginState(WebSettings.PluginState.ON);
+        job_address_web.getSettings().setAllowFileAccess(true);
+        job_address_web.getSettings().setJavaScriptEnabled(true);
         jobtypelabel.setTypeface(tf);
         jobtype.setTypeface(tf);
         salarylabel.setTypeface(tf);
@@ -475,7 +342,7 @@ jobrequest= Volley.newRequestQueue(getActivity());
                 jobtype.setText(jobtypes);
                 salaryamt.setText(jobsalary);
                if(jobcompedu!=null){
-                   Candidateprofiledetails.setText("Educationtamil: "+jobcompedu);
+                   Candidateprofiledetails.setText("Education: "+jobcompedu);
                }else {
                    Candidateprofiledetails.setVisibility(View.GONE);
                }
@@ -962,7 +829,7 @@ if(jobcompexp!=null){
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
@@ -1065,7 +932,7 @@ if(jobcompexp!=null){
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1432,7 +1299,7 @@ if(jobcompexp!=null){
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();

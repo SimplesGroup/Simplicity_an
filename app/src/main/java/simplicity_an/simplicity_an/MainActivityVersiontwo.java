@@ -243,7 +243,7 @@ if(colorcodes.length()==0){
         }
     }
 }
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         String simplycity_title_reugular= "fonts/robotoSlabBold.ttf";
         Typeface tf1 = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_reugular);
@@ -884,9 +884,9 @@ public void Check(){
 
    }
 }
-    public void onFragmentInteraction(String playurl, String title) {
+    public void onFragmentInteraction(String playurl, String title,String image) {
         MusicplayerBottom secondFragment = (MusicplayerBottom) getSupportFragmentManager().findFragmentById(R.id.musicbottomplayer);
-        secondFragment.PlaySong(playurl, title );
+        secondFragment.PlaySong(playurl, title,image );
     }
 
 

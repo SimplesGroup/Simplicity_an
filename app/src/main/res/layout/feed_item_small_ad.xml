@@ -24,9 +24,12 @@
                 android:layout_marginTop="1dp"
                 android:drawingCacheQuality="low"
                 android:layout_width="fill_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:maxHeight="130dp"
+                android:adjustViewBounds="true"
                 android:background="@android:color/white"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:visibility="visible" />
 
 

@@ -163,29 +163,7 @@ public class AdvertisementPage extends AppCompatActivity {
         }
 
         requestQueue = Volley.newRequestQueue(this);
-        if(activity==null){
-            Intent getnotifi=getIntent();
-            notifiid=getnotifi.getStringExtra("ID");
-            searchnonitiid = getnotifi.getStringExtra("IDSEARCH");
-            notifiid = notifiid.replaceAll("\\D+","");
-            Log.e("ID",notifiid);
 
-        } else {
-            if(activity.equalsIgnoreCase("articledesc")){
-                notifiid=contentid;
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.remove(Activity);
-                editor.remove(CONTENTID);
-                editor.apply();
-
-            }else {
-                Intent getnotifi=getIntent();
-                notifiid=getnotifi.getStringExtra("ID");
-                searchnonitiid = getnotifi.getStringExtra("IDSEARCH");
-                notifiid = notifiid.replaceAll("\\D+","");
-                Log.e("ID",notifiid);
-            }
-        }
 
         Intent getnotifi=getIntent();
         notifiid=getnotifi.getStringExtra("ID");
@@ -215,6 +193,8 @@ public class AdvertisementPage extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         description.setWebViewClient(new MyBrowser());
         description.getSettings().setLoadsImagesAutomatically(true);
+       description.getSettings().setPluginState(WebSettings.PluginState.ON);
+        description.getSettings().setAllowFileAccess(true);
         description.getSettings().setJavaScriptEnabled(true);
        // webView.getSettings().setSupportZoom(true);
         description.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -230,7 +210,7 @@ public class AdvertisementPage extends AppCompatActivity {
         //  recycler_comment.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
 
         recycler_comment.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         String simplycity_title_fontPathone = "fonts/robotoSlabBold.ttf";
         Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPathone);
@@ -513,15 +493,21 @@ String yy="http://simpli-city.in/education-detail.php?nid=444&isnotify=n";
                 description.setBackgroundColor(Color.TRANSPARENT);
 
                 modelList.add(model);
-                if (favcount == 1) {
-                    favourite.setImageResource(R.mipmap.likered);
-                } else {
-                    favourite.setImageResource(R.mipmap.like);
-                }
+                if (favcount == 1) {                     favourite.setImageResource(R.mipmap.likered);                     favourite.setTag("heartfullred");                 } else {                    favourite.setImageResource(R.mipmap.like);                     favourite.setTag("heart");                 }
                 favourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Toast.makeText(getApplicationContext(),"worked",Toast.LENGTH_LONG).show();
+                        String backgroundImageName = String.valueOf(favourite.getTag());
+                        Log.e("RUN","with"+backgroundImageName);
+                        if(backgroundImageName.equals("heart")){
+                            favourite.setImageResource(R.mipmap.likered);
+                            favourite.setTag("heartfullred");
+                        }else if(backgroundImageName.equals("heartfullred")) {
+                            favourite.setImageResource(R.mipmap.like);
+                            favourite.setTag("heart");
+                        }else {
+
+                        }
                         if(myprofileid!=null) {
                             StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
@@ -531,10 +517,11 @@ String yy="http://simpli-city.in/education-detail.php?nid=444&isnotify=n";
                                     res = res.trim();
                                     Log.e("LIke",res.toString());
                                     if(res.equalsIgnoreCase("yes")){
-                                        //  System.out.println(itemmodel.getId());
                                         favourite.setImageResource(R.mipmap.likered);
+                                        favourite.setTag("heartfullred");
                                     }else if(res.equalsIgnoreCase("no")){
                                         favourite.setImageResource(R.mipmap.like);
+                                        favourite.setTag("heart");
                                     }
 
                                 }
@@ -551,7 +538,7 @@ String yy="http://simpli-city.in/education-detail.php?nid=444&isnotify=n";
                                     //Adding parameters
                                     param.put(QID, postid);
                                     param.put(USERID, myprofileid);
-                                    param.put(QTYPE, "article");
+                                    param.put(QTYPE, "advetorial");
                                    /* if (postid != null) {
 
 
@@ -1029,7 +1016,7 @@ String yy="http://simpli-city.in/education-detail.php?nid=444&isnotify=n";
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getApplicationContext()).getImageLoader();
@@ -1155,7 +1142,7 @@ String yy="http://simpli-city.in/education-detail.php?nid=444&isnotify=n";
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1522,7 +1509,7 @@ String yy="http://simpli-city.in/education-detail.php?nid=444&isnotify=n";
 
                     final MyDialogFragment.UserViewHolder userViewHolder = (MyDialogFragment.UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getActivity()).getImageLoader();

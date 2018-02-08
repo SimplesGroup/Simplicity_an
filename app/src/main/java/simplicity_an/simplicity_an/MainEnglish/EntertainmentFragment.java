@@ -35,14 +35,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.onesignal.OneSignal;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,9 +51,13 @@ import java.util.Map;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SimplicitySearchview;
+import simplicity_an.simplicity_an.TabColumns;
 import simplicity_an.simplicity_an.TabEntertainmentAll;
 import simplicity_an.simplicity_an.TabEntertainmentTheatre;
+import simplicity_an.simplicity_an.Tabarticle;
+import simplicity_an.simplicity_an.Tabcolumnist;
 import simplicity_an.simplicity_an.TabentertainmentRadio;
+import simplicity_an.simplicity_an.Tabphotostories;
 
 /**
  * Created by kuppusamy on 5/18/2017.
@@ -66,7 +65,7 @@ import simplicity_an.simplicity_an.TabentertainmentRadio;
 
 public class EntertainmentFragment extends Fragment  {
 
-    TextView notification_batge_count,date_text,weather_update,title_coimbatore,language_title,weathercentre_textview;
+    TextView date_text,weather_update,title_coimbatore,language_title,weathercentre_textview;
     RequestQueue requestQueue;
     SharedPreferences sharedpreferences;
     int cDay,cMonth,cYear,cHour,cMinute,cSecond;
@@ -81,7 +80,7 @@ public class EntertainmentFragment extends Fragment  {
     public static final String MYUSERID= "myprofileid";
     String WEATHER_URL="http://simpli-explore.in/request2.php?rtype=weather&key=simples";
     String url_noti_count="http://simpli-explore.in/request2.php?rtype=notificationcount&key=simples&user_id=";
-    String url_notification_count_valueget,myprofileid,weather_degree_value,notification_counts;
+    String url_notification_count_valueget,myprofileid;
     int value;
     public static final String Activity = "activity";
     public static final String CONTENTID = "contentid";
@@ -161,7 +160,7 @@ public class EntertainmentFragment extends Fragment  {
         fabinnerplus=(FloatingActionButton)view.findViewById(R.id.fabinnerplus) ;
 
         search=(ImageButton)view.findViewById(R.id.searchbutton);
-
+        search.setVisibility(View.GONE);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -319,7 +318,7 @@ public class EntertainmentFragment extends Fragment  {
         Date d1full = new Date();
         String sMonthNamefull =  fmt.format(d1full);
         Log.e("DAY_OF_MONTH: ", "DAY_OF_MONTH: " + calendar.get(Calendar.DAY_OF_MONTH)+sMonthName);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
         title_coimbatore=(TextView)view.findViewById(R.id.title_versiontwo) ;
         date_text=(TextView)view.findViewById(R.id.date_versiontwo) ;
@@ -369,7 +368,7 @@ public class EntertainmentFragment extends Fragment  {
         title_coimbatore.setTypeface(tf);
         date_text.setTypeface(tf);
         weather_update.setTypeface(tf);
-        title_coimbatore.setText("Entertainment");
+        title_coimbatore.setText(" Specials");
         if(dayOfTheWeek.equalsIgnoreCase("Sun")){
             date_text.setText(Html.fromHtml("Sun"+","+"&nbsp;"+sMonthNamefull));
         }else if(dayOfTheWeek.equalsIgnoreCase("Mon")){
@@ -823,7 +822,7 @@ public class EntertainmentFragment extends Fragment  {
 
 
 
-        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/robotoSlabRegular.ttf");
+        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Lora-Regular.ttf");
         ViewGroup vg = (ViewGroup) mTabLayout.getChildAt(0);
         int tabsCount = vg.getChildCount();
         for (int j = 0; j < tabsCount; j++) {
@@ -910,11 +909,12 @@ public class EntertainmentFragment extends Fragment  {
     private void setupViewPager(ViewPager mPager) {
        HealthViewPagerAdapter adapter = new HealthViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new TabEntertainmentAll(), "All");
-
-        adapter.addFragment(new TabentertainmentRadio(), "Radio");
-        //adapter.addFragment(new TabEntertainmentMusic(), "Music");
+        adapter.addFragment(new TabColumns(), "Columns");
+        adapter.addFragment(new Tabcolumnist(),"Columnist");
+        adapter.addFragment(new Tabarticle(),"Article");
         adapter.addFragment(new TabEntertainmentTheatre(), "Videos");
-       // adapter.addFragment(new RadioJockey(),"Radio Jockey");
+        adapter.addFragment(new TabentertainmentRadio(), "Audio");
+        adapter.addFragment(new Tabphotostories(), "Photo Stories");
         mPager.setAdapter(adapter);
     }
     class HealthViewPagerAdapter extends FragmentPagerAdapter {

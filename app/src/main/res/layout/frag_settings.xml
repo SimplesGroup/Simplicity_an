@@ -292,6 +292,7 @@
                 ></View>
         </LinearLayout>
             <TextView
+                android:visibility="gone"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
@@ -305,6 +306,7 @@
                 android:id="@+id/savearticle" />
 
             <ImageButton
+                android:visibility="gone"
                 android:layout_marginTop="20dp"
                 android:id="@+id/savearticleappbutton"
                 android:layout_marginLeft="20dp"
@@ -321,6 +323,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_height="1dp"
+                android:visibility="gone"
                 android:id="@+id/footerline_savearticle"
                 android:orientation="horizontal"
                 android:layout_below="@+id/savearticle"

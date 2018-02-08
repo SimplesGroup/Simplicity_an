@@ -58,7 +58,6 @@ import java.util.Map;
 import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SimplicitySearchview;
-import simplicity_an.simplicity_an.Tamil.TamilArticle;
 import simplicity_an.simplicity_an.Tamil.TamilFarming;
 import simplicity_an.simplicity_an.Tamil.TamilFoods;
 import simplicity_an.simplicity_an.Tamil.TamilHealth;
@@ -176,7 +175,7 @@ public class CityFragmentTamil extends Fragment {
         fabsearch=(FloatingActionButton)view.findViewById(R.id.fabsearch) ;
         fabinnerplus=(FloatingActionButton)view.findViewById(R.id.fabinnerplus) ;
         search=(ImageButton)view.findViewById(R.id.searchbutton);
-
+        search.setVisibility(View.GONE);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -248,7 +247,7 @@ public class CityFragmentTamil extends Fragment {
                 }
             }
         }
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
         String simplycity_title_reugular= "fonts/robotoSlabBold.ttf";
         Typeface tf1 = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
@@ -918,7 +917,7 @@ public class CityFragmentTamil extends Fragment {
 
 
 
-        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/robotoSlabRegular.ttf");
+        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Lora-Regular.ttf");
         ViewGroup vg = (ViewGroup) mTabLayout.getChildAt(0);
         int tabsCount = vg.getChildCount();
         for (int j = 0; j < tabsCount; j++) {
@@ -1039,15 +1038,16 @@ public class CityFragmentTamil extends Fragment {
 
     private void setupViewPager(ViewPager mPager) {
         HealthViewPagerAdapter adapter = new HealthViewPagerAdapter(getChildFragmentManager());
+        adapter.addFragment(new Tamilnews(), "நகரம் ");
         adapter.addFragment(new TamilTaball(), "அனைத்தும்");
-        adapter.addFragment(new Tamilnews(), "செய்திகள்");
-        adapter.addFragment(new TamilArticle(), "கட்டுரை");
+        //adapter.addFragment(new TamilArticle(), "கட்டுரை");
        // adapter.addFragment(new TamilRadio(), "போட்காஸ்ட்");
         //adapter.addFragment(new TamilEvent(), "நிகழ்வுகள்");
         adapter.addFragment(new Tamilgovt(), "அரசு அறிவிப்பு");
         adapter.addFragment(new Tamiljob(), "வேலைவாய்ப்பு");
         adapter.addFragment(new TamilFoods(), "சமையல் குறிப்பு");
         adapter.addFragment(new Tamileducation(), "கல்வி செய்தி");
+        adapter.addFragment(new Tamiltravel(), "பயணங்கள்");
       //  adapter.addFragment(new Tamilmusic(), "இசை");
        // adapter.addFragment(new TamilMovies(), "குறும்படம்");
 
@@ -1057,7 +1057,7 @@ public class CityFragmentTamil extends Fragment {
         adapter.addFragment(new TamilFarming(), "விவசாயம்");
         adapter.addFragment(new TamilHealth(), "ஆரோக்கியம்");
 
-        adapter.addFragment(new Tamiltravel(), "பயணங்கள்");
+
         mPager.setAdapter(adapter);
     }
     class HealthViewPagerAdapter extends FragmentPagerAdapter {

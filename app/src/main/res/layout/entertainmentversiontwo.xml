@@ -26,6 +26,7 @@
                 android:id="@+id/collapsing_toolbar_layout"
                 android:layout_width="match_parent"
                 app:layout_scrollFlags="scroll"
+
                 android:background="@android:color/transparent"
                 android:layout_height="wrap_content"
                 app:contentScrim="?attr/colorPrimary"
@@ -77,6 +78,7 @@
                         android:layout_below="@+id/title"
                         android:layout_height="wrap_content">
                         <LinearLayout
+                            android:layout_marginLeft="15dp"
                             android:layout_weight=".43"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content">
@@ -175,8 +177,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:tabMinWidth="20dp"
+                    app:tabMode="scrollable"
 
-                    app:tabMode="fixed"
                     app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
                     app:tabGravity="center"
                     app:tabIndicatorColor="@android:color/white"

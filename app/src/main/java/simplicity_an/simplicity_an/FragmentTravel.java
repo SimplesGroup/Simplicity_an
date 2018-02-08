@@ -672,7 +672,7 @@ public class FragmentTravel extends Fragment {
                 ItemModel itemmodel=modelList.get(position);
                 final ViewitemTwoholder userViewHolder = (ViewitemTwoholder) holder;
                 if(itemmodel.getTypeid()==1) {
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     userViewHolder.type_two_title.setText(itemmodel.getTitle());
                     userViewHolder.type_two_title.setTypeface(seguiregular);
@@ -726,7 +726,7 @@ public class FragmentTravel extends Fragment {
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getActivity()).getImageLoader();

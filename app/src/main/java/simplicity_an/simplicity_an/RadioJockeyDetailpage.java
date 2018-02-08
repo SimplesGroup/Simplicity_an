@@ -87,7 +87,7 @@ public class RadioJockeyDetailpage extends AppCompatActivity {
         getimage=get.getStringExtra("IMAGE");
         URLTWO=URL+getid;
         Log.e("URl:",URLTWO);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         imageView=(FeedImageView)findViewById(R.id.feedImage1);
         title=(TextView)findViewById(R.id.viewitem_typetwo_title);
@@ -506,7 +506,7 @@ public class RadioJockeyDetailpage extends AppCompatActivity {
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
 

@@ -118,7 +118,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
     private String KEY_TYPE = "qtype";
     private String KEY_MYUID = "user_id";
     private String KEY_POSTID = "id";
-    String URLCOMMENT = "http://simpli-city.in/request2.php?rtype=viewcomment&key=simples&qtype=article&id=";
+    String URLCOMMENT = "http://simpli-city.in/request2.php?rtype=viewcomment&key=simples&qtype=photostories&id=";
     String urlpost = "http://simpli-city.in/request2.php?rtype=comments&key=simples";
     String URLLIKES="http://simpli-city.in/request2.php?rtype=articlelikes&key=simples";
     public static final String USERID="user_id";
@@ -167,9 +167,9 @@ public class PhotoStoriesDetail extends AppCompatActivity {
 
         }
         scrollView=(ScrollView)findViewById(R.id.scroll);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
-        String simplycity_title_fontPathone = "fonts/robotoSlabBold.ttf";
+        String simplycity_title_fontPathone = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPathone);
       share = (ImageButton) findViewById(R.id.btn_share);
         back = (ImageButton) findViewById(R.id.btn_back);
@@ -301,6 +301,9 @@ public class PhotoStoriesDetail extends AppCompatActivity {
 
             photostory_title = (TextView) findViewById(R.id.title);
             photostory_date = (TextView) findViewById(R.id.date);
+
+        photostory_date.setTypeface(tf);
+        photostory_title.setTypeface(tf_regular);
           /*  if (photostory_title != null) {
                 photostory_title.setText(Html.fromHtml(title));
             } else {
@@ -338,7 +341,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                             for (int k = 0; k < array.length(); k++) {
                                 JSONObject object = (JSONObject) array.get(k);
                                 photostory_title.setText(Html.fromHtml(object.getString("title")));
-                                photostory_date.setText(Html.fromHtml(object.getString("pdate")));
+                                photostory_date.setText(Html.fromHtml(object.getString("source")) +"\n"+Html.fromHtml(object.getString("pdate")));
                             }
 
 
@@ -704,7 +707,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
@@ -798,24 +801,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
         URLTWO_comment = URLCOMMENT +likes_to_load+"&page="+ requestCount;
 
 
-        Cache cache = AppControllers.getInstance().getRequestQueue().getCache();
-        Cache.Entry entry = cache.get(URLTWO_comment);
-        if (entry != null) {
-            // fetch the data from cache
-            try {
-                String data = new String(entry.data, "UTF-8");
-                try {
-                  //  pdialog.dismiss();
-                    // dissmissDialog();
-                    parseJsonFeedTwo(new JSONObject(data));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
 
-        } else {
             // making fresh volley request and getting json
             jsonReq = new JsonObjectRequest(Request.Method.GET,
                     URLTWO_comment, new Response.Listener<JSONObject>() {
@@ -841,7 +827,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
             jsonReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
             requestQueue.add(jsonReq);
-        }
+
         return jsonReq;
     }
     private void parseJsonFeedTwo(JSONObject response) {
@@ -1006,7 +992,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
 
                 final UserViewHoldercomment userViewHolder = (UserViewHoldercomment) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getApplicationContext()).getImageLoader();
@@ -1132,7 +1118,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1499,7 +1485,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getActivity()).getImageLoader();

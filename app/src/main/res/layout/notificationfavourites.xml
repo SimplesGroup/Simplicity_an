@@ -35,55 +35,55 @@
     </android.support.v4.widget.NestedScrollView>
     <LinearLayout android:id="@+id/footer"
         android:layout_width="fill_parent"
-        android:layout_height="52dp"
+        android:layout_height="62dp"
         android:gravity="bottom"
         android:orientation="horizontal"
         android:background="#FF000000"
 
         android:layout_alignParentBottom="true">
         <ImageButton android:id="@+id/btn_articleback"
-            android:layout_marginRight="1dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/back"
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/backwithtext"
             android:background="@drawable/buttonselector"
             android:gravity="center_horizontal"
             android:layout_weight="1"
             />
         <ImageButton android:id="@+id/btn_citycenter"
-            android:layout_margin="1dp"
+
             android:background="@drawable/buttonselector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/beyond"
+            android:src="@mipmap/events"
             android:gravity="center_horizontal"
             />
         <ImageButton android:id="@+id/btn_home"
-            android:layout_margin="1dp"
+
 
             android:background="@drawable/buttonselector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/searchversiontwo"
+            android:src="@mipmap/search"
             android:gravity="center_horizontal" />
         <ImageButton android:id="@+id/btn_entertainment"
-            android:layout_margin="1dp"
+
             android:background="@drawable/buttonselector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ent"
+           android:src="@mipmap/specials"
             android:gravity="center_horizontal"
             />
         <ImageButton android:id="@+id/btn_notifications"
-            android:layout_margin="1dp"
+
             android:background="@drawable/buttonselector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/moreveriontwo"
+            android:src="@mipmap/more"
             android:gravity="center_horizontal"
             />
     </LinearLayout>

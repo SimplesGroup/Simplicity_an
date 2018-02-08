@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -28,6 +27,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -332,13 +332,21 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
                 }
             }
         });
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";;
         Typeface tf = Typeface.createFromAsset(FoodAndCookDescriptionPagetamil.this.getAssets(), simplycity_title_fontPath);
         titleofrecipie=(TextView)findViewById(R.id.textView_titlename);
         fooditemimage=(NetworkImageView)findViewById(R.id.thumbnailone);
        date=(TextView)findViewById(R.id.author);
         ingredientsdescription=(WebView)findViewById(R.id.ingredients_desc);
+        ingredientsdescription.getSettings().setLoadsImagesAutomatically(true);
+       ingredientsdescription.getSettings().setPluginState(WebSettings.PluginState.ON);
+        ingredientsdescription.getSettings().setAllowFileAccess(true);
+        ingredientsdescription.getSettings().setJavaScriptEnabled(true);
         stepsdescriptions=(WebView)findViewById(R.id.steps_desc);
+        stepsdescriptions.getSettings().setLoadsImagesAutomatically(true);
+        stepsdescriptions.getSettings().setPluginState(WebSettings.PluginState.ON);
+        stepsdescriptions.getSettings().setAllowFileAccess(true);
+        stepsdescriptions.getSettings().setJavaScriptEnabled(true);
         ingredients=(Button)findViewById(R.id.ingredients_button);
         steps=(Button)findViewById(R.id.steps_button);
         ingredientsdescription.setVisibility(View.VISIBLE);
@@ -348,14 +356,14 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);
         date.setTypeface(tf);
-        ingredients.setBackgroundColor(0x14ffffff);
+        ingredients.setBackgroundColor(0x31ffffff);
         steps.setBackgroundColor(0x0affffff);
         ingredients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ingredientsdescription.setVisibility(View.VISIBLE);
                 stepsdescriptions.setVisibility(View.GONE);
-                ingredients.setBackgroundColor(0x14ffffff);
+                ingredients.setBackgroundColor(0x31ffffff);
                 steps.setBackgroundColor(0x0affffff);
             }
         });
@@ -365,7 +373,7 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
                 ingredientsdescription.setVisibility(View.GONE);
                 stepsdescriptions.setVisibility(View.VISIBLE);
                 ingredients.setBackgroundColor(0x0affffff);
-                steps.setBackgroundColor(0x14ffffff);
+                steps.setBackgroundColor(0x31ffffff);
             }
         });
 
@@ -573,7 +581,7 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
                         .getString("ingredient");
 
                 ingredientsdescription.getSettings().setJavaScriptEnabled(true);
-                String fonts="<html>\n" +         "\t<head>\n" +         "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" +         "\t\t<style>\n" +         "\t\t@font-face {\n" +         "  font-family: 'segeoui-light';\n" +         " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-regular';\n" +         "src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-sbold';\n" +         " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Bold';\n" +         "   src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Light';\n" +         "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Regular';\n" +         "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Thin';\n" +         "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "\t\t</style>\n" +         "\t</head>"; ingredientsdescription.loadDataWithBaseURL("", fonts+descrition+"</head>", "text/html", "utf-8", "");
+                String fonts="<html>\n" +         "\t<head>\n" +         "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" +         "\t\t<style>\n" +         "\t\t@font-face {\n" +         "  font-family: 'segeoui-light';\n" +         " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-regular';\n" +         "src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-sbold';\n" +         " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Bold';\n" +         "   src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Light';\n" +         "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Regular';\n" +         "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Thin';\n" +         "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "\t\t</style>\n" +         "\t</head>"; ingredientsdescription.loadDataWithBaseURL("", fonts+descrition+"</head>", "text/html", "utf-8", "");
                 ingredientsdescription.getSettings().setAllowContentAccess(true);
                 ingredientsdescription.setBackgroundColor(Color.TRANSPARENT);
 
@@ -607,16 +615,23 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
 
                     }
                 });
-                if (favcount == 1) {
-                    favourite.setImageResource(R.mipmap.likered);
-                } else {
-                   favourite.setImageResource(R.mipmap.like);
-                }
+                 if (favcount == 1) {                     favourite.setImageResource(R.mipmap.likered);                     favourite.setTag("heartfullred");                 } else {                    favourite.setImageResource(R.mipmap.like);                     favourite.setTag("heart");                 }
                 favourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         if(myprofileid!=null) {
+                            String backgroundImageName = String.valueOf(favourite.getTag());
+                            Log.e("RUN","with"+backgroundImageName);
+                            if(backgroundImageName.equals("heart")){
+                                favourite.setImageResource(R.mipmap.likered);
+                                favourite.setTag("heartfullred");
+                            }else if(backgroundImageName.equals("heartfullred")) {
+                                favourite.setImageResource(R.mipmap.like);
+                                favourite.setTag("heart");
+                            }else {
+
+                            }
                             StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
@@ -624,12 +639,7 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
                                     res = res.replace(" ", "");
                                     res = res.trim();
                                     Log.e("LIke",res.toString());
-                                    if(res.equalsIgnoreCase("yes")){
-                                        //  System.out.println(itemmodel.getId());
-                                        favourite.setImageResource(R.mipmap.likered);
-                                    }else if(res.equalsIgnoreCase("no")){
-                                       favourite.setImageResource(R.mipmap.like);
-                                    }
+                                   if(res.equalsIgnoreCase("yes")){                                          favourite.setImageResource(R.mipmap.likered);                                         favourite.setTag("heartfullred");                                     }else if(res.equalsIgnoreCase("no")){                                        favourite.setImageResource(R.mipmap.like);                                         favourite.setTag("heart");                                     }
 
                                 }
                             }, new Response.ErrorListener() {
@@ -1061,7 +1071,7 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
@@ -1165,7 +1175,7 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1532,7 +1542,7 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();

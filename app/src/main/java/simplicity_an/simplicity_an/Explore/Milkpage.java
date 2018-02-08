@@ -80,7 +80,7 @@ public class Milkpage extends AppCompatActivity {
         setContentView(R.layout.explore_milk_age);
         Intent get=getIntent();
          title=get.getStringExtra("TITLE");
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         sharedpreferences =  getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);

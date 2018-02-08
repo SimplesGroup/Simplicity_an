@@ -46,8 +46,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import simplicity_an.simplicity_an.Explore.ExploreMain;
-
 /**
  * Created by kuppusamy on 2/11/2016.
  */
@@ -156,7 +154,7 @@ public class Events extends AppCompatActivity {
         }else {
 
         }
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         mCoordinator = (CoordinatorLayout) findViewById(R.id.root_coordinator);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
@@ -168,9 +166,9 @@ back=(ImageButton)findViewById(R.id.btn_eventback);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent search_intent = new Intent(getApplicationContext(), EntertainmentVersiontwo.class);
-                startActivity(search_intent);
-                overridePendingTransition(R.anim.righttoleft, R.anim.righttoleft);
+                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                entairnment.putExtra("ID","2");
+                startActivity(entairnment);
             }
         });
 
@@ -188,9 +186,9 @@ back.setOnClickListener(new View.OnClickListener() {
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent menuevent=new Intent(getApplicationContext(), ExploreMain.class);
-                startActivity(menuevent);
-                overridePendingTransition(R.anim.righttoleft, R.anim.righttoleft);
+                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                entairnment.putExtra("ID","4");
+                startActivity(entairnment);
             }
         });
         notification=(ImageButton)findViewById(R.id.btn_eventprofile) ;
@@ -198,9 +196,9 @@ back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                    Intent notification_page=new Intent(Events.this, MainPageEnglish.class);
-                    startActivity(notification_page);
-                overridePendingTransition(R.anim.righttoleft, R.anim.righttoleft);
+                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                entairnment.putExtra("ID","1");
+                startActivity(entairnment);
 
             }
         });

@@ -4,7 +4,7 @@
     android:background="@android:color/white"
     android:layout_alignParentBottom="true"
     android:layout_marginBottom="3dp"
-
+    android:visibility="gone"
     android:id="@+id/musicfrag"
     android:layout_height="wrap_content">
 

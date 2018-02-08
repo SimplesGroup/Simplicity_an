@@ -92,7 +92,7 @@ public class HealthAndLiving extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.healthandliving);
-        final String fontPath = "fonts/robotoSlabRegular.ttf";
+        final String fontPath = "fonts/Lora-Regular.ttf";;
         queues = simplicity_an.simplicity_an.MySingleton.getInstance(this.getApplicationContext()).
                 getRequestQueue();
         notification_batge_count=(TextView)findViewById(R.id.text_batchvalue_main);

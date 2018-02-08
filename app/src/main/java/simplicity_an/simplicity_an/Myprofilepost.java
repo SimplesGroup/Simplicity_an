@@ -133,7 +133,7 @@ public class Myprofilepost extends Fragment {
         }
         requestQueue = Volley.newRequestQueue(getActivity());
         getData();
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
         lLayout = new LinearLayoutManager(getActivity());
         recycler = (RecyclerView)view.findViewById(R.id.recycler_view_myprofilepost_id);
@@ -1380,7 +1380,7 @@ userViewHolder.hearts_likes_counts.setOnClickListener(new View.OnClickListener()
 
                 }
             });
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
 
             Toolbartitle=(TextView)root.findViewById(R.id.toolbar_title);
 
@@ -1740,7 +1740,7 @@ userViewHolder.hearts_likes_counts.setOnClickListener(new View.OnClickListener()
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getActivity()).getImageLoader();

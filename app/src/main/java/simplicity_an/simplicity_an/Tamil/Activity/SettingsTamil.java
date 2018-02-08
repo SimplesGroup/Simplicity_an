@@ -68,7 +68,7 @@ Spinner language_spin;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.frag_settings);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
      final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         sharedpreferences = getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
@@ -95,7 +95,7 @@ Spinner language_spin;
                 Log.e("ELSE","else");
             }
 
-        final String fontPath = "fonts/robotoSlabRegular.ttf";
+        final String fontPath = "fonts/Lora-Regular.ttf";;
         if(activity!=null){
             if(activity.equalsIgnoreCase("notification")){
 

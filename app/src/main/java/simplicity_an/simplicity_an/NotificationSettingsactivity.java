@@ -59,7 +59,7 @@ ImageButton back,home;
             myprofileid = sharedpreferences.getString(MYUSERID, "");
             myprofileid = myprofileid.replaceAll("\\D+", "");
         }
-        final String fontPath = "fonts/robotoSlabRegular.ttf";
+        final String fontPath = "fonts/Lora-Regular.ttf";;
 if(activity!=null){
     if(activity.equalsIgnoreCase("notification")){
 

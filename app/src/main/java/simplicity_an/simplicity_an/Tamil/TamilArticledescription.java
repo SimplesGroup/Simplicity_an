@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -28,11 +27,13 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -53,6 +54,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,7 +71,6 @@ import simplicity_an.simplicity_an.AppControllers;
 import simplicity_an.simplicity_an.DividerItemDecoration;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.MySingleton;
-import simplicity_an.simplicity_an.NewsDescription;
 import simplicity_an.simplicity_an.OnLoadMoreListener;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SigninpageActivity;
@@ -81,6 +82,8 @@ public class TamilArticledescription extends AppCompatActivity {
     TextView tv,articleoftheday,authorname,pdate,sourcelinknews,sourcelinksimplicity;//description;
     NetworkImageView thump;
     WebView description;
+    ImageView reporter_profile_image;
+    TextView source_reporter_name,sourcereprterdivider,hashtags_title,image_description,short_description,title_category,textview_date;
 
     ImageButton comment,share,menu,back,favourite;
  String notifiid,shareurl,sharetitle;
@@ -155,7 +158,7 @@ ScrollView scrollView;
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.articledescription);
+        setContentView(R.layout.newsdescriptiontamil);
         sharedpreferences =  getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
         searchactivity_article=sharedpreferences.getString(MYACTIVITYSEARCH,"");
@@ -271,17 +274,24 @@ if(activity==null){
         tv = (TextView) findViewById(R.id.textView_titlename);
         sourcelinknews = (TextView) findViewById(R.id.sourcelink);
         sourcelinksimplicity = (TextView) findViewById(R.id.sourcelinkredsimplicity);
-        pdate = (TextView) findViewById(R.id.authordate);
-        articleoftheday = (TextView) findViewById(R.id.articleof);
-        articleoftheday.setPadding(7, 25, 7, 4);
-        authorname = (TextView) findViewById(R.id.author);
-        comment = (ImageButton) findViewById(R.id.btn_4);
+        source_reporter_name=(TextView)findViewById(R.id.textView_sourcename) ;
+        sourcereprterdivider=(TextView)findViewById(R.id.centerdivider);
+        hashtags_title=(TextView) findViewById(R.id.textView_hashtags);
+        reporter_profile_image=(ImageView)findViewById(R.id.profile_reporter);
+        image_description=(TextView)findViewById(R.id.textView_photodescription);
+        short_description=(TextView)findViewById(R.id.textView_shortdescription);
+        title_category=(TextView)findViewById(R.id.textView_qtypename) ;
+        pdate = (TextView) findViewById(R.id.textView_date);
+        textview_date=(TextView) findViewById(R.id.textView_datenew);
         share = (ImageButton) findViewById(R.id.btn_share);
         menu = (ImageButton) findViewById(R.id.btn_3);
         back = (ImageButton) findViewById(R.id.btn_back);
         favourite = (ImageButton) findViewById(R.id.btn_like);
         description = (WebView) findViewById(R.id.textView_desc);
-
+        description.getSettings().setLoadsImagesAutomatically(true);
+        description.getSettings().setPluginState(WebSettings.PluginState.ON);
+        description.getSettings().setAllowFileAccess(true);
+        description.getSettings().setJavaScriptEnabled(true);
         commentbox=(LinearLayout)findViewById(R.id.comments_versiontwo) ;
         comment_title=(TextView)findViewById(R.id.comments_title);
         loadmore_title=(TextView)findViewById(R.id.loadmore);
@@ -292,19 +302,21 @@ if(activity==null){
       //  recycler_comment.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
 
         recycler_comment.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
-        String simplycity_title_fontPathone = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPathone = "fonts/Lora-Regular.ttf";;
         Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPathone);
         tv.setTypeface(tf_regular);
-        articleoftheday.setText("Article of the day");
+
         sourcelinknews.setTypeface(tf);
         sourcelinksimplicity.setTypeface(tf);
         comment_title.setTypeface(tf);
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);
-        articleoftheday.setTypeface(tf);
-        authorname.setTypeface(tf_regular);
+
+
+        hashtags_title.setTypeface(tf_regular);
+        source_reporter_name.setTypeface(tf_regular);
         pdate.setTypeface(tf);
         thump = (NetworkImageView) findViewById(R.id.thumbnailone);
         pdialog = new ProgressDialog(this);
@@ -556,19 +568,40 @@ if(myprofileid!=null){
                 post_likes_count=obj.getInt("fav_count");
                 shareurl=obj.getString("sharingurl");
                 sharetitle=obj.getString("title");
+                articleoftheday.setText(obj.getString("qtype"));
                 thump.setDefaultImageResId(R.mipmap.ic_launcher);
                 thump.setErrorImageResId(R.mipmap.ic_launcher);
                 thump.setImageUrl(image, mImageLoader);
                 //thump.setImageUrl(image, imageLoader);
-                authorname.setText(Html.fromHtml("By&nbsp;" + "" + obj.getString("publisher_name")));
-                pdate.setText(obj.getString("pdate"));
+               // hashtags_title.setText("#Article of the day");
+                String by = "By&nbsp;";
+
                 String descrition = obj.isNull("description") ? null : obj
                         .getString("description");
                 String ss = descrition;
-                sourcelinknews.setText(Html.fromHtml("Source:"));
-                sourcelinksimplicity.setText(Html.fromHtml("<u>" + obj.getString("publisher_name") + "</u>"));
-                // Toast.makeText(Second.this,ss,Toast.LENGTH_LONG).show();
 
+                image_description.setText("");
+                if(short_description!=null){
+                    short_description.setText(obj.getString("short_description"));
+                }else {
+                    short_description.setVisibility(View.GONE);
+                }
+                hashtags_title.setText("");
+                title_category.setText(obj.getString("qtype"));
+                String reporterimage=obj.getString("reporter_image");
+                if(reporterimage.equals("null")||reporterimage.equals("")){
+
+                }else {
+                    Picasso.with(getApplicationContext())
+                            .load(reporterimage)
+                            .centerCrop()
+                            .resize(40, 40)
+                            .into(reporter_profile_image);
+                }
+
+                if (obj.getString("reporter_name").equals("") || obj.getString("reporter_name").equals("null")) {                     source_reporter_name.setText(Html.fromHtml(obj.getString("source")));                 } else {                     if(obj.getString("source").equals("")){                         source_reporter_name.setText(Html.fromHtml(obj.getString("reporter_name")+"&nbsp;"));                     }else {                         source_reporter_name.setText(Html.fromHtml(obj.getString("reporter_name") + "&nbsp;"+"|"+"&nbsp;"+obj.getString("source")));                     }                  }
+                pdate.setText(Html.fromHtml( obj.getString("source")));
+                textview_date.setText(obj.getString("pdate"));
 
                 String s = ss;
                 // s = s.replace("\"", "'");
@@ -579,7 +612,7 @@ if(myprofileid!=null){
                 // description.setBackgroundColor(0x0a000000);
                 description.setBackgroundColor(Color.TRANSPARENT);
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 String fonts="<html>\n" +
                         "\t<head>\n" +
@@ -587,40 +620,40 @@ if(myprofileid!=null){
                         "\t\t<style>\n" +
                         "\t\t@font-face {\n" +
                         "  font-family: 'segeoui-light';\n" +
-                        " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "  font-family: 'segeoui-regular';\n" +
-                        "src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "  font-family: 'segeoui-sbold';\n" +
-                        " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Bold';\n" +
-                        "   src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "   src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Light';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Regular';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Thin';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "\t\t</style>\n" +
@@ -633,15 +666,28 @@ if(myprofileid!=null){
                 description.setBackgroundColor(Color.TRANSPARENT);
                 modelList.add(model);
                 if (favcount == 1) {
-                    favourite.setImageResource(R.drawable.favred);
+                    favourite.setImageResource(R.mipmap.likered);
+                    favourite.setTag("heartfullred");
                 } else {
-                    favourite.setImageResource(R.drawable.favtwo);
+                    favourite.setImageResource(R.mipmap.like);
+                    favourite.setTag("heart");
                 }
                 favourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         if(myprofileid!=null) {
+                            String backgroundImageName = String.valueOf(favourite.getTag());
+                            Log.e("RUN","with"+backgroundImageName);
+                            if(backgroundImageName.equals("heart")){
+                                favourite.setImageResource(R.mipmap.likered);
+                                favourite.setTag("heartfullred");
+                            }else if(backgroundImageName.equals("heartfullred")) {
+                                favourite.setImageResource(R.mipmap.like);
+                                favourite.setTag("heart");
+                            }else {
+
+                            }
                             StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
@@ -649,12 +695,7 @@ if(myprofileid!=null){
                                     res = res.replace(" ", "");
                                     res = res.trim();
                                     Log.e("LIke",res.toString());
-                                    if(res.equalsIgnoreCase("yes")){
-                                        //  System.out.println(itemmodel.getId());
-                                        favourite.setImageResource(R.mipmap.likered);
-                                    }else if(res.equalsIgnoreCase("no")){
-                                       favourite.setImageResource(R.mipmap.like);
-                                    }
+                                   if(res.equalsIgnoreCase("yes")){                                          favourite.setImageResource(R.mipmap.likered);                                         favourite.setTag("heartfullred");                                     }else if(res.equalsIgnoreCase("no")){                                        favourite.setImageResource(R.mipmap.like);                                         favourite.setTag("heart");                                     }
 
                                 }
                             }, new Response.ErrorListener() {
@@ -734,7 +775,9 @@ if(myprofileid!=null){
                 ads.putExtra("ID",url);
                 startActivity(ads);
             }else {
-                Intent ads=new Intent(getApplicationContext(),AdvertisementPage.class);                 ads.putExtra("ID",url);                 startActivity(ads);
+                Intent ads=new Intent(getApplicationContext(),AdvertisementPage.class);
+                ads.putExtra("ID",url);
+                startActivity(ads);
                 // view.loadUrl(url);
             }
             //
@@ -1130,7 +1173,7 @@ if(myprofileid!=null){
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
@@ -1238,7 +1281,7 @@ if(myprofileid!=null){
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
             myuserid = getArguments().getString("USERID");
-            String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
             commentbox = (EditText) root.findViewById(R.id.comment_description);
             post_review = (Button) root.findViewById(R.id.post_button);
@@ -1605,7 +1648,7 @@ if(myprofileid!=null){
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();

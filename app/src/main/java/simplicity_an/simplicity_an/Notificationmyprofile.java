@@ -81,7 +81,7 @@ RequestQueue requestQueue;
 requestQueue= Volley.newRequestQueue(getActivity());
         tabLayout = (TabLayout)view. findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
         profile_image_notifications = (ImageView) view.findViewById(R.id.profile_image_notification);
         name_profiles = (TextView) view.findViewById(R.id.name_profile);

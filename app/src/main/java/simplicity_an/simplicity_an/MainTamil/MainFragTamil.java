@@ -20,8 +20,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +41,6 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import simplicity_an.simplicity_an.Directories;
-import simplicity_an.simplicity_an.Events;
 import simplicity_an.simplicity_an.GCMRegistrationIntentService;
 import simplicity_an.simplicity_an.MusicActivity;
 import simplicity_an.simplicity_an.PhotoStories;
@@ -58,6 +55,7 @@ import simplicity_an.simplicity_an.Tamil.Activity.JobsActivitytamil;
 import simplicity_an.simplicity_an.Tamil.Activity.NewsActivityTamil;
 import simplicity_an.simplicity_an.Tamil.Activity.RadioActivitytamil;
 import simplicity_an.simplicity_an.Tamil.Activity.ScienceandTechnologytamil;
+import simplicity_an.simplicity_an.Tamil.Activity.TamilEvents;
 import simplicity_an.simplicity_an.Tamil.Activity.TamilSports;
 import simplicity_an.simplicity_an.Tamil.Activity.TravelsActivitytamil;
 import simplicity_an.simplicity_an.Tamil.TamilArticleoftheday;
@@ -123,7 +121,7 @@ public class MainFragTamil extends Fragment {
         requestQueue= Volley.newRequestQueue(getActivity());
         String fontPathbarkendina = "fonts/Barkentina.otf";
         barkentina = Typeface.createFromAsset(getActivity().getAssets(), fontPathbarkendina);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
 
         toolbartitle=(TextView)view.findViewById(R.id.simplicitynewtitle);
@@ -432,7 +430,7 @@ public class MainFragTamil extends Fragment {
         events.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent events= new Intent(getActivity(),Events.class);
+                Intent events= new Intent(getActivity(),TamilEvents.class);
                 startActivity(events);
 
             }

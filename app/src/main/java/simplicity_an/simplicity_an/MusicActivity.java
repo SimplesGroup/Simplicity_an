@@ -165,7 +165,7 @@ String URLTWO="http://simpli-city.in/request2.php?rtype=music&key=simples";
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
 
 
-        String fontPath = "fonts/robotoSlabRegular.ttf";
+        String fontPath = "fonts/Lora-Regular.ttf";;
         final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), fontPath);
         queues = simplicity_an.simplicity_an.MySingleton.getInstance(this.getApplicationContext()).
                 getRequestQueue();
@@ -1006,7 +1006,7 @@ music_newreleases.addOnItemTouchListener(new MusicActivity.RecyclerTouchListener
                 if(itemmodel.getType()==0) {
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                    String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                    String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
                         mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getApplicationContext()).getImageLoader();

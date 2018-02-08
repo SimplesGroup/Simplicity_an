@@ -283,7 +283,7 @@ public class TamilEntertainment extends AppCompatActivity implements TamilEntert
         calendar.set(Calendar.MONTH, 1);
         int mon=calander.get(Calendar.DAY_OF_MONTH);
         Log.e("DAY_OF_MONTH: ", "DAY_OF_MONTH: " + calendar.get(Calendar.DAY_OF_MONTH)+sMonthName);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         title_coimbatore=(TextView)findViewById(R.id.title_versiontwo) ;
         date_text=(TextView)findViewById(R.id.date_versiontwo) ;
@@ -744,9 +744,9 @@ public class TamilEntertainment extends AppCompatActivity implements TamilEntert
 
         }
     }
-    public void onFragmentInteraction(String playurl, String title) {
+    public void onFragmentInteraction(String playurl, String title,String image) {
         MusicplayerBottom secondFragment = (MusicplayerBottom) getSupportFragmentManager().findFragmentById(R.id.musicbottomplayer);
-        secondFragment.PlaySong(playurl, title );
+        secondFragment.PlaySong(playurl, title ,image);
     }
 
     public void initializeViews() {

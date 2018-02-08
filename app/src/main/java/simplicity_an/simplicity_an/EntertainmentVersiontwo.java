@@ -36,13 +36,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -284,7 +279,7 @@ FloatingActionButton fabsearch,fabinnerplus,fabplus,fabup;
         Date d1full = new Date();
         String sMonthNamefull =  fmt.format(d1full);
         Log.e("DAY_OF_MONTH: ", "DAY_OF_MONTH: " + calendar.get(Calendar.DAY_OF_MONTH)+sMonthName);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         title_coimbatore=(TextView)findViewById(R.id.title_versiontwo) ;
         date_text=(TextView)findViewById(R.id.date_versiontwo) ;
@@ -872,11 +867,11 @@ FloatingActionButton fabsearch,fabinnerplus,fabplus,fabup;
 
         }
     }
-    public void onFragmentInteraction(String playurl, String title) {
+    public void onFragmentInteraction(String playurl, String title,String image) {
         playurls=playurl;
         play_title=title;
         MusicplayerBottom secondFragment = (MusicplayerBottom) getSupportFragmentManager().findFragmentById(R.id.musicbottomplayer);
-        secondFragment.PlaySong(playurl, title );
+        secondFragment.PlaySong(playurl, title ,image);
     }
 
 

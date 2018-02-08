@@ -41,7 +41,7 @@ public class CustomizeNotification extends AppCompatActivity {
             myprofileid=sharedpreferences.getString(MYUSERID,"");
             myprofileid = myprofileid.replaceAll("\\D+","");
         }
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
         back=(ImageButton)findViewById(R.id.btn_back);

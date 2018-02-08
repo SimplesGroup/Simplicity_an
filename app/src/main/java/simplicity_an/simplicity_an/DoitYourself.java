@@ -165,7 +165,7 @@ public class DoitYourself extends AppCompatActivity {
        queue= simplicity_an.simplicity_an.MySingleton.getInstance(this.getApplicationContext()).
                 getRequestQueue();
 
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         mCoordinator = (CoordinatorLayout) findViewById(R.id.root_coordinator);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
@@ -867,7 +867,7 @@ public class DoitYourself extends AppCompatActivity {
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";
+                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if(mImageLoader==null)
                     mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(DoitYourself.this).getImageLoader();

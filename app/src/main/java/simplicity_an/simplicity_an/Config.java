@@ -1,8 +1,5 @@
 package simplicity_an.simplicity_an;
 
-/**
- * Created by echessa on 1/13/17.
- */
 
 public final class Config {
 
