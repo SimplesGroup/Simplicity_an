@@ -70,6 +70,44 @@
                             android:id="@+id/title_versiontwo" />
                     </LinearLayout>
                     <LinearLayout
+                        android:gravity="center_horizontal"
+                        android:layout_centerHorizontal="true"
+                        android:paddingBottom="10dp"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="2dp"
+                        android:layout_below="@+id/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_marginLeft="10dp"
+
+                            android:layout_width="wrap_content"
+                            android:id="@+id/date_versiontwo"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@android:color/white"
+                            android:textSize="12dp"
+                            android:layout_height="wrap_content" />
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:id="@+id/language_versiontwo"
+                            android:textAlignment="center"
+                            android:textColor="@android:color/white"
+                            android:layout_gravity="center_horizontal"
+                            android:textSize="12dp"
+                            android:layout_height="wrap_content" />
+                        <ImageButton
+
+
+                            android:layout_width="wrap_content"
+                            android:id="@+id/themebutton"
+                            android:src="@drawable/theme"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/buttonselector"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_centerHorizontal="true"
                         android:paddingBottom="10dp"
@@ -85,7 +123,7 @@
                             <TextView
                                 android:layout_marginTop="3dp"
                                 android:layout_width="match_parent"
-                                android:id="@+id/date_versiontwo"
+
                                 android:gravity="right"
                                 android:layout_gravity="right"
                                 android:textColor="@android:color/white"
@@ -132,7 +170,7 @@
                             <TextView
 
                                 android:layout_width="wrap_content"
-                                android:id="@+id/language_versiontwo"
+
                                 android:layout_toRightOf="@+id/weather_degree_versiontwo"
                                 android:layout_marginLeft="4dp"
                                 android:textAlignment="center"
@@ -143,7 +181,7 @@
                                 android:layout_height="wrap_content" />
                             <ImageButton
                                 android:layout_width="wrap_content"
-                                android:id="@+id/themebutton"
+
                                 android:layout_marginLeft="5dp"
                                 android:src="@drawable/theme"
                                 android:layout_toRightOf="@+id/language_versiontwo"
@@ -172,13 +210,12 @@
                 <android.support.design.widget.TabLayout
                     android:id="@+id/tab_layout"
                     android:layout_marginTop="6dp"
-                    app:tabPaddingEnd="8dp"
-                    app:paddingStart="6dp"
-                    android:layout_width="match_parent"
+
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:tabMinWidth="20dp"
 
-                    app:tabMode="scrollable"
+
                     app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
                     app:tabGravity="center"
                     app:tabIndicatorColor="@android:color/white"
@@ -227,7 +264,7 @@
 
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-
+            android:visibility="gone"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="90dp"
             android:src="@mipmap/plus"

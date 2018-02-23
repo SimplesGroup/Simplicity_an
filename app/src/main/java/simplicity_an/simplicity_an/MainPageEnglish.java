@@ -21,13 +21,24 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.onesignal.OneSignal;
+
+import java.util.Hashtable;
+import java.util.Map;
 
 import simplicity_an.simplicity_an.MainEnglish.CityFragment;
 import simplicity_an.simplicity_an.MainEnglish.EntertainmentFragment;
 import simplicity_an.simplicity_an.MainEnglish.HappeningFrag;
 import simplicity_an.simplicity_an.MainEnglish.MainFrag;
 import simplicity_an.simplicity_an.MainEnglish.SettingsFragment;
+import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 
 /**
  * Created by kuppusamy on 5/18/2017.
@@ -35,7 +46,7 @@ import simplicity_an.simplicity_an.MainEnglish.SettingsFragment;
 
 public class MainPageEnglish extends AppCompatActivity implements Tab_All.OnFragmentInteractionListener,TabRadio.OnFragmentInteractionListener,TabMusic.OnFragmentInteractionListener, TabEntertainmentAll.OnFragmentInteractionListener,TabEntertainmentMusic.OnFragmentInteractionListener,TabentertainmentRadio.OnFragmentInteractionListener,Tabnews.OnFragmentInteractionListener{
     ImageButton city,happening,search,audio_video,settings,explore;
-
+    String UPLOAD_CHECK_USER="http://simpli-city.in/request2.php?rtype=checkplayer&key=simples";
     LinearLayout footerbar;
     private ImageButton play_music,fastforward,backforward,close_player;
     TextView music_title_name;
@@ -89,39 +100,17 @@ public class MainPageEnglish extends AppCompatActivity implements Tab_All.OnFrag
 
             }
         });
+
+        CheckPlayerid();
+
+
         city=(ImageButton)findViewById(R.id.btn_versiontwocity);
         happening=(ImageButton)findViewById(R.id.btn_versiontwobeyond);
         search=(ImageButton)findViewById(R.id.btn_versiontwosearch);
         audio_video=(ImageButton)findViewById(R.id.btn_versiontwoexplore);
         settings=(ImageButton)findViewById(R.id.btn_versiontwonotifications);
 topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
-       /* topLevelLayout.setOnTouchListener(new View.OnTouchListener(){
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                topLevelLayout.setVisibility(View.INVISIBLE);
-                return false;
-            }
-
-        });
-      topLevelLayout.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(new Runnable() {
-
-            *//*
-             * Showing splash screen with a timer. This will be useful when you
-             * want to show case your app logo / company
-             *//*
-
-            @Override
-            public void run() {
-                try{
-                    topLevelLayout.setVisibility(View.GONE);
-                }catch (Exception e){
-
-                }
-
-            }
-        }, SPLASH_TIME_OUT);*/
         city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -466,6 +455,31 @@ topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
 
         }
     }
+
+    private void CheckPlayerid(){
+        StringRequest request=new StringRequest(Request.Method.POST, UPLOAD_CHECK_USER, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+Log.e("RES",response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params=new Hashtable<String, String>();
+                params.put("player_id",playerid);
+                return  params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(MainPageEnglish.this);
+        requestQueue.add(request);
+    }
+
+
     private void changefrag(){
         if(id.equals("1")){
             happening.setBackgroundResource(R.color.mytransparent);

@@ -19,9 +19,20 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.onesignal.OneSignal;
 
+import java.util.Hashtable;
+import java.util.Map;
+
 import simplicity_an.simplicity_an.MainEnglish.HappeningFrag;
+import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.MusicplayerBottom;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.Tamil.TamilEntertainmentall;
@@ -48,7 +59,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
     String id,radio_title,radio_url;
     RelativeLayout topLevelLayout;
 
-
+    String UPLOAD_CHECK_USER="http://simpli-city.in/request2.php?rtype=checkplayer&key=simples";
     boolean doubleBackToExitPressedOnce = false;
 
     @Override
@@ -87,6 +98,8 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
 
             }
         });
+
+        CheckPlayerid();
         city=(ImageButton)findViewById(R.id.btn_versiontwocity);
         happening=(ImageButton)findViewById(R.id.btn_versiontwobeyond);
         search=(ImageButton)findViewById(R.id.btn_versiontwosearch);
@@ -415,7 +428,28 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
         return true;
 
     }
+    private void CheckPlayerid(){
+        StringRequest request=new StringRequest(Request.Method.POST, UPLOAD_CHECK_USER, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("RES",response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params=new Hashtable<String, String>();
+                params.put("player_id",playerid);
+                return  params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(MainPageTamil.this);
+        requestQueue.add(request);
+    }
 
 
     public void onFragmentInteraction(String playurl, String title,String image) {

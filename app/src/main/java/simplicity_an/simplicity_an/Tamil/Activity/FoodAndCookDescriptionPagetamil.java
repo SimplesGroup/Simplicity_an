@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -332,7 +333,7 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
                 }
             }
         });
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";;
+        String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";;
         Typeface tf = Typeface.createFromAsset(FoodAndCookDescriptionPagetamil.this.getAssets(), simplycity_title_fontPath);
         titleofrecipie=(TextView)findViewById(R.id.textView_titlename);
         fooditemimage=(NetworkImageView)findViewById(R.id.thumbnailone);
@@ -342,11 +343,17 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
        ingredientsdescription.getSettings().setPluginState(WebSettings.PluginState.ON);
         ingredientsdescription.getSettings().setAllowFileAccess(true);
         ingredientsdescription.getSettings().setJavaScriptEnabled(true);
+       /* Resources ress = getResources();
+        float  fontSizes = ress.getDimension(R.dimen.txtSize);
+        ingredientsdescription.getSettings().setDefaultFontSize((int)fontSizes);*/
         stepsdescriptions=(WebView)findViewById(R.id.steps_desc);
         stepsdescriptions.getSettings().setLoadsImagesAutomatically(true);
         stepsdescriptions.getSettings().setPluginState(WebSettings.PluginState.ON);
         stepsdescriptions.getSettings().setAllowFileAccess(true);
         stepsdescriptions.getSettings().setJavaScriptEnabled(true);
+       /* Resources res = getResources();
+        float  fontSize = res.getDimension(R.dimen.txtSize);
+        stepsdescriptions.getSettings().setDefaultFontSize((int)fontSize);*/
         ingredients=(Button)findViewById(R.id.ingredients_button);
         steps=(Button)findViewById(R.id.steps_button);
         ingredientsdescription.setVisibility(View.VISIBLE);
@@ -381,20 +388,7 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* if(searchactivity_health.equalsIgnoreCase("foodsearch")){
-                    Intent searchnotification = new Intent(getApplicationContext(), FoodSearchviewTamil.class);
-                    startActivity(searchnotification);
-                }
-                else if (searchnonitiid != null) {
-                    Intent searchnotification = new Intent(getApplicationContext(), SimplicitySearchview.class);
-                    searchnotification.putExtra("IDSEARCH", searchnonitiid);
-                    startActivity(searchnotification);
-                    finish();
-                } else {
-                    Intent backfooddesc = new Intent(getApplicationContext(), MainPageTamil.class);
-                    startActivity(backfooddesc);
-                    finish();
-                }*/
+
                 onBackPressed();
 
             }
@@ -581,7 +575,7 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
                         .getString("ingredient");
 
                 ingredientsdescription.getSettings().setJavaScriptEnabled(true);
-                String fonts="<html>\n" +         "\t<head>\n" +         "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" +         "\t\t<style>\n" +         "\t\t@font-face {\n" +         "  font-family: 'segeoui-light';\n" +         " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-regular';\n" +         "src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-sbold';\n" +         " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Bold';\n" +         "   src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Light';\n" +         "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Regular';\n" +         "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Thin';\n" +         "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "\t\t</style>\n" +         "\t</head>"; ingredientsdescription.loadDataWithBaseURL("", fonts+descrition+"</head>", "text/html", "utf-8", "");
+                String fonts="<html>\n" +         "\t<head>\n" +         "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" +         "\t\t<style>\n" +         "\t\t@font-face {\n" +         "  font-family: 'segeoui-light';\n" +         " src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-regular';\n" +         "src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-sbold';\n" +         " src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Bold';\n" +         "   src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Light';\n" +         "    src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Regular';\n" +         "    src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Thin';\n" +         "    src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "\t\t</style>\n" +         "\t</head>"; ingredientsdescription.loadDataWithBaseURL("", fonts+descrition+"</head>", "text/html", "utf-8", "");
                 ingredientsdescription.getSettings().setAllowContentAccess(true);
                 ingredientsdescription.setBackgroundColor(Color.TRANSPARENT);
 
@@ -635,12 +629,7 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
                             StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    String res=response.toString();
-                                    res = res.replace(" ", "");
-                                    res = res.trim();
-                                    Log.e("LIke",res.toString());
-                                   if(res.equalsIgnoreCase("yes")){                                          favourite.setImageResource(R.mipmap.likered);                                         favourite.setTag("heartfullred");                                     }else if(res.equalsIgnoreCase("no")){                                        favourite.setImageResource(R.mipmap.like);                                         favourite.setTag("heart");                                     }
-
+                                    String res;                                     try {                                                                 Log.e("RES", "START");                                           JSONObject data = new JSONObject(response.toString());                                            String dir = data.getString("result");                                           Log.d("RES", dir);                                                            JSONObject object=new JSONObject(dir);                                           String dir2=object.getString("message");                                            Log.d("RES", dir2);                                                        for (int i = 0; i < object.length(); i++) {                                                   String dirs = object.getString("message");                                                 Log.d("RES", dirs);                                                        res=object.getString("message");                                                                                            if(res.equals("Liked")){                                                       favourite.setImageResource(R.mipmap.likered);                                                  favourite.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                    favourite.setImageResource(R.mipmap.like);                                                  favourite.setTag("heart");                                                }                                                }                                             }catch (JSONException e){                                                                                  }
                                 }
                             }, new Response.ErrorListener() {
                                 @Override

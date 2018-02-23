@@ -224,7 +224,7 @@ public class Tabphotostoriestamil extends Fragment {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                 swipeRefresh.setRefreshing(true);                 modelList.clear();                 recyclerview_tab_all_adapter.notifyDataSetChanged();                  requestCount=0;                 getData();                 //  Toast.makeText(getActivity(),"Swipe",Toast.LENGTH_SHORT).show();                 ( new Handler()).postDelayed(new Runnable() {                     @Override                     public void run() {                         swipeRefresh.setRefreshing(false);                     }                 }, 3000);
+                 swipeRefresh.setRefreshing(true);                 modelList.clear();                 recyclerview_tab_all_adapter.notifyDataSetChanged();                  requestCount=0;                 getData();                                ( new Handler()).postDelayed(new Runnable() {                     @Override                     public void run() {                         swipeRefresh.setRefreshing(false);                     }                 }, 3000);
 
             }
         });
@@ -819,7 +819,7 @@ public class Tabphotostoriestamil extends Fragment {
 
                 final Userviewholdertaball userViewHolder = (Userviewholdertaball) holder;
 
-                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
+                String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                 String simplycity_title = "fonts/playfairDisplayRegular.ttf";
                 final Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
@@ -878,17 +878,18 @@ public class Tabphotostoriestamil extends Fragment {
                 }
                 mediaPlayer=new MediaPlayer();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                userViewHolder.shortdescription.setTypeface(seguiregular);
-                if(itemmodel.getPdate()==null||itemmodel.getPdate()==""){                      userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
+                userViewHolder.shortdescription.setTypeface(tf_play);
+                if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){                     userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
 
-                userViewHolder.editername.setTypeface(tf_play);
+                userViewHolder.editername.setTypeface(seguiregular);
                 userViewHolder.editername.setText(itemmodel.getEditername());
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
-                userViewHolder.title_item.setTypeface(tf_play);
+                userViewHolder.title_item.setTypeface(seguiregular);
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(tf_play);
                // userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(tf_play);
-                userViewHolder.date.setTypeface(tf_play);
+                userViewHolder.commentscount.setTypeface(tf_play);
+                userViewHolder.date.setTypeface(seguiregular);
                 if(itemmodel.getLikescount()==0){                         userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"விருப்பு"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"விருப்பு"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"கருத்து"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"கருத்து"));                     }                     userViewHolder.countlayout.setVisibility(View.VISIBLE);
 
 
@@ -1058,42 +1059,38 @@ public class Tabphotostoriestamil extends Fragment {
                                     StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
-                                            String res=response.toString();
-                                            res = res.replace(" ", "");
-                                            res = res.trim();
-                                            if(res.equalsIgnoreCase("yes")){
-                                                System.out.println(itemmodel.getId());
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount()+1;
+                                             String res;
+                                            Log.e("RES",response.toString());
+                                            try {
+                                                Log.e("RES", "START");
+                                                JSONObject data = new JSONObject(response.toString());
+                                                String dir = data.getString("result");
+                                                Log.d("RES", dir);
+                                                JSONObject object=new JSONObject(dir);
+                                                String dir2=object.getString("message");
+                                                Log.d("RES", dir2);
+                                                for (int i = 0; i < object.length(); i++) {
+                                                    String dirs = object.getString("message");
+                                                    Log.d("RES", dirs);
+                                                    res=object.getString("message");
+                                                    like_finalvalues=object.getInt("total_likes");
+                                                    Log.e("RES",res.toString());
+                                                    if(res.equals("Liked")){
+                                                        System.out.println(itemmodel.getId());
+                                                        like_finalvalues=object.getInt("total_likes");
+                                                        Log.e("RES",String.valueOf(like_finalvalues));
+                                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+                                                        userViewHolder.like_imagebutton.setTag("heartfullred");
+                                                    }else if(res.equals("Like")){
+                                                        like_finalvalues=object.getInt("total_likes");
+                                                        Log.e("RES","dis"+String.valueOf(like_finalvalues));
+                                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                                                        userViewHolder.like_imagebutton.setTag("heart");
+                                                    }
+                                                    userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "விருப்பு"));
                                                 }
-                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
-                                            }else if(res.equalsIgnoreCase("no")){
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount()-1;
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }
-                                                System.out.println(itemmodel.getId());
-                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
-                                                userViewHolder.like_imagebutton.setTag("heart");
-                                                /*userViewHolder.likes_button.setText("விருப்பு");
-                                                userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.like,0,0,0);
-                                                userViewHolder.likes_button.setTypeface(seguiregular);
-                                                userViewHolder.likes_button.setTransformationMethod(null);*/
-                                            }
-                                            if(like_finalvalues==0||like_finalvalues==-1){
-                                                System.out.println(itemmodel.getId());
-                                                userViewHolder.    likescount.setVisibility(View.GONE);
-                                            }else {
-                                                System.out.println(itemmodel.getId());
-                                                System.out.println(like_finalvalues);
-                                                userViewHolder.    countlayout.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "விருப்பு"));
+                                            }catch (JSONException e){
 
-                                                like_finalvalues=0;
                                             }
                                         }
                                     }, new Response.ErrorListener() {
@@ -1350,7 +1347,7 @@ public class Tabphotostoriestamil extends Fragment {
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
                 }
 userViewHolder.shortdescription.setTypeface(seguiregular);
-                if(itemmodel.getPdate()==null||itemmodel.getPdate()==""){                      userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
+                if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){                      userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
 
                 userViewHolder.editername.setTypeface(tf_play);
                 userViewHolder.editername.setText(itemmodel.getEditername());
@@ -1541,43 +1538,7 @@ userViewHolder.shortdescription.setTypeface(seguiregular);
                                     StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
-                                            String res=response.toString();
-                                            res = res.replace(" ", "");
-                                            res = res.trim();
-                                            if(res.equalsIgnoreCase("yes")){
-                                                System.out.println(itemmodel.getId());
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount()+1;
-                                                }
-                                               userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
-                                            }else if(res.equalsIgnoreCase("no")){
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount()-1;
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }
-                                                System.out.println(itemmodel.getId());
-                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
-                                                userViewHolder.like_imagebutton.setTag("heart");
-                                                /*userViewHolder.likes_button.setText("விருப்பு");
-                                                userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.like,0,0,0);
-                                                userViewHolder.likes_button.setTypeface(seguiregular);
-                                                userViewHolder.likes_button.setTransformationMethod(null);*/
-                                            }
-                                            if(like_finalvalues==0||like_finalvalues==-1){
-                                                System.out.println(itemmodel.getId());
-                                                userViewHolder.    likescount.setVisibility(View.GONE);
-                                            }else {
-                                                System.out.println(itemmodel.getId());
-                                                System.out.println(like_finalvalues);
-                                                userViewHolder.    countlayout.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "விருப்பு"));
-
-                                                like_finalvalues=0;
-                                            }
+                                             String res;                                             Log.e("RES",response.toString());                                             try {                                                 Log.e("RES", "START");                                                 JSONObject data = new JSONObject(response.toString());                                                 String dir = data.getString("result");                                                 Log.d("RES", dir);                                                 JSONObject object=new JSONObject(dir);                                                 String dir2=object.getString("message");                                                 Log.d("RES", dir2);                                                 for (int i = 0; i < object.length(); i++) {                                                     String dirs = object.getString("message");                                                     Log.d("RES", dirs);                                                     res=object.getString("message");                                                     like_finalvalues=object.getInt("total_likes");                                                     Log.e("RES",res.toString());                                                     if(res.equals("Liked")){                                                         System.out.println(itemmodel.getId());                                                         like_finalvalues=object.getInt("total_likes");                                                         Log.e("RES",String.valueOf(like_finalvalues));                                                         userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);                                                         userViewHolder.like_imagebutton.setTag("heartfullred");                                                     }else if(res.equals("Like")){                                                         like_finalvalues=object.getInt("total_likes");                                                         Log.e("RES","dis"+String.valueOf(like_finalvalues));                                                         userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);                                                         userViewHolder.like_imagebutton.setTag("heart");                                                     }                                                     userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "விருப்பு"));                                                 }                                             }catch (JSONException e){                                              }
                                         }
                                     }, new Response.ErrorListener() {
                                         @Override

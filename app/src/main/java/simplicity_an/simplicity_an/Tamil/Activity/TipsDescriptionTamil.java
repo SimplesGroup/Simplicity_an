@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -315,7 +316,7 @@ public class TipsDescriptionTamil extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
+        String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         titleofrecipie=(TextView)findViewById(R.id.textView_titlename);
         date=(TextView)findViewById(R.id.author);
@@ -325,6 +326,9 @@ public class TipsDescriptionTamil extends AppCompatActivity {
         desc.getSettings().setPluginState(WebSettings.PluginState.ON);
         desc.getSettings().setAllowFileAccess(true);
         desc.getSettings().setJavaScriptEnabled(true);
+       /* Resources res = getResources();
+        float  fontSize = res.getDimension(R.dimen.txtSize);
+        desc.getSettings().setDefaultFontSize((int)fontSize);*/
         titleofrecipie.setTypeface(tf);
         date.setTypeface(tf);
         comment_title.setTypeface(tf);
@@ -530,40 +534,40 @@ public class TipsDescriptionTamil extends AppCompatActivity {
                         "\t\t<style>\n" +
                         "\t\t@font-face {\n" +
                         "  font-family: 'segeoui-light';\n" +
-                        " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        " src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "  font-family: 'segeoui-regular';\n" +
-                        "src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "  font-family: 'segeoui-sbold';\n" +
-                        " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        " src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Bold';\n" +
-                        "   src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "   src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Light';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Regular';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Thin';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "\t\t</style>\n" +
@@ -611,12 +615,7 @@ public class TipsDescriptionTamil extends AppCompatActivity {
                             StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    String res=response.toString();
-                                    res = res.replace(" ", "");
-                                    res = res.trim();
-                                    Log.e("LIke",res.toString());
-                                   if(res.equalsIgnoreCase("yes")){                                          favourite.setImageResource(R.mipmap.likered);                                         favourite.setTag("heartfullred");                                     }else if(res.equalsIgnoreCase("no")){                                        favourite.setImageResource(R.mipmap.like);                                         favourite.setTag("heart");                                     }
-
+                                    String res;                                     try {                                                                 Log.e("RES", "START");                                           JSONObject data = new JSONObject(response.toString());                                            String dir = data.getString("result");                                           Log.d("RES", dir);                                                            JSONObject object=new JSONObject(dir);                                           String dir2=object.getString("message");                                            Log.d("RES", dir2);                                                        for (int i = 0; i < object.length(); i++) {                                                   String dirs = object.getString("message");                                                 Log.d("RES", dirs);                                                        res=object.getString("message");                                                                                            if(res.equals("Liked")){                                                       favourite.setImageResource(R.mipmap.likered);                                                  favourite.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                    favourite.setImageResource(R.mipmap.like);                                                  favourite.setTag("heart");                                                }                                                }                                             }catch (JSONException e){                                                                                  }
                                 }
                             }, new Response.ErrorListener() {
                                 @Override

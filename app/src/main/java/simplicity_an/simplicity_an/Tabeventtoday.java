@@ -70,7 +70,7 @@ import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
 
 public class Tabeventtoday extends Fragment {
     RecyclerView recyclerview_tab_all;
-    String URL="http://simpli-city.in/request2.php?rtype=today-event&key=simples";
+    String URL="http://simpli-city.in/request2.php?rtype=alldatatest&key=simples&qtype=today_event";
     String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples"; 				String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
     String URLALL;
     RequestQueue requestQueue;
@@ -411,7 +411,12 @@ OnFragmentInteractionListener mListener;
                 model.setAds(obj.getString("ad_url"));
                 // model.setDislikecount(obj.getInt("dislikes_count"));
                 model.setCounttype(obj.getInt("like_type"));
-
+                String shortdesc = obj.isNull("short_description") ? null : obj
+                        .getString("short_description");
+                model.setShortdescription(shortdesc);
+                String reportername = obj.isNull("reporter_name") ? null : obj
+                        .getString("reporter_name");
+                model.setEditername(reportername);
                 model.setPlayurl(obj.getString("file"));
                 int typevalue = obj.isNull("album_count") ? null : obj
                         .getInt("album_count");
@@ -931,7 +936,8 @@ OnFragmentInteractionListener mListener;
                 final Typeface seguiregular_bold = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reqular);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
-
+                String simplycity_title = "fonts/Lora-Regular.ttf";
+                final Typeface pala = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
 
                 final ItemModel itemmodel = modelList.get(position);
                 userViewHolder.comment_button.setText("Comment");
@@ -983,25 +989,22 @@ OnFragmentInteractionListener mListener;
                 mediaPlayer=new MediaPlayer();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
+                userViewHolder.shortdescription.setTypeface(pala);
 
-                if(itemmodel.getPdate()==null||itemmodel.getPdate()==""){
+                if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){
 
-                   // userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));
+                   userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));
                 }else {
-                   // userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getShortdescription()));
+                   userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getShortdescription()));
                 }
-                if(itemmodel.getEditername().equals("")){
-                   // userViewHolder.arrow_imagebutton.setVisibility(View.GONE);
-                }else {
-                   // userViewHolder.arrow_imagebutton.setVisibility(View.VISIBLE);
-                }
+
                 userViewHolder.editername.setTypeface(seguiregular);
-                userViewHolder.editername.setText(itemmodel.getEditername());
+               // userViewHolder.editername.setText(itemmodel.getEditername());
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
                 userViewHolder.title_item.setTypeface(seguiregular);
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular_bold);
                 userViewHolder.date.setText(itemmodel.getPdate());
-                userViewHolder.likescount.setTypeface(seguiregular);
+               // userViewHolder.likescount.setTypeface(seguiregular);
                 userViewHolder.date.setTypeface(seguiregular);
                 if(itemmodel.getLikescount()==0){                         userViewHolder.likescount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Like"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Comment"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                     }                                        if(itemmodel.getCommentscount()==0){                      userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));                 }else {                     userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                 }
                 if(itemmodel.getCommentscount()==0){
@@ -1010,6 +1013,9 @@ OnFragmentInteractionListener mListener;
                 }else {
                     userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));
                 }
+
+                userViewHolder.likescount.setTypeface(pala);
+                userViewHolder.commentscount.setTypeface(pala);
                 if(itemmodel.getImage()!=null){
                     userViewHolder.item_image.setImageUrl(itemmodel.getImage(),mImageLoader);
                 }else {
@@ -1198,38 +1204,7 @@ OnFragmentInteractionListener mListener;
                                     StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
-                                            String res=response.toString();
-                                            res = res.replace(" ", "");
-                                            res = res.trim();
-                                            if(res.equalsIgnoreCase("yes")){
-                                                System.out.println(itemmodel.getId());
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount()+1;
-                                                }
-                                               userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
-                                            }else if(res.equalsIgnoreCase("no")){
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount()-1;
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }
-                                                System.out.println(itemmodel.getId());
-                                               userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart); 				userViewHolder.like_imagebutton.setTag("heart");
-                                            }
-                                            if(like_finalvalues==0||like_finalvalues==-1){
-                                                System.out.println(itemmodel.getId());
-                                                userViewHolder.    likescount.setVisibility(View.GONE);
-                                            }else {
-                                                System.out.println(itemmodel.getId());
-                                                System.out.println(like_finalvalues);
-                                                userViewHolder.    countlayout.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
-
-                                                like_finalvalues=0;
-                                            }
+                                             String res;                                             Log.e("RES",response.toString());                                             try {                                                 Log.e("RES", "START");                                                 JSONObject data = new JSONObject(response.toString());                                                 String dir = data.getString("result");                                                 Log.d("RES", dir);                                                 JSONObject object=new JSONObject(dir);                                                 String dir2=object.getString("message");                                                 Log.d("RES", dir2);                                                  for (int i = 0; i < object.length(); i++) {                                                      String dirs = object.getString("message");                                                      Log.d("RES", dirs);                                                     res=object.getString("message");                                                     like_finalvalues=object.getInt("total_likes");                                                     Log.e("RES",res.toString());                                                       if(res.equals("Liked")){                                                         System.out.println(itemmodel.getId());                                                         like_finalvalues=object.getInt("total_likes");                                                         Log.e("RES",String.valueOf(like_finalvalues));                                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                     like_finalvalues=object.getInt("total_likes");                                                     Log.e("RES","dis"+String.valueOf(like_finalvalues));                                                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart); 				userViewHolder.like_imagebutton.setTag("heart");                                             }                                                      userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));                                                   }                                              }catch (JSONException e){                                              }
                                         }
                                     }, new Response.ErrorListener() {
                                         @Override
@@ -1856,38 +1831,7 @@ OnFragmentInteractionListener mListener;
                                     StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
-                                            String res=response.toString();
-                                            res = res.replace(" ", "");
-                                            res = res.trim();
-                                            if(res.equalsIgnoreCase("yes")){
-                                                System.out.println(itemmodel.getId());
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount()+1;
-                                                }
-                                               userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
-                                            }else if(res.equalsIgnoreCase("no")){
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount()-1;
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }
-                                                System.out.println(itemmodel.getId());
-                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart); 				userViewHolder.like_imagebutton.setTag("heart");
-                                            }
-                                            if(like_finalvalues==0||like_finalvalues==-1){
-                                                System.out.println(itemmodel.getId());
-                                                userViewHolder.    likescount.setVisibility(View.GONE);
-                                            }else {
-                                                System.out.println(itemmodel.getId());
-                                                System.out.println(like_finalvalues);
-                                                userViewHolder.    countlayout.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
-
-                                                like_finalvalues=0;
-                                            }
+                                             String res;                                             Log.e("RES",response.toString());                                             try {                                                 Log.e("RES", "START");                                                 JSONObject data = new JSONObject(response.toString());                                                 String dir = data.getString("result");                                                 Log.d("RES", dir);                                                 JSONObject object=new JSONObject(dir);                                                 String dir2=object.getString("message");                                                 Log.d("RES", dir2);                                                  for (int i = 0; i < object.length(); i++) {                                                      String dirs = object.getString("message");                                                      Log.d("RES", dirs);                                                     res=object.getString("message");                                                     like_finalvalues=object.getInt("total_likes");                                                     Log.e("RES",res.toString());                                                       if(res.equals("Liked")){                                                         System.out.println(itemmodel.getId());                                                         like_finalvalues=object.getInt("total_likes");                                                         Log.e("RES",String.valueOf(like_finalvalues));                                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                     like_finalvalues=object.getInt("total_likes");                                                     Log.e("RES","dis"+String.valueOf(like_finalvalues));                                                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart); 				userViewHolder.like_imagebutton.setTag("heart");                                             }                                                      userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));                                                   }                                              }catch (JSONException e){                                              }
                                         }
                                     }, new Response.ErrorListener() {
                                         @Override

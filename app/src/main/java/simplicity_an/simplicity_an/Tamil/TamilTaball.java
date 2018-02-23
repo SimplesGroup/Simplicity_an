@@ -919,7 +919,7 @@ public class TamilTaball extends Fragment {
 
                 final Userviewholdertaball userViewHolder = (Userviewholdertaball) holder;
 
-                String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";;
+                String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
@@ -973,7 +973,7 @@ public class TamilTaball extends Fragment {
                 mediaPlayer=new MediaPlayer();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
-                String simplycity_title = "fonts/Lora-Regular.ttf";;
+                String simplycity_title = "fonts/playfairDisplayRegular.ttf";
                 final Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
                 userViewHolder.shortdescription.setTypeface(tf_play);
 
@@ -981,19 +981,30 @@ public class TamilTaball extends Fragment {
                 userViewHolder.editername.setTypeface(seguiregular);
                 userViewHolder.editername.setText(itemmodel.getEditername());
 
-                if(itemmodel.getPdate()==null||itemmodel.getPdate()==""){                      userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
+                if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){                     userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
 
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
                 userViewHolder.title_item.setTypeface(seguiregular);
-                if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular);
+                if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }
+                userViewHolder.item_type_name.setTypeface(tf_play);
                // userViewHolder.date.setText(itemmodel.getPdate());
-                userViewHolder.likescount.setTypeface(seguiregular);
+                userViewHolder.likescount.setTypeface(tf_play);
+                userViewHolder.commentscount.setTypeface(tf_play);
                 userViewHolder.date.setTypeface(seguiregular);
                 if(itemmodel.getLikescount()==0){                         userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"விருப்பு"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"விருப்பு"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"கருத்து"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"கருத்து"));                     }                     userViewHolder.countlayout.setVisibility(View.VISIBLE);
                 if(itemmodel.getImage()!=null){
                     userViewHolder.item_image.setImageUrl(itemmodel.getImage(),mImageLoader);
                 }else {
                     userViewHolder.item_image.setVisibility(View.GONE);
+                }
+                if(itemmodel.getQtypemain().equals("Job")){
+                    userViewHolder.editername.setTypeface(tf_play);
+                    userViewHolder.title_item.setTypeface(tf_play);
+                    userViewHolder.item_type_name.setTypeface(tf_play);
+                }else if(itemmodel.getQtypemain().equals("event")){
+                    userViewHolder.editername.setTypeface(tf_play);
+                    userViewHolder.title_item.setTypeface(tf_play);
+                    userViewHolder.item_type_name.setTypeface(tf_play);
                 }
 
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
@@ -1036,12 +1047,12 @@ public class TamilTaball extends Fragment {
 
                                 }else if(type.equals("food")||type.equals("foodtip")){
 
-                                    if(type.equals("food")){
+                                    if(type.equals("சமையல் குறிப்பு")){
                                         Intent intent = new Intent(getActivity(), FoodAndCookDescriptionPagetamil.class);
                                         intent.putExtra("ID", ids);
                                         startActivity(intent);
                                     }else {
-                                        Intent intent = new Intent(getActivity(), FoodAndCookDescriptionPagetamil.class);
+                                        Intent intent = new Intent(getActivity(), TipsDescriptionTamil.class);
                                         intent.putExtra("ID", ids);
                                         startActivity(intent);
                                     }
@@ -1175,39 +1186,7 @@ public class TamilTaball extends Fragment {
                                     StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
-                                            String res=response.toString();
-                                            res = res.replace(" ", "");
-                                            res = res.trim();
-                                            if(res.equalsIgnoreCase("yes")){
-                                                System.out.println(itemmodel.getId());
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount()+1;
-                                                }
-                                               userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
-                                            }else if(res.equalsIgnoreCase("no")){
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount()-1;
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }
-                                                System.out.println(itemmodel.getId());
-                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
-                                                userViewHolder.like_imagebutton.setTag("heart");
-                                            }
-                                            if(like_finalvalues==0||like_finalvalues==-1){
-                                                System.out.println(itemmodel.getId());
-                                                userViewHolder.    likescount.setVisibility(View.GONE);
-                                            }else {
-                                                System.out.println(itemmodel.getId());
-                                                System.out.println(like_finalvalues);
-                                                userViewHolder.    countlayout.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "விருப்பு"));
-
-                                                like_finalvalues=0;
-                                            }
+                                             String res;                                             Log.e("RES",response.toString());                                             try {                                                 Log.e("RES", "START");                                                 JSONObject data = new JSONObject(response.toString());                                                 String dir = data.getString("result");                                                 Log.d("RES", dir);                                                 JSONObject object=new JSONObject(dir);                                                 String dir2=object.getString("message");                                                 Log.d("RES", dir2);                                                 for (int i = 0; i < object.length(); i++) {                                                     String dirs = object.getString("message");                                                     Log.d("RES", dirs);                                                     res=object.getString("message");                                                     like_finalvalues=object.getInt("total_likes");                                                     Log.e("RES",res.toString());                                                     if(res.equals("Liked")){                                                         System.out.println(itemmodel.getId());                                                         like_finalvalues=object.getInt("total_likes");                                                         Log.e("RES",String.valueOf(like_finalvalues));                                                         userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);                                                         userViewHolder.like_imagebutton.setTag("heartfullred");                                                     }else if(res.equals("Like")){                                                         like_finalvalues=object.getInt("total_likes");                                                         Log.e("RES","dis"+String.valueOf(like_finalvalues));                                                         userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);                                                         userViewHolder.like_imagebutton.setTag("heart");                                                     }                                                     userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "விருப்பு"));                                                 }                                             }catch (JSONException e){                                              }
                                         }
                                     }, new Response.ErrorListener() {
                                         @Override
@@ -1423,7 +1402,7 @@ public class TamilTaball extends Fragment {
 
                 final UserViewHolderphotostories userViewHolder = (UserViewHolderphotostories) holder;
 
-                String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";;
+                String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
@@ -1467,7 +1446,7 @@ public class TamilTaball extends Fragment {
                     userViewHolder.save_button.setTransformationMethod(null);
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
                 }
-                String simplycity_title = "fonts/Lora-Regular.ttf";;
+                String simplycity_title = "fonts/robotoSlabRegular.ttf";
                 final Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
                 userViewHolder.shortdescription.setTypeface(tf_play);
 
@@ -1476,13 +1455,15 @@ public class TamilTaball extends Fragment {
                 userViewHolder.editername.setText(itemmodel.getEditername());
 
 
-                if(itemmodel.getPdate()==null||itemmodel.getPdate()==""){                      userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
+                if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){                      userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
 
                 userViewHolder.title_item.setText(itemmodel.getTitle());
                 userViewHolder.title_item.setTypeface(seguiregular);
-                if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular);
+                if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }
+                userViewHolder.item_type_name.setTypeface(tf_play);
                // userViewHolder.date.setText(itemmodel.getPdate());
-                userViewHolder.likescount.setTypeface(seguiregular);
+                userViewHolder.likescount.setTypeface(tf_play);
+                userViewHolder.commentscount.setTypeface(tf_play);
                 userViewHolder.date.setTypeface(seguiregular);
                 if(itemmodel.getLikescount()==0){                         userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"விருப்பு"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"விருப்பு"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"கருத்து"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"கருத்து"));                     }                     userViewHolder.countlayout.setVisibility(View.VISIBLE);
 
@@ -1664,39 +1645,7 @@ public class TamilTaball extends Fragment {
                                     StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
-                                            String res=response.toString();
-                                            res = res.replace(" ", "");
-                                            res = res.trim();
-                                            if(res.equalsIgnoreCase("yes")){
-                                                System.out.println(itemmodel.getId());
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount()+1;
-                                                }
-                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
-                                            }else if(res.equalsIgnoreCase("no")){
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount()-1;
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }
-                                                System.out.println(itemmodel.getId());
-                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
-                                                userViewHolder.like_imagebutton.setTag("heart");
-                                            }
-                                            if(like_finalvalues==0||like_finalvalues==-1){
-                                                System.out.println(itemmodel.getId());
-                                                userViewHolder.    likescount.setVisibility(View.GONE);
-                                            }else {
-                                                System.out.println(itemmodel.getId());
-                                                System.out.println(like_finalvalues);
-                                                userViewHolder.    countlayout.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "விருப்பு"));
-
-                                                like_finalvalues=0;
-                                            }
+                                            String res;                                             Log.e("RES",response.toString());                                             try {                                                 Log.e("RES", "START");                                                 JSONObject data = new JSONObject(response.toString());                                                 String dir = data.getString("result");                                                 Log.d("RES", dir);                                                 JSONObject object=new JSONObject(dir);                                                 String dir2=object.getString("message");                                                 Log.d("RES", dir2);                                                 for (int i = 0; i < object.length(); i++) {                                                     String dirs = object.getString("message");                                                     Log.d("RES", dirs);                                                     res=object.getString("message");                                                     like_finalvalues=object.getInt("total_likes");                                                     Log.e("RES",res.toString());                                                     if(res.equals("Liked")){                                                         System.out.println(itemmodel.getId());                                                         like_finalvalues=object.getInt("total_likes");                                                         Log.e("RES",String.valueOf(like_finalvalues));                                                         userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);                                                         userViewHolder.like_imagebutton.setTag("heartfullred");                                                     }else if(res.equals("Like")){                                                         like_finalvalues=object.getInt("total_likes");                                                         Log.e("RES","dis"+String.valueOf(like_finalvalues));                                                         userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);                                                         userViewHolder.like_imagebutton.setTag("heart");                                                     }                                                     userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "விருப்பு"));                                                 }                                             }catch (JSONException e){                                              }
                                         }
                                     }, new Response.ErrorListener() {
                                         @Override

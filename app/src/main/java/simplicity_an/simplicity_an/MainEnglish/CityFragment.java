@@ -64,6 +64,7 @@ import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SimplicitySearchview;
 import simplicity_an.simplicity_an.TabAdvertorial;
+import simplicity_an.simplicity_an.TabColumns;
 import simplicity_an.simplicity_an.TabEducation;
 import simplicity_an.simplicity_an.TabFarming;
 import simplicity_an.simplicity_an.TabFood;
@@ -269,6 +270,7 @@ search.setVisibility(View.GONE);
         title_coimbatore=(TextView)view.findViewById(R.id.title_versiontwo) ;
 
         title_coimbatore.setTypeface(tf_pala);
+
         title_coimbatore.setText("Vanakkam Kovai");
         layout = (LinearLayout)view. findViewById(R.id.title);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)layout.getLayoutParams();
@@ -1065,6 +1067,7 @@ Log.e("CHANGE LAMG",response.toString());
 
         adapter.addFragment(new Tabnews(), "City");
         adapter.addFragment(new Tab_All(), "Beyond");
+        adapter.addFragment(new TabColumns(), "Columns");
         adapter.addFragment(new Tabgovt(), "Govt.Notif");
         adapter.addFragment(new Tabjobs(), "Jobs");
         adapter.addFragment(new TabFood(), "Food");

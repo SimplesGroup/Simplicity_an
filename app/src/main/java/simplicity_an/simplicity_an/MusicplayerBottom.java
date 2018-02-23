@@ -54,7 +54,8 @@ ImageButton playpause,forward,backward,close;
             try {
                 mMediaControllerCompat = new MediaControllerCompat(getActivity(), mMediaBrowserCompat.getSessionToken());
                 mMediaControllerCompat.registerCallback(mMediaControllerCompatCallback);
-                getActivity().setSupportMediaController(mMediaControllerCompat);
+               //getActivity().setSupportMediaController(mMediaControllerCompat);
+                MediaControllerCompat.setMediaController(getActivity(), mMediaControllerCompat);
             }catch (RemoteException e){
 
             }
@@ -178,14 +179,14 @@ musicbotttomfraglayout.setOnClickListener(new View.OnClickListener() {
                 }*/
 
                 if( mCurrentState == STATE_PAUSED ) {
-                   getActivity(). getSupportMediaController().getTransportControls().play();
+                    MediaControllerCompat.getMediaController(getActivity()).getTransportControls().play();
                     playpause.setImageResource(R.mipmap.pauseblack);
                     Log.e("media","PAUSE");
                     mCurrentState = STATE_PLAYING;
                 } else {
                     Log.e("media","PLAY");
-                    if( getActivity().getSupportMediaController().getPlaybackState().getState() == PlaybackStateCompat.STATE_PLAYING ) {
-                       getActivity(). getSupportMediaController().getTransportControls().pause();
+                    if( MediaControllerCompat.getMediaController(getActivity()).getPlaybackState().getState() == PlaybackStateCompat.STATE_PLAYING ) {
+                        MediaControllerCompat.getMediaController(getActivity()).getTransportControls().pause();
                         playpause.setImageResource(R.mipmap.playblack);
                     }
 
@@ -239,8 +240,8 @@ musicbotttomfraglayout.setVisibility(View.VISIBLE);
         Bundle bundle = new Bundle();
         bundle.putString("TITLE",radio_title);
         bundle.putString("IMAGE", radio_image);
-      getActivity().  getSupportMediaController().getTransportControls().playFromMediaId(radio_play_url,bundle);
-      getActivity().  getSupportMediaController().getTransportControls().play();
+        MediaControllerCompat.getMediaController(getActivity()).getTransportControls().playFromMediaId(radio_play_url,bundle);
+        MediaControllerCompat.getMediaController(getActivity()).getTransportControls().play();
 
 
 
@@ -249,8 +250,8 @@ musicbotttomfraglayout.setVisibility(View.VISIBLE);
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if( getActivity().getSupportMediaController().getPlaybackState().getState() == PlaybackStateCompat.STATE_PLAYING ) {
-          getActivity().  getSupportMediaController().getTransportControls().pause();
+        if( MediaControllerCompat.getMediaController(getActivity()).getPlaybackState().getState() == PlaybackStateCompat.STATE_PLAYING ) {
+            MediaControllerCompat.getMediaController(getActivity()).getTransportControls().pause();
         }
 
         mMediaBrowserCompat.disconnect();

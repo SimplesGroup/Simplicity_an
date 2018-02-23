@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -300,6 +301,9 @@ public class Columnistdetailtamil extends AppCompatActivity {
         description.getSettings().setPluginState(WebSettings.PluginState.ON);
         description.getSettings().setAllowFileAccess(true);
         description.getSettings().setJavaScriptEnabled(true);
+       /* Resources res = getResources();
+        float  fontSize = res.getDimension(R.dimen.txtSize);
+        description.getSettings().setDefaultFontSize((int)fontSize);*/
 
         commentbox=(LinearLayout)findViewById(R.id.comments_versiontwo) ;
         comment_title=(TextView)findViewById(R.id.comments_title);
@@ -312,12 +316,12 @@ public class Columnistdetailtamil extends AppCompatActivity {
         //  recycler_comment.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
 
         recycler_comment.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";;
+        String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
-        String simplycity_title_fontPathone = "fonts/robotoSlabBold.ttf";
+        String simplycity_title_fontPathone = "fonts/TAU_Elango_Madhavi.TTF";
         Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPathone);
         tv.setTypeface(tf_regular);
-        String playfair = "fonts/robotoSlabRegular.ttf";
+        String playfair = "fonts/TAU_Elango_Madhavi.TTF";
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
 
         sourcelinknews.setTypeface(tf);
@@ -577,7 +581,7 @@ public class Columnistdetailtamil extends AppCompatActivity {
                 image_description.setText("");
                 short_description.setText(obj.getString("short_description"));
                 hashtags_title.setText("");
-                title_category.setText(obj.getString("qtype"));
+                //title_category.setText(obj.getString("qtype"));
                 String reporterimage=obj.getString("reporter_image");
                 if(reporterimage.equals("null")||reporterimage.equals("")){
 
@@ -608,7 +612,7 @@ public class Columnistdetailtamil extends AppCompatActivity {
                 s = s.replace("\\", "");
 
 
-                String fonts="<html>\n" +         "\t<head>\n" +         "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" +         "\t\t<style>\n" +         "\t\t@font-face {\n" +         "  font-family: 'segeoui-light';\n" +         " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-regular';\n" +         "src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-sbold';\n" +         " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Bold';\n" +         "   src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Light';\n" +         "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Regular';\n" +         "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Thin';\n" +         "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "\t\t</style>\n" +         "\t</head>";
+                String fonts="<html>\n" +         "\t<head>\n" +         "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" +         "\t\t<style>\n" +         "\t\t@font-face {\n" +         "  font-family: 'segeoui-light';\n" +         " src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-regular';\n" +         "src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-sbold';\n" +         " src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Bold';\n" +         "   src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Light';\n" +         "    src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Regular';\n" +         "    src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Thin';\n" +         "    src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "\t\t</style>\n" +         "\t</head>";
                 description.loadDataWithBaseURL("", fonts+descrition+"</head>", "text/html", "utf-8", "");
 
                 description.setBackgroundColor(Color.TRANSPARENT);
@@ -634,12 +638,7 @@ public class Columnistdetailtamil extends AppCompatActivity {
                             StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    String res=response.toString();
-                                    res = res.replace(" ", "");
-                                    res = res.trim();
-                                    Log.e("LIke",res.toString());
-                                    if(res.equalsIgnoreCase("yes")){                                          favourite.setImageResource(R.mipmap.likered);                                         favourite.setTag("heartfullred");                                     }else if(res.equalsIgnoreCase("no")){                                        favourite.setImageResource(R.mipmap.like);                                         favourite.setTag("heart");                                     }
-
+                                   String res;                                     try {                                                                 Log.e("RES", "START");                                           JSONObject data = new JSONObject(response.toString());                                            String dir = data.getString("result");                                           Log.d("RES", dir);                                                            JSONObject object=new JSONObject(dir);                                           String dir2=object.getString("message");                                            Log.d("RES", dir2);                                                        for (int i = 0; i < object.length(); i++) {                                                   String dirs = object.getString("message");                                                 Log.d("RES", dirs);                                                        res=object.getString("message");                                                                                            if(res.equals("Liked")){                                                       favourite.setImageResource(R.mipmap.likered);                                                  favourite.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                    favourite.setImageResource(R.mipmap.like);                                                  favourite.setTag("heart");                                                }                                                }                                             }catch (JSONException e){                                                                                  }
                                 }
                             }, new Response.ErrorListener() {
                                 @Override
@@ -1197,7 +1196,7 @@ public class Columnistdetailtamil extends AppCompatActivity {
 
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
 
-                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
+                String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
                     mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getApplicationContext()).getImageLoader();

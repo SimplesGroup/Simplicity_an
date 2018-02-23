@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -320,14 +321,18 @@ booknow.setText("பதிவு செய்ய");
         description.getSettings().setPluginState(WebSettings.PluginState.ON);
         description.getSettings().setAllowFileAccess(true);
         description.getSettings().setJavaScriptEnabled(true);
+
+       /* Resources res = getResources();
+        float  fontSize = res.getDimension(R.dimen.txtSize);
+        description.getSettings().setDefaultFontSize((int)fontSize);*/
         comment=(ImageButton)findViewById(R.id.btn_4);
         share=(ImageButton)findViewById(R.id.btn_share);
         menu=(ImageButton)findViewById(R.id.btn_3);
         back=(ImageButton)findViewById(R.id.btn_back);
         favourite=(ImageButton)findViewById(R.id.btn_like);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";;
+        String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
-        String simplycity_title_bold = "fonts/robotoSlabRegular.ttf";
+        String simplycity_title_bold = "fonts/TAU_Elango_Madhavi.TTF";
         Typeface tf_bold = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
 
         venue_text.setTypeface(tf);
@@ -522,18 +527,18 @@ booknow.setText("பதிவு செய்ய");
                 model.setContactwebsite(contactwebsite);
                 String organizedby = obj.isNull("organized_by") ? null : obj
                         .getString("organized_by");
-                model.setContactwebsite(organizedby);
-                String entrytype = obj.isNull("etype") ? null : obj
+                model.setOrganizedby(organizedby);
+              /*  String entrytype = obj.isNull("etype") ? null : obj
                         .getString("etype");
                 model.setEtype(entrytype);
                 String entryfees = obj.isNull("emt") ? null : obj
                         .getString("emt");
-                model.setEmt(entryfees);
+                model.setEmt(entryfees);*/
                 // bimage=obj.isNull("bimage")?null:obj.getString("bimage");
                 // model.setBimage(bimage);
                 // model.setName(obj.getString("pub_by"));
                 model.setDescription(obj.getString("description"));
-                model.setTypeid(obj.getInt("type"));
+                //model.setTypeid(obj.getInt("type"));
                 model.setPdate(obj.getString("pdate"));
                 model.setTitle(obj.getString("title"));
                 model.setEventstartdate(obj.getString("event_start_date"));
@@ -555,14 +560,22 @@ booknow.setText("பதிவு செய்ய");
                event_place=obj.getString("venue");
                 event_startdate=obj.getString("event_start_date");
                 event_enddate=obj.getString("event_end_date");
-
+                JSONArray array=obj.getJSONArray("amt");
+                JSONObject object=null;
+                for(int n = 0; n < array.length(); n++)
+                {
+                    object = array.getJSONObject(n);
+                    // do some stuff....
+                }
                 if (organizedby.equals("")||organizedby.equals("null")) {
 
                     if (entrytype != null) {
-                        if (obj.getString("etype").contentEquals("paid")) {
-                            eventdetaildata.setText(Html.fromHtml("அனுமதி"+"&nbsp;"+ ":"+ "&nbsp;"+entrytype + "\n" + "நுழைவுகட்டணம்" + obj.getString("emt")));
+                        if (object.getString("amont").contentEquals("0")) {
+                            eventdetaildata.setText(Html.fromHtml("அனுமதி"+"&nbsp;"+":" +"&nbsp;"+"Free"));
                         } else {
-                            eventdetaildata.setText(Html.fromHtml("அனுமதி"+"&nbsp;"+":" +"&nbsp;"+ entrytype));
+                            eventdetaildata.setText(Html.fromHtml("அனுமதி"+"&nbsp;"+ ":"+ "&nbsp;"+"Paid" +"\n" + "நுழைவுகட்டணம்" + obj.getString("amont")));
+
+
                         }
                     } else {
                         eventdetaildata.setVisibility(View.GONE);
@@ -571,10 +584,10 @@ booknow.setText("பதிவு செய்ய");
                     eventdetaildata.setVisibility(View.VISIBLE);
 
                     if (entrytype != null) {
-                        if (obj.getString("etype").contentEquals("paid")) {
-                            eventdetaildata.setText(Html.fromHtml("ஒருங்கிணைப்புக் குழு"+"&nbsp;"+":"+"&nbsp;" + organizedby+"\n"+"அனுமதி"+"&nbsp;"+":"+"&nbsp;"  + entrytype + "\n" + "நுழைவுகட்டணம்"+"&nbsp;"+":"+"&nbsp;"  + obj.getString("emt")));
+                        if (object.getString("amont").contentEquals("0")) {
+                            eventdetaildata.setText(Html.fromHtml("ஒருங்கிணைப்புக் குழு"+"&nbsp;"+":"+"&nbsp;" + organizedby+"\n"+"அனுமதி"+"&nbsp;"+":"+"&nbsp;"  + "Paid" + "\n" + "நுழைவுகட்டணம்"+"&nbsp;"+":"+"&nbsp;"  + obj.getString("amont")));
                         } else {
-                            eventdetaildata.setText(Html.fromHtml("ஒருங்கிணைப்புக் குழு"+"&nbsp;"+":"+"&nbsp;"  + organizedby+"\n"+"அனுமதி"+"&nbsp;"+":"+"&nbsp;"  + entrytype));
+                            eventdetaildata.setText(Html.fromHtml("ஒருங்கிணைப்புக் குழு"+"&nbsp;"+":"+"&nbsp;"  + organizedby+"\n"+"அனுமதி"+"&nbsp;"+":"+"&nbsp;"  + "Free"));
                         }
                     } else {
                         eventdetaildata.setVisibility(View.GONE);
@@ -605,40 +618,40 @@ booknow.setText("பதிவு செய்ய");
                         "\t\t<style>\n" +
                         "\t\t@font-face {\n" +
                         "  font-family: 'segeoui-light';\n" +
-                        " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        " src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "  font-family: 'segeoui-regular';\n" +
-                        "src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "  font-family: 'segeoui-sbold';\n" +
-                        " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        " src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Bold';\n" +
-                        "   src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "   src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Light';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Regular';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Thin';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "\t\t</style>\n" +
@@ -732,12 +745,7 @@ emaildetails.setVisibility(View.GONE);
                             StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    String res=response.toString();
-                                    res = res.replace(" ", "");
-                                    res = res.trim();
-                                    Log.e("LIke",res.toString());
-                                   if(res.equalsIgnoreCase("yes")){                                          favourite.setImageResource(R.mipmap.likered);                                         favourite.setTag("heartfullred");                                     }else if(res.equalsIgnoreCase("no")){                                        favourite.setImageResource(R.mipmap.like);                                         favourite.setTag("heart");                                     }
-
+                                    String res;                                     try {                                                                 Log.e("RES", "START");                                           JSONObject data = new JSONObject(response.toString());                                            String dir = data.getString("result");                                           Log.d("RES", dir);                                                            JSONObject object=new JSONObject(dir);                                           String dir2=object.getString("message");                                            Log.d("RES", dir2);                                                        for (int i = 0; i < object.length(); i++) {                                                   String dirs = object.getString("message");                                                 Log.d("RES", dirs);                                                        res=object.getString("message");                                                                                            if(res.equals("Liked")){                                                       favourite.setImageResource(R.mipmap.likered);                                                  favourite.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                    favourite.setImageResource(R.mipmap.like);                                                  favourite.setTag("heart");                                                }                                                }                                             }catch (JSONException e){                                                                                  }
                                 }
                             }, new Response.ErrorListener() {
                                 @Override

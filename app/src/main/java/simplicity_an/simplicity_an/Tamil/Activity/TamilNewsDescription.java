@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -308,11 +309,15 @@ public class TamilNewsDescription extends AppCompatActivity {
         description.getSettings().setPluginState(WebSettings.PluginState.ON);
         description.getSettings().setAllowFileAccess(true);
         description.getSettings().setJavaScriptEnabled(true);
+
+      /*  Resources res = getResources();
+     float  fontSize = res.getDimension(R.dimen.txtSize);
+        description.getSettings().setDefaultFontSize((int)fontSize);*/
         // description=(TextView)findViewById(R.id.textView_desc);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";;
+        String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
-        String playfair = "fonts/robotoSlabRegular.ttf";
+        String playfair = "fonts/TAU_Elango_Madhavi.TTF";
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
 
         tv.setTypeface(tf_play);
@@ -555,7 +560,7 @@ public class TamilNewsDescription extends AppCompatActivity {
                 model.setTitle(obj.getString("title"));
 
                 model.setSource(obj.getString("source"));
-                tv.setText(Html.fromHtml(obj.getString("title")));
+                tv.setText(Html.fromHtml("<b>"+obj.getString("title")+"</b>"));
                 model.setFavcount(obj.getInt("fav_count"));
                 model.setShareurl(obj.getString("sharingurl"));
                 favcount=obj.getInt("fav_count");
@@ -612,7 +617,7 @@ public class TamilNewsDescription extends AppCompatActivity {
                 description.getSettings().setAllowContentAccess(true);
 
 
-                String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
+                String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";;
                 Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 String fonts="<html>\n" +
                         "\t<head>\n" +
@@ -658,16 +663,19 @@ public class TamilNewsDescription extends AppCompatActivity {
                         "}\n" +
                         "\t\t</style>\n" +
                         "\t</head>";
+                String s="";
+
+
+Log.e("DESC",descrition);
+
                 description.loadDataWithBaseURL("", fonts+descrition+"</head>", "text/html", "utf-8", "");
 
                 description.setWebViewClient(new MyBrowser());
-                // description.loadUrl(fonts+descrition+"</head>");
+
 
                 description.setBackgroundColor(Color.TRANSPARENT);
                 description.setBackgroundColor(Color.TRANSPARENT);
-/*
-                sourcelinknews.setText(Html.fromHtml("Source:"));
-                sourcelinksimplicity.setText(Html.fromHtml("<u>" + obj.getString("source") + "</u>"));*/
+
                 share.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -700,12 +708,7 @@ public class TamilNewsDescription extends AppCompatActivity {
                             StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    String res=response.toString();
-                                    res = res.replace(" ", "");
-                                    res = res.trim();
-                                    Log.e("LIke",res.toString());
-                                   if(res.equalsIgnoreCase("yes")){                                          favourite.setImageResource(R.mipmap.likered);                                         favourite.setTag("heartfullred");                                     }else if(res.equalsIgnoreCase("no")){                                        favourite.setImageResource(R.mipmap.like);                                         favourite.setTag("heart");                                     }
-
+                                    String res;                                     try {                                                                 Log.e("RES", "START");                                           JSONObject data = new JSONObject(response.toString());                                            String dir = data.getString("result");                                           Log.d("RES", dir);                                                            JSONObject object=new JSONObject(dir);                                           String dir2=object.getString("message");                                            Log.d("RES", dir2);                                                        for (int i = 0; i < object.length(); i++) {                                                   String dirs = object.getString("message");                                                 Log.d("RES", dirs);                                                        res=object.getString("message");                                                                                            if(res.equals("Liked")){                                                       favourite.setImageResource(R.mipmap.likered);                                                  favourite.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                    favourite.setImageResource(R.mipmap.like);                                                  favourite.setTag("heart");                                                }                                                }                                             }catch (JSONException e){                                                                                  }
                                 }
                             }, new Response.ErrorListener() {
                                 @Override
@@ -721,16 +724,7 @@ public class TamilNewsDescription extends AppCompatActivity {
                                     param.put(QID, postid);
                                     param.put(USERID, myprofileid);
                                     param.put(QTYPE, "article");
-                                   /* if (postid != null) {
 
-
-                                        param.put(QID, ids);
-                                        param.put(USERID, myprofileid);
-                                        param.put(QTYPE, itemmodel.getQtypemain());
-                                    } else {
-
-
-                                    }*/
                                     return param;
                                 }
                             };

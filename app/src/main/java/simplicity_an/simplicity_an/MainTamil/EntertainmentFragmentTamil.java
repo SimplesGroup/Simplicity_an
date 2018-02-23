@@ -110,6 +110,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
     String playerid;
     LinearLayout layout;
     public static final String GcmId = "gcmid";
+    String dayOfTheWeek,sMonthNamefull;
     public static EntertainmentFragmentTamil newInstance() {
         EntertainmentFragmentTamil fragment = new EntertainmentFragmentTamil();
         return fragment;
@@ -284,25 +285,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
         weather_update=(TextView)view. findViewById(R.id.weather_degree_versiontwo);
         weathercentre_textview=(TextView)view.findViewById(R.id.weathercenter) ;
         weathercentre_textview.setText(Html.fromHtml("&nbsp;"+"|"+"&nbsp;"));
-        StringRequest weather=new StringRequest(Request.Method.GET, WEATHER_URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
 
-                if(response!=null){
-                    weather_update.setText(Html.fromHtml(response+"<sup>o</sup>"));
-                }else {
-                    weather_update.setVisibility(View.GONE);
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-        weather.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        requestQueue.add(weather);
         Calendar calander = Calendar.getInstance();
         cDay = calander.get(Calendar.DAY_OF_MONTH);
         cMonth = calander.get(Calendar.MONTH) + 1;
@@ -314,7 +297,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
         cSecond = calander.get(Calendar.SECOND);
         SimpleDateFormat sdf = new SimpleDateFormat("EE");
         Date d = new Date();
-        String dayOfTheWeek = sdf.format(d);
+         dayOfTheWeek = sdf.format(d);
         SimpleDateFormat sdf1 = new SimpleDateFormat("MMM");
         Date d1 = new Date();
         String sMonthName =  sdf1.format(d1);
@@ -323,7 +306,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
         int mon=calander.get(Calendar.DAY_OF_MONTH);
         SimpleDateFormat fmt = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
         Date d1full = new Date();
-        String sMonthNamefull =  fmt.format(d1full);
+        sMonthNamefull =  fmt.format(d1full);
         Log.e("DAY_OF_MONTH: ", "DAY_OF_MONTH: " + calendar.get(Calendar.DAY_OF_MONTH)+sMonthName);
         String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
@@ -331,11 +314,50 @@ public class EntertainmentFragmentTamil extends Fragment  {
         date_text=(TextView)view.findViewById(R.id.date_versiontwo) ;
         language_title=(TextView)view.findViewById(R.id.language_versiontwo) ;
         language_title.setTypeface(tf);
-        language_title.setText(Html.fromHtml("&nbsp;"+"|"+"&nbsp;"+"<b>Eng</b>"+"&nbsp;"+"|"+"&nbsp;"));
+        language_title.setText(Html.fromHtml("&nbsp;"+"<b>Eng</b>"+"&nbsp;"+"|"+"&nbsp;"));
         layout = (LinearLayout)view. findViewById(R.id.title);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)layout.getLayoutParams();
         params.setMargins(0, 170, 0, 0);
         layout.setLayoutParams(params);
+
+        StringRequest weather=new StringRequest(Request.Method.GET, WEATHER_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String weatherdata;
+                /*if(response!=null){
+                    weather_update.setText(Html.fromHtml(response+"<sup>o</sup>"));
+                }else {
+                    weather_update.setVisibility(View.GONE);
+                }*/
+                weatherdata=response.toString();
+                if(dayOfTheWeek.equalsIgnoreCase("Sun")){
+                    date_text.setText(Html.fromHtml("ஞாயிறு"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+                }else if(dayOfTheWeek.equalsIgnoreCase("Mon")){
+                    date_text.setText(Html.fromHtml("திங்கள்"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+                }else if(dayOfTheWeek.equalsIgnoreCase("Tue")){
+                    date_text.setText(Html.fromHtml("செவ்வாய் "+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+                }else if (dayOfTheWeek.equalsIgnoreCase("Wed")){
+                    date_text.setText(Html.fromHtml("புதன்"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+                }else if(dayOfTheWeek.equalsIgnoreCase("Thu")){
+                    date_text.setText(Html.fromHtml("வியாழன்"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+                }else if(dayOfTheWeek.equalsIgnoreCase("Fri")){
+                    date_text.setText(Html.fromHtml("வெள்ளி"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+                }else if(dayOfTheWeek.equalsIgnoreCase("Sat")){
+                    date_text.setText(Html.fromHtml("சனி"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        weather.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(weather);
+
+
+
+
         language_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -915,9 +937,9 @@ public class EntertainmentFragmentTamil extends Fragment  {
     private void setupViewPager(ViewPager mPager) {
        HealthViewPagerAdapter adapter = new HealthViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new TamilEntertainmentall(), "அனைத்தும்");
-        adapter.addFragment(new TabColumnstamil(), "சிறப்பு கட்டுரைகள் ");
-        adapter.addFragment(new Tabarticle(),"கட்டுரைகள்");
-        adapter.addFragment(new Tabcolumnisttamil(),"கட்டுரையாளர் ");
+
+       // adapter.addFragment(new Tabarticle(),"கட்டுரைகள்");
+       // adapter.addFragment(new Tabcolumnisttamil(),"கட்டுரையாளர் ");
         adapter.addFragment(new Tamilentertainmentmovies(), "வீடியோ ");
         adapter.addFragment(new Tamilentertainmentradio(), "ஆடியோ ");
         adapter.addFragment(new Tabphotostoriestamil(),"புகைப்படங்கள்  ");

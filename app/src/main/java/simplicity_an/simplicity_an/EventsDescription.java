@@ -504,18 +504,18 @@ public class EventsDescription extends AppCompatActivity {
                 model.setContactwebsite(contactwebsite);
                 String organizedby = obj.isNull("organized_by") ? null : obj
                         .getString("organized_by");
-                model.setContactwebsite(organizedby);
-                String entrytype = obj.isNull("etype") ? null : obj
+                model.setOrganizedby(organizedby);
+              /*  String entrytype = obj.isNull("etype") ? null : obj
                         .getString("etype");
                 model.setEtype(entrytype);
                 String entryfees = obj.isNull("emt") ? null : obj
                         .getString("emt");
-                model.setEmt(entryfees);
+                model.setEmt(entryfees);*/
                 // bimage=obj.isNull("bimage")?null:obj.getString("bimage");
                 // model.setBimage(bimage);
                 // model.setName(obj.getString("pub_by"));
                 model.setDescription(obj.getString("description"));
-                model.setTypeid(obj.getInt("type"));
+               // model.setTypeid(obj.getInt("type"));
                 model.setPdate(obj.getString("pdate"));
                 model.setTitle(obj.getString("title"));
                 model.setEventstartdate(obj.getString("event_start_date"));
@@ -524,12 +524,19 @@ public class EventsDescription extends AppCompatActivity {
                 model.setVenue(obj.getString("venue"));
                 model.setLocation(obj.getString("location"));
                 model.setTiming(obj.getString("timing"));
-                model.setOrganizedby(obj.getString("organized_by"));
-                model.setEtype(obj.getString("etype"));
-                model.setEmt(obj.getString("emt"));
+               // model.setOrganizedby(obj.getString("organized_by"));
+              //  model.setEtype(obj.getString("etype"));
+              //  model.setEmt(obj.getString("emt"));
                 model.setContactphone(obj.getString("contact_phone"));
                 model.setContactemail(obj.getString("contact_email"));
-                model.setContactwebsite(obj.getString("contact_website"));
+                //model.setContactwebsite(obj.getString("contact_website"));
+JSONArray array=obj.getJSONArray("amt");
+                JSONObject object=null;
+                for(int n = 0; n < array.length(); n++)
+                {
+                     object = array.getJSONObject(n);
+                    // do some stuff....
+                }
 
                 thump.setImageUrl(image, mImageLoader);
                 //  Picasso.with(getApplicationContext()).load(obj.getString("image")).into(thump);
@@ -541,19 +548,23 @@ public class EventsDescription extends AppCompatActivity {
 
                 if (organizedby.equals("")||organizedby.equals("null")) {
 
-                    if (entrytype != null) {
-                        if (obj.getString("etype").contentEquals("paid")) {
-                            eventdetaildata.setText(Html.fromHtml("Entry Type"+"&nbsp;"+ ":"+ "&nbsp;"+entrytype + "\n" + "Entry Fee" + obj.getString("emt")));
+
+                        if (object.getString("amont").contentEquals("0")) {
+                            eventdetaildata.setText(Html.fromHtml("Entry Type"+"&nbsp;"+":" +"&nbsp;"+ "Free"));
                         } else {
-                            eventdetaildata.setText(Html.fromHtml("Entry Type"+"&nbsp;"+":" +"&nbsp;"+ entrytype));
+                            eventdetaildata.setText(Html.fromHtml("Entry Type"+"&nbsp;"+ ":"+ "&nbsp;"+"Paid" + "\n" + "Entry Fee" + object.getString("amont")));
+
                         }
-                    } else {
-                        eventdetaildata.setVisibility(View.GONE);
-                    }
+
                 } else {
                     eventdetaildata.setVisibility(View.VISIBLE);
+                    if (object.getString("amont").contentEquals("0")) {
+                        eventdetaildata.setText(Html.fromHtml("Entry Type"+"&nbsp;"+":" +"&nbsp;"+ "Free"));
+                    } else {
+                        eventdetaildata.setText(Html.fromHtml("Entry Type"+"&nbsp;"+ ":"+ "&nbsp;"+"Paid" + "\n" + "Entry Fee" + object.getString("amont")));
 
-                    if (entrytype != null) {
+                    }
+                   /* if (entrytype != null) {
                         if (obj.getString("etype").contentEquals("paid")) {
                             eventdetaildata.setText(Html.fromHtml("Organized by"+"&nbsp;"+":"+"&nbsp;" + organizedby+"\n"+"Entry Type"+"&nbsp;"+":"+"&nbsp;"  + entrytype + "\n" + "Entry Fee"+"&nbsp;"+":"+"&nbsp;"  + obj.getString("emt")));
                         } else {
@@ -561,7 +572,7 @@ public class EventsDescription extends AppCompatActivity {
                         }
                     } else {
                         eventdetaildata.setVisibility(View.GONE);
-                    }
+                    }*/
 
                 }
 
@@ -639,6 +650,7 @@ public class EventsDescription extends AppCompatActivity {
                 favourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (myprofileid != null) {
                         String backgroundImageName = String.valueOf(favourite.getTag());
                         Log.e("RUN","with"+backgroundImageName);
                         if(backgroundImageName.equals("heart")){
@@ -650,16 +662,11 @@ public class EventsDescription extends AppCompatActivity {
                         }else {
 
                         }
-                        if (myprofileid != null) {
+
                             StringRequest likes = new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    String res = response.toString();
-                                    res = res.replace(" ", "");
-                                    res = res.trim();
-                                    Log.e("LIke", res.toString());
-                                    if(res.equalsIgnoreCase("yes")){                                          favourite.setImageResource(R.mipmap.likered);                                         favourite.setTag("heartfullred");                                     }else if(res.equalsIgnoreCase("no")){                                        favourite.setImageResource(R.mipmap.like);                                         favourite.setTag("heart");                                     }
-
+                                    String res;                                     try {                                                                 Log.e("RES", "START");                                           JSONObject data = new JSONObject(response.toString());                                            String dir = data.getString("result");                                           Log.d("RES", dir);                                                            JSONObject object=new JSONObject(dir);                                           String dir2=object.getString("message");                                            Log.d("RES", dir2);                                                        for (int i = 0; i < object.length(); i++) {                                                   String dirs = object.getString("message");                                                 Log.d("RES", dirs);                                                        res=object.getString("message");                                                                                            if(res.equals("Liked")){                                                       favourite.setImageResource(R.mipmap.likered);                                                  favourite.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                    favourite.setImageResource(R.mipmap.like);                                                  favourite.setTag("heart");                                                }                                                }                                             }catch (JSONException e){                                                                                  }
                                 }
                             }, new Response.ErrorListener() {
                                 @Override

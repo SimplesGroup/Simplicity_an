@@ -110,6 +110,7 @@ public class HappeningFragTamil extends Fragment {
     String url_change_lang="http://simpli-city.in/request2.php?rtype=updatelanguage&key=simples";
     String playerid;
     public static final String GcmId = "gcmid";
+    String dayOfTheWeek,sMonthNamefull;
     public static HappeningFragTamil newInstance() {
         HappeningFragTamil fragment = new HappeningFragTamil();
         return fragment;
@@ -350,25 +351,9 @@ public class HappeningFragTamil extends Fragment {
         weather_update=(TextView) view.findViewById(R.id.weather_degree_versiontwo);
         weathercentre_textview=(TextView)view.findViewById(R.id.weathercenter) ;
         weathercentre_textview.setText(Html.fromHtml("&nbsp;"+"|"+"&nbsp;"));
-        StringRequest weather=new StringRequest(Request.Method.GET, WEATHER_URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
 
-                if(response!=null){
-                    weather_update.setText(Html.fromHtml(response+"<sup>o</sup>"));
-                }else {
-                    weather_update.setVisibility(View.GONE);
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
-            }
-        });
 
-        weather.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        requestQueue.add(weather);
         Calendar calander = Calendar.getInstance();
         cDay = calander.get(Calendar.DAY_OF_MONTH);
         cMonth = calander.get(Calendar.MONTH) + 1;
@@ -380,7 +365,7 @@ public class HappeningFragTamil extends Fragment {
         cSecond = calander.get(Calendar.SECOND);
         SimpleDateFormat sdf = new SimpleDateFormat("EE");
         Date d = new Date();
-        String dayOfTheWeek = sdf.format(d);
+       dayOfTheWeek = sdf.format(d);
         SimpleDateFormat sdf1 = new SimpleDateFormat("MMM");
         Date d1 = new Date();
         String sMonthName =  sdf1.format(d1);
@@ -399,12 +384,12 @@ public class HappeningFragTamil extends Fragment {
 
         SimpleDateFormat fmt = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
         Date d1full = new Date();
-        String sMonthNamefull =  fmt.format(d1full);
+        sMonthNamefull =  fmt.format(d1full);
 
 
         title_coimbatore.setTypeface(tf1);
         date_text.setTypeface(tf);
-        language_title.setText(Html.fromHtml("&nbsp;"+"|"+"&nbsp;"+"Eng"+"&nbsp;"+"|"+"&nbsp;"));
+        language_title.setText(Html.fromHtml("&nbsp;"+"Eng"+"&nbsp;"+"|"+"&nbsp;"));
         layout = (LinearLayout)view. findViewById(R.id.title);
         LinearLayout.LayoutParams paramss = (LinearLayout.LayoutParams)layout.getLayoutParams();
         paramss.setMargins(0, 170, 0, 0);
@@ -493,6 +478,40 @@ public class HappeningFragTamil extends Fragment {
             fabinnerplus.setBackgroundResource(R.color.theme12);
             fabsearch.setBackgroundResource(R.color.theme12);
         }
+        StringRequest weather=new StringRequest(Request.Method.GET, WEATHER_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String weatherdata;
+                /*if(response!=null){
+                    weather_update.setText(Html.fromHtml(response+"<sup>o</sup>"));
+                }else {
+                    weather_update.setVisibility(View.GONE);
+                }*/
+                weatherdata=response.toString();
+                if(dayOfTheWeek.equalsIgnoreCase("Sun")){
+                    date_text.setText(Html.fromHtml("ஞாயிறு"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+                }else if(dayOfTheWeek.equalsIgnoreCase("Mon")){
+                    date_text.setText(Html.fromHtml("திங்கள்"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+                }else if(dayOfTheWeek.equalsIgnoreCase("Tue")){
+                    date_text.setText(Html.fromHtml("செவ்வாய் "+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+                }else if (dayOfTheWeek.equalsIgnoreCase("Wed")){
+                    date_text.setText(Html.fromHtml("புதன்"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+                }else if(dayOfTheWeek.equalsIgnoreCase("Thu")){
+                    date_text.setText(Html.fromHtml("வியாழன்"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+                }else if(dayOfTheWeek.equalsIgnoreCase("Fri")){
+                    date_text.setText(Html.fromHtml("வெள்ளி"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+                }else if(dayOfTheWeek.equalsIgnoreCase("Sat")){
+                    date_text.setText(Html.fromHtml("சனி"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        weather.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(weather);
 
 
         language_title.setOnClickListener(new View.OnClickListener() {

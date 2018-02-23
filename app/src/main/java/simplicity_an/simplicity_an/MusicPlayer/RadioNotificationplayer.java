@@ -93,7 +93,8 @@ public class RadioNotificationplayer extends AppCompatActivity implements SeekBa
             try {
                 mMediaControllerCompat = new MediaControllerCompat(RadioNotificationplayer.this, mMediaBrowserCompat.getSessionToken());
                 mMediaControllerCompat.registerCallback(mMediaControllerCompatCallback);
-                setSupportMediaController(mMediaControllerCompat);
+          //setSupportMediaController(getApplicationContext(),mMediaControllerCompat);
+                MediaControllerCompat.setMediaController(RadioNotificationplayer.this, mMediaControllerCompat);
 
             }catch (RemoteException e){
 
@@ -381,14 +382,14 @@ songduration.setOnSeekBarChangeListener(this);
 
 
                 if( mCurrentState == STATE_PAUSED ) {
-                    getSupportMediaController().getTransportControls().play();
+                    MediaControllerCompat.getMediaController(RadioNotificationplayer.this).getTransportControls().play();
                     play.setImageResource(R.drawable.pause);
                     Log.e("media","PAUSE");
                     mCurrentState = STATE_PLAYING;
                 } else {
                     Log.e("media","PLAY");
-                    if( getSupportMediaController().getPlaybackState().getState() == PlaybackStateCompat.STATE_PLAYING ) {
-                        getSupportMediaController().getTransportControls().pause();
+                    if( MediaControllerCompat.getMediaController(RadioNotificationplayer.this).getPlaybackState().getState() == PlaybackStateCompat.STATE_PLAYING ) {
+                        MediaControllerCompat.getMediaController(RadioNotificationplayer.this).getTransportControls().pause();
                         play.setImageResource(R.drawable.play);
                     }
 
@@ -457,8 +458,8 @@ if(radio_image!=null){
         Bundle bundle = new Bundle();
         bundle.putString("TITLE",radio_title);
         bundle.putString("IMAGE", radio_image);
-        getSupportMediaController().getTransportControls().playFromMediaId(radio_play_url,bundle);
-        getSupportMediaController().getTransportControls().play();
+        MediaControllerCompat.getMediaController(RadioNotificationplayer.this).getTransportControls().playFromMediaId(radio_play_url,bundle);
+        MediaControllerCompat.getMediaController(RadioNotificationplayer.this).getTransportControls().play();
 
         updateProgressBar();
         new Handler().postDelayed(new Runnable() {
@@ -511,8 +512,8 @@ if(radio_image!=null){
   @Override
   protected void onDestroy() {
       super.onDestroy();
-      if( getSupportMediaController().getPlaybackState().getState() == PlaybackStateCompat.STATE_PLAYING ) {
-          getSupportMediaController().getTransportControls().pause();
+      if( MediaControllerCompat.getMediaController(RadioNotificationplayer.this).getPlaybackState().getState() == PlaybackStateCompat.STATE_PLAYING ) {
+          MediaControllerCompat.getMediaController(RadioNotificationplayer.this).getTransportControls().pause();
       }
 
       mMediaBrowserCompat.disconnect();

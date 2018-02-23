@@ -643,6 +643,7 @@ String fonts="<html>\n" +
                 favourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(myprofileid!=null) {
                         String backgroundImageName = String.valueOf(favourite.getTag());
                         Log.e("RUN","with"+backgroundImageName);
                         if(backgroundImageName.equals("heart")){
@@ -654,22 +655,11 @@ String fonts="<html>\n" +
                         }else {
 
                         }
-                        if(myprofileid!=null) {
+
                             StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    String res=response.toString();
-                                    res = res.replace(" ", "");
-                                    res = res.trim();
-                                    Log.e("LIke",res.toString());
-                                    if(res.equalsIgnoreCase("yes")){
-
-                                        favourite.setImageResource(R.mipmap.likered);
-                                        favourite.setTag("heartfullred");
-                                    }else if(res.equalsIgnoreCase("no")){
-                                       favourite.setImageResource(R.mipmap.like);
-                                        favourite.setTag("heart");
-                                    }
+                                    String res;                                     try {                                                                 Log.e("RES", "START");                                           JSONObject data = new JSONObject(response.toString());                                            String dir = data.getString("result");                                           Log.d("RES", dir);                                                            JSONObject object=new JSONObject(dir);                                           String dir2=object.getString("message");                                            Log.d("RES", dir2);                                                        for (int i = 0; i < object.length(); i++) {                                                   String dirs = object.getString("message");                                                 Log.d("RES", dirs);                                                        res=object.getString("message");                                                                                            if(res.equals("Liked")){                                                       favourite.setImageResource(R.mipmap.likered);                                                  favourite.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                    favourite.setImageResource(R.mipmap.like);                                                  favourite.setTag("heart");                                                }                                                }                                             }catch (JSONException e){                                                                                  }
 
                                 }
                             }, new Response.ErrorListener() {

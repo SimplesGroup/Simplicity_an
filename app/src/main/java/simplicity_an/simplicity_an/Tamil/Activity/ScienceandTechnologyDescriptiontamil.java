@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -288,10 +289,15 @@ requestQueue=Volley.newRequestQueue(this);
         description.getSettings().setPluginState(WebSettings.PluginState.ON);
         description.getSettings().setAllowFileAccess(true);
         description.getSettings().setJavaScriptEnabled(true);
-        String simplycity_title_fontPath = "fonts/robotoSlabRegular.ttf";;
+        /*Resources res = getResources();
+        float  fontSize = res.getDimension(R.dimen.txtSize);
+        description.getSettings().setDefaultFontSize((int)fontSize);*/
+
+
+        String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
-        String playfair = "fonts/robotoSlabRegular.ttf";
+        String playfair = "fonts/TAU_Elango_Madhavi.TTF";
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
         titlename.setTypeface(tf_play);
         hashtags_title.setTypeface(tf);
@@ -545,7 +551,7 @@ requestQueue=Volley.newRequestQueue(this);
                 image_description.setText("");
                 short_description.setText(obj.getString("short_description"));
                 hashtags_title.setText("");
-                title_category.setText(obj.getString("qtype"));
+               // title_category.setText(obj.getString("qtype"));
                 String reporterimage=obj.getString("reporter_image");
                 if(reporterimage.equals("null")||reporterimage.equals("")){
 
@@ -593,40 +599,40 @@ requestQueue=Volley.newRequestQueue(this);
                         "\t\t<style>\n" +
                         "\t\t@font-face {\n" +
                         "  font-family: 'segeoui-light';\n" +
-                        " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        " src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "  font-family: 'segeoui-regular';\n" +
-                        "src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "  font-family: 'segeoui-sbold';\n" +
-                        " src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        " src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "  font-style: normal;\n" +
                         "}\n" +
                         "\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Bold';\n" +
-                        "   src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "   src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Light';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Regular';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "@font-face {\n" +
                         "    font-family: 'RobotoSlab-Thin';\n" +
-                        "    src: url('file:///android_asset/fonts/RobotoSlab-Regular.ttf');\n" +
+                        "    src: url('file:///android_asset/fonts/robotoSlabRegular.ttf');\n" +
                         "    font-style: normal;\n" +
                         "}\n" +
                         "\t\t</style>\n" +
@@ -668,12 +674,7 @@ requestQueue=Volley.newRequestQueue(this);
                             StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    String res=response.toString();
-                                    res = res.replace(" ", "");
-                                    res = res.trim();
-                                    Log.e("LIke",res.toString());
-                                   if(res.equalsIgnoreCase("yes")){                                          favourite.setImageResource(R.mipmap.likered);                                         favourite.setTag("heartfullred");                                     }else if(res.equalsIgnoreCase("no")){                                        favourite.setImageResource(R.mipmap.like);                                         favourite.setTag("heart");                                     }
-
+                                    String res;                                     try {                                                                 Log.e("RES", "START");                                           JSONObject data = new JSONObject(response.toString());                                            String dir = data.getString("result");                                           Log.d("RES", dir);                                                            JSONObject object=new JSONObject(dir);                                           String dir2=object.getString("message");                                            Log.d("RES", dir2);                                                        for (int i = 0; i < object.length(); i++) {                                                   String dirs = object.getString("message");                                                 Log.d("RES", dirs);                                                        res=object.getString("message");                                                                                            if(res.equals("Liked")){                                                       favourite.setImageResource(R.mipmap.likered);                                                  favourite.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                    favourite.setImageResource(R.mipmap.like);                                                  favourite.setTag("heart");                                                }                                                }                                             }catch (JSONException e){                                                                                  }
                                 }
                             }, new Response.ErrorListener() {
                                 @Override
