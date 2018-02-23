@@ -665,7 +665,8 @@ public class TipsDescriptionTamil extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent sendIntent = new Intent();
                         sendIntent.setAction(Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_TEXT, sharetitle+ "\n" + shareurl);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, sharetitle+ "\n" + shareurl+"\n"+"\n"+"\n"+"Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+
                         sendIntent.setType("text/plain");
                         startActivity(Intent.createChooser(sendIntent, "Share using"));
 

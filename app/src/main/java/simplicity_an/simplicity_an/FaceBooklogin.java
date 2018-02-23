@@ -269,13 +269,31 @@ ProgressDialog pdialog;
                                         Log.e("UserID", response);
                                         String[] array = response.split(",");
 
-                                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                                        editor.putString(MYUSERID,array[0]);
-                                        editor.putString(USERNAME,array[1]);
-                                        editor.putString(USERIMAGE,array[2]);
-                                        String emails=array[3].toString();
-                                        editor.putString(USERMAILID,array[3].toString().trim());
-                                        editor.commit();
+                                        try {
+                                            JSONObject data = new JSONObject(response);
+                                            String dir = data.getString("result");
+                                            JSONObject object=new JSONObject(dir);
+                                            //String dir2=object.getString("message");
+                                            String name=null;
+                                            String userid=null;
+                                            String userimage=null;
+                                            String usermailid=null;
+                                            for (int i=0;i<object.length();i++){
+                                                name=object.getString("name");
+                                                userid=object.getString("user_id");
+                                                userimage=object.getString("image");
+                                                usermailid=object.getString("email");
+                                            }
+                                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                                            editor.putString(MYUSERID,userid);
+                                            editor.putString(USERNAME,name);
+                                            editor.putString(USERIMAGE,userimage);
+                                            editor.putString(USERMAILID,usermailid);
+                                            Log.e("EMAIL,",usermailid);
+                                            editor.commit();
+                                        }catch (JSONException e){
+
+                                        }
                                         if(language_data.equals("English")) {
                                             Intent main = new Intent(getApplicationContext(), MainPageEnglish.class);
                                             startActivity(main);

@@ -27,6 +27,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -52,7 +55,7 @@ public class GoogleSignintwo extends AppCompatActivity implements  GoogleApiClie
     public static final String mypreference = "mypref";
     public static final String Activity = "activity";
     public static final String CONTENTID = "contentid";
-    String UPLOAD_URL=" http://simpli-city.in/request2.php?rtype=checkusertest&key=simples";
+    String UPLOAD_URL="http://simpli-city.in/request2.php?rtype=checkusertest&key=simples";
     private String KEY_GCM = "player_id";
     private String KEY_NAME = "name";
     private String KEY_EMAIL= "email";
@@ -272,14 +275,33 @@ Log.e("Email",gcmids);
                         }else {
                             Log.e("UserIDnew", res);
                             String[] array = res.split(",");
+                            try {
+                                JSONObject data = new JSONObject(res);
+                                String dir = data.getString("result");
+                                JSONObject object=new JSONObject(dir);
+                                //String dir2=object.getString("message");
+                                String name=null;
+                                String userid=null;
+                                String userimage=null;
+                                String usermailid=null;
+                                for (int i=0;i<object.length();i++){
+                                    name=object.getString("name");
+                                    userid=object.getString("user_id");
+                                    userimage=object.getString("image");
+                                    usermailid=object.getString("email");
+                                }
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putString(MYUSERID,userid);
+                                editor.putString(USERNAME,name);
+                                editor.putString(USERIMAGE,userimage);
+                                editor.putString(USERMAILID,usermailid);
+                                Log.e("EMAIL,",usermailid);
+                                editor.commit();
+                            }catch (JSONException e){
 
-                            SharedPreferences.Editor editor = sharedpreferences.edit();
-                            editor.putString(MYUSERID,array[0]);
-                            editor.putString(USERNAME,array[1]);
-                            editor.putString(USERIMAGE,array[2]);
-                            editor.putString(USERMAILID,array[3].toString().trim());
-                            Log.e("EMAIL,",array[3].toString());
-                            editor.commit();
+                            }
+
+
                             if (sharedpreferences.contains(USERNAME)) {
                                 // name.setText(sharedpreferences.getString(Name, ""));
                                 username=sharedpreferences.getString(USERNAME,"");
@@ -320,8 +342,8 @@ Log.e("Email",gcmids);
                     params.put(KEY_EMAIL,acct.getEmail());
                     params.put(KEY_NAME,acct.getDisplayName());
                     params.put(KEY_PROFILEIMAGE,acct.getPhotoUrl().toString());
-
                     params.put(KEY_GCM,gcmids);
+                    Log.e("Email",acct.getEmail()+acct.getDisplayName()+acct.getPhotoUrl());
                     return  params;
                 }
             };
