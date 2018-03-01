@@ -277,14 +277,14 @@ String searchnonitiid,searchactivity_sports;
         image_description=(TextView)findViewById(R.id.textView_photodescription);
         short_description=(TextView)findViewById(R.id.textView_shortdescription);
         title_category=(TextView)findViewById(R.id.textView_qtypename) ;
-        source=(TextView)findViewById(R.id.source_spotrs);
-        sourcefrom=(TextView)findViewById(R.id.sourcelinkredsimplicity);
+        /*source=(TextView)findViewById(R.id.source_spotrs);
+        sourcefrom=(TextView)findViewById(R.id.sourcelinkredsimplicity);*/
         comment=(ImageButton)findViewById(R.id.btn_4);
         share=(ImageButton)findViewById(R.id.btn_share);
         menu=(ImageButton)findViewById(R.id.btn_3);
         back=(ImageButton)findViewById(R.id.btn_back);
         favourite=(ImageButton)findViewById(R.id.btn_like);
-        description=(WebView)findViewById(R.id.textView_desc_sports);
+        description=(WebView)findViewById(R.id.textView_desc);
         description.getSettings().setLoadsImagesAutomatically(true);
         description.getSettings().setPluginState(WebSettings.PluginState.ON);
         description.getSettings().setAllowFileAccess(true);
@@ -325,10 +325,9 @@ String searchnonitiid,searchactivity_sports;
         comment_title.setTypeface(tf);
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);
-        source.setTypeface(tf);
-        sourcefrom.setTypeface(tf);
+
         date.setTypeface(tf);
-        image=(NetworkImageView)findViewById(R.id.sports_desc_image);
+        image=(NetworkImageView)findViewById(R.id.thumbnailone);
 
         if(notifiid!=null) {
             JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
@@ -691,8 +690,8 @@ String searchnonitiid,searchactivity_sports;
                 // description.loadUrl(fonts+descrition+"</head>");
 
                 description.setBackgroundColor(Color.TRANSPARENT);
-                source.setText(Html.fromHtml("Source:"));
-                sourcefrom.setText(Html.fromHtml("<u>" + obj.getString("source") + "</u>"));
+                /*source.setText(Html.fromHtml("Source:"));
+                sourcefrom.setText(Html.fromHtml("<u>" + obj.getString("source") + "</u>"));*/
                 model.setFavcount(obj.getInt("fav_count"));
                 model.setShareurl(obj.getString("sharingurl"));
                 favcount=obj.getInt("fav_count");
