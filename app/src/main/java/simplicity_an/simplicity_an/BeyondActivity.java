@@ -109,6 +109,7 @@ public class BeyondActivity extends AppCompatActivity {
             myprofileid=sharedpreferences.getString(MYUSERID,"");
 
         }
+
         url_notification_count_valueget=url_noti_count+myprofileid;
         URLPOSTQTYPE=urlpost;
         if(activity.equalsIgnoreCase("beyondversion")){

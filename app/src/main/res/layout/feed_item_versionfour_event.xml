@@ -24,11 +24,6 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-
-
-
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -211,6 +206,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp">
                     <View
+                        android:id="@+id/line_separter"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/whitefood"/>

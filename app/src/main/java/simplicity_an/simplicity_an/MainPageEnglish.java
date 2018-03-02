@@ -109,16 +109,58 @@ public class MainPageEnglish extends AppCompatActivity implements Tab_All.OnFrag
         search=(ImageButton)findViewById(R.id.btn_versiontwosearch);
         audio_video=(ImageButton)findViewById(R.id.btn_versiontwoexplore);
         settings=(ImageButton)findViewById(R.id.btn_versiontwonotifications);
-topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
+        topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
+
+        if(colorcodes.equals("#FFFFFFFF")){
+            city.setBackgroundResource(R.color.white);
+            happening.setBackgroundResource(R.color.white);
+            search.setBackgroundResource(R.color.white);
+            audio_video.setBackgroundResource(R.color.white);
+            settings.setBackgroundResource(R.color.white);
+            city.setImageResource(R.mipmap.newsone);
+            happening.setImageResource(R.mipmap.eventone);
+            search.setImageResource(R.mipmap.searchone);
+            audio_video.setImageResource(R.mipmap.specialone);
+            settings.setImageResource(R.mipmap.moreone);
+        }
+        else{
+            happening.setBackgroundResource(R.color.mytransparent);
+            search.setBackgroundResource(R.color.mytransparent);
+            audio_video.setBackgroundResource(R.color.mytransparent);
+            settings.setBackgroundResource(R.color.mytransparent);
+            city.setImageResource(R.mipmap.news);
+            happening.setImageResource(R.mipmap.events);
+            search.setImageResource(R.mipmap.search);
+            audio_video.setImageResource(R.mipmap.specials);
+            settings.setImageResource(R.mipmap.more);
+        }
 
         city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-               happening.setBackgroundResource(R.color.mytransparent);
-                search.setBackgroundResource(R.color.mytransparent);
-                audio_video.setBackgroundResource(R.color.mytransparent);
-                settings.setBackgroundResource(R.color.mytransparent);
+                if(colorcodes.equals("#FFFFFFFF")){
+                    //city.setBackgroundResource(R.color.white);
+                    happening.setBackgroundResource(R.color.white);
+                    search.setBackgroundResource(R.color.white);
+                    audio_video.setBackgroundResource(R.color.white);
+                    settings.setBackgroundResource(R.color.white);
+                    //city.setImageResource(R.mipmap.newsone);
+                    happening.setImageResource(R.mipmap.eventone);
+                    search.setImageResource(R.mipmap.searchone);
+                    audio_video.setImageResource(R.mipmap.specialone);
+                    settings.setImageResource(R.mipmap.moreone);
+                }
+                else{
+                    happening.setBackgroundResource(R.color.Black);
+                    search.setBackgroundResource(R.color.Black);
+                    audio_video.setBackgroundResource(R.color.Black);
+                    settings.setBackgroundResource(R.color.Black);
+                   city.setImageResource(R.mipmap.news);
+                    happening.setImageResource(R.mipmap.events);
+                    search.setImageResource(R.mipmap.search);
+                    audio_video.setImageResource(R.mipmap.specials);
+                    settings.setImageResource(R.mipmap.more);
+                }
                 Fragment selectedFragment = null;
                 selectedFragment = CityFragment.newInstance();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -155,6 +197,9 @@ topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
                         }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                             city.setBackgroundResource(R.color.theme12);
                         }
+                        else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                            city.setBackgroundResource(R.color.theme13);
+                        }
                     }
                 }
             }
@@ -162,10 +207,33 @@ topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
         happening.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                city.setBackgroundResource(R.color.mytransparent);
-                search.setBackgroundResource(R.color.mytransparent);
-                audio_video.setBackgroundResource(R.color.mytransparent);
-              settings.setBackgroundResource(R.color.mytransparent);
+
+
+
+                if(colorcodes.equals("#FFFFFFFF")){
+                    city.setBackgroundResource(R.color.white);
+                    //happening.setBackgroundResource(R.color.white);
+                    search.setBackgroundResource(R.color.white);
+                    audio_video.setBackgroundResource(R.color.white);
+                    settings.setBackgroundResource(R.color.white);
+                    city.setImageResource(R.mipmap.newsone);
+                    //happening.setImageResource(R.mipmap.eventone);
+                    search.setImageResource(R.mipmap.searchone);
+                    audio_video.setImageResource(R.mipmap.specialone);
+                    settings.setImageResource(R.mipmap.moreone);
+                }
+                else{
+                    //happening.setBackgroundResource(R.color.mytransparent);
+                    search.setBackgroundResource(R.color.Black);
+                    city.setBackgroundResource(R.color.Black);
+                    audio_video.setBackgroundResource(R.color.Black);
+                    settings.setBackgroundResource(R.color.Black);
+                    city.setImageResource(R.mipmap.news);
+                    happening.setImageResource(R.mipmap.events);
+                    search.setImageResource(R.mipmap.search);
+                    audio_video.setImageResource(R.mipmap.specials);
+                    settings.setImageResource(R.mipmap.more);
+                }
                 Fragment selectedFragment = null;
                 selectedFragment = HappeningFrag.newInstance();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -202,6 +270,9 @@ topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
                         }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                             happening.setBackgroundResource(R.color.theme12);
                         }
+                        else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                            happening.setBackgroundResource(R.color.theme13);
+                        }
                     }
                 }
             }
@@ -210,10 +281,31 @@ topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
             @Override
             public void onClick(View v) {
               //  if(myprofileid!=null) {
-                    happening.setBackgroundResource(R.color.mytransparent);
-                    city.setBackgroundResource(R.color.mytransparent);
-                    audio_video.setBackgroundResource(R.color.mytransparent);
-                    settings.setBackgroundResource(R.color.mytransparent);
+
+
+                if(colorcodes.equals("#FFFFFFFF")){
+                    city.setBackgroundResource(R.color.white);
+                    happening.setBackgroundResource(R.color.white);
+                    //search.setBackgroundResource(R.color.white);
+                    audio_video.setBackgroundResource(R.color.white);
+                    settings.setBackgroundResource(R.color.white);
+                    city.setImageResource(R.mipmap.newsone);
+                    happening.setImageResource(R.mipmap.eventone);
+                    //search.setImageResource(R.mipmap.searchone);
+                    audio_video.setImageResource(R.mipmap.specialone);
+                    settings.setImageResource(R.mipmap.moreone);
+                }
+                else{
+                    happening.setBackgroundResource(R.color.Black);
+                    city.setBackgroundResource(R.color.Black);
+                    audio_video.setBackgroundResource(R.color.Black);
+                    settings.setBackgroundResource(R.color.Black);
+                    city.setImageResource(R.mipmap.news);
+                    happening.setImageResource(R.mipmap.events);
+                   search.setImageResource(R.mipmap.search);
+                    audio_video.setImageResource(R.mipmap.specials);
+                    settings.setImageResource(R.mipmap.more);
+                }
              /* Intent in = new Intent(getApplicationContext(), ExploreMain.class);
                     startActivity(in);*/
 
@@ -252,6 +344,9 @@ topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
                             } else if (colorcodes.equalsIgnoreCase("#00B09B")) {
                                 search.setBackgroundResource(R.color.theme12);
                             }
+                            else if (colorcodes.equalsIgnoreCase("#ffffff")) {
+                                search.setBackgroundResource(R.color.theme13);
+                            }
                         }
                     }
                 /*}else {
@@ -263,10 +358,31 @@ topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
         audio_video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                happening.setBackgroundResource(R.color.mytransparent);
-                search.setBackgroundResource(R.color.mytransparent);
-                city.setBackgroundResource(R.color.mytransparent);
-                settings.setBackgroundResource(R.color.mytransparent);
+
+
+                if(colorcodes.equals("#FFFFFFFF")){
+                    city.setBackgroundResource(R.color.white);
+                    happening.setBackgroundResource(R.color.white);
+                    search.setBackgroundResource(R.color.white);
+                    //audio_video.setBackgroundResource(R.color.white);
+                    settings.setBackgroundResource(R.color.white);
+                    city.setImageResource(R.mipmap.newsone);
+                    happening.setImageResource(R.mipmap.eventone);
+                    search.setImageResource(R.mipmap.searchone);
+                    //audio_video.setImageResource(R.mipmap.specialone);
+                    settings.setImageResource(R.mipmap.moreone);
+                }
+                else{
+                    happening.setBackgroundResource(R.color.Black);
+                    search.setBackgroundResource(R.color.Black);
+                    city.setBackgroundResource(R.color.Black);
+                    settings.setBackgroundResource(R.color.Black);
+                    city.setImageResource(R.mipmap.news);
+                    happening.setImageResource(R.mipmap.events);
+                    search.setImageResource(R.mipmap.search);
+                    audio_video.setImageResource(R.mipmap.specials);
+                    settings.setImageResource(R.mipmap.more);
+                }
                 Fragment selectedFragment = null;
                 selectedFragment = EntertainmentFragment.newInstance();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -303,6 +419,9 @@ topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
                         }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                             audio_video.setBackgroundResource(R.color.theme12);
                         }
+                        else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                            audio_video.setBackgroundResource(R.color.theme13);
+                        }
                     }
                 }
             }
@@ -310,10 +429,32 @@ topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                happening.setBackgroundResource(R.color.mytransparent);
-                search.setBackgroundResource(R.color.mytransparent);
-                audio_video.setBackgroundResource(R.color.mytransparent);
-                city.setBackgroundResource(R.color.mytransparent);
+
+
+
+                if(colorcodes.equals("#FFFFFFFF")){
+                    city.setBackgroundResource(R.color.white);
+                    happening.setBackgroundResource(R.color.white);
+                    search.setBackgroundResource(R.color.white);
+                    audio_video.setBackgroundResource(R.color.white);
+                    //settings.setBackgroundResource(R.color.white);
+                    city.setImageResource(R.mipmap.newsone);
+                    happening.setImageResource(R.mipmap.eventone);
+                    search.setImageResource(R.mipmap.searchone);
+                    audio_video.setImageResource(R.mipmap.specialone);
+                    //settings.setImageResource(R.mipmap.moreone);
+                }
+                else{
+                    happening.setBackgroundResource(R.color.Black);
+                    search.setBackgroundResource(R.color.Black);
+                    audio_video.setBackgroundResource(R.color.Black);
+                    city.setBackgroundResource(R.color.Black);
+                    city.setImageResource(R.mipmap.news);
+                    happening.setImageResource(R.mipmap.events);
+                    search.setImageResource(R.mipmap.search);
+                    audio_video.setImageResource(R.mipmap.specials);
+                    settings.setImageResource(R.mipmap.more);
+                }
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 SettingsFragment fragment = new SettingsFragment();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -349,6 +490,9 @@ topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
                             settings.setBackgroundResource(R.color.theme11);
                         }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                             settings.setBackgroundResource(R.color.theme12);
+                        }
+                        else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                            settings.setBackgroundResource(R.color.theme13);
                         }
                     }
                 }
@@ -397,6 +541,9 @@ topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
                     city.setBackgroundResource(R.color.theme11);
                 }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                     city.setBackgroundResource(R.color.theme12);
+                }
+                else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                    city.setBackgroundResource(R.color.theme13);
                 }
             }
         }
@@ -522,6 +669,9 @@ Log.e("RES",response);
                     }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                         settings.setBackgroundResource(R.color.theme12);
                     }
+                    else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                        settings.setBackgroundResource(R.color.theme13);
+                    }
                 }
             }
         }else if(id.equals("2")){
@@ -564,6 +714,9 @@ Log.e("RES",response);
                         audio_video.setBackgroundResource(R.color.theme11);
                     } else if (colorcodes.equalsIgnoreCase("#00B09B")) {
                         audio_video.setBackgroundResource(R.color.theme12);
+                    }
+                    else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                        settings.setBackgroundResource(R.color.theme13);
                     }
                 }
             }
@@ -608,6 +761,9 @@ Log.e("RES",response);
                     }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                         happening.setBackgroundResource(R.color.theme12);
                     }
+                    else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                        settings.setBackgroundResource(R.color.theme13);
+                    }
                 }
             }
         }else if(id.equals("4")){
@@ -650,6 +806,9 @@ Log.e("RES",response);
                         search.setBackgroundResource(R.color.theme11);
                     }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                         search.setBackgroundResource(R.color.theme12);
+                    }
+                    else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                        settings.setBackgroundResource(R.color.theme13);
                     }
                 }
             }
@@ -694,6 +853,9 @@ Log.e("RES",response);
                         city.setBackgroundResource(R.color.theme11);
                     }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                         city.setBackgroundResource(R.color.theme12);
+                    }
+                    else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                        settings.setBackgroundResource(R.color.theme13);
                     }
                 }
             }

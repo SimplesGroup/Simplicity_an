@@ -139,6 +139,7 @@ public class SplashScreen extends AppCompatActivity {
                         ImageButton colorten = (ImageButton) dialog.findViewById(R.id.color10);
                         ImageButton coloreleven = (ImageButton) dialog.findViewById(R.id.color11);
                         ImageButton colortwelve = (ImageButton) dialog.findViewById(R.id.color12);
+                        ImageButton colorthirteen = (ImageButton) dialog.findViewById(R.id.color13);
                         Button closebutton=(Button)dialog.findViewById(R.id.close_button);
                         Button continue_button=(Button)dialog.findViewById(R.id.continue_button);
                         final RadioGroup radioGroup = (RadioGroup)dialog. findViewById(R.id.radiogroup);
@@ -346,6 +347,23 @@ public class SplashScreen extends AppCompatActivity {
                                 editor.commit();
                             }
                         });
+                        colorthirteen.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                                GradientDrawable gd = new GradientDrawable(
+                                        GradientDrawable.Orientation.TOP_BOTTOM,
+                                        colors);
+                                gd.setCornerRadius(0f);
+
+
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putString(backgroundcolor, "#FFFFFFFF");
+
+                                editor.commit();
+                            }
+                        });
+
 
                         closebutton.setOnClickListener(new View.OnClickListener() {
                             @Override

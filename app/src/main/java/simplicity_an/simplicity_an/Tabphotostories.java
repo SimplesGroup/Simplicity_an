@@ -1,5 +1,6 @@
 package simplicity_an.simplicity_an;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -198,6 +199,10 @@ public class Tabphotostories extends Fragment {
                 }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
+                }
+                else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
+                    fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
                 }
             }
         }
@@ -607,6 +612,7 @@ public class Tabphotostories extends Fragment {
         public RelativeLayout countlayout,listLayout;
         ImageButton play;
         RecyclerView_OnClickListener.OnClickListener onClickListener;
+        View line;
         public Userviewholdertaball(View itemView) {
             super(itemView);
             this.title_item=(TextView)itemView.findViewById(R.id.item_title_taball);
@@ -635,6 +641,7 @@ public class Tabphotostories extends Fragment {
             this.comment_imagebutton=(ImageButton)itemView.findViewById(R.id.button_comment);
             this.like_imagebutton=(ImageButton)itemView.findViewById(R.id.button_likes) ;
             this.share_imagebutton=(ImageButton)itemView.findViewById(R.id.button_share) ;
+            this.line = itemView.findViewById(R.id.line_separter);
 
 
 
@@ -833,6 +840,7 @@ public class Tabphotostories extends Fragment {
 
             return null;
         }
+        @SuppressLint("ResourceAsColor")
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof Userviewholdertaball) {
@@ -857,6 +865,29 @@ public class Tabphotostories extends Fragment {
                 userViewHolder.share_button.setTransformationMethod(null);
 
                 save_item_count=itemmodel.getFavcount();
+
+                if(colorcodes.equals("#FFFFFFFF"))
+                {
+                    userViewHolder.shortdescription.setTextColor(Color.GRAY);
+                    userViewHolder.title_item.setTextColor(Color.BLACK);
+                    userViewHolder.item_type_name.setTextColor(Color.GRAY);
+                    userViewHolder.date.setTextColor(Color.GRAY);
+                    userViewHolder.likescount.setTextColor(Color.BLACK);
+                    userViewHolder.commentscount.setTextColor(Color.BLACK);
+                    userViewHolder.line.setBackgroundColor(Color.LTGRAY);
+
+                }
+                else if(colorcodes.equals("#00B09B")){
+                    userViewHolder.shortdescription.setTextColor(Color.WHITE);
+                    userViewHolder.title_item.setTextColor(Color.WHITE);
+                    userViewHolder.item_type_name.setTextColor(Color.WHITE);
+                    userViewHolder.likescount.setTextColor(Color.WHITE);
+                    userViewHolder.commentscount.setTextColor(Color.WHITE);
+                    userViewHolder.line.setBackgroundColor(R.color.whitefood);
+                    userViewHolder.date.setTextColor(Color.WHITE);
+
+                }
+
                 int imgResource = R.mipmap.likered;
                 String likecount=String.valueOf(itemmodel.getCounttype());
                 if(likecount.equals("0")){

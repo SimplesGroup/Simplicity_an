@@ -101,7 +101,7 @@ public class SportsnewsDescription extends AppCompatActivity {
     public static final String CONTENTID = "contentid";
     String contentid,activity;
     ProgressDialog pdialog;
-String searchnonitiid,searchactivity_sports;
+    String searchnonitiid,searchactivity_sports;
     public static final String MYACTIVITYSEARCH= "myactivitysearch";
 
     List<ItemModels> commentlist = new ArrayList<ItemModels>();
