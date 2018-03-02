@@ -287,7 +287,7 @@ public class TravelsDescription extends AppCompatActivity {
         recycler_comment.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         scrollView=(ScrollView)findViewById(R.id.scroll);
-        title=(TextView)findViewById(R.id.textView_titlename_sports);
+        title=(TextView)findViewById(R.id.textView_titlename);
         date=(TextView)findViewById(R.id.textView_date);
         textview_date=(TextView) findViewById(R.id.textView_datenew);
         source_reporter_name=(TextView)findViewById(R.id.textView_sourcename) ;

@@ -256,7 +256,7 @@ public class SportsnewsDescription extends AppCompatActivity {
         }else {
             URLTWO=URL+notifiid;
         }
-      title=(TextView)findViewById(R.id.textView_titlename_sports);
+      title=(TextView)findViewById(R.id.textView_titlename);
         date=(TextView)findViewById(R.id.textView_date);
         textview_date=(TextView) findViewById(R.id.textView_datenew);
         source_reporter_name=(TextView)findViewById(R.id.textView_sourcename) ;
@@ -267,8 +267,8 @@ public class SportsnewsDescription extends AppCompatActivity {
         short_description=(TextView)findViewById(R.id.textView_shortdescription);
         title_category=(TextView)findViewById(R.id.textView_qtypename) ;
 
-        source=(TextView)findViewById(R.id.source_spotrs);
-        sourcefrom=(TextView)findViewById(R.id.sourcelinkredsimplicity);
+      /*  source=(TextView)findViewById(R.id.source_spotrs);
+        sourcefrom=(TextView)findViewById(R.id.sourcelinkredsimplicity);*/
         comment=(ImageButton)findViewById(R.id.btn_4);
         share=(ImageButton)findViewById(R.id.btn_share);
         menu=(ImageButton)findViewById(R.id.btn_3);
@@ -309,11 +309,10 @@ public class SportsnewsDescription extends AppCompatActivity {
         comment_title.setTypeface(tf);
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);
-        source.setTypeface(tf);
-        sourcefrom.setTypeface(tf);
+
         commentbox_editext.setHint("Comments Here");
         date.setTypeface(tf);
-        image=(NetworkImageView)findViewById(R.id.sports_desc_image);
+        image=(NetworkImageView)findViewById(R.id.thumbnailone);
 
         if(notifiid!=null) {
             JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
@@ -672,7 +671,7 @@ public class SportsnewsDescription extends AppCompatActivity {
                 description.setWebViewClient(new MyBrowser());
                 description.setBackgroundColor(Color.TRANSPARENT);
                 final String sourcelink=obj.getString("source_link");
-                sourcefrom.setOnClickListener(new View.OnClickListener() {
+                /*sourcefrom.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(sourcelink.equals("")||sourcelink.equals("null")){
@@ -683,7 +682,7 @@ public class SportsnewsDescription extends AppCompatActivity {
                             startActivity(ads);
                         }
                     }
-                });
+                });*/
                 description.setBackgroundColor(Color.TRANSPARENT);
                  if (favcount == 1) {                     favourite.setImageResource(R.mipmap.likered);                     favourite.setTag("heartfullred");                 } else {                    favourite.setImageResource(R.mipmap.like);                     favourite.setTag("heart");                 }
                 favourite.setOnClickListener(new View.OnClickListener() {
