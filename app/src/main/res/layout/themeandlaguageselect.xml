@@ -179,6 +179,21 @@
                 android:background="@color/theme12"
                 />
         </RelativeLayout>
+        <RelativeLayout
+            android:layout_centerHorizontal="true"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/color13"
+                android:layout_centerInParent="true"
+                android:layout_margin="3dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/theme13"
+                />
+
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_marginTop="15dp"

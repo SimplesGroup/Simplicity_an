@@ -1,5 +1,6 @@
 package simplicity_an.simplicity_an;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -653,6 +654,8 @@ SwipeRefreshLayout swipeRefresh;
         public RelativeLayout countlayout,listLayout;
         ImageButton play;
         RecyclerView_OnClickListener.OnClickListener onClickListener;
+        public View line;
+
         public Userviewholdertaball(View itemView) {
             super(itemView);
             this.title_item=(TextView)itemView.findViewById(R.id.item_title_taball);
@@ -681,7 +684,7 @@ SwipeRefreshLayout swipeRefresh;
             this.comment_imagebutton=(ImageButton)itemView.findViewById(R.id.button_comment);
             this.like_imagebutton=(ImageButton)itemView.findViewById(R.id.button_likes) ;
             this.share_imagebutton=(ImageButton)itemView.findViewById(R.id.button_share) ;
-
+            this.line = itemView.findViewById(R.id.line_separter);
 
 
 
@@ -714,7 +717,7 @@ SwipeRefreshLayout swipeRefresh;
         ImageButton share_imagebutton,like_imagebutton,comment_imagebutton,arrow_imagebutton;
         public Button share_button,comment_button,likes_button,save_button;
         NetworkImageView   feedImageView;
-
+        View line;
         NetworkImageView   feedImageView_typetwo_one,feedImageView_typetwo_two;
         NetworkImageView   feed_typethree_ones,feed_typethree_twos,feed_typethree_threes;
         NetworkImageView   feedImageView_typefour_one,feedImageView_typefour_two,feedImageView_typefour_three,feedImageView_typefour_four;
@@ -737,7 +740,7 @@ SwipeRefreshLayout swipeRefresh;
             this. save_button=(Button)itemView.findViewById(R.id.taball_savepage);
             this. share_button=(Button)itemView.findViewById(R.id.taball_sharepost);
             this. comment_button=(Button)itemView.findViewById(R.id.taball_comment);
-
+            this.line = itemView.findViewById(R.id.line_separter);
             this.listLayout=(RelativeLayout) itemView.findViewById(R.id.listlayout_taball);
             this.countlayout=(RelativeLayout)itemView.findViewById(R.id.counts_layout);
             this.likes_button.setOnClickListener(this);
@@ -884,6 +887,7 @@ private  int currentvisiblecount;
 
             return null;
         }
+        @SuppressLint("ResourceAsColor")
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof Userviewholdertaball) {
@@ -908,7 +912,24 @@ private  int currentvisiblecount;
                 userViewHolder.share_button.setTransformationMethod(null);
 
                 save_item_count=itemmodel.getFavcount();
+                if(colorcodes.equals("#FFFFFFFF"))
+                {
+                    userViewHolder.shortdescription.setTextColor(Color.GRAY);
+                    userViewHolder.title_item.setTextColor(Color.BLACK);
+                    userViewHolder.item_type_name.setTextColor(Color.GRAY);
+                    userViewHolder.likescount.setTextColor(Color.BLACK);
+                    userViewHolder.commentscount.setTextColor(Color.BLACK);
+                    userViewHolder.line.setBackgroundColor(Color.LTGRAY);
 
+                }
+                else if(colorcodes.equals("#00B09B")){
+                    userViewHolder.shortdescription.setTextColor(Color.WHITE);
+                    userViewHolder.title_item.setTextColor(Color.WHITE);
+                    userViewHolder.item_type_name.setTextColor(Color.WHITE);
+                    userViewHolder.likescount.setTextColor(Color.WHITE);
+                    userViewHolder.commentscount.setTextColor(Color.WHITE);
+                    userViewHolder.line.setBackgroundColor(R.color.whitefood);
+                }
                 String likecount=String.valueOf(itemmodel.getCounttype());
                 if(likecount.equals("0")){
 

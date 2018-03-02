@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -63,6 +64,7 @@ public class SettingsFragment extends Fragment {
     public static final String USERIMAGE= "myprofileimage";
     public static final String USERMAILID= "myprofileemail";
     NotificationManagerCompat mNotificationManagerCompat;
+    ImageButton city,specials,events,btsearch,more;
     public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
         return fragment;
@@ -86,7 +88,11 @@ public class SettingsFragment extends Fragment {
             myprofileid = sharedpreferences.getString(MYUSERID, "");
             myprofileid = myprofileid.replaceAll("\\D+", "");
         }
-
+        city=(ImageButton)getActivity().findViewById(R.id.btn_versiontwocity);
+        specials=(ImageButton)getActivity().findViewById(R.id.btn_versiontwoexplore);
+        events = (ImageButton)getActivity().findViewById(R.id.btn_versiontwobeyond);
+        btsearch = (ImageButton)getActivity().findViewById(R.id.btn_versiontwosearch);
+        more = (ImageButton)getActivity().findViewById(R.id.btn_versiontwonotifications);
 
         mNotificationManagerCompat = NotificationManagerCompat.from(getActivity());
 
@@ -286,6 +292,9 @@ public class SettingsFragment extends Fragment {
 
             }
         });
+
+
+
 
         terms.setText("Terms & Conditions");
         about.setText("About");

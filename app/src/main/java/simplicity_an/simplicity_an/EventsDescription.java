@@ -1,5 +1,6 @@
 package simplicity_an.simplicity_an;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -141,6 +142,8 @@ public class EventsDescription extends AppCompatActivity {
     public static final String backgroundcolor = "color";
     RelativeLayout mainlayout;
     String colorcodes;
+    TextView venuecontactinfo;
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -202,14 +205,30 @@ public class EventsDescription extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    if(colorcodes == "#FFFFFFFF"){
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
 
-                    mainlayout.setBackgroundDrawable(gd);
+                        mainlayout.setBackgroundDrawable(gd);
+                    } else {
+                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(gd);
+
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#383838");
+
+                        editor.commit();
+                    }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -291,6 +310,7 @@ public class EventsDescription extends AppCompatActivity {
         date = (TextView) findViewById(R.id.text_date_event);
         datedetails = (TextView) findViewById(R.id.text_date_event_data);
         contactname = (TextView) findViewById(R.id.text_eventontactname);
+        venuecontactinfo = (TextView) findViewById(R.id.eventtitle);
 
         contactnamedetails = (TextView) findViewById(R.id.text_eventontactname_details);
         phone = (TextView) findViewById(R.id.text_eventphonenumber);
@@ -323,7 +343,66 @@ public class EventsDescription extends AppCompatActivity {
         venue_text.setText("Venue:");
         location_text.setText("Location:");
         website_text.setText("Website:");
+        venuecontactinfo.setText("VENUE  CONTACT INFORMATION");
 
+        if(colorcodes == "#FFFFFFFF"){
+            venue_text.setTextColor(Color.BLACK);
+//            comment_title.setTextColor(Color.BLACK);
+           // loadmore_title.setTextColor(Color.BLACK);
+           // post.setTextColor(Color.BLACK);
+            location_text.setTextColor(Color.BLACK);
+            website_text.setTextColor(Color.BLACK);
+            venue_text.setTextColor(Color.BLACK);
+            title.setTextColor(Color.BLACK);
+            title_qype.setTextColor(Color.BLACK);
+            eventdetaildata.setTextColor(Color.BLACK);
+            venuedetails.setTextColor(Color.BLACK);
+            timing.setTextColor(Color.BLACK);
+            timingdetails.setTextColor(Color.BLACK);
+            date.setTextColor(Color.BLACK);
+            date.setTextColor(Color.BLACK);
+            datedetails.setTextColor(Color.BLACK);
+            contactname.setTextColor(Color.BLACK);
+            booknow.setTextColor(Color.BLACK);
+            contactnamedetails.setTextColor(Color.BLACK);
+            email.setTextColor(Color.BLACK);
+            emaildetails.setTextColor(Color.BLACK);
+            phone.setTextColor(Color.BLACK);
+            phonenumberdetails.setTextColor(Color.BLACK);
+            location_details.setTextColor(Color.BLACK);
+            website_details.setTextColor(Color.BLACK);
+            venuecontactinfo.setTextColor(Color.BLACK);
+
+        }
+        else{
+            venue_text.setTextColor(Color.WHITE);
+            //comment_title.setTextColor(Color.WHITE);
+            //loadmore_title.setTextColor(Color.WHITE);
+           // post.setTextColor(Color.WHITE);
+            location_text.setTextColor(Color.WHITE);
+            website_text.setTextColor(Color.WHITE);
+            venue_text.setTextColor(Color.WHITE);
+            title.setTextColor(Color.WHITE);
+            title_qype.setTextColor(Color.WHITE);
+            eventdetaildata.setTextColor(Color.WHITE);
+            venuedetails.setTextColor(Color.WHITE);
+            timing.setTextColor(Color.WHITE);
+            timingdetails.setTextColor(Color.WHITE);
+            date.setTextColor(Color.WHITE);
+            date.setTextColor(Color.WHITE);
+            datedetails.setTextColor(Color.WHITE);
+            contactname.setTextColor(Color.WHITE);
+            booknow.setTextColor(Color.WHITE);
+            contactnamedetails.setTextColor(Color.WHITE);
+            email.setTextColor(Color.WHITE);
+            emaildetails.setTextColor(Color.WHITE);
+            phone.setTextColor(Color.WHITE);
+            phonenumberdetails.setTextColor(Color.WHITE);
+            location_details.setTextColor(Color.WHITE);
+            website_details.setTextColor(Color.WHITE);
+            venuecontactinfo.setTextColor(Color.WHITE);
+            venuecontactinfo.setBackgroundColor(R.color.eventcolor);
+        }
 
         title.setTypeface(tf_bold);
         title_qype.setTypeface(tf);
@@ -580,10 +659,15 @@ JSONArray array=obj.getJSONArray("amt");
                         .getString("description");
                 String ss = descrition;
                 String s = ss;
+                String rep = String.valueOf(descrition);
+                rep =  rep.replaceAll("color:#fff","color:#000");
 
                 String fonts = "<html>\n" + "\t<head>\n" + "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" + "\t\t<style>\n" + "\t\t@font-face {\n" + "  font-family: 'segeoui-light';\n" + " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "  font-style: normal;\n" + "}\n" + "\n" + "@font-face {\n" + "  font-family: 'segeoui-regular';\n" + "src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "  font-style: normal;\n" + "}\n" + "\n" + "@font-face {\n" + "  font-family: 'segeoui-sbold';\n" + " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "  font-style: normal;\n" + "}\n" + "\n" + "@font-face {\n" + "    font-family: 'RobotoSlab-Bold';\n" + "   src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "    font-style: normal;\n" + "}\n" + "@font-face {\n" + "    font-family: 'RobotoSlab-Light';\n" + "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "    font-style: normal;\n" + "}\n" + "@font-face {\n" + "    font-family: 'RobotoSlab-Regular';\n" + "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "    font-style: normal;\n" + "}\n" + "@font-face {\n" + "    font-family: 'RobotoSlab-Thin';\n" + "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "    font-style: normal;\n" + "}\n" + "\t\t</style>\n" + "\t</head>";
-                description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
-                // description.setBackgroundColor(0x0a000000);
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    description.loadDataWithBaseURL("", fonts + rep + "</head>", "text/html", "utf-8", "");
+                }else{
+                    description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
+                }                // description.setBackgroundColor(0x0a000000);
                 description.setBackgroundColor(Color.TRANSPARENT);
                 description.setWebViewClient(new MyBrowser());
                 venuedetails.setText(venue);

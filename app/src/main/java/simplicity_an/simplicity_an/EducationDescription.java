@@ -201,14 +201,30 @@ public class EducationDescription extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    if(colorcodes == "#FFFFFFFF"){
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
 
-                    mainlayout.setBackgroundDrawable(gd);
+                        mainlayout.setBackgroundDrawable(gd);
+                    } else {
+                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(gd);
+
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#383838");
+
+                        editor.commit();
+                    }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -300,7 +316,31 @@ public class EducationDescription extends AppCompatActivity {
         commentbox_editext.setHint("Comments Here");
         post.setTypeface(tf);
         thump = (NetworkImageView) findViewById(R.id.thumbnailone);
+        if(colorcodes == "#FFFFFFFF"){
+            tv.setTextColor(Color.BLACK);
+            textview_date.setTextColor(Color.BLACK);
+            comment_title.setTextColor(Color.BLACK);
+            loadmore_title.setTextColor(Color.BLACK);
+            sourcelinknews.setTextColor(Color.BLACK);
+            sourcelinksimplicity.setTextColor(Color.BLACK);
+            image_description.setTextColor(Color.BLACK);
+            short_description.setTextColor(Color.BLACK);
+            pdate.setTextColor(Color.BLACK);
+            source_reporter_name.setTextColor(Color.BLACK);
 
+        }
+        else{
+            tv.setTextColor(Color.WHITE);
+            textview_date.setTextColor(Color.WHITE);
+            comment_title.setTextColor(Color.WHITE);
+            loadmore_title.setTextColor(Color.WHITE);
+            sourcelinknews.setTextColor(Color.WHITE);
+            sourcelinksimplicity.setTextColor(Color.WHITE);
+            image_description.setTextColor(Color.WHITE);
+            short_description.setTextColor(Color.WHITE);
+            textview_date.setTextColor(Color.WHITE);
+            pdate.setTextColor(Color.WHITE);
+        }
         if (notifiid != null) {
             JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
 
@@ -619,7 +659,13 @@ public class EducationDescription extends AppCompatActivity {
                         "\t\t</style>\n" +
                         "\t</head>";
                 String date = "<p><font color=\"white\">" + obj.getString("pdate") + "</font></p>";
-                description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
+                String rep = String.valueOf(descrition);
+                rep =  rep.replaceAll("color:#fff","color:#000");
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    description.loadDataWithBaseURL("", fonts + rep + "</head>", "text/html", "utf-8", "");
+                }else{
+                    description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
+                }
                 description.setWebViewClient(new MyBrowser());
                 description.setBackgroundColor(Color.TRANSPARENT);
                 Log.e("DESC",descrition.toString());

@@ -1,5 +1,6 @@
 package simplicity_an.simplicity_an;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -247,6 +248,12 @@ SwipeRefreshLayout swipeRefresh;
                 fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                 fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                 fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
+            }
+            else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
+                fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
             }
         }
     }
@@ -670,6 +677,7 @@ SwipeRefreshLayout swipeRefresh;
         public NetworkImageView item_image;
         public RelativeLayout countlayout,listLayout;
         ImageButton play;
+        View line;
         RecyclerView_OnClickListener.OnClickListener onClickListener;
         public Userviewholdertaball(View itemView) {
             super(itemView);
@@ -689,7 +697,7 @@ SwipeRefreshLayout swipeRefresh;
             this.comment_imagebutton=(ImageButton)itemView.findViewById(R.id.button_comment);
             this.like_imagebutton=(ImageButton)itemView.findViewById(R.id.button_likes) ;
             this.share_imagebutton=(ImageButton)itemView.findViewById(R.id.button_share) ;
-
+            this.line = itemView.findViewById(R.id.line_separter);
             this. item_image=(NetworkImageView)itemView.findViewById(R.id.image_alltab);
             this.listLayout=(RelativeLayout) itemView.findViewById(R.id.listlayout_taball);
             this.countlayout=(RelativeLayout)itemView.findViewById(R.id.counts_layout);
@@ -897,6 +905,7 @@ SwipeRefreshLayout swipeRefresh;
 
             return null;
         }
+        @SuppressLint("ResourceAsColor")
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof Userviewholdertaball) {
@@ -922,6 +931,26 @@ SwipeRefreshLayout swipeRefresh;
                 userViewHolder.share_button.setTransformationMethod(null);
 
                 save_item_count=itemmodel.getFavcount();
+
+                if(colorcodes.equals("#FFFFFFFF"))
+                {
+                    userViewHolder.shortdescription.setTextColor(Color.GRAY);
+                    userViewHolder.title_item.setTextColor(Color.BLACK);
+                    userViewHolder.item_type_name.setTextColor(Color.GRAY);
+                    userViewHolder.likescount.setTextColor(Color.BLACK);
+                    userViewHolder.commentscount.setTextColor(Color.BLACK);
+                    userViewHolder.line.setBackgroundColor(Color.LTGRAY);
+
+                }
+                else if(colorcodes.equals("#00B09B")){
+                    userViewHolder.shortdescription.setTextColor(Color.WHITE);
+                    userViewHolder.title_item.setTextColor(Color.WHITE);
+                    userViewHolder.item_type_name.setTextColor(Color.WHITE);
+                    userViewHolder.likescount.setTextColor(Color.WHITE);
+                    userViewHolder.commentscount.setTextColor(Color.WHITE);
+                    userViewHolder.line.setBackgroundColor(R.color.whitefood);
+                }
+
                 if(itemmodel.getCounttype()==1){
                     userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
                     userViewHolder.like_imagebutton.setTag("heartfullred");

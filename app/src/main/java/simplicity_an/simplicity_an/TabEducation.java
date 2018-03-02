@@ -244,6 +244,12 @@ SwipeRefreshLayout swipeRefresh;
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                 }
+                else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
+                    fabeducation.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                }
             }
         }
 
@@ -689,6 +695,7 @@ SwipeRefreshLayout swipeRefresh;
         public RelativeLayout countlayout,listLayout;
         ImageButton play;
         RecyclerView_OnClickListener.OnClickListener onClickListener;
+        View line;
         public Userviewholdertaball(View itemView) {
             super(itemView);
             this.title_item=(TextView)itemView.findViewById(R.id.item_title_taball);
@@ -711,7 +718,7 @@ SwipeRefreshLayout swipeRefresh;
             this.listLayout.setOnClickListener(this);
             this.play.setOnClickListener(this);
             this.likescount.setOnClickListener(this);
-
+            this.line = itemView.findViewById(R.id.line_separter);
             this.arrow_imagebutton=(ImageButton)itemView.findViewById(R.id.arrow);
             this.editername=(TextView)itemView.findViewById(R.id.qtypetitle_sourcename);
             this.shortdescription=(TextView)itemView.findViewById(R.id.textview_shortdescription) ;
@@ -945,6 +952,24 @@ SwipeRefreshLayout swipeRefresh;
                 userViewHolder.share_button.setTransformationMethod(null);
 
                 save_item_count=itemmodel.getFavcount();
+                if(colorcodes.equals("#FFFFFFFF"))
+                {
+                    userViewHolder.shortdescription.setTextColor(Color.GRAY);
+                    userViewHolder.title_item.setTextColor(Color.BLACK);
+                    userViewHolder.item_type_name.setTextColor(Color.GRAY);
+                    userViewHolder.likescount.setTextColor(Color.BLACK);
+                    userViewHolder.commentscount.setTextColor(Color.BLACK);
+                    userViewHolder.line.setBackgroundColor(Color.LTGRAY);
+
+                }
+                else if(colorcodes.equals("#00B09B")){
+                    userViewHolder.shortdescription.setTextColor(Color.WHITE);
+                    userViewHolder.title_item.setTextColor(Color.WHITE);
+                    userViewHolder.item_type_name.setTextColor(Color.WHITE);
+                    userViewHolder.likescount.setTextColor(Color.WHITE);
+                    userViewHolder.commentscount.setTextColor(Color.WHITE);
+                    userViewHolder.line.setBackgroundColor(R.color.whitefood);
+                }
                 int imgResource = R.mipmap.likered;
                 String likecount=String.valueOf(itemmodel.getCounttype());
                 if(likecount.equals("0")){
