@@ -887,12 +887,12 @@ SwipeRefreshLayout swipeRefresh;
                 userViewHolder.share_button.setTransformationMethod(null);
 
                 save_item_count=itemmodel.getFavcount();
-               /* if(colorcodes.equals("#FFFFFFFF"))
+           if(colorcodes.equals("#FFFFFFFF"))
                 {
                     //userViewHolder.shortdescription.setTextColor(Color.GRAY);
                     userViewHolder.title_item.setTextColor(Color.BLACK);
                     userViewHolder.item_type_name.setTextColor(Color.GRAY);
-                    userViewHolder.likes_button.setTextColor(getResources().getColor(Color.BLACK));
+                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.Black));
                     userViewHolder.likescount.setTextColor(Color.BLACK);
                     userViewHolder.likescount.setBackgroundColor(Color.GREEN);
                     userViewHolder.commentscount.setTextColor(Color.BLACK);
@@ -906,7 +906,7 @@ SwipeRefreshLayout swipeRefresh;
                     userViewHolder.likescount.setTextColor(Color.WHITE);
                     userViewHolder.commentscount.setTextColor(Color.WHITE);
                     userViewHolder.line.setBackgroundColor(R.color.whitefood);
-                }*/
+                }
                 if(itemmodel.getCounttype()==1){
                     userViewHolder.likes_button.setText("Liked");
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));

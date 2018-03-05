@@ -186,14 +186,30 @@ public class TipsDescription extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    if(colorcodes == "#FFFFFFFF"){
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
 
-                    mainlayout.setBackgroundDrawable(gd);
+                        mainlayout.setBackgroundDrawable(gd);
+                    } else {
+                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(gd);
+
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#383838");
+
+                        editor.commit();
+                    }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -326,7 +342,17 @@ public class TipsDescription extends AppCompatActivity {
 
 
         post.setTypeface(tf);
-
+        if(colorcodes == "#FFFFFFFF"){
+            titleofrecipie.setTextColor(Color.BLACK);
+            comment_title.setTextColor(Color.BLACK);
+            loadmore_title.setTextColor(Color.BLACK);
+            date.setTextColor(Color.BLACK);
+        }
+        else{
+            titleofrecipie.setTextColor(Color.WHITE);
+            comment_title.setTextColor(Color.WHITE);
+            loadmore_title.setTextColor(Color.WHITE);
+            date.setTextColor(Color.WHITE);}
 
             JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
 
@@ -570,8 +596,14 @@ public class TipsDescription extends AppCompatActivity {
                         "}\n" +
                         "\t\t</style>\n" +
                         "\t</head>";
-                desc.loadDataWithBaseURL("", fonts+s+"</head>", "text/html", "utf-8", "");
-                desc.setWebViewClient(new MyBrowser());
+                String rep = String.valueOf(s);
+                rep =  rep.replaceAll("color:#fff","color:#000");
+                String date = "<p><font color=\"white\">" + obj.getString("pdate") + "</font></p>";
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    desc.loadDataWithBaseURL("", fonts + rep + "</head>", "text/html", "utf-8", "");
+                }else{
+                    desc.loadDataWithBaseURL("", fonts + s + "</head>", "text/html", "utf-8", "");
+                }                   desc.setWebViewClient(new MyBrowser());
                 desc.setBackgroundColor(Color.TRANSPARENT);
 
                 model.setFavcount(obj.getInt("fav_count"));

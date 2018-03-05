@@ -869,6 +869,7 @@ public class Tabphotostories extends Fragment {
                 if(colorcodes.equals("#FFFFFFFF"))
                 {
                     userViewHolder.shortdescription.setTextColor(Color.GRAY);
+                    userViewHolder.editername.setTextColor(Color.GRAY);
                     userViewHolder.title_item.setTextColor(Color.BLACK);
                     userViewHolder.item_type_name.setTextColor(Color.GRAY);
                     userViewHolder.date.setTextColor(Color.GRAY);
@@ -879,6 +880,7 @@ public class Tabphotostories extends Fragment {
                 }
                 else if(colorcodes.equals("#00B09B")){
                     userViewHolder.shortdescription.setTextColor(Color.WHITE);
+                    userViewHolder.editername.setTextColor(Color.WHITE);
                     userViewHolder.title_item.setTextColor(Color.WHITE);
                     userViewHolder.item_type_name.setTextColor(Color.WHITE);
                     userViewHolder.likescount.setTextColor(Color.WHITE);

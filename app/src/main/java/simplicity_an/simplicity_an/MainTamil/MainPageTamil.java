@@ -108,17 +108,58 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
         topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
       topLevelLayout.setVisibility(View.GONE);
 
-
+        if(colorcodes.equals("#FFFFFFFF")){
+            city.setBackgroundResource(R.color.white);
+            happening.setBackgroundResource(R.color.white);
+            search.setBackgroundResource(R.color.white);
+            audio_video.setBackgroundResource(R.color.white);
+            settings.setBackgroundResource(R.color.white);
+            city.setImageResource(R.mipmap.newsone);
+            happening.setImageResource(R.mipmap.eventone);
+            search.setImageResource(R.mipmap.searchone);
+            audio_video.setImageResource(R.mipmap.specialone);
+            settings.setImageResource(R.mipmap.moreone);
+        }
+        else{
+            happening.setBackgroundResource(R.color.mytransparent);
+            search.setBackgroundResource(R.color.mytransparent);
+            audio_video.setBackgroundResource(R.color.mytransparent);
+            settings.setBackgroundResource(R.color.mytransparent);
+            city.setImageResource(R.mipmap.newstamil);
+            happening.setImageResource(R.mipmap.eventstamil);
+            search.setImageResource(R.mipmap.searchtamil);
+            audio_video.setImageResource(R.mipmap.specialtamil);
+            settings.setImageResource(R.mipmap.moretamil);
+        }
 
 
         city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                happening.setBackgroundResource(R.color.mytransparent);
-                search.setBackgroundResource(R.color.mytransparent);
-                audio_video.setBackgroundResource(R.color.mytransparent);
-                settings.setBackgroundResource(R.color.mytransparent);
+                if(colorcodes.equals("#FFFFFFFF")){
+                    //city.setBackgroundResource(R.color.white);
+                    happening.setBackgroundResource(R.color.white);
+                    search.setBackgroundResource(R.color.white);
+                    audio_video.setBackgroundResource(R.color.white);
+                    settings.setBackgroundResource(R.color.white);
+                    //city.setImageResource(R.mipmap.newsone);
+                    happening.setImageResource(R.mipmap.eventone);
+                    search.setImageResource(R.mipmap.searchone);
+                    audio_video.setImageResource(R.mipmap.specialone);
+                    settings.setImageResource(R.mipmap.moreone);
+                }
+                else{
+                    happening.setBackgroundResource(R.color.Black);
+                    search.setBackgroundResource(R.color.Black);
+                    audio_video.setBackgroundResource(R.color.Black);
+                    settings.setBackgroundResource(R.color.Black);
+                    city.setImageResource(R.mipmap.newstamil);
+                    happening.setImageResource(R.mipmap.eventstamil);
+                    search.setImageResource(R.mipmap.searchtamil);
+                    audio_video.setImageResource(R.mipmap.specialtamil);
+                    settings.setImageResource(R.mipmap.moretamil);
+                }
                 Fragment selectedFragment = null;
                 selectedFragment = CityFragmentTamil.newInstance();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -162,10 +203,30 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
         happening.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                city.setBackgroundResource(R.color.mytransparent);
-                search.setBackgroundResource(R.color.mytransparent);
-                audio_video.setBackgroundResource(R.color.mytransparent);
-                settings.setBackgroundResource(R.color.mytransparent);
+                if(colorcodes.equals("#FFFFFFFF")){
+                    city.setBackgroundResource(R.color.white);
+                    //happening.setBackgroundResource(R.color.white);
+                    search.setBackgroundResource(R.color.white);
+                    audio_video.setBackgroundResource(R.color.white);
+                    settings.setBackgroundResource(R.color.white);
+                    city.setImageResource(R.mipmap.newsone);
+                    //happening.setImageResource(R.mipmap.eventone);
+                    search.setImageResource(R.mipmap.searchone);
+                    audio_video.setImageResource(R.mipmap.specialone);
+                    settings.setImageResource(R.mipmap.moreone);
+                }
+                else{
+                    //happening.setBackgroundResource(R.color.mytransparent);
+                    search.setBackgroundResource(R.color.Black);
+                    city.setBackgroundResource(R.color.Black);
+                    audio_video.setBackgroundResource(R.color.Black);
+                    settings.setBackgroundResource(R.color.Black);
+                    city.setImageResource(R.mipmap.newstamil);
+                    happening.setImageResource(R.mipmap.eventstamil);
+                    search.setImageResource(R.mipmap.searchtamil);
+                    audio_video.setImageResource(R.mipmap.specialtamil);
+                    settings.setImageResource(R.mipmap.moretamil);
+                }
                 Fragment selectedFragment = null;
                 selectedFragment = HappeningFragTamil.newInstance();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -210,10 +271,29 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
             @Override
             public void onClick(View v) {
                 //  if(myprofileid!=null) {
-                happening.setBackgroundResource(R.color.mytransparent);
-                city.setBackgroundResource(R.color.mytransparent);
-                audio_video.setBackgroundResource(R.color.mytransparent);
-                settings.setBackgroundResource(R.color.mytransparent);
+                if(colorcodes.equals("#FFFFFFFF")){
+                    city.setBackgroundResource(R.color.white);
+                    happening.setBackgroundResource(R.color.white);
+                    //search.setBackgroundResource(R.color.white);
+                    audio_video.setBackgroundResource(R.color.white);
+                    settings.setBackgroundResource(R.color.white);
+                    city.setImageResource(R.mipmap.newsone);
+                    happening.setImageResource(R.mipmap.eventone);
+                    //search.setImageResource(R.mipmap.searchone);
+                    audio_video.setImageResource(R.mipmap.specialone);
+                    settings.setImageResource(R.mipmap.moreone);
+                }
+                else{
+                    happening.setBackgroundResource(R.color.Black);
+                    city.setBackgroundResource(R.color.Black);
+                    audio_video.setBackgroundResource(R.color.Black);
+                    settings.setBackgroundResource(R.color.Black);
+                    city.setImageResource(R.mipmap.newstamil);
+                    happening.setImageResource(R.mipmap.eventstamil);
+                    search.setImageResource(R.mipmap.searchtamil);
+                    audio_video.setImageResource(R.mipmap.specialtamil);
+                    settings.setImageResource(R.mipmap.moretamil);
+                }
             /*    Intent in = new Intent(getApplicationContext(), ExploreMain.class);
                     startActivity(in);*/
               FragmentManager fragmentManager= getSupportFragmentManager();
@@ -263,10 +343,29 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
         audio_video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                happening.setBackgroundResource(R.color.mytransparent);
-                search.setBackgroundResource(R.color.mytransparent);
-                city.setBackgroundResource(R.color.mytransparent);
-                settings.setBackgroundResource(R.color.mytransparent);
+                if(colorcodes.equals("#FFFFFFFF")){
+                    city.setBackgroundResource(R.color.white);
+                    happening.setBackgroundResource(R.color.white);
+                    search.setBackgroundResource(R.color.white);
+                    //audio_video.setBackgroundResource(R.color.white);
+                    settings.setBackgroundResource(R.color.white);
+                    city.setImageResource(R.mipmap.newsone);
+                    happening.setImageResource(R.mipmap.eventone);
+                    search.setImageResource(R.mipmap.searchone);
+                    //audio_video.setImageResource(R.mipmap.specialone);
+                    settings.setImageResource(R.mipmap.moreone);
+                }
+                else{
+                    happening.setBackgroundResource(R.color.Black);
+                    search.setBackgroundResource(R.color.Black);
+                    city.setBackgroundResource(R.color.Black);
+                    settings.setBackgroundResource(R.color.Black);
+                    city.setImageResource(R.mipmap.newstamil);
+                    happening.setImageResource(R.mipmap.eventstamil);
+                    search.setImageResource(R.mipmap.searchtamil);
+                    audio_video.setImageResource(R.mipmap.specialtamil);
+                    settings.setImageResource(R.mipmap.moretamil);
+                }
                 Fragment selectedFragment = null;
                 selectedFragment = EntertainmentFragmentTamil.newInstance();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -310,10 +409,29 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                happening.setBackgroundResource(R.color.mytransparent);
-                search.setBackgroundResource(R.color.mytransparent);
-                audio_video.setBackgroundResource(R.color.mytransparent);
-                city.setBackgroundResource(R.color.mytransparent);
+                if(colorcodes.equals("#FFFFFFFF")){
+                    city.setBackgroundResource(R.color.white);
+                    happening.setBackgroundResource(R.color.white);
+                    search.setBackgroundResource(R.color.white);
+                    audio_video.setBackgroundResource(R.color.white);
+                    //settings.setBackgroundResource(R.color.white);
+                    city.setImageResource(R.mipmap.newsone);
+                    happening.setImageResource(R.mipmap.eventone);
+                    search.setImageResource(R.mipmap.searchone);
+                    audio_video.setImageResource(R.mipmap.specialone);
+                    //settings.setImageResource(R.mipmap.moreone);
+                }
+                else{
+                    happening.setBackgroundResource(R.color.Black);
+                    search.setBackgroundResource(R.color.Black);
+                    audio_video.setBackgroundResource(R.color.Black);
+                    city.setBackgroundResource(R.color.Black);
+                    city.setImageResource(R.mipmap.newstamil);
+                    happening.setImageResource(R.mipmap.eventstamil);
+                    search.setImageResource(R.mipmap.searchtamil);
+                    audio_video.setImageResource(R.mipmap.specialtamil);
+                    settings.setImageResource(R.mipmap.moretamil);
+                }
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 SettingsFragmentTamil fragment = new SettingsFragmentTamil();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -349,6 +467,9 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                             settings.setBackgroundResource(R.color.theme11);
                         }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                             settings.setBackgroundResource(R.color.theme12);
+                        }
+                        else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                            city.setBackgroundResource(R.color.theme13);
                         }
                     }
                 }
@@ -397,6 +518,9 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                         city.setBackgroundResource(R.color.theme11);
                     }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                         city.setBackgroundResource(R.color.theme12);
+                    }
+                    else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                        settings.setBackgroundResource(R.color.theme13);
                     }
                 }
             }
@@ -506,6 +630,9 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                         settings.setBackgroundResource(R.color.theme12);
                     }
+                    else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                        settings.setBackgroundResource(R.color.theme13);
+                    }
                 }
             }
         }else if(id.equals("2")){
@@ -548,6 +675,9 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                         audio_video.setBackgroundResource(R.color.theme11);
                     } else if (colorcodes.equalsIgnoreCase("#00B09B")) {
                         audio_video.setBackgroundResource(R.color.theme12);
+                    }
+                    else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                        settings.setBackgroundResource(R.color.theme13);
                     }
                 }
             }
@@ -592,6 +722,9 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                         happening.setBackgroundResource(R.color.theme12);
                     }
+                    else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                        settings.setBackgroundResource(R.color.theme13);
+                    }
                 }
             }
         }else if(id.equals("4")){
@@ -634,6 +767,9 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                         search.setBackgroundResource(R.color.theme11);
                     }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                         search.setBackgroundResource(R.color.theme12);
+                    }
+                    else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                        settings.setBackgroundResource(R.color.theme13);
                     }
                 }
             }
@@ -678,6 +814,9 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                         city.setBackgroundResource(R.color.theme11);
                     }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                         city.setBackgroundResource(R.color.theme12);
+                    }
+                    else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                        settings.setBackgroundResource(R.color.theme13);
                     }
                 }
             }

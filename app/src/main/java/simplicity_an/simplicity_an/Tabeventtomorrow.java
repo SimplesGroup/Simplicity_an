@@ -248,10 +248,10 @@ OnFragmentInteractionListener mListener;
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                 }
                 else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
-                    fabevent.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
-                    fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
-                    fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
-                    fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
+                    fabevent.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
                 }
             }
         }

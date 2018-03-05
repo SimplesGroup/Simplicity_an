@@ -204,14 +204,30 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
             }else {
 
                 if(colorcodes!=null){
-                    int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    if(colorcodes == "#FFFFFFFF"){
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
 
-                    mainlayout.setBackgroundDrawable(gd);
+                        mainlayout.setBackgroundDrawable(gd);
+                    } else {
+                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(gd);
+
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#383838");
+
+                        editor.commit();
+                    }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -363,6 +379,27 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);
         date.setTypeface(tf);
+
+        if(colorcodes == "#FFFFFFFF"){
+
+            comment_title.setTextColor(Color.BLACK);
+            loadmore_title.setTextColor(Color.BLACK);
+            ingredients.setTextColor(Color.BLACK);
+            steps.setTextColor(Color.BLACK);
+            date.setTextColor(Color.BLACK);
+            titleofrecipie.setTextColor(Color.BLACK);
+
+
+        }
+        else{
+            comment_title.setTextColor(Color.WHITE);
+            loadmore_title.setTextColor(Color.WHITE);
+            ingredients.setTextColor(Color.WHITE);
+            steps.setTextColor(Color.WHITE);
+            date.setTextColor(Color.WHITE);
+            titleofrecipie.setTextColor(Color.WHITE);
+        }
+
         ingredients.setBackgroundColor(0x31ffffff);
         steps.setBackgroundColor(0x0affffff);
         ingredients.setOnClickListener(new View.OnClickListener() {
@@ -584,8 +621,20 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
 
                 stepsdescriptions.getSettings().setJavaScriptEnabled(true);
 
-                stepsdescriptions.loadDataWithBaseURL("", fonts+steps+"</head>", "text/html", "utf-8", "");
-                ingredientsdescription.loadDataWithBaseURL("",fonts+descrition+"</head>","text/html","utf-8","");
+                String reps = String.valueOf(steps);
+                reps =  reps.replaceAll("color:#fff","color:#000");
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    stepsdescriptions.loadDataWithBaseURL("", fonts + reps + "</head>", "text/html", "utf-8", "");
+                }else{
+                    stepsdescriptions.loadDataWithBaseURL("", fonts + steps + "</head>", "text/html", "utf-8", "");
+                }
+                String rep = String.valueOf(descrition);
+                rep =  rep.replaceAll("color:#fff","color:#000");
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    ingredientsdescription.loadDataWithBaseURL("", fonts + rep + "</head>", "text/html", "utf-8", "");
+                }else{
+                    ingredientsdescription.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
+                }
                 stepsdescriptions.setWebViewClient(new MyBrowser());
                 ingredientsdescription.setWebViewClient(new MyBrowser());
                 stepsdescriptions.getSettings().setAllowContentAccess(true);

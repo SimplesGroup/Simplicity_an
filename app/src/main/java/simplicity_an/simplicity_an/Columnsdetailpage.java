@@ -231,14 +231,30 @@ if(activity==null){
             }else {
 
                 if(colorcodes!=null){
-                    int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    if(colorcodes == "#FFFFFFFF"){
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
 
-                    mainlayout.setBackgroundDrawable(gd);
+                        mainlayout.setBackgroundDrawable(gd);
+                    } else {
+                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(gd);
+
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#383838");
+
+                        editor.commit();
+                    }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -307,7 +323,7 @@ if(activity==null){
         comment_title.setTypeface(tf);
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);
-commentbox_editext.setHint("Comments Here");
+        commentbox_editext.setHint("Comments Here");
 
       //  articleoftheday.setTypeface(tf_regular);
         hashtags_title.setTypeface(tf_regular);
@@ -315,6 +331,27 @@ commentbox_editext.setHint("Comments Here");
 //        authorname.setTypeface(tf_regular);
        // pdate.setTypeface(tf);
         thump = (NetworkImageView) findViewById(R.id.thumbnailone);
+
+        if(colorcodes == "#FFFFFFFF"){
+            tv.setTextColor(Color.BLACK);
+            comment_title.setTextColor(Color.BLACK);
+            loadmore_title.setTextColor(Color.BLACK);
+            source_reporter_name.setTextColor(Color.BLACK);
+            sourcelinknews.setTextColor(Color.BLACK);
+            sourcelinksimplicity.setTextColor(Color.BLACK);
+            pdate.setTextColor(Color.BLACK);
+
+        }
+        else{
+            tv.setTextColor(Color.WHITE);
+            comment_title.setTextColor(Color.WHITE);
+            loadmore_title.setTextColor(Color.WHITE);
+            source_reporter_name.setTextColor(Color.WHITE);
+            sourcelinknews.setTextColor(Color.WHITE);
+            sourcelinksimplicity.setTextColor(Color.WHITE);
+            pdate.setTextColor(Color.WHITE);
+        }
+
         pdialog = new ProgressDialog(this);
         pdialog.show();
         pdialog.setContentView(R.layout.custom_progressdialog);
@@ -636,8 +673,14 @@ try {
                         "}\n" +
                         "\t\t</style>\n" +
                         "\t</head>";
+                String rep = String.valueOf(descrition);
+                rep =  rep.replaceAll("color:#fff","color:#000");
                 String date = "<p><font color=\"white\">" + obj.getString("pdate") + "</font></p>";
-                description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    description.loadDataWithBaseURL("", fonts + rep + "</head>", "text/html", "utf-8", "");
+                }else{
+                    description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
+                }
                 description.setWebViewClient(new MyBrowser());
                 description.setBackgroundColor(Color.TRANSPARENT);
                 modelList.add(model);

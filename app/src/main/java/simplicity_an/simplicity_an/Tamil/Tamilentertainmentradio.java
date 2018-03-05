@@ -276,6 +276,12 @@ public class Tamilentertainmentradio extends Fragment {
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                 }
+                else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
+                    fabradio.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                }
             }
         }
         swipeRefresh = (SwipeRefreshLayout)view.findViewById(R.id.swipe);
@@ -689,6 +695,7 @@ public class Tamilentertainmentradio extends Fragment {
         public RelativeLayout countlayout,listLayout;
         ImageButton play;
         RecyclerView_OnClickListener.OnClickListener onClickListener;
+        View line;
         public Userviewholdertaball(View itemView) {
             super(itemView);
             this.title_item=(TextView)itemView.findViewById(R.id.item_title_taball);
@@ -717,7 +724,7 @@ public class Tamilentertainmentradio extends Fragment {
             this.comment_imagebutton=(ImageButton)itemView.findViewById(R.id.button_comment);
             this.like_imagebutton=(ImageButton)itemView.findViewById(R.id.button_likes) ;
             this.share_imagebutton=(ImageButton)itemView.findViewById(R.id.button_share) ;
-
+            this.line = itemView.findViewById(R.id.line_separter);
 
             this.shortdescription.setOnClickListener(this);
             this.editername.setOnClickListener(this);
@@ -936,6 +943,27 @@ public class Tamilentertainmentradio extends Fragment {
                 userViewHolder.share_button.setTransformationMethod(null);
                 post_likes_count=itemmodel.getCounttype();
                 save_item_count=itemmodel.getFavcount();
+                if(colorcodes.equals("#FFFFFFFF"))
+                {
+                    userViewHolder.shortdescription.setTextColor(Color.GRAY);
+                    userViewHolder.title_item.setTextColor(Color.BLACK);
+                    userViewHolder.item_type_name.setTextColor(Color.GRAY);
+                    userViewHolder.date.setTextColor(Color.GRAY);
+                    userViewHolder.likescount.setTextColor(Color.BLACK);
+                    userViewHolder.commentscount.setTextColor(Color.BLACK);
+                    userViewHolder.line.setBackgroundColor(Color.LTGRAY);
+
+                }
+                else if(colorcodes.equals("#00B09B")){
+                    userViewHolder.shortdescription.setTextColor(Color.WHITE);
+                    userViewHolder.title_item.setTextColor(Color.WHITE);
+                    userViewHolder.item_type_name.setTextColor(Color.WHITE);
+                    userViewHolder.likescount.setTextColor(Color.WHITE);
+                    userViewHolder.commentscount.setTextColor(Color.WHITE);
+                    userViewHolder.line.setBackgroundColor(R.color.whitefood);
+                    userViewHolder.date.setTextColor(Color.WHITE);
+
+                }
                 if(itemmodel.getCounttype()==1){
                     userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
                     userViewHolder.like_imagebutton.setTag("heartfullred");

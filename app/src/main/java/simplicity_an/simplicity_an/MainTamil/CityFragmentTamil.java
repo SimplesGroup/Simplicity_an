@@ -1,5 +1,6 @@
 package simplicity_an.simplicity_an.MainTamil;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.util.Log;
@@ -56,6 +58,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import simplicity_an.simplicity_an.MainEnglish.CityFragment;
 import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SimplicitySearchview;
@@ -97,7 +100,7 @@ public class CityFragmentTamil extends Fragment {
     public static final String Activity = "activity";
     public static final String CONTENTID = "contentid";
     public static final String backgroundcolor = "color";
-    ImageButton city,beyond,search,explore,notifications,themechange_button;
+    ImageButton city,beyond,search,explore,notifications,themechange_button,btnspecials,btnevents,btnsearch,btnmore;
     String activity,contentid,colorcodes;
     FloatingActionButton fabsearch,fabinnerplus;
     CoordinatorLayout mCoordinator;
@@ -138,8 +141,11 @@ public class CityFragmentTamil extends Fragment {
                 Context.MODE_PRIVATE);
 
         requestQueue= Volley.newRequestQueue(getActivity());
-
-
+        city=(ImageButton)getActivity().findViewById(R.id.btn_versiontwocity);
+        btnspecials=(ImageButton)getActivity().findViewById(R.id.btn_versiontwoexplore);
+        btnevents = (ImageButton)getActivity().findViewById(R.id.btn_versiontwobeyond);
+        btnsearch = (ImageButton)getActivity().findViewById(R.id.btn_versiontwosearch);
+        btnmore = (ImageButton)getActivity().findViewById(R.id.btn_versiontwonotifications);
         contentid=sharedpreferences.getString(CONTENTID,"");
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
         //   colorcodes = colorcodes.replaceAll("\\D+","");
@@ -222,14 +228,30 @@ public class CityFragmentTamil extends Fragment {
             }else {
 
                 if(colorcodes!=null){
-                    int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    if(!colorcodes.equals("#FFFFFFFF")) {
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
 
-                    mainlayout.setBackgroundDrawable(gd);
+                        mainlayout.setBackgroundDrawable(gd);
+
+
+                    }
+                    else{
+                        int[] color = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+
+                        GradientDrawable g = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                color);
+                        g.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(g);
+                        city.setBackgroundResource(R.color.theme13);
+                        city.setImageResource(R.mipmap.newsone);
+                    }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -258,6 +280,16 @@ public class CityFragmentTamil extends Fragment {
         title_coimbatore.setTypeface(tf1);
 
         title_coimbatore.setText("வணக்கம் கோவை");
+        if(colorcodes.equals("#FFFFFFFF"))
+        {
+            title_coimbatore.setTextColor(Color.BLACK);
+
+
+        }
+        else
+        {
+            title_coimbatore.setTextColor(Color.WHITE);
+        }
         layout = (LinearLayout)view. findViewById(R.id.title);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)layout.getLayoutParams();
         params.setMargins(0, 170, 0, 0);
@@ -402,6 +434,31 @@ public class CityFragmentTamil extends Fragment {
         language_title.setText(Html.fromHtml("&nbsp;"+"Eng"+"&nbsp;"+"|"+"&nbsp;"));
 
         weather_update.setTypeface(tf1);
+        if(colorcodes.equals("#FFFFFFFF"))
+        {
+            language_title.setTextColor(Color.BLACK);
+        }
+        else{
+            language_title.setTextColor(Color.WHITE);
+        }
+
+        if(colorcodes.equals("#FFFFFFFF"))
+        {
+            date_text.setTextColor(Color.BLACK);
+
+        }
+        else{
+            date_text.setTextColor(Color.WHITE);
+        }
+
+        if(colorcodes.equals("#FFFFFFFF"))
+        {
+            weather_update.setTextColor(Color.BLACK);
+
+        }
+        else{
+            weather_update.setTextColor(Color.WHITE);
+        }
         StringRequest weather=new StringRequest(Request.Method.GET, WEATHER_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -504,7 +561,12 @@ public class CityFragmentTamil extends Fragment {
             fabinnerplus.setBackgroundResource(R.color.theme12);
             fabsearch.setBackgroundResource(R.color.theme12);
         }
-
+        else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
+            city.setBackgroundResource(R.color.theme13);
+            fabplus.setBackgroundResource(R.color.theme13);
+            fabinnerplus.setBackgroundResource(R.color.theme13);
+            fabsearch.setBackgroundResource(R.color.theme13);
+        }
 
         language_title.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -619,10 +681,18 @@ public class CityFragmentTamil extends Fragment {
                 ImageButton colorten = (ImageButton) dialog.findViewById(R.id.color10);
                 ImageButton coloreleven = (ImageButton) dialog.findViewById(R.id.color11);
                 ImageButton colortwelve = (ImageButton) dialog.findViewById(R.id.color12);
+                ImageButton colorthirteen = (ImageButton) dialog.findViewById(R.id.color13);
+
                 Button closebutton=(Button)dialog.findViewById(R.id.close_button);
                 colorone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Fragment fragment = new CityFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                         int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -631,6 +701,16 @@ public class CityFragmentTamil extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
+                        city.setBackgroundResource(R.color.theme1button);
+                        city.setImageResource(R.mipmap.newstamil);
+                        btnspecials.setBackgroundResource(R.color.Black);
+                        btnspecials.setImageResource(R.mipmap.specialtamil);
+                        btnevents.setBackgroundResource(R.color.Black);
+                        btnevents.setImageResource(R.mipmap.eventstamil);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.searchtamil);
+                        btnmore.setBackgroundResource(R.color.Black);
+                        btnmore.setImageResource(R.mipmap.moretamil);
                         //city.setBackgroundResource(R.color.theme1button);
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
@@ -644,6 +724,12 @@ public class CityFragmentTamil extends Fragment {
                 colortwo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Fragment fragment = new CityFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                         int[] colors = {Color.parseColor("#59247c"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -652,7 +738,16 @@ public class CityFragmentTamil extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                       // city.setBackgroundResource(R.color.theme2);
+                        city.setBackgroundResource(R.color.theme2);
+                        city.setImageResource(R.mipmap.newstamil);
+                        btnspecials.setBackgroundResource(R.color.Black);
+                        btnspecials.setImageResource(R.mipmap.specialtamil);
+                        btnevents.setBackgroundResource(R.color.Black);
+                        btnevents.setImageResource(R.mipmap.eventstamil);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.searchtamil);
+                        btnmore.setBackgroundResource(R.color.Black);
+                        btnmore.setImageResource(R.mipmap.moretamil);
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
@@ -668,6 +763,12 @@ public class CityFragmentTamil extends Fragment {
                 colorthree.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Fragment fragment = new CityFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                         int[] colors = {Color.parseColor("#1d487a"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -676,7 +777,16 @@ public class CityFragmentTamil extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                      //  city.setBackgroundResource(R.color.theme3);
+                        city.setBackgroundResource(R.color.theme3);
+                        city.setImageResource(R.mipmap.newstamil);
+                        btnspecials.setBackgroundResource(R.color.Black);
+                        btnspecials.setImageResource(R.mipmap.searchtamil);
+                        btnevents.setBackgroundResource(R.color.Black);
+                        btnevents.setImageResource(R.mipmap.eventstamil);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.searchtamil);
+                        btnmore.setBackgroundResource(R.color.Black);
+                        btnmore.setImageResource(R.mipmap.moretamil);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme3));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme3));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme3));
@@ -689,6 +799,12 @@ public class CityFragmentTamil extends Fragment {
                 colorfour.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Fragment fragment = new CityFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                         int[] colors = {Color.parseColor("#7A4100"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -696,6 +812,16 @@ public class CityFragmentTamil extends Fragment {
                                 colors);
                         gd.setCornerRadius(0f);
                       //  city.setBackgroundResource(R.color.theme4);
+                        city.setBackgroundResource(R.color.theme3);
+                        city.setImageResource(R.mipmap.newstamil);
+                        btnspecials.setBackgroundResource(R.color.Black);
+                        btnspecials.setImageResource(R.mipmap.searchtamil);
+                        btnevents.setBackgroundResource(R.color.Black);
+                        btnevents.setImageResource(R.mipmap.eventstamil);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.searchtamil);
+                        btnmore.setBackgroundResource(R.color.Black);
+                        btnmore.setImageResource(R.mipmap.moretamil);
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme4));
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme4));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme4));
@@ -709,6 +835,12 @@ public class CityFragmentTamil extends Fragment {
                 colorfive.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Fragment fragment = new CityFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                         int[] colors = {Color.parseColor("#6E0138"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -718,6 +850,16 @@ public class CityFragmentTamil extends Fragment {
 
                         mainlayout.setBackgroundDrawable(gd);
                     //    city.setBackgroundResource(R.color.theme5);
+                        city.setBackgroundResource(R.color.theme3);
+                        city.setImageResource(R.mipmap.newstamil);
+                        btnspecials.setBackgroundResource(R.color.Black);
+                        btnspecials.setImageResource(R.mipmap.searchtamil);
+                        btnevents.setBackgroundResource(R.color.Black);
+                        btnevents.setImageResource(R.mipmap.eventstamil);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.searchtamil);
+                        btnmore.setBackgroundResource(R.color.Black);
+                        btnmore.setImageResource(R.mipmap.moretamil);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
@@ -730,6 +872,12 @@ public class CityFragmentTamil extends Fragment {
                 colorsix.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Fragment fragment = new CityFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                         int[] colors = {Color.parseColor("#00BFD4"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -739,6 +887,16 @@ public class CityFragmentTamil extends Fragment {
 
                         mainlayout.setBackgroundDrawable(gd);
                       //  city.setBackgroundResource(R.color.theme6);
+                        city.setBackgroundResource(R.color.theme3);
+                        city.setImageResource(R.mipmap.newstamil);
+                        btnspecials.setBackgroundResource(R.color.Black);
+                        btnspecials.setImageResource(R.mipmap.searchtamil);
+                        btnevents.setBackgroundResource(R.color.Black);
+                        btnevents.setImageResource(R.mipmap.eventstamil);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.searchtamil);
+                        btnmore.setBackgroundResource(R.color.Black);
+                        btnmore.setImageResource(R.mipmap.moretamil);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
@@ -751,6 +909,12 @@ public class CityFragmentTamil extends Fragment {
                 colorseven.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Fragment fragment = new CityFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                         int[] colors = {Color.parseColor("#185546"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -760,6 +924,16 @@ public class CityFragmentTamil extends Fragment {
 
                         mainlayout.setBackgroundDrawable(gd);
                      //   city.setBackgroundResource(R.color.theme7);
+                        city.setBackgroundResource(R.color.theme3);
+                        city.setImageResource(R.mipmap.newstamil);
+                        btnspecials.setBackgroundResource(R.color.Black);
+                        btnspecials.setImageResource(R.mipmap.searchtamil);
+                        btnevents.setBackgroundResource(R.color.Black);
+                        btnevents.setImageResource(R.mipmap.eventstamil);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.searchtamil);
+                        btnmore.setBackgroundResource(R.color.Black);
+                        btnmore.setImageResource(R.mipmap.moretamil);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
@@ -772,6 +946,12 @@ public class CityFragmentTamil extends Fragment {
                 coloreight.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Fragment fragment = new CityFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                         int[] colors = {Color.parseColor("#D0A06F"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -781,6 +961,16 @@ public class CityFragmentTamil extends Fragment {
 
                         mainlayout.setBackgroundDrawable(gd);
                       //  city.setBackgroundResource(R.color.theme8);
+                        city.setBackgroundResource(R.color.theme3);
+                        city.setImageResource(R.mipmap.newstamil);
+                        btnspecials.setBackgroundResource(R.color.Black);
+                        btnspecials.setImageResource(R.mipmap.searchtamil);
+                        btnevents.setBackgroundResource(R.color.Black);
+                        btnevents.setImageResource(R.mipmap.eventstamil);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.searchtamil);
+                        btnmore.setBackgroundResource(R.color.Black);
+                        btnmore.setImageResource(R.mipmap.moretamil);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
@@ -793,6 +983,12 @@ public class CityFragmentTamil extends Fragment {
                 colornine.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Fragment fragment = new CityFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                         int[] colors = {Color.parseColor("#82C6E6"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -802,6 +998,16 @@ public class CityFragmentTamil extends Fragment {
 
                         mainlayout.setBackgroundDrawable(gd);
                      //   city.setBackgroundResource(R.color.theme9);
+                        city.setBackgroundResource(R.color.theme3);
+                        city.setImageResource(R.mipmap.newstamil);
+                        btnspecials.setBackgroundResource(R.color.Black);
+                        btnspecials.setImageResource(R.mipmap.searchtamil);
+                        btnevents.setBackgroundResource(R.color.Black);
+                        btnevents.setImageResource(R.mipmap.eventstamil);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.searchtamil);
+                        btnmore.setBackgroundResource(R.color.Black);
+                        btnmore.setImageResource(R.mipmap.moretamil);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
@@ -814,6 +1020,12 @@ public class CityFragmentTamil extends Fragment {
                 colorten.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Fragment fragment = new CityFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                         int[] colors = {Color.parseColor("#339900"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -823,6 +1035,16 @@ public class CityFragmentTamil extends Fragment {
 
                         mainlayout.setBackgroundDrawable(gd);
                       //  city.setBackgroundResource(R.color.theme10);
+                        city.setBackgroundResource(R.color.theme3);
+                        city.setImageResource(R.mipmap.newstamil);
+                        btnspecials.setBackgroundResource(R.color.Black);
+                        btnspecials.setImageResource(R.mipmap.searchtamil);
+                        btnevents.setBackgroundResource(R.color.Black);
+                        btnevents.setImageResource(R.mipmap.eventstamil);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.searchtamil);
+                        btnmore.setBackgroundResource(R.color.Black);
+                        btnmore.setImageResource(R.mipmap.moretamil);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
@@ -835,6 +1057,12 @@ public class CityFragmentTamil extends Fragment {
                 coloreleven.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Fragment fragment = new CityFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                         int[] colors = {Color.parseColor("#CC9C00"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -843,7 +1071,17 @@ public class CityFragmentTamil extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                     //   city.setBackgroundResource(R.color.theme11);
+                     //   city.setBackgroundResource(R.color.theme11);city.setBackgroundResource(R.color.theme3);
+                        city.setImageResource(R.mipmap.newstamil);
+                        btnspecials.setBackgroundResource(R.color.Black);
+                        btnspecials.setImageResource(R.mipmap.searchtamil);
+                        btnevents.setBackgroundResource(R.color.Black);
+                        btnevents.setImageResource(R.mipmap.eventstamil);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.searchtamil);
+                        btnmore.setBackgroundResource(R.color.Black);
+                        btnmore.setImageResource(R.mipmap.moretamil);
+
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
@@ -856,6 +1094,12 @@ public class CityFragmentTamil extends Fragment {
                 colortwelve.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Fragment fragment = new CityFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                         int[] colors = {Color.parseColor("#00B09B"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -864,11 +1108,57 @@ public class CityFragmentTamil extends Fragment {
 
                         mainlayout.setBackgroundDrawable(gd);
                     //    city.setBackgroundResource(R.color.theme12);
+                        city.setBackgroundResource(R.color.theme3);
+                        city.setImageResource(R.mipmap.newstamil);
+                        btnspecials.setBackgroundResource(R.color.Black);
+                        btnspecials.setImageResource(R.mipmap.searchtamil);
+                        btnevents.setBackgroundResource(R.color.Black);
+                        btnevents.setImageResource(R.mipmap.eventstamil);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.searchtamil);
+                        btnmore.setBackgroundResource(R.color.Black);
+                        btnmore.setImageResource(R.mipmap.moretamil);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#00B09B");
+
+                        editor.commit();
+                    }
+                });
+                colorthirteen.setOnClickListener(new View.OnClickListener() {
+                    @SuppressLint("ResourceType")
+                    @Override
+                    public void onClick(View v) {
+                        Fragment fragment = new CityFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(gd);
+                        city.setImageResource(R.mipmap.newsone);
+                        city.setBackgroundResource(R.color.theme13);
+                        btnspecials.setBackgroundResource(R.color.theme14);
+                        btnspecials.setImageResource(R.mipmap.specialone);
+                        btnevents.setBackgroundResource(R.color.theme14);
+                        btnevents.setImageResource(R.mipmap.eventone);
+                        btnsearch.setBackgroundResource(R.color.theme14);
+                        btnsearch.setImageResource(R.mipmap.searchone);
+                        btnmore.setBackgroundResource(R.color.theme14);
+                        btnmore.setImageResource(R.mipmap.moreone);
+                        fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                        fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                        fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#FFFFFFFF");
 
                         editor.commit();
                     }
@@ -896,6 +1186,12 @@ public class CityFragmentTamil extends Fragment {
       //  mTabLayout.setOnTabSelectedListener(this);
         //Notice how The Tab Layout adn View Pager object are linked
         mTabLayout.setupWithViewPager(mPager);
+        if(colorcodes.equals("#FFFFFFFF")){
+            mTabLayout.setSelectedTabIndicatorColor(Color.BLACK);
+        }
+        else{
+            mTabLayout.setSelectedTabIndicatorColor(Color.WHITE);
+        }
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -932,6 +1228,9 @@ public class CityFragmentTamil extends Fragment {
                 View tabViewChild = vgTab.getChildAt(i);
                 if (tabViewChild instanceof TextView) {
                     ((TextView) tabViewChild).setTypeface(tf);
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        ((TextView) tabViewChild).setTextColor(Color.BLACK);
+                    }
                 }
             }
         }
