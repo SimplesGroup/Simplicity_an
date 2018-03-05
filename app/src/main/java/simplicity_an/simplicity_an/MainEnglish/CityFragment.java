@@ -262,6 +262,7 @@ search.setVisibility(View.GONE);
                         mainlayout.setBackgroundDrawable(g);
                         city.setBackgroundResource(R.color.theme13);
                         city.setImageResource(R.mipmap.newsone);
+
                     }
 
                 }else {

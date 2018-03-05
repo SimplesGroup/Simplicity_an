@@ -364,6 +364,7 @@ requestQueue=Volley.newRequestQueue(this);
         if(colorcodes == "#FFFFFFFF"){
             titlename.setTextColor(Color.BLACK);
             comment_title.setTextColor(Color.BLACK);
+            post.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
             source_reporter_name.setTextColor(Color.BLACK);
             sourcelinknews.setTextColor(Color.BLACK);
@@ -375,6 +376,7 @@ requestQueue=Volley.newRequestQueue(this);
         }
         else{
             titlename.setTextColor(Color.WHITE);
+            post.setTextColor(Color.WHITE);
             comment_title.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);
             source_reporter_name.setTextColor(Color.WHITE);

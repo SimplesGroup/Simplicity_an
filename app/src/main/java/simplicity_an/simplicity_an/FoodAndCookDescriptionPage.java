@@ -397,7 +397,9 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
         if(colorcodes == "#FFFFFFFF"){
 
             comment_title.setTextColor(Color.BLACK);
+            comment_title.setText("Comment here...");
             post.setTextColor(Color.BLACK);
+            post.setText("Post");
             loadmore_title.setTextColor(Color.BLACK);
             ingredients.setTextColor(Color.BLACK);
             steps.setTextColor(Color.BLACK);
@@ -408,7 +410,9 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
         }
         else{
             comment_title.setTextColor(Color.WHITE);
+            comment_title.setText("Comment here...");
             post.setTextColor(Color.WHITE);
+            post.setText("Post");
             loadmore_title.setTextColor(Color.WHITE);
             ingredients.setTextColor(Color.WHITE);
             steps.setTextColor(Color.WHITE);

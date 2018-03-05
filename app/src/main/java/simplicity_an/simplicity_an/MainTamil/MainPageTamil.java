@@ -150,10 +150,10 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     settings.setImageResource(R.mipmap.moretamilone);
                 }
                 else{
-                    happening.setBackgroundResource(R.color.Black);
-                    search.setBackgroundResource(R.color.Black);
-                    audio_video.setBackgroundResource(R.color.Black);
-                    settings.setBackgroundResource(R.color.Black);
+                    happening.setBackgroundResource(R.color.mytransparent);
+                    search.setBackgroundResource(R.color.mytransparent);
+                    audio_video.setBackgroundResource(R.color.mytransparent);
+                    settings.setBackgroundResource(R.color.mytransparent);
                     city.setImageResource(R.mipmap.newstamil);
                     happening.setImageResource(R.mipmap.eventstamil);
                     search.setImageResource(R.mipmap.searchtamil);
