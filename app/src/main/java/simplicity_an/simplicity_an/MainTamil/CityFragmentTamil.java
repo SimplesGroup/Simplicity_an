@@ -250,7 +250,7 @@ public class CityFragmentTamil extends Fragment {
 
                         mainlayout.setBackgroundDrawable(g);
                         city.setBackgroundResource(R.color.theme13);
-                        city.setImageResource(R.mipmap.newsone);
+                        city.setImageResource(R.mipmap.newstamilone);
                     }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
@@ -1144,16 +1144,16 @@ public class CityFragmentTamil extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                        city.setImageResource(R.mipmap.newsone);
+                        city.setImageResource(R.mipmap.newstamilone);
                         city.setBackgroundResource(R.color.theme13);
                         btnspecials.setBackgroundResource(R.color.theme14);
-                        btnspecials.setImageResource(R.mipmap.specialone);
+                        btnspecials.setImageResource(R.mipmap.specialstamilone);
                         btnevents.setBackgroundResource(R.color.theme14);
-                        btnevents.setImageResource(R.mipmap.eventone);
+                        btnevents.setImageResource(R.mipmap.eventstamilone);
                         btnsearch.setBackgroundResource(R.color.theme14);
-                        btnsearch.setImageResource(R.mipmap.searchone);
+                        btnsearch.setImageResource(R.mipmap.searchtamilone);
                         btnmore.setBackgroundResource(R.color.theme14);
-                        btnmore.setImageResource(R.mipmap.moreone);
+                        btnmore.setImageResource(R.mipmap.moretamilone);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));

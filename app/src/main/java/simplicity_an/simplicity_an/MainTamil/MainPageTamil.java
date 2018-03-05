@@ -114,11 +114,11 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
             search.setBackgroundResource(R.color.white);
             audio_video.setBackgroundResource(R.color.white);
             settings.setBackgroundResource(R.color.white);
-            city.setImageResource(R.mipmap.newsone);
-            happening.setImageResource(R.mipmap.eventone);
-            search.setImageResource(R.mipmap.searchone);
-            audio_video.setImageResource(R.mipmap.specialone);
-            settings.setImageResource(R.mipmap.moreone);
+            city.setImageResource(R.mipmap.newstamilone);
+            happening.setImageResource(R.mipmap.eventstamilone);
+            search.setImageResource(R.mipmap.searchtamilone);
+            audio_video.setImageResource(R.mipmap.specialstamilone);
+            settings.setImageResource(R.mipmap.moretamilone);
         }
         else{
             happening.setBackgroundResource(R.color.mytransparent);
@@ -144,10 +144,10 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     audio_video.setBackgroundResource(R.color.white);
                     settings.setBackgroundResource(R.color.white);
                     //city.setImageResource(R.mipmap.newsone);
-                    happening.setImageResource(R.mipmap.eventone);
-                    search.setImageResource(R.mipmap.searchone);
-                    audio_video.setImageResource(R.mipmap.specialone);
-                    settings.setImageResource(R.mipmap.moreone);
+                    happening.setImageResource(R.mipmap.eventstamilone);
+                    search.setImageResource(R.mipmap.searchtamilone);
+                    audio_video.setImageResource(R.mipmap.specialstamilone);
+                    settings.setImageResource(R.mipmap.moretamilone);
                 }
                 else{
                     happening.setBackgroundResource(R.color.Black);
@@ -209,11 +209,11 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     search.setBackgroundResource(R.color.white);
                     audio_video.setBackgroundResource(R.color.white);
                     settings.setBackgroundResource(R.color.white);
-                    city.setImageResource(R.mipmap.newsone);
+                    city.setImageResource(R.mipmap.newstamilone);
                     //happening.setImageResource(R.mipmap.eventone);
-                    search.setImageResource(R.mipmap.searchone);
-                    audio_video.setImageResource(R.mipmap.specialone);
-                    settings.setImageResource(R.mipmap.moreone);
+                    search.setImageResource(R.mipmap.searchtamilone);
+                    audio_video.setImageResource(R.mipmap.specialstamilone);
+                    settings.setImageResource(R.mipmap.moretamilone);
                 }
                 else{
                     //happening.setBackgroundResource(R.color.mytransparent);
@@ -277,11 +277,11 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     //search.setBackgroundResource(R.color.white);
                     audio_video.setBackgroundResource(R.color.white);
                     settings.setBackgroundResource(R.color.white);
-                    city.setImageResource(R.mipmap.newsone);
-                    happening.setImageResource(R.mipmap.eventone);
+                    city.setImageResource(R.mipmap.newstamilone);
+                    happening.setImageResource(R.mipmap.eventstamilone);
                     //search.setImageResource(R.mipmap.searchone);
-                    audio_video.setImageResource(R.mipmap.specialone);
-                    settings.setImageResource(R.mipmap.moreone);
+                    audio_video.setImageResource(R.mipmap.specialstamilone);
+                    settings.setImageResource(R.mipmap.moretamilone);
                 }
                 else{
                     happening.setBackgroundResource(R.color.Black);
@@ -349,11 +349,11 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     search.setBackgroundResource(R.color.white);
                     //audio_video.setBackgroundResource(R.color.white);
                     settings.setBackgroundResource(R.color.white);
-                    city.setImageResource(R.mipmap.newsone);
-                    happening.setImageResource(R.mipmap.eventone);
-                    search.setImageResource(R.mipmap.searchone);
+                    city.setImageResource(R.mipmap.newstamilone);
+                    happening.setImageResource(R.mipmap.eventstamilone);
+                    search.setImageResource(R.mipmap.searchtamilone);
                     //audio_video.setImageResource(R.mipmap.specialone);
-                    settings.setImageResource(R.mipmap.moreone);
+                    settings.setImageResource(R.mipmap.moretamilone);
                 }
                 else{
                     happening.setBackgroundResource(R.color.Black);
@@ -415,10 +415,10 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     search.setBackgroundResource(R.color.white);
                     audio_video.setBackgroundResource(R.color.white);
                     //settings.setBackgroundResource(R.color.white);
-                    city.setImageResource(R.mipmap.newsone);
-                    happening.setImageResource(R.mipmap.eventone);
-                    search.setImageResource(R.mipmap.searchone);
-                    audio_video.setImageResource(R.mipmap.specialone);
+                    city.setImageResource(R.mipmap.newstamilone);
+                    happening.setImageResource(R.mipmap.eventstamilone);
+                    search.setImageResource(R.mipmap.searchtamilone);
+                    audio_video.setImageResource(R.mipmap.specialstamilone);
                     //settings.setImageResource(R.mipmap.moreone);
                 }
                 else{

@@ -239,7 +239,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
 
                         mainlayout.setBackgroundDrawable(g);
                         explore.setBackgroundResource(R.color.theme13);
-                        explore.setImageResource(R.mipmap.specialone);
+                        explore.setImageResource(R.mipmap.specialstamilone);
                     }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
@@ -1097,14 +1097,14 @@ public class EntertainmentFragmentTamil extends Fragment  {
 
                         mainlayout.setBackgroundDrawable(gd);
                         explore.setBackgroundResource(R.color.theme13);
-                        explore.setImageResource(R.mipmap.specialone);
-                        beyond.setImageResource(R.mipmap.eventone);
-                        city.setImageResource(R.mipmap.newsone);
+                        explore.setImageResource(R.mipmap.specialstamilone);
+                        beyond.setImageResource(R.mipmap.eventstamilone);
+                        city.setImageResource(R.mipmap.newstamilone);
                         city.setBackgroundResource(R.color.theme14);
                         btnsearch.setBackgroundResource(R.color.theme14);
-                        btnsearch.setImageResource(R.mipmap.searchone);
+                        btnsearch.setImageResource(R.mipmap.searchtamilone);
                         more.setBackgroundResource(R.color.theme14);
-                        more.setImageResource(R.mipmap.moreone);
+                        more.setImageResource(R.mipmap.moretamilone);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));

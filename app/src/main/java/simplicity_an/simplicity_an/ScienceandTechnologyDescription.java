@@ -132,6 +132,7 @@ public class ScienceandTechnologyDescription extends AppCompatActivity {
     RelativeLayout mainlayout;
     String colorcodes;
     TextView qtype;
+    LinearLayout commentboxlayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,6 +164,18 @@ public class ScienceandTechnologyDescription extends AppCompatActivity {
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
 
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
+
+        commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
+        back = (ImageButton)findViewById(R.id.btn_back);
+        if(colorcodes.equals("#FFFFFFFF")){
+            commentboxlayout.setBackgroundColor(Color.WHITE);
+            back.setImageResource(R.mipmap.backtamilone);
+        }
+        else{
+            commentboxlayout.setBackgroundColor(Color.BLACK);
+            back.setImageResource(R.mipmap.back);
+        }
+
         if(colorcodes.length()==0){
             int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
             GradientDrawable gd = new GradientDrawable(
@@ -326,6 +339,7 @@ requestQueue=Volley.newRequestQueue(this);
 
         if(colorcodes == "#FFFFFFFF"){
             titlename.setTextColor(Color.BLACK);
+            post.setTextColor(Color.BLACK);
             textview_date.setTextColor(Color.BLACK);
             comment_title.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
@@ -340,6 +354,7 @@ requestQueue=Volley.newRequestQueue(this);
         }
         else{
             titlename.setTextColor(Color.WHITE);
+            post.setTextColor(Color.WHITE);
             textview_date.setTextColor(Color.WHITE);
             comment_title.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);

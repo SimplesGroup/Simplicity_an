@@ -132,7 +132,7 @@ public class Healthylivingdescription extends AppCompatActivity {
     public static final String USERID="user_id";
     public static final String QID="qid";
     public static final String QTYPE="qtype";
-
+    LinearLayout commentboxlayout;
     ScrollView scrollView;
     public static final String backgroundcolor = "color";
     RelativeLayout mainlayout;
@@ -169,6 +169,18 @@ public class Healthylivingdescription extends AppCompatActivity {
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
 
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
+
+        commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
+        back = (ImageButton)findViewById(R.id.btn_back);
+        if(colorcodes.equals("#FFFFFFFF")){
+            commentboxlayout.setBackgroundColor(Color.WHITE);
+            back.setImageResource(R.mipmap.backtamilone);
+        }
+        else{
+            commentboxlayout.setBackgroundColor(Color.BLACK);
+            back.setImageResource(R.mipmap.back);
+        }
+
         if(colorcodes.length()==0){
             int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
             GradientDrawable gd = new GradientDrawable(
@@ -340,6 +352,7 @@ public class Healthylivingdescription extends AppCompatActivity {
         if(colorcodes == "#FFFFFFFF"){
 
             comment_title.setTextColor(Color.BLACK);
+            post.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
             textview_date.setTextColor(Color.BLACK);
             tv.setTextColor(Color.BLACK);
@@ -351,6 +364,7 @@ public class Healthylivingdescription extends AppCompatActivity {
         }
         else{
             comment_title.setTextColor(Color.WHITE);
+            post.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);
             textview_date.setTextColor(Color.WHITE);
             tv.setTextColor(Color.WHITE);

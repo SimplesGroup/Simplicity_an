@@ -239,7 +239,7 @@ public class HappeningFragTamil extends Fragment {
 
                         mainlayout.setBackgroundDrawable(g);
                         beyond.setBackgroundResource(R.color.theme13);
-                        beyond.setImageResource(R.mipmap.eventone);
+                        beyond.setImageResource(R.mipmap.eventstamilone);
                     }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
@@ -1181,15 +1181,15 @@ public class HappeningFragTamil extends Fragment {
 
                         mainlayout.setBackgroundDrawable(gd);
                         beyond.setBackgroundResource(R.color.theme13);
-                        beyond.setImageResource(R.mipmap.eventone);
-                        city.setImageResource(R.mipmap.newsone);
+                        beyond.setImageResource(R.mipmap.eventstamilone);
+                        city.setImageResource(R.mipmap.newstamilone);
                         city.setBackgroundResource(R.color.theme14);
                         specials.setBackgroundResource(R.color.theme14);
-                        specials.setImageResource(R.mipmap.specialone);
+                        specials.setImageResource(R.mipmap.specialstamilone);
                         btnsearch.setBackgroundResource(R.color.theme14);
-                        btnsearch.setImageResource(R.mipmap.searchone);
+                        btnsearch.setImageResource(R.mipmap.searchtamilone);
                         more.setBackgroundResource(R.color.theme14);
-                        more.setImageResource(R.mipmap.moreone);
+                        more.setImageResource(R.mipmap.moretamilone);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
@@ -1221,6 +1221,12 @@ public class HappeningFragTamil extends Fragment {
         //  mTabLayout.setOnTabSelectedListener(this);
         //Notice how The Tab Layout adn View Pager object are linked
         mTabLayout.setupWithViewPager(mPager);
+        if(colorcodes.equals("#FFFFFFFF")){
+            mTabLayout.setSelectedTabIndicatorColor(Color.BLACK);
+        }
+        else{
+            mTabLayout.setSelectedTabIndicatorColor(Color.WHITE);
+        }
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -1256,6 +1262,9 @@ public class HappeningFragTamil extends Fragment {
                 View tabViewChild = vgTab.getChildAt(i);
                 if (tabViewChild instanceof TextView) {
                     ((TextView) tabViewChild).setTypeface(tf);
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        ((TextView) tabViewChild).setTextColor(Color.BLACK);
+                    }
                 }
             }
         }
