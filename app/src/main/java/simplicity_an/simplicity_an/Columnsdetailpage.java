@@ -597,7 +597,7 @@ try {
                     short_description.setVisibility(View.GONE);
                 }
                 hashtags_title.setText("");
-                title_category.setText(obj.getString("qtype"));
+                //title_category.setText(obj.getString("qtype"));
                 String reporterimage=obj.getString("reporter_image");
                 if(reporterimage.equals("null")||reporterimage.equals("")){
 
