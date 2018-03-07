@@ -266,7 +266,165 @@ public class HappeningFragTamil extends Fragment {
         String simplycity_title_reugular= "fonts/robotoSlabBold.ttf";
         Typeface tf1 = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
         title_coimbatore=(TextView)view.findViewById(R.id.title_versiontwo) ;
+        if(colorcodes.equals("#FFFFFFFF")){
+            beyond.setBackgroundResource(R.color.theme13);
+            beyond.setImageResource(R.mipmap.eventstamilone);
+           /* city.setBackgroundResource(R.color.white);
+            btnevents.setBackgroundResource(R.color.mytransparent);
+            btnmore.setBackgroundResource(R.color.mytransparent);
+            btnspecials.setBackgroundResource(R.color.mytransparent);
+            city.setImageResource(R.mipmap.news);
+            btnevents.setImageResource(R.mipmap.events);
+            btnmore.setImageResource(R.mipmap.more);
+            btnspecials.setImageResource(R.mipmap.specials);*/
+        }
+        else{
 
+            if(colorcodes.equals("#383838")) {
+                beyond.setBackgroundResource(R.color.theme1button);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                specials.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setImageResource(R.mipmap.newstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                specials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#59247c")) {
+                beyond.setBackgroundResource(R.color.theme2);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                specials.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setImageResource(R.mipmap.newstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                specials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#1d487a")) {
+                beyond.setBackgroundResource(R.color.theme3);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                specials.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setImageResource(R.mipmap.newstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                specials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#7A4100")) {
+                beyond.setBackgroundResource(R.color.theme4);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                specials.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setImageResource(R.mipmap.newstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                specials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#6E0138")) {
+                beyond.setBackgroundResource(R.color.theme5);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                specials.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setImageResource(R.mipmap.newstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                specials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#00BFD4")) {
+                beyond.setBackgroundResource(R.color.theme6);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                specials.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setImageResource(R.mipmap.newstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                specials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#185546")) {
+                beyond.setBackgroundResource(R.color.theme7);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                specials.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setImageResource(R.mipmap.newstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                specials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#D0A06F")) {
+                beyond.setBackgroundResource(R.color.theme8);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                specials.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setImageResource(R.mipmap.newstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                specials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#82C6E6")) {
+                beyond.setBackgroundResource(R.color.theme9);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                specials.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setImageResource(R.mipmap.newstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                specials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#339900")) {
+                beyond.setBackgroundResource(R.color.theme10);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                specials.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setImageResource(R.mipmap.newstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                specials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#CC9C00")) {
+                beyond.setBackgroundResource(R.color.theme11);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                specials.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setImageResource(R.mipmap.newstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                specials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#00B09B")) {
+                beyond.setBackgroundResource(R.color.theme12);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                specials.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setImageResource(R.mipmap.newstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                specials.setImageResource(R.mipmap.specialtamil);
+            }
+        }
         title_coimbatore.setTypeface(tf1);
         title_coimbatore.setText(" நிகழ்வுகள்");
         layout = (LinearLayout)view. findViewById(R.id.title);

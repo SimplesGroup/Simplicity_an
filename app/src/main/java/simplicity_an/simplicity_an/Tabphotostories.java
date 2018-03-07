@@ -128,6 +128,7 @@ public class Tabphotostories extends Fragment {
             myprofileid = myprofileid.replaceAll("\\D+","");
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
+       // Log.e("Colorcode",colorcodes);
         requestQueue = Volley.newRequestQueue(getActivity());
 
             getData();
@@ -681,7 +682,7 @@ public class Tabphotostories extends Fragment {
         public RelativeLayout countlayout,listLayout;
         // LinearLayout ;
         RecyclerView_OnClickListener.OnClickListener onClickListener;
-
+        View line;
         public UserViewHolderphotostories(View itemView) {
             super(itemView);
 
@@ -726,6 +727,8 @@ public class Tabphotostories extends Fragment {
             this.comment_imagebutton=(ImageButton)itemView.findViewById(R.id.button_comment);
             this.like_imagebutton=(ImageButton)itemView.findViewById(R.id.button_likes) ;
             this.share_imagebutton=(ImageButton)itemView.findViewById(R.id.button_share) ;
+            this.line = itemView.findViewById(R.id.line_separter);
+
 
 
 
@@ -868,11 +871,10 @@ public class Tabphotostories extends Fragment {
 
                 if(colorcodes.equals("#FFFFFFFF"))
                 {
+                    Log.e("colorcode",colorcodes);
                     userViewHolder.shortdescription.setTextColor(Color.GRAY);
-                    userViewHolder.editername.setTextColor(Color.GRAY);
                     userViewHolder.title_item.setTextColor(Color.BLACK);
                     userViewHolder.item_type_name.setTextColor(Color.GRAY);
-                    userViewHolder.date.setTextColor(Color.GRAY);
                     userViewHolder.likescount.setTextColor(Color.BLACK);
                     userViewHolder.commentscount.setTextColor(Color.BLACK);
                     userViewHolder.line.setBackgroundColor(Color.LTGRAY);
@@ -880,14 +882,11 @@ public class Tabphotostories extends Fragment {
                 }
                 else if(colorcodes.equals("#00B09B")){
                     userViewHolder.shortdescription.setTextColor(Color.WHITE);
-                    userViewHolder.editername.setTextColor(Color.WHITE);
                     userViewHolder.title_item.setTextColor(Color.WHITE);
                     userViewHolder.item_type_name.setTextColor(Color.WHITE);
                     userViewHolder.likescount.setTextColor(Color.WHITE);
                     userViewHolder.commentscount.setTextColor(Color.WHITE);
                     userViewHolder.line.setBackgroundColor(R.color.whitefood);
-                    userViewHolder.date.setTextColor(Color.WHITE);
-
                 }
 
                 int imgResource = R.mipmap.likered;
@@ -944,12 +943,52 @@ public class Tabphotostories extends Fragment {
                 userViewHolder.editername.setText(itemmodel.getEditername());
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
                 userViewHolder.title_item.setTypeface(seguiregular);
-                if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular_bold);
+                if(itemmodel.getEditername().equals("")){
+                    userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));
+                }else {
+                    userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));
+                }
+                userViewHolder.item_type_name.setTypeface(seguiregular_bold);
                 //userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(tf_play);
                 userViewHolder.commentscount.setTypeface(tf_play);
                 userViewHolder.date.setTypeface(seguiregular);
-               if(itemmodel.getLikescount()==0){                         userViewHolder.likescount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Like"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Comment"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                     }                                        if(itemmodel.getCommentscount()==0){                      userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));                 }else {                     userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                 }
+                if(colorcodes.equals("#FFFFFFFF"))
+                {
+                    Log.e("colorcode",colorcodes);
+                    userViewHolder.shortdescription.setTextColor(Color.GRAY);
+                    userViewHolder.title_item.setTextColor(Color.BLACK);
+                    userViewHolder.item_type_name.setTextColor(Color.GRAY);
+                    userViewHolder.likescount.setTextColor(Color.BLACK);
+                    userViewHolder.commentscount.setTextColor(Color.BLACK);
+                    userViewHolder.line.setBackgroundColor(Color.LTGRAY);
+
+                }
+                else if(colorcodes.equals("#00B09B")){
+                    userViewHolder.shortdescription.setTextColor(Color.WHITE);
+                    userViewHolder.title_item.setTextColor(Color.WHITE);
+                    userViewHolder.item_type_name.setTextColor(Color.WHITE);
+                    userViewHolder.likescount.setTextColor(Color.WHITE);
+                    userViewHolder.commentscount.setTextColor(Color.WHITE);
+                    userViewHolder.line.setBackgroundColor(R.color.whitefood);
+                }
+
+               if(itemmodel.getLikescount()==0){
+                    userViewHolder.likescount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Like"));
+                }else
+                    {
+                        userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));
+                    }
+                    if(itemmodel.getCommentscount()==0){
+                   userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Comment"));
+               }else {
+                        userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));
+                    }
+                    if(itemmodel.getCommentscount()==0){
+                        userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));
+                    }else {
+                        userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));
+                    }
 
 
                 if(itemmodel.getImage()!=null){
@@ -1374,7 +1413,25 @@ public class Tabphotostories extends Fragment {
                 userViewHolder.share_button.setText("Share");
                 userViewHolder.share_button.setTypeface(seguiregular);
                 userViewHolder.share_button.setTransformationMethod(null);
+                if(colorcodes.equals("#FFFFFFFF"))
+                {
+                    Log.e("colorcode",colorcodes);
+                    userViewHolder.shortdescription.setTextColor(Color.GRAY);
+                    userViewHolder.title_item.setTextColor(Color.BLACK);
+                    userViewHolder.item_type_name.setTextColor(Color.GRAY);
+                    userViewHolder.likescount.setTextColor(Color.BLACK);
+                    userViewHolder.commentscount.setTextColor(Color.BLACK);
+ //                    userViewHolder.line.setBackgroundColor(Color.LTGRAY);
 
+                }
+                else if(colorcodes.equals("#00B09B")){
+                    userViewHolder.shortdescription.setTextColor(Color.WHITE);
+                    userViewHolder.title_item.setTextColor(Color.WHITE);
+                    userViewHolder.item_type_name.setTextColor(Color.WHITE);
+                    userViewHolder.likescount.setTextColor(Color.WHITE);
+                    userViewHolder.commentscount.setTextColor(Color.WHITE);
+                   // userViewHolder.line.setBackgroundColor(R.color.whitefood);
+                }
                 save_item_count=itemmodel.getFavcount();
                 if(itemmodel.getCounttype()==1){
 

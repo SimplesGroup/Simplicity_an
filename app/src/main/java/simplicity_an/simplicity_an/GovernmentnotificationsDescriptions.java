@@ -349,6 +349,7 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
         if(colorcodes == "#FFFFFFFF"){
             titlename.setTextColor(Color.BLACK);
             comment_title.setTextColor(Color.BLACK);
+            post.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
             source_reporter_name.setTextColor(Color.BLACK);
             sourcelinknews.setTextColor(Color.BLACK);
@@ -361,6 +362,7 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
         else{
             titlename.setTextColor(Color.WHITE);
             comment_title.setTextColor(Color.WHITE);
+            post.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);
             source_reporter_name.setTextColor(Color.WHITE);
             sourcelinknews.setTextColor(Color.WHITE);
