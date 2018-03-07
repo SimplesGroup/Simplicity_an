@@ -173,7 +173,12 @@ OnFragmentInteractionListener mListener;
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         fabjobs=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
-
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabjobs.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabjobs.setImageResource(R.mipmap.uparrow);
+        }
         fabjobs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

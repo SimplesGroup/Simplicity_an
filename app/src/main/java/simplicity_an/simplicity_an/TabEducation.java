@@ -142,6 +142,12 @@ int like_finalvalues;
         recyclerview_tab_all.setLayoutManager(lLayout);
         pdialog = new ProgressDialog(getActivity());
         fabeducation=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabeducation.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabeducation.setImageResource(R.mipmap.uparrow);
+        }
         fabeducation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

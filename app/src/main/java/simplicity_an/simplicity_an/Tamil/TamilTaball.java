@@ -169,7 +169,12 @@ public class TamilTaball extends Fragment {
         recyclerview_tab_all.setLayoutManager(lLayout);
         pdialog = new ProgressDialog(getActivity());
         fabnews=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
-
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabnews.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabnews.setImageResource(R.mipmap.uparrow);
+        }
         fabnews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

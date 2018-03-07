@@ -141,6 +141,12 @@ FloatingActionButton fabhealth,fabplus;
         recyclerview_tab_all.setLayoutManager(lLayout);
         pdialog = new ProgressDialog(getActivity());
         fabhealth=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabhealth.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabhealth.setImageResource(R.mipmap.uparrow);
+        }
         fabhealth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

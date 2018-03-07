@@ -172,7 +172,12 @@ public class TamilEntertainmentall extends Fragment {
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         fabradio=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
-
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabradio.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabradio.setImageResource(R.mipmap.uparrow);
+        }
         fabradio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

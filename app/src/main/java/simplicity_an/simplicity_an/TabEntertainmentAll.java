@@ -150,6 +150,12 @@ public class TabEntertainmentAll extends Fragment {
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         fabentertainmentall=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabentertainmentall.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabentertainmentall.setImageResource(R.mipmap.uparrow);
+        }
         fabentertainmentall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

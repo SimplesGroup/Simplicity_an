@@ -146,6 +146,12 @@ OnFragmentInteractionListener mListener;
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         fabtravel=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabtravel.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabtravel.setImageResource(R.mipmap.uparrow);
+        }
         fabtravel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
