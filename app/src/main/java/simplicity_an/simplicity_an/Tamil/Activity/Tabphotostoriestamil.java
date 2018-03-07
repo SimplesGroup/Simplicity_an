@@ -1403,7 +1403,7 @@ public class Tabphotostoriestamil extends Fragment {
                     userViewHolder.date.setTextColor(Color.GRAY);
                     userViewHolder.likescount.setTextColor(Color.BLACK);
                     userViewHolder.commentscount.setTextColor(Color.BLACK);
-                    userViewHolder.line.setBackgroundColor(Color.LTGRAY);
+//                    userViewHolder.line.setBackgroundColor(Color.LTGRAY);
 
                 }
                 else if(colorcodes.equals("#00B09B")){
@@ -1413,7 +1413,7 @@ public class Tabphotostoriestamil extends Fragment {
                     userViewHolder.item_type_name.setTextColor(Color.WHITE);
                     userViewHolder.likescount.setTextColor(Color.WHITE);
                     userViewHolder.commentscount.setTextColor(Color.WHITE);
-                    userViewHolder.line.setBackgroundColor(R.color.whitefood);
+                   // userViewHolder.line.setBackgroundColor(R.color.whitefood);
                     userViewHolder.date.setTextColor(Color.WHITE);
 
                 }
