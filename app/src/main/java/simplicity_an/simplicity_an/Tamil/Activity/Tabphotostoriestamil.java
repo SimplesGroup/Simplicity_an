@@ -75,6 +75,7 @@ import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
 import simplicity_an.simplicity_an.RecyclerView_OnClickListener;
 import simplicity_an.simplicity_an.ReportNewsOrComplaints;
 import simplicity_an.simplicity_an.SigninpageActivity;
+import simplicity_an.simplicity_an.Tabphotostories;
 import simplicity_an.simplicity_an.Tamil.TamilArticledescription;
 import simplicity_an.simplicity_an.YoutubeVideoPlayer;
 
@@ -83,7 +84,7 @@ import simplicity_an.simplicity_an.YoutubeVideoPlayer;
  */
 public class Tabphotostoriestamil extends Fragment {
     RecyclerView recyclerview_tab_all_news;
-    String URL="http://simpli-city.in/request2.php?rtype=ent_alldatanew&key=simples&qtype=photostories&language=2";
+    String URL="http://simpli-city.in/request2.php?rtype=ent_alldatatest&key=simples&qtype=photostories&language=2";
     String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples"; 				String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
     String URLALL;
     RequestQueue requestQueue;
@@ -224,7 +225,17 @@ public class Tabphotostoriestamil extends Fragment {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                 swipeRefresh.setRefreshing(true);                 modelList.clear();                 recyclerview_tab_all_adapter.notifyDataSetChanged();                  requestCount=0;                 getData();                                ( new Handler()).postDelayed(new Runnable() {                     @Override                     public void run() {                         swipeRefresh.setRefreshing(false);                     }                 }, 3000);
+                 swipeRefresh.setRefreshing(true);
+                 modelList.clear();
+                 recyclerview_tab_all_adapter.notifyDataSetChanged();
+                 requestCount=0;
+                 getData();
+                 ( new Handler()).postDelayed(new Runnable() {
+                     @Override
+                     public void run() {
+                         swipeRefresh.setRefreshing(false);
+                     }
+                     }, 3000);
 
             }
         });
@@ -275,6 +286,7 @@ public class Tabphotostoriestamil extends Fragment {
             // fetch the data from cache
             try {
                 String data = new String(entry.data, "UTF-8");
+                Log.e("PHOTO",data.toString());
                 try {
                     dissmissDialog();
                     parseJsonFeed(new JSONObject(data));
@@ -292,6 +304,7 @@ public class Tabphotostoriestamil extends Fragment {
 
                 @Override
                 public void onResponse(JSONObject response) {
+                    Log.e("PHOTO",response.toString());
                     VolleyLog.d(TAG_REQUEST, "Response: " + response.toString());
                     if (response != null) {
                         dissmissDialog();
@@ -333,8 +346,7 @@ public class Tabphotostoriestamil extends Fragment {
                 String image = obj.isNull("image") ? null : obj
                         .getString("image");
                 model.setImage(image);
-                model.setEditername(obj.getString("reporter_name"));
-                model.setShortdescription(obj.getString("short_description"));
+
                 model.setId(obj.getString("id"));
                 model.setPdate(obj.getString("pdate"));
                 model.setTitle(obj.getString("title"));
@@ -343,14 +355,18 @@ public class Tabphotostoriestamil extends Fragment {
                 model.setCommentscount(obj.getInt("commentscount"));
                 model.setSharingurl(obj.getString("sharingurl"));
                 model.setQtypemain(obj.getString("qtypemain"));
+                model.setAds(obj.getString("ad_url"));
+                model.setEditername(obj.getString("reporter_name"));
+                model.setShortdescription(obj.getString("short_description"));
+
                 // model.setDislikecount(obj.getInt("dislikes_count"));
                 model.setCounttype(obj.getInt("like_type"));
-                model.setAds(obj.getString("ad_url"));
+
                 model.setPlayurl(obj.getString("file"));
                 int typevalue = obj.isNull("album_count") ? null : obj
                         .getInt("album_count");
-                model.setAlibumcount(typevalue);
-
+                model.setAlbumcount(typevalue);
+                List<ItemModel> albums = new ArrayList<>();
                 ArrayList<String> album = new ArrayList<String>();
                 try {
                     JSONArray feedArraygallery = obj.getJSONArray("palbum");
@@ -359,7 +375,9 @@ public class Tabphotostoriestamil extends Fragment {
                     for (int k = 0; k < feedArraygallery.length(); k++) {
 
                         JSONObject object = (JSONObject) feedArraygallery.get(k);
-
+                       ItemModel models = new ItemModel();
+                        models.setAlbumimage(object.getString("image"));
+                        albums.add(models);
 
                         String images=object.getString("image");
                         album.add(images);
@@ -367,6 +385,7 @@ public class Tabphotostoriestamil extends Fragment {
                 }catch (JSONException e){
 
                 }
+                model.setAlbumlist(albums);
                 model.setAlbum(album);
                 modelList.add(model);
 
@@ -408,21 +427,18 @@ public class Tabphotostoriestamil extends Fragment {
         private String pdate;
         private String description;
         private String title;
-        int alibumcount;
-        String playurl;
+        int albumcount;
+        String playurl,albumimage;
         private ArrayList<String> album;
+        private List<ItemModel> albumlist;
         /******** start the Food category names****/
         private String id;
         /******** start the Food category names****/
         private String qtype,qtypemain;
+        String ads;
         int favcount;
         String sharingurl;
-        int likescount,dislikecount,counttype,commentscount;
-        public String getPlayurl() {
-            return playurl;
-        }
-        String ads;
-
+        int likescount,dislikecount,commentscount,counttype;
         String shortdescription,editername;
 
         public String getEditername() {
@@ -440,7 +456,6 @@ public class Tabphotostoriestamil extends Fragment {
         public void setShortdescription(String shortdescription) {
             this.shortdescription = shortdescription;
         }
-
         public String getAds() {
             return ads;
         }
@@ -448,6 +463,26 @@ public class Tabphotostoriestamil extends Fragment {
         public void setAds(String ads) {
             this.ads = ads;
         }
+        public List<ItemModel> getAlbumlist() {
+            return albumlist;
+        }
+
+        public void setAlbumlist(List<ItemModel> albumlist) {
+            this.albumlist = albumlist;
+        }
+
+        public String getAlbumimage() {
+            return albumimage;
+        }
+
+        public void setAlbumimage(String albumimage) {
+            this.albumimage = albumimage;
+        }
+
+        public String getPlayurl() {
+            return playurl;
+        }
+
         public void setPlayurl(String playurl) {
             this.playurl = playurl;
         }
@@ -459,12 +494,13 @@ public class Tabphotostoriestamil extends Fragment {
         public void setAlbum(ArrayList<String> album) {
             this.album = album;
         }
-        public int getAlibumcount() {
-            return alibumcount;
+
+        public int getAlbumcount() {
+            return albumcount;
         }
 
-        public void setAlibumcount(int alibumcount) {
-            this.alibumcount = alibumcount;
+        public void setAlbumcount(int albumcount) {
+            this.albumcount = albumcount;
         }
 
         public String getQtypemain() {
@@ -1309,7 +1345,7 @@ public class Tabphotostoriestamil extends Fragment {
 
                 String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
-                String simplycity_title = "fonts/playfairDisplayRegular.ttf";
+                String simplycity_title = "fonts/robotoSlabRegular.ttf";
                 final Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
 
 
@@ -1357,6 +1393,7 @@ userViewHolder.shortdescription.setTypeface(seguiregular);
                 userViewHolder.item_type_name.setTypeface(tf_play);
                 //userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(tf_play);
+                userViewHolder.commentscount.setTypeface(tf_play);
                 userViewHolder.date.setTypeface(tf_play);
                 if(itemmodel.getLikescount()==0){                         userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"விருப்பு"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"விருப்பு"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"கருத்து"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"கருத்து"));                     }                     userViewHolder.countlayout.setVisibility(View.VISIBLE);
 
@@ -1367,7 +1404,7 @@ userViewHolder.shortdescription.setTypeface(seguiregular);
                 String powers = "";
                 String powerstwo = "";
                 // Chcek for empty status message
-                if (itemmodel.getAlibumcount()==0) {
+                if (itemmodel.getAlbumcount()==0) {
 
                     userViewHolder.feedImageView.setImageUrl(itemmodel.getImage(), mImageLoader);
                     userViewHolder.feedImageView.setDefaultImageResId(R.mipmap.ic_launcher);
@@ -1383,7 +1420,7 @@ userViewHolder.shortdescription.setTypeface(seguiregular);
                     userViewHolder.feedImageView_typefour_two.setVisibility(View.GONE);
                     userViewHolder.feedImageView_typefour_three.setVisibility(View.GONE);
                     userViewHolder.feedImageView_typefour_four.setVisibility(View.GONE);
-                }else if(itemmodel.getAlibumcount()==2){
+                }else if(itemmodel.getAlbumcount()==2){
                     int j;
 
 
@@ -1412,7 +1449,7 @@ userViewHolder.shortdescription.setTypeface(seguiregular);
                         userViewHolder.feedImageView_typefour_three.setVisibility(View.GONE);
                         userViewHolder.feedImageView_typefour_four.setVisibility(View.GONE);
                     }
-                }else if(itemmodel.getAlibumcount()==3){
+                }else if(itemmodel.getAlbumcount()==3){
                     int j;
                     for( j=0;j<itemmodel.getAlbum().size();j++) {
                         powerstwo = itemmodel.getAlbum().get(j);
@@ -1486,7 +1523,7 @@ userViewHolder.shortdescription.setTypeface(seguiregular);
 
                     }
                 }
-                int albumcountsdata=itemmodel.getAlibumcount();
+                int albumcountsdata=itemmodel.getAlbumcount();
                 if(albumcountsdata>4){
                     userViewHolder.moreimagescount_textview.setVisibility(View.VISIBLE);
                     int result=albumcountsdata-4;

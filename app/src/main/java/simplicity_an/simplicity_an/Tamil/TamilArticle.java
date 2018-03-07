@@ -954,7 +954,7 @@ OnFragmentInteractionListener mListener;
                 mediaPlayer=new MediaPlayer();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
-                String simplycity_title = "fonts/playfairDisplayRegular.ttf";;
+                String simplycity_title = "fonts/robotoSlabRegular.ttf";
                 final Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
                 userViewHolder.shortdescription.setTypeface(tf_play);
                 if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){                      userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
