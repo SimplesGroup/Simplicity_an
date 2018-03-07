@@ -16,6 +16,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.util.Log;
@@ -53,6 +54,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import simplicity_an.simplicity_an.MainEnglish.EntertainmentFragment;
 import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SimplicitySearchview;
@@ -90,7 +92,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
     public static final String Activity = "activity";
     public static final String Language = "lamguage";
     public static final String CONTENTID = "contentid";
-    ImageButton city,beyond,search,explore,notifications,themechange_button;
+    ImageButton city,beyond,more,btnsearch,search,explore,notifications,themechange_button;
     String activity,contentid,colorcodes;
 
     CoordinatorLayout mCoordinator;
@@ -138,6 +140,10 @@ public class EntertainmentFragmentTamil extends Fragment  {
             myprofileid = myprofileid.replaceAll("\\D+","");
         }
         explore=(ImageButton)getActivity().findViewById(R.id.btn_versiontwoexplore);
+        beyond=(ImageButton)getActivity().findViewById(R.id.btn_versiontwobeyond);
+        city=(ImageButton)getActivity().findViewById(R.id.btn_versiontwocity);
+        btnsearch = (ImageButton)getActivity().findViewById(R.id.btn_versiontwosearch);
+        more = (ImageButton)getActivity().findViewById(R.id.btn_versiontwonotifications);
         url_notification_count_valueget=url_noti_count+myprofileid;
         URLPOSTQTYPE=urlpost;
         if(activity.equalsIgnoreCase("entertainmentversion")){
@@ -211,14 +217,30 @@ public class EntertainmentFragmentTamil extends Fragment  {
             }else {
 
                 if(colorcodes!=null){
-                    int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    if(!colorcodes.equals("#FFFFFFFF")) {
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
 
-                    mainlayout.setBackgroundDrawable(gd);
+                        mainlayout.setBackgroundDrawable(gd);
+
+
+                    }
+                    else{
+                        int[] color = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+
+                        GradientDrawable g = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                color);
+                        g.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(g);
+                        explore.setBackgroundResource(R.color.theme13);
+                        explore.setImageResource(R.mipmap.specialstamilone);
+                    }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -320,6 +342,176 @@ public class EntertainmentFragmentTamil extends Fragment  {
         params.setMargins(0, 170, 0, 0);
         layout.setLayoutParams(params);
 
+        if(colorcodes.equals("#FFFFFFFF"))
+        {
+            title_coimbatore.setTextColor(Color.BLACK);
+
+
+        }
+        else
+        {
+            title_coimbatore.setTextColor(Color.WHITE);
+        }
+
+        if(colorcodes.equals("#FFFFFFFF")){
+            explore.setBackgroundResource(R.color.theme13);
+            explore.setImageResource(R.mipmap.specialstamilone);
+           /* city.setBackgroundResource(R.color.white);
+            btnevents.setBackgroundResource(R.color.mytransparent);
+            btnmore.setBackgroundResource(R.color.mytransparent);
+            btnspecials.setBackgroundResource(R.color.mytransparent);
+            city.setImageResource(R.mipmap.news);
+            btnevents.setImageResource(R.mipmap.events);
+            btnmore.setImageResource(R.mipmap.more);
+            btnspecials.setImageResource(R.mipmap.specials);*/
+        }
+        else{
+
+            if(colorcodes.equals("#383838")) {
+                explore.setBackgroundResource(R.color.theme1button);
+                explore.setImageResource(R.mipmap.specialtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                beyond.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+            }
+            else if(colorcodes.equals("#59247c")) {
+                explore.setBackgroundResource(R.color.theme2);
+                explore.setImageResource(R.mipmap.specialtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                beyond.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+            }
+            else if(colorcodes.equals("#1d487a")) {
+                explore.setBackgroundResource(R.color.theme3);
+                explore.setImageResource(R.mipmap.specialtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                beyond.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+            }
+            else if(colorcodes.equals("#7A4100")) {
+                explore.setBackgroundResource(R.color.theme4);
+                explore.setImageResource(R.mipmap.specialtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                beyond.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+            }
+            else if(colorcodes.equals("#6E0138")) {
+                explore.setBackgroundResource(R.color.theme5);
+                explore.setImageResource(R.mipmap.specialtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                beyond.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+            }
+            else if(colorcodes.equals("#00BFD4")) {
+                explore.setBackgroundResource(R.color.theme6);
+                explore.setImageResource(R.mipmap.specialtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                beyond.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+            }
+            else if(colorcodes.equals("#185546")) {
+                explore.setBackgroundResource(R.color.theme7);
+                explore.setImageResource(R.mipmap.specialtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                beyond.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+            }
+            else if(colorcodes.equals("#D0A06F")) {
+                explore.setBackgroundResource(R.color.theme8);
+                explore.setImageResource(R.mipmap.specialtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                beyond.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+            }
+            else if(colorcodes.equals("#82C6E6")) {
+                explore.setBackgroundResource(R.color.theme9);
+                explore.setImageResource(R.mipmap.specialtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                beyond.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+            }
+            else if(colorcodes.equals("#339900")) {
+                explore.setBackgroundResource(R.color.theme10);
+                explore.setImageResource(R.mipmap.specialtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                beyond.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+            }
+            else if(colorcodes.equals("#CC9C00")) {
+                explore.setBackgroundResource(R.color.theme11);
+                explore.setImageResource(R.mipmap.specialtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                beyond.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+            }
+            else if(colorcodes.equals("#00B09B")) {
+                explore.setBackgroundResource(R.color.theme12);
+                explore.setImageResource(R.mipmap.specialtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                beyond.setBackgroundResource(R.color.mytransparent);
+                more.setBackgroundResource(R.color.mytransparent);
+                btnsearch.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                beyond.setImageResource(R.mipmap.eventstamil);
+                more.setImageResource(R.mipmap.moretamil);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+            }
+        }
         StringRequest weather=new StringRequest(Request.Method.GET, WEATHER_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -397,6 +589,32 @@ public class EntertainmentFragmentTamil extends Fragment  {
         title_coimbatore.setTypeface(tf1);
         date_text.setTypeface(tf);
         weather_update.setTypeface(tf);
+        if(colorcodes.equals("#FFFFFFFF"))
+        {
+            language_title.setTextColor(Color.BLACK);
+        }
+        else{
+            language_title.setTextColor(Color.WHITE);
+        }
+
+        if(colorcodes.equals("#FFFFFFFF"))
+        {
+            date_text.setTextColor(Color.BLACK);
+
+        }
+        else{
+            date_text.setTextColor(Color.WHITE);
+        }
+
+        if(colorcodes.equals("#FFFFFFFF"))
+        {
+            weather_update.setTextColor(Color.BLACK);
+
+        }
+        else{
+            weather_update.setTextColor(Color.WHITE);
+        }
+
         title_coimbatore.setText("சிறப்பு தொகுப்பு  ");
         if(dayOfTheWeek.equalsIgnoreCase("Sun")){
             date_text.setText(Html.fromHtml("ஞாயிறு"+","+"&nbsp;"+sMonthNamefull));
@@ -480,6 +698,12 @@ public class EntertainmentFragmentTamil extends Fragment  {
             fabinnerplus.setBackgroundResource(R.color.theme12);
             fabsearch.setBackgroundResource(R.color.theme12);
         }
+        else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
+            explore.setBackgroundResource(R.color.theme13);
+            fabplus.setBackgroundResource(R.color.theme13);
+            fabinnerplus.setBackgroundResource(R.color.theme13);
+            fabsearch.setBackgroundResource(R.color.theme13);
+        }
        /* explore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -550,10 +774,20 @@ public class EntertainmentFragmentTamil extends Fragment  {
                 ImageButton colorten = (ImageButton) dialog.findViewById(R.id.color10);
                 ImageButton coloreleven = (ImageButton) dialog.findViewById(R.id.color11);
                 ImageButton colortwelve = (ImageButton) dialog.findViewById(R.id.color12);
+                ImageButton colorthirteen = (ImageButton) dialog.findViewById(R.id.color13);
                 Button closebutton=(Button)dialog.findViewById(R.id.close_button);
                 colorone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        Fragment fragment = new EntertainmentFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+
                         int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -562,7 +796,16 @@ public class EntertainmentFragmentTamil extends Fragment  {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                       explore.setBackgroundResource(R.color.theme1button);
+                        explore.setBackgroundResource(R.color.theme1button);
+                        explore.setImageResource(R.mipmap.specials);
+                        beyond.setBackgroundResource(R.color.Black);
+                        beyond.setImageResource(R.mipmap.events);
+                        city.setBackgroundResource(R.color.Black);
+                        city.setImageResource(R.mipmap.news);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.search);
+                        more.setBackgroundResource(R.color.Black);
+                        more.setImageResource(R.mipmap.more);
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
@@ -575,6 +818,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
                 colortwo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        Fragment fragment = new EntertainmentFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+
                         int[] colors = {Color.parseColor("#59247c"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -584,6 +836,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
 
                         mainlayout.setBackgroundDrawable(gd);
                        explore.setBackgroundResource(R.color.theme2);
+                        explore.setImageResource(R.mipmap.specials);
+                        beyond.setBackgroundResource(R.color.Black);
+                        beyond.setImageResource(R.mipmap.events);
+                        city.setBackgroundResource(R.color.Black);
+                        city.setImageResource(R.mipmap.news);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.search);
+                        more.setBackgroundResource(R.color.Black);
+                        more.setImageResource(R.mipmap.more);
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
@@ -599,6 +860,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
                 colorthree.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        Fragment fragment = new EntertainmentFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+
                         int[] colors = {Color.parseColor("#1d487a"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -620,6 +890,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
                 colorfour.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        Fragment fragment = new EntertainmentFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+
                         int[] colors = {Color.parseColor("#7A4100"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -627,6 +906,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
                                 colors);
                         gd.setCornerRadius(0f);
                        explore.setBackgroundResource(R.color.theme4);
+                        explore.setImageResource(R.mipmap.specials);
+                        beyond.setBackgroundResource(R.color.Black);
+                        beyond.setImageResource(R.mipmap.events);
+                        city.setBackgroundResource(R.color.Black);
+                        city.setImageResource(R.mipmap.news);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.search);
+                        more.setBackgroundResource(R.color.Black);
+                        more.setImageResource(R.mipmap.more);
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme4));
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme4));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme4));
@@ -640,6 +928,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
                 colorfive.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        Fragment fragment = new EntertainmentFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+
                         int[] colors = {Color.parseColor("#6E0138"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -649,6 +946,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
 
                         mainlayout.setBackgroundDrawable(gd);
                      explore.setBackgroundResource(R.color.theme5);
+                        explore.setImageResource(R.mipmap.specials);
+                        beyond.setBackgroundResource(R.color.Black);
+                        beyond.setImageResource(R.mipmap.events);
+                        city.setBackgroundResource(R.color.Black);
+                        city.setImageResource(R.mipmap.news);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.search);
+                        more.setBackgroundResource(R.color.Black);
+                        more.setImageResource(R.mipmap.more);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
@@ -661,6 +967,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
                 colorsix.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        Fragment fragment = new EntertainmentFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+
                         int[] colors = {Color.parseColor("#00BFD4"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -670,6 +985,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
 
                         mainlayout.setBackgroundDrawable(gd);
                         explore.setBackgroundResource(R.color.theme6);
+                        explore.setImageResource(R.mipmap.specials);
+                        beyond.setBackgroundResource(R.color.Black);
+                        beyond.setImageResource(R.mipmap.events);
+                        city.setBackgroundResource(R.color.Black);
+                        city.setImageResource(R.mipmap.news);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.search);
+                        more.setBackgroundResource(R.color.Black);
+                        more.setImageResource(R.mipmap.more);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
@@ -682,6 +1006,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
                 colorseven.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        Fragment fragment = new EntertainmentFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+
                         int[] colors = {Color.parseColor("#185546"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -691,6 +1024,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
 
                         mainlayout.setBackgroundDrawable(gd);
                      explore.setBackgroundResource(R.color.theme7);
+                        explore.setImageResource(R.mipmap.specials);
+                        beyond.setBackgroundResource(R.color.Black);
+                        beyond.setImageResource(R.mipmap.events);
+                        city.setBackgroundResource(R.color.Black);
+                        city.setImageResource(R.mipmap.news);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.search);
+                        more.setBackgroundResource(R.color.Black);
+                        more.setImageResource(R.mipmap.more);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
@@ -703,6 +1045,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
                 coloreight.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        Fragment fragment = new EntertainmentFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+
                         int[] colors = {Color.parseColor("#D0A06F"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -712,6 +1063,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
 
                         mainlayout.setBackgroundDrawable(gd);
                         explore.setBackgroundResource(R.color.theme8);
+                        explore.setImageResource(R.mipmap.specials);
+                        beyond.setBackgroundResource(R.color.Black);
+                        beyond.setImageResource(R.mipmap.events);
+                        city.setBackgroundResource(R.color.Black);
+                        city.setImageResource(R.mipmap.news);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.search);
+                        more.setBackgroundResource(R.color.Black);
+                        more.setImageResource(R.mipmap.more);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
@@ -724,6 +1084,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
                 colornine.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        Fragment fragment = new EntertainmentFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+
                         int[] colors = {Color.parseColor("#82C6E6"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -733,6 +1102,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
 
                         mainlayout.setBackgroundDrawable(gd);
                        explore.setBackgroundResource(R.color.theme9);
+                        explore.setImageResource(R.mipmap.specials);
+                        beyond.setBackgroundResource(R.color.Black);
+                        beyond.setImageResource(R.mipmap.events);
+                        city.setBackgroundResource(R.color.Black);
+                        city.setImageResource(R.mipmap.news);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.search);
+                        more.setBackgroundResource(R.color.Black);
+                        more.setImageResource(R.mipmap.more);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
@@ -745,6 +1123,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
                 colorten.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        Fragment fragment = new EntertainmentFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+
                         int[] colors = {Color.parseColor("#339900"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -754,6 +1141,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
 
                         mainlayout.setBackgroundDrawable(gd);
                         explore.setBackgroundResource(R.color.theme10);
+                        explore.setImageResource(R.mipmap.specials);
+                        beyond.setBackgroundResource(R.color.Black);
+                        beyond.setImageResource(R.mipmap.events);
+                        city.setBackgroundResource(R.color.Black);
+                        city.setImageResource(R.mipmap.news);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.search);
+                        more.setBackgroundResource(R.color.Black);
+                        more.setImageResource(R.mipmap.more);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
@@ -766,6 +1162,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
                 coloreleven.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        Fragment fragment = new EntertainmentFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+
                         int[] colors = {Color.parseColor("#CC9C00"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -775,6 +1180,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
 
                         mainlayout.setBackgroundDrawable(gd);
                      explore.setBackgroundResource(R.color.theme11);
+                        explore.setImageResource(R.mipmap.specials);
+                        beyond.setBackgroundResource(R.color.Black);
+                        beyond.setImageResource(R.mipmap.events);
+                        city.setBackgroundResource(R.color.Black);
+                        city.setImageResource(R.mipmap.news);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.search);
+                        more.setBackgroundResource(R.color.Black);
+                        more.setImageResource(R.mipmap.more);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
@@ -787,6 +1201,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
                 colortwelve.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        Fragment fragment = new EntertainmentFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+
                         int[] colors = {Color.parseColor("#00B09B"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -795,6 +1218,15 @@ public class EntertainmentFragmentTamil extends Fragment  {
 
                         mainlayout.setBackgroundDrawable(gd);
                      explore.setBackgroundResource(R.color.theme12);
+                        explore.setImageResource(R.mipmap.specials);
+                        beyond.setBackgroundResource(R.color.Black);
+                        beyond.setImageResource(R.mipmap.events);
+                        city.setBackgroundResource(R.color.Black);
+                        city.setImageResource(R.mipmap.news);
+                        btnsearch.setBackgroundResource(R.color.Black);
+                        btnsearch.setImageResource(R.mipmap.search);
+                        more.setBackgroundResource(R.color.Black);
+                        more.setImageResource(R.mipmap.more);
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
@@ -804,7 +1236,42 @@ public class EntertainmentFragmentTamil extends Fragment  {
                         editor.commit();
                     }
                 });
+                colorthirteen.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
+                        Fragment fragment = new EntertainmentFragmentTamil();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+                        int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(gd);
+                        explore.setBackgroundResource(R.color.theme13);
+                        explore.setImageResource(R.mipmap.specialstamilone);
+                        beyond.setImageResource(R.mipmap.eventstamilone);
+                        city.setImageResource(R.mipmap.newstamilone);
+                        city.setBackgroundResource(R.color.theme14);
+                        btnsearch.setBackgroundResource(R.color.theme14);
+                        btnsearch.setImageResource(R.mipmap.searchtamilone);
+                        more.setBackgroundResource(R.color.theme14);
+                        more.setImageResource(R.mipmap.moretamilone);
+                        fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                        fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                        fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#FFFFFFFF");
+
+                        editor.commit();
+                    }
+                });
                 closebutton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -826,6 +1293,12 @@ public class EntertainmentFragmentTamil extends Fragment  {
       //  mTabLayout.setOnTabSelectedListener(this);
         //Notice how The Tab Layout adn View Pager object are linked
         mTabLayout.setupWithViewPager(mPager);
+        if(colorcodes.equals("#FFFFFFFF")){
+            mTabLayout.setSelectedTabIndicatorColor(Color.BLACK);
+        }
+        else{
+            mTabLayout.setSelectedTabIndicatorColor(Color.WHITE);
+        }
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -861,6 +1334,9 @@ public class EntertainmentFragmentTamil extends Fragment  {
                 View tabViewChild = vgTab.getChildAt(i);
                 if (tabViewChild instanceof TextView) {
                     ((TextView) tabViewChild).setTypeface(tf);
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        ((TextView) tabViewChild).setTextColor(Color.BLACK);
+                    }
                 }
             }
         }

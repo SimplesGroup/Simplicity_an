@@ -154,6 +154,7 @@ public class Columnistdetailtamil extends AppCompatActivity {
     String description_comment;
     ScrollView scrollView;
     RelativeLayout mainlayout;
+    LinearLayout commentboxlayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -226,6 +227,17 @@ public class Columnistdetailtamil extends AppCompatActivity {
             gd.setCornerRadius(0f);
 
             mainlayout.setBackgroundDrawable(gd);
+
+            commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
+            back = (ImageButton)findViewById(R.id.btn_back);
+            if(colorcodes.equals("#FFFFFFFF")){
+                commentboxlayout.setBackgroundColor(Color.WHITE);
+                back.setImageResource(R.mipmap.backtamilone);
+            }
+            else{
+                commentboxlayout.setBackgroundColor(Color.BLACK);
+                back.setImageResource(R.mipmap.back);
+            }
 
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(backgroundcolor, "#383838");

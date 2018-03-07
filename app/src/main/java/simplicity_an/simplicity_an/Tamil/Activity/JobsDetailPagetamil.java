@@ -143,6 +143,7 @@ public class JobsDetailPagetamil extends AppCompatActivity {
     String description_comment,my_profilename,my_profileimage;
     WebView infodescrtion,infoaddress;
     TextView phonenumber_textview;
+    LinearLayout commentboxlayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,6 +161,19 @@ public class JobsDetailPagetamil extends AppCompatActivity {
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
 
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
+
+        commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
+        back = (ImageButton)findViewById(R.id.btn_back);
+        if(colorcodes.equals("#FFFFFFFF")){
+            commentboxlayout.setBackgroundColor(Color.WHITE);
+            back.setImageResource(R.mipmap.backtamilone);
+        }
+        else{
+            commentboxlayout.setBackgroundColor(Color.BLACK);
+            back.setImageResource(R.mipmap.back);
+        }
+
+
         if(colorcodes.length()==0){
             int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
             GradientDrawable gd = new GradientDrawable(
@@ -189,14 +203,30 @@ public class JobsDetailPagetamil extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    if(colorcodes == "#FFFFFFFF"){
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
 
-                    mainlayout.setBackgroundDrawable(gd);
+                        mainlayout.setBackgroundDrawable(gd);
+                    } else {
+                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(gd);
+
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#383838");
+
+                        editor.commit();
+                    }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -303,6 +333,53 @@ public class JobsDetailPagetamil extends AppCompatActivity {
         title_qype.setTypeface(tf);
 
         jobrequest= Volley.newRequestQueue(getApplicationContext());
+
+        if(colorcodes == "#FFFFFFFF"){
+
+            //comment_title.setTextColor(Color.BLACK);
+            //loadmore_title.setTextColor(Color.BLACK);
+            jobtypelabel.setTextColor(Color.BLACK);
+            jobtype.setTextColor(Color.BLACK);
+            salarylabel.setTextColor(Color.BLACK);
+            salaryamt.setTextColor(Color.BLACK);
+            candidateprofile.setTextColor(Color.BLACK);
+            Candidateprofileskills.setTextColor(Color.BLACK);
+            Candidateprofileeducation.setTextColor(Color.BLACK);
+            Candidateprofiledetails.setTextColor(Color.BLACK);
+            walininterviewlabel.setTextColor(Color.BLACK);
+            interviewdate.setTextColor(Color.BLACK);
+            interviewdate_data.setTextColor(Color.BLACK);
+            interviewtim_label.setTextColor(Color.BLACK);
+            interviewtiming.setTextColor(Color.BLACK);
+            venue.setTextColor(Color.BLACK);
+            emailabel.setTextColor(Color.BLACK);
+            phonenumber_textview.setTextColor(Color.BLACK);
+            title.setTextColor(Color.BLACK);
+            title_qype.setTextColor(Color.BLACK);
+        }
+        else{
+//            comment_title.setTextColor(Color.WHITE);
+            //loadmore_title.setTextColor(Color.WHITE);
+            jobtypelabel.setTextColor(Color.WHITE);
+            jobtype.setTextColor(Color.WHITE);
+            salarylabel.setTextColor(Color.WHITE);
+            salaryamt.setTextColor(Color.WHITE);
+            candidateprofile.setTextColor(Color.WHITE);
+            Candidateprofileskills.setTextColor(Color.WHITE);
+            Candidateprofileeducation.setTextColor(Color.WHITE);
+            Candidateprofiledetails.setTextColor(Color.WHITE);
+            walininterviewlabel.setTextColor(Color.WHITE);
+            interviewdate.setTextColor(Color.WHITE);
+            interviewdate_data.setTextColor(Color.WHITE);
+            interviewtim_label.setTextColor(Color.WHITE);
+            interviewtiming.setTextColor(Color.WHITE);
+            venue.setTextColor(Color.WHITE);
+            emailabel.setTextColor(Color.WHITE);
+            phonenumber_textview.setTextColor(Color.WHITE);
+            title.setTextColor(Color.WHITE);
+            title_qype.setTextColor(Color.WHITE);
+        }
+
         /*pdialog = new ProgressDialog(getApplicationContext());
         pdialog.show();
         pdialog.setContentView(R.layout.custom_progressdialog);
@@ -585,15 +662,26 @@ public class JobsDetailPagetamil extends AppCompatActivity {
                         "}\n" +
                         "\t\t</style>\n" +
                         "\t</head>";
-                jobdescrion_web.loadDataWithBaseURL("", fonts+s+"</head>", "text/html", "utf-8", "");
-                jobdescrion_web.setWebViewClient(new MyBrowser());
+                String rep = String.valueOf(s);
+                rep =  rep.replaceAll("color:#fff","color:#000");
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    jobdescrion_web.loadDataWithBaseURL("", fonts + rep + "</head>", "text/html", "utf-8", "");
+                }else{
+                    jobdescrion_web.loadDataWithBaseURL("", fonts + s + "</head>", "text/html", "utf-8", "");
+                }                jobdescrion_web.setWebViewClient(new MyBrowser());
                 jobdescrion_web.setBackgroundColor(Color.TRANSPARENT);
                 String adds=jobcompadd;
                 String sad=adds;
                 // s = s.replace("\"", "'");
                 //sad = sad.replace("\\", "");
 
-                job_address_web.loadDataWithBaseURL("", fonts+sad+"</head>", "text/html", "utf-8", "");
+                String reps = sad;
+                reps =  rep.replaceAll("color:#fff","color:#000");
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    jobdescrion_web.loadDataWithBaseURL("", fonts + reps + "</head>", "text/html", "utf-8", "");
+                }else{
+                    jobdescrion_web.loadDataWithBaseURL("", fonts + sad + "</head>", "text/html", "utf-8", "");
+                }
                 job_address_web.setWebViewClient(new MyBrowser());
                 job_address_web.setBackgroundColor(Color.TRANSPARENT);
 
@@ -601,8 +689,13 @@ public class JobsDetailPagetamil extends AppCompatActivity {
                 String sinfo=ssinfo;
                 // s = s.replace("\"", "'");
 //        s = s.replace("\\", "");
-                infodescrtion.loadData(fonts+sinfo, "text/html; charset=UTF-8", null);
-                infodescrtion.setBackgroundColor(Color.TRANSPARENT);
+                String repss = sinfo;
+                repss =  rep.replaceAll("color:#fff","color:#000");
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    jobdescrion_web.loadDataWithBaseURL("", fonts + repss + "</head>", "text/html", "utf-8", "");
+                }else{
+                    jobdescrion_web.loadDataWithBaseURL("", fonts + sinfo + "</head>", "text/html", "utf-8", "");
+                }                infodescrtion.setBackgroundColor(Color.TRANSPARENT);
                 String addsinfo=jobcompadd;
                 String sadinfo=adds;
                 // s = s.replace("\"", "'");

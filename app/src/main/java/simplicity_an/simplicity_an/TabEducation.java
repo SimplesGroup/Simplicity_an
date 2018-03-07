@@ -1,5 +1,6 @@
 package simplicity_an.simplicity_an;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -928,6 +929,7 @@ SwipeRefreshLayout swipeRefresh;
 
             return null;
         }
+        @SuppressLint("ResourceAsColor")
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof Userviewholdertaball) {

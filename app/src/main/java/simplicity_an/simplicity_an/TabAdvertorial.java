@@ -711,7 +711,7 @@ SwipeRefreshLayout swipeRefresh;
         NetworkImageView   feedImageView_typetwo_one,feedImageView_typetwo_two;
         NetworkImageView   feed_typethree_ones,feed_typethree_twos,feed_typethree_threes;
         NetworkImageView   feedImageView_typefour_one,feedImageView_typefour_two,feedImageView_typefour_three,feedImageView_typefour_four;
-
+        View line;
         public RelativeLayout countlayout,listLayout;
         // LinearLayout ;
         RecyclerView_OnClickListener.OnClickListener onClickListener;
@@ -748,7 +748,7 @@ SwipeRefreshLayout swipeRefresh;
             this. feed_typethree_ones=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_three_one) ;
             this. feed_typethree_twos=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_three_two) ;
             this.  feed_typethree_threes=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_three_three) ;
-
+             this.line = itemView.findViewById(R.id.line_separter);
 
             this. feedImageView_typefour_one=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_type_four_one) ;
             this. feedImageView_typefour_two=(NetworkImageView)itemView.findViewById(R.id.feedImage_photostory_type_four_two) ;
@@ -887,12 +887,12 @@ SwipeRefreshLayout swipeRefresh;
                 userViewHolder.share_button.setTransformationMethod(null);
 
                 save_item_count=itemmodel.getFavcount();
-               /* if(colorcodes.equals("#FFFFFFFF"))
+           if(colorcodes.equals("#FFFFFFFF"))
                 {
                     //userViewHolder.shortdescription.setTextColor(Color.GRAY);
                     userViewHolder.title_item.setTextColor(Color.BLACK);
                     userViewHolder.item_type_name.setTextColor(Color.GRAY);
-                    userViewHolder.likes_button.setTextColor(getResources().getColor(Color.BLACK));
+                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.Black));
                     userViewHolder.likescount.setTextColor(Color.BLACK);
                     userViewHolder.likescount.setBackgroundColor(Color.GREEN);
                     userViewHolder.commentscount.setTextColor(Color.BLACK);
@@ -906,7 +906,7 @@ SwipeRefreshLayout swipeRefresh;
                     userViewHolder.likescount.setTextColor(Color.WHITE);
                     userViewHolder.commentscount.setTextColor(Color.WHITE);
                     userViewHolder.line.setBackgroundColor(R.color.whitefood);
-                }*/
+                }
                 if(itemmodel.getCounttype()==1){
                     userViewHolder.likes_button.setText("Liked");
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
@@ -1431,6 +1431,26 @@ SwipeRefreshLayout swipeRefresh;
                 userViewHolder.share_button.setTransformationMethod(null);
 
                 save_item_count=itemmodel.getFavcount();
+                if(colorcodes.equals("#FFFFFFFF"))
+                {
+                    //userViewHolder.shortdescription.setTextColor(Color.GRAY);
+                    userViewHolder.title_item.setTextColor(Color.BLACK);
+                    userViewHolder.item_type_name.setTextColor(Color.GRAY);
+                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.Black));
+                    userViewHolder.likescount.setTextColor(Color.BLACK);
+                    userViewHolder.likescount.setBackgroundColor(Color.GREEN);
+                    userViewHolder.commentscount.setTextColor(Color.BLACK);
+                    userViewHolder.line.setBackgroundColor(Color.LTGRAY);
+
+                }
+                else if(colorcodes.equals("#00B09B")){
+                    // userViewHolder.shortdescription.setTextColor(Color.WHITE);
+                    userViewHolder.title_item.setTextColor(Color.WHITE);
+                    userViewHolder.item_type_name.setTextColor(Color.WHITE);
+                    userViewHolder.likescount.setTextColor(Color.WHITE);
+                    userViewHolder.commentscount.setTextColor(Color.WHITE);
+                    userViewHolder.line.setBackgroundColor(R.color.whitefood);
+                }
                 if(itemmodel.getCounttype()==1){
                     userViewHolder.likes_button.setText("Liked");
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));

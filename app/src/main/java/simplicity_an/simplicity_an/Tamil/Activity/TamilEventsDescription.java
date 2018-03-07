@@ -1,5 +1,6 @@
 package simplicity_an.simplicity_an.Tamil.Activity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -154,6 +155,8 @@ ProgressDialog pdialog;
     public static final String backgroundcolor = "color";
     RelativeLayout mainlayout;
     String colorcodes;
+    LinearLayout commentboxlayout;
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,6 +188,19 @@ ProgressDialog pdialog;
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
 
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
+
+        commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
+        back = (ImageButton)findViewById(R.id.btn_back);
+        if(colorcodes.equals("#FFFFFFFF")){
+            commentboxlayout.setBackgroundColor(Color.WHITE);
+            back.setImageResource(R.mipmap.backtamilone);
+        }
+        else{
+            commentboxlayout.setBackgroundColor(Color.BLACK);
+            back.setImageResource(R.mipmap.back);
+        }
+
+
         if(colorcodes.length()==0){
             int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
             GradientDrawable gd = new GradientDrawable(
@@ -214,14 +230,30 @@ ProgressDialog pdialog;
             }else {
 
                 if(colorcodes!=null){
-                    int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    if(colorcodes == "#FFFFFFFF"){
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
 
-                    mainlayout.setBackgroundDrawable(gd);
+                        mainlayout.setBackgroundDrawable(gd);
+                    } else {
+                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(gd);
+
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#383838");
+
+                        editor.commit();
+                    }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -339,7 +371,64 @@ booknow.setText("பதிவு செய்ய");
         location_text.setTypeface(tf);
         website_text.setTypeface(tf);
 
+        if(colorcodes == "#FFFFFFFF"){
+            venue_text.setTextColor(Color.BLACK);
+//            comment_title.setTextColor(Color.BLACK);
+            // loadmore_title.setTextColor(Color.BLACK);
+            // post.setTextColor(Color.BLACK);
+            location_text.setTextColor(Color.BLACK);
+            website_text.setTextColor(Color.BLACK);
+            venue_text.setTextColor(Color.BLACK);
+            title.setTextColor(Color.BLACK);
+            title_qype.setTextColor(Color.BLACK);
+            eventdetaildata.setTextColor(Color.BLACK);
+            venuedetails.setTextColor(Color.BLACK);
+            timing.setTextColor(Color.BLACK);
+            timingdetails.setTextColor(Color.BLACK);
+            date.setTextColor(Color.BLACK);
+            date.setTextColor(Color.BLACK);
+            datedetails.setTextColor(Color.BLACK);
+            contactname.setTextColor(Color.BLACK);
+            booknow.setTextColor(Color.BLACK);
+            contactnamedetails.setTextColor(Color.BLACK);
+            email.setTextColor(Color.BLACK);
+            emaildetails.setTextColor(Color.BLACK);
+            phone.setTextColor(Color.BLACK);
+            phonenumberdetails.setTextColor(Color.BLACK);
+            location_details.setTextColor(Color.BLACK);
+            website_details.setTextColor(Color.BLACK);
+            venueandcontact.setTextColor(Color.BLACK);
 
+        }
+        else{
+            venue_text.setTextColor(Color.WHITE);
+            //comment_title.setTextColor(Color.WHITE);
+            //loadmore_title.setTextColor(Color.WHITE);
+            // post.setTextColor(Color.WHITE);
+            location_text.setTextColor(Color.WHITE);
+            website_text.setTextColor(Color.WHITE);
+            venue_text.setTextColor(Color.WHITE);
+            title.setTextColor(Color.WHITE);
+            title_qype.setTextColor(Color.WHITE);
+            eventdetaildata.setTextColor(Color.WHITE);
+            venuedetails.setTextColor(Color.WHITE);
+            timing.setTextColor(Color.WHITE);
+            timingdetails.setTextColor(Color.WHITE);
+            date.setTextColor(Color.WHITE);
+            date.setTextColor(Color.WHITE);
+            datedetails.setTextColor(Color.WHITE);
+            contactname.setTextColor(Color.WHITE);
+            booknow.setTextColor(Color.WHITE);
+            contactnamedetails.setTextColor(Color.WHITE);
+            email.setTextColor(Color.WHITE);
+            emaildetails.setTextColor(Color.WHITE);
+            phone.setTextColor(Color.WHITE);
+            phonenumberdetails.setTextColor(Color.WHITE);
+            location_details.setTextColor(Color.WHITE);
+            website_details.setTextColor(Color.WHITE);
+            venueandcontact.setTextColor(Color.WHITE);
+            venueandcontact.setBackgroundColor(R.color.eventcolor);
+        }
 
         title.setTypeface(tf_bold);
         eventdetaildata.setTypeface(tf);
@@ -656,8 +745,14 @@ booknow.setText("பதிவு செய்ய");
                         "}\n" +
                         "\t\t</style>\n" +
                         "\t</head>";
-                description.loadDataWithBaseURL("", fonts+descrition+"</head>", "text/html", "utf-8", "");
+                String rep = String.valueOf(descrition);
+                rep =  rep.replaceAll("color:#fff","color:#000");
 
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    description.loadDataWithBaseURL("", fonts + rep + "</head>", "text/html", "utf-8", "");
+                }else{
+                    description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
+                }
                 description.setWebViewClient(new MyBrowser());
                 // description.loadUrl(fonts+descrition+"</head>");
 

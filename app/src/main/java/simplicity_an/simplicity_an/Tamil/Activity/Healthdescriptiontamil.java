@@ -147,6 +147,7 @@ public class Healthdescriptiontamil extends AppCompatActivity {
     public static final String backgroundcolor = "color";
     RelativeLayout mainlayout;
     String colorcodes;
+    LinearLayout commentboxlayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -179,6 +180,18 @@ public class Healthdescriptiontamil extends AppCompatActivity {
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
 
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
+
+        commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
+        back = (ImageButton)findViewById(R.id.btn_back);
+        if(colorcodes.equals("#FFFFFFFF")){
+            commentboxlayout.setBackgroundColor(Color.WHITE);
+            back.setImageResource(R.mipmap.backtamilone);
+        }
+        else{
+            commentboxlayout.setBackgroundColor(Color.BLACK);
+            back.setImageResource(R.mipmap.back);
+        }
+
         if(colorcodes.length()==0){
             int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
             GradientDrawable gd = new GradientDrawable(
@@ -208,14 +221,30 @@ public class Healthdescriptiontamil extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    if(colorcodes == "#FFFFFFFF"){
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
 
-                    mainlayout.setBackgroundDrawable(gd);
+                        mainlayout.setBackgroundDrawable(gd);
+                    } else {
+                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(gd);
+
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#383838");
+
+                        editor.commit();
+                    }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -340,6 +369,31 @@ public class Healthdescriptiontamil extends AppCompatActivity {
         pdate.setTypeface(tf);
         sourcelinknews.setTypeface(tf);
         sourcelinksimplicity.setTypeface(tf);
+
+        if(colorcodes == "#FFFFFFFF"){
+
+            comment_title.setTextColor(Color.BLACK);
+            post.setTextColor(Color.BLACK);
+            loadmore_title.setTextColor(Color.BLACK);
+            textview_date.setTextColor(Color.BLACK);
+            tv.setTextColor(Color.BLACK);
+            sourcelinksimplicity.setTextColor(Color.BLACK);
+            sourcelinknews.setTextColor(Color.BLACK);
+            pdate.setTextColor(Color.BLACK);
+
+
+        }
+        else{
+            comment_title.setTextColor(Color.WHITE);
+            post.setTextColor(Color.WHITE);
+            loadmore_title.setTextColor(Color.WHITE);
+            textview_date.setTextColor(Color.WHITE);
+            tv.setTextColor(Color.WHITE);
+            sourcelinksimplicity.setTextColor(Color.WHITE);
+            sourcelinknews.setTextColor(Color.WHITE);
+            pdate.setTextColor(Color.WHITE);
+
+        }
 
         thump=(NetworkImageView)findViewById(R.id.thumbnailone);
         if(notifiid!=null) {
@@ -665,8 +719,13 @@ public class Healthdescriptiontamil extends AppCompatActivity {
                         "}\n" +
                         "\t\t</style>\n" +
                         "\t</head>";
-                description.loadDataWithBaseURL("", fonts+descrition+"</head>", "text/html", "utf-8", "");
-
+                String rep = String.valueOf(descrition);
+                rep =  rep.replaceAll("color:#fff","color:#000");
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    description.loadDataWithBaseURL("", fonts + rep + "</head>", "text/html", "utf-8", "");
+                }else{
+                    description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
+                }
                 description.setWebViewClient(new MyBrowser());
                 // description.loadUrl(fonts+descrition+"</head>");
 

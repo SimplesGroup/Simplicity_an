@@ -94,6 +94,11 @@ public class MainFragTamil extends Fragment {
     private String KEY_MYUID = "user_id";
     private String KEY_POSTID = "id";
     RequestQueue requestQueue;
+    public static final String backgroundcolor = "color";
+    public static final String Language = "lamguage";
+    public static final String CONTENTID = "contentid";
+    ImageButton btnsearch,city,btnspecials,btnevents,btnmore;
+    String activity,contentid,colorcodes;
     public static MainFragTamil newInstance() {
         MainFragTamil fragment = new MainFragTamil();
         return fragment;
@@ -116,14 +121,19 @@ public class MainFragTamil extends Fragment {
         }
         url_notification_count_valueget=url_noti_count+myprofileid;
         Log.e("notification Url:",url_notification_count_valueget);
-
+        contentid=sharedpreferences.getString(CONTENTID,"");
+        colorcodes=sharedpreferences.getString(backgroundcolor,"");
         URLPOSTQTYPE=urlpost;
         requestQueue= Volley.newRequestQueue(getActivity());
         String fontPathbarkendina = "fonts/Barkentina.otf";
         barkentina = Typeface.createFromAsset(getActivity().getAssets(), fontPathbarkendina);
         String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
-
+        city=(ImageButton)getActivity().findViewById(R.id.btn_versiontwocity);
+        btnspecials=(ImageButton)getActivity().findViewById(R.id.btn_versiontwoexplore);
+        btnevents = (ImageButton)getActivity().findViewById(R.id.btn_versiontwobeyond);
+        btnsearch = (ImageButton)getActivity().findViewById(R.id.btn_versiontwosearch);
+        btnmore = (ImageButton)getActivity().findViewById(R.id.btn_versiontwonotifications);
         toolbartitle=(TextView)view.findViewById(R.id.simplicitynewtitle);
         toolbartitle.setTypeface(barkentina);
         search=(android.support.v7.widget.SearchView)view.findViewById(R.id.searchview_main);
@@ -163,7 +173,167 @@ public class MainFragTamil extends Fragment {
             }
         }*/
 
+        if(colorcodes.equals("#FFFFFFFF")){
+            btnsearch.setBackgroundResource(R.color.theme13);
+            btnsearch.setImageResource(R.mipmap.searchtamilone);
+           /* city.setBackgroundResource(R.color.white);
+            btnevents.setBackgroundResource(R.color.mytransparent);
+            btnmore.setBackgroundResource(R.color.mytransparent);
+            btnspecials.setBackgroundResource(R.color.mytransparent);
+            city.setImageResource(R.mipmap.news);
+            btnevents.setImageResource(R.mipmap.events);
+            btnmore.setImageResource(R.mipmap.more);
+            btnspecials.setImageResource(R.mipmap.specials);*/
+        }
+        else{
 
+            if(colorcodes.equals("#383838")) {
+                btnsearch.setBackgroundResource(R.color.theme1button);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                btnevents.setBackgroundResource(R.color.mytransparent);
+                btnmore.setBackgroundResource(R.color.mytransparent);
+                btnspecials.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                btnevents.setImageResource(R.mipmap.eventstamil);
+                btnmore.setImageResource(R.mipmap.moretamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#59247c")) {
+                btnsearch.setBackgroundResource(R.color.theme2);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                btnevents.setBackgroundResource(R.color.mytransparent);
+                btnmore.setBackgroundResource(R.color.mytransparent);
+                btnspecials.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                btnevents.setImageResource(R.mipmap.eventstamil);
+                btnmore.setImageResource(R.mipmap.moretamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#1d487a")) {
+                btnsearch.setBackgroundResource(R.color.theme3);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                btnevents.setBackgroundResource(R.color.mytransparent);
+                btnmore.setBackgroundResource(R.color.mytransparent);
+                btnspecials.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                btnevents.setImageResource(R.mipmap.eventstamil);
+                btnmore.setImageResource(R.mipmap.moretamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#7A4100")) {
+                btnsearch.setBackgroundResource(R.color.theme4);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                btnevents.setBackgroundResource(R.color.mytransparent);
+                btnmore.setBackgroundResource(R.color.mytransparent);
+                btnspecials.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                btnevents.setImageResource(R.mipmap.eventstamil);
+                btnmore.setImageResource(R.mipmap.moretamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#6E0138")) {
+                btnsearch.setBackgroundResource(R.color.theme5);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                btnevents.setBackgroundResource(R.color.mytransparent);
+                btnmore.setBackgroundResource(R.color.mytransparent);
+                btnspecials.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                btnevents.setImageResource(R.mipmap.eventstamil);
+                btnmore.setImageResource(R.mipmap.moretamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#00BFD4")) {
+                btnsearch.setBackgroundResource(R.color.theme6);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                btnevents.setBackgroundResource(R.color.mytransparent);
+                btnmore.setBackgroundResource(R.color.mytransparent);
+                btnspecials.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                btnevents.setImageResource(R.mipmap.eventstamil);
+                btnmore.setImageResource(R.mipmap.moretamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#185546")) {
+                btnsearch.setBackgroundResource(R.color.theme7);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                btnevents.setBackgroundResource(R.color.mytransparent);
+                btnmore.setBackgroundResource(R.color.mytransparent);
+                btnspecials.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                btnevents.setImageResource(R.mipmap.eventstamil);
+                btnmore.setImageResource(R.mipmap.moretamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#D0A06F")) {
+                btnsearch.setBackgroundResource(R.color.theme8);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                btnevents.setBackgroundResource(R.color.mytransparent);
+                btnmore.setBackgroundResource(R.color.mytransparent);
+                btnspecials.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                btnevents.setImageResource(R.mipmap.eventstamil);
+                btnmore.setImageResource(R.mipmap.moretamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#82C6E6")) {
+                btnsearch.setBackgroundResource(R.color.theme9);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                btnevents.setBackgroundResource(R.color.mytransparent);
+                btnmore.setBackgroundResource(R.color.mytransparent);
+                btnspecials.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                btnevents.setImageResource(R.mipmap.eventstamil);
+                btnmore.setImageResource(R.mipmap.moretamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#339900")) {
+                btnsearch.setBackgroundResource(R.color.theme10);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                btnevents.setBackgroundResource(R.color.mytransparent);
+                btnmore.setBackgroundResource(R.color.mytransparent);
+                btnspecials.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                btnevents.setImageResource(R.mipmap.eventstamil);
+                btnmore.setImageResource(R.mipmap.moretamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#CC9C00")) {
+                btnsearch.setBackgroundResource(R.color.theme11);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                btnevents.setBackgroundResource(R.color.mytransparent);
+                btnmore.setBackgroundResource(R.color.mytransparent);
+                btnspecials.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                btnevents.setImageResource(R.mipmap.eventstamil);
+                btnmore.setImageResource(R.mipmap.moretamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);
+            }
+            else if(colorcodes.equals("#00B09B")) {
+                btnsearch.setBackgroundResource(R.color.theme12);
+                btnsearch.setImageResource(R.mipmap.searchtamil);
+                city.setBackgroundResource(R.color.mytransparent);
+                btnevents.setBackgroundResource(R.color.mytransparent);
+                btnmore.setBackgroundResource(R.color.mytransparent);
+                btnspecials.setBackgroundResource(R.color.mytransparent);
+                city.setImageResource(R.mipmap.newstamil);
+                btnevents.setImageResource(R.mipmap.eventstamil);
+                btnmore.setImageResource(R.mipmap.moretamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);
+            }
+
+
+        }
         search.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
 
             @Override

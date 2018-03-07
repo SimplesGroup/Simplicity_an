@@ -134,6 +134,7 @@ ScrollView scrollView;
     public static final String backgroundcolor = "color";
     RelativeLayout mainlayout;
     String colorcodes;
+    LinearLayout commentboxlayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,6 +168,18 @@ ScrollView scrollView;
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
 
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
+
+        commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
+        back = (ImageButton)findViewById(R.id.btn_back);
+        if(colorcodes.equals("#FFFFFFFF")){
+            commentboxlayout.setBackgroundColor(Color.WHITE);
+            back.setImageResource(R.mipmap.backtamilone);
+        }
+        else{
+            commentboxlayout.setBackgroundColor(Color.BLACK);
+            back.setImageResource(R.mipmap.back);
+        }
+
         if(colorcodes.length()==0){
             int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
             GradientDrawable gd = new GradientDrawable(
@@ -196,14 +209,30 @@ ScrollView scrollView;
             }else {
 
                 if(colorcodes!=null){
-                    int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    if(colorcodes == "#FFFFFFFF"){
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
 
-                    mainlayout.setBackgroundDrawable(gd);
+                        mainlayout.setBackgroundDrawable(gd);
+                    } else {
+                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(gd);
+
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#383838");
+
+                        editor.commit();
+                    }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -300,6 +329,29 @@ ScrollView scrollView;
         commentbox_editext.setHint("Comments Here");
         pdate.setTypeface(tf);
         thump = (NetworkImageView) findViewById(R.id.thumbnailone);
+
+        if(colorcodes == "#FFFFFFFF"){
+            tv.setTextColor(Color.BLACK);
+            post.setTextColor(Color.BLACK);
+            comment_title.setTextColor(Color.BLACK);
+            loadmore_title.setTextColor(Color.BLACK);
+            source_reporter_name.setTextColor(Color.BLACK);
+            sourcelinknews.setTextColor(Color.BLACK);
+            sourcelinksimplicity.setTextColor(Color.BLACK);
+            pdate.setTextColor(Color.BLACK);
+
+        }
+        else{
+            tv.setTextColor(Color.WHITE);
+            post.setTextColor(Color.WHITE);
+            comment_title.setTextColor(Color.WHITE);
+            loadmore_title.setTextColor(Color.WHITE);
+            source_reporter_name.setTextColor(Color.WHITE);
+            sourcelinknews.setTextColor(Color.WHITE);
+            sourcelinksimplicity.setTextColor(Color.WHITE);
+            pdate.setTextColor(Color.WHITE);
+        }
+
         pdialog = new ProgressDialog(this);
         pdialog.show();
         pdialog.setContentView(R.layout.custom_progressdialog);
@@ -598,7 +650,14 @@ String fonts="<html>\n" +
         "}\n" +
         "\t\t</style>\n" +
         "\t</head>";
-                description.loadDataWithBaseURL("", fonts+descrition+"</head>", "text/html", "utf-8", "");
+                String rep = String.valueOf(descrition);
+                rep =  rep.replaceAll("color:#fff","color:#000");
+                String date = "<p><font color=\"white\">" + obj.getString("pdate") + "</font></p>";
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    description.loadDataWithBaseURL("", fonts + rep + "</head>", "text/html", "utf-8", "");
+                }else{
+                    description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
+                }
                 description.setWebViewClient(new MyBrowser());
                 description.setBackgroundColor(Color.TRANSPARENT);
                 Log.e("DESC",descrition.toString());

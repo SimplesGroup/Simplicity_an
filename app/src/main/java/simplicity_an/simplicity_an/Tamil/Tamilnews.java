@@ -1,5 +1,6 @@
 package simplicity_an.simplicity_an.Tamil;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -275,6 +276,12 @@ public class Tamilnews extends Fragment {
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
+                }
+                else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
+                    fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
                 }
             }
         }
@@ -694,6 +701,7 @@ public class Tamilnews extends Fragment {
         public RelativeLayout countlayout,listLayout;
         ImageButton play;
         RecyclerView_OnClickListener.OnClickListener onClickListener;
+        View line;
         public Userviewholdertaball(View itemView) {
             super(itemView);
             this.title_item=(TextView)itemView.findViewById(R.id.item_title_taball);
@@ -722,7 +730,7 @@ public class Tamilnews extends Fragment {
             this.comment_imagebutton=(ImageButton)itemView.findViewById(R.id.button_comment);
             this.like_imagebutton=(ImageButton)itemView.findViewById(R.id.button_likes) ;
             this.share_imagebutton=(ImageButton)itemView.findViewById(R.id.button_share) ;
-
+            this.line = itemView.findViewById(R.id.line_separter);
 
             this.shortdescription.setOnClickListener(this);
             this.editername.setOnClickListener(this);
@@ -758,7 +766,7 @@ public class Tamilnews extends Fragment {
         NetworkImageView   feedImageView_typetwo_one,feedImageView_typetwo_two;
         NetworkImageView   feed_typethree_ones,feed_typethree_twos,feed_typethree_threes;
         NetworkImageView   feedImageView_typefour_one,feedImageView_typefour_two,feedImageView_typefour_three,feedImageView_typefour_four;
-
+        View line;
         public RelativeLayout countlayout,listLayout;
         // LinearLayout ;
         RecyclerView_OnClickListener.OnClickListener onClickListener;
@@ -808,6 +816,7 @@ public class Tamilnews extends Fragment {
             this.like_imagebutton=(ImageButton)itemView.findViewById(R.id.button_likes) ;
             this.share_imagebutton=(ImageButton)itemView.findViewById(R.id.button_share) ;
 
+            this.line = itemView.findViewById(R.id.line_separter);
 
             this.shortdescription.setOnClickListener(this);
             this.editername.setOnClickListener(this);
@@ -917,6 +926,7 @@ public class Tamilnews extends Fragment {
 
             return null;
         }
+        @SuppressLint("ResourceAsColor")
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof Userviewholdertaball) {
@@ -938,6 +948,26 @@ public class Tamilnews extends Fragment {
                 userViewHolder.share_button.setTransformationMethod(null);
                 post_likes_count=itemmodel.getCounttype();
                 save_item_count=itemmodel.getFavcount();
+
+                if(colorcodes.equals("#FFFFFFFF"))
+                {
+                    userViewHolder.shortdescription.setTextColor(Color.GRAY);
+                    userViewHolder.title_item.setTextColor(Color.BLACK);
+                    userViewHolder.item_type_name.setTextColor(Color.GRAY);
+                    userViewHolder.likescount.setTextColor(Color.BLACK);
+                    userViewHolder.commentscount.setTextColor(Color.BLACK);
+                    userViewHolder.line.setBackgroundColor(Color.LTGRAY);
+
+                }
+                else if(colorcodes.equals("#00B09B")){
+                    userViewHolder.shortdescription.setTextColor(Color.WHITE);
+                    userViewHolder.title_item.setTextColor(Color.WHITE);
+                    userViewHolder.item_type_name.setTextColor(Color.WHITE);
+                    userViewHolder.likescount.setTextColor(Color.WHITE);
+                    userViewHolder.commentscount.setTextColor(Color.WHITE);
+                    userViewHolder.line.setBackgroundColor(R.color.whitefood);
+                }
+
                 if(itemmodel.getCounttype()==1){
                     userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
                     userViewHolder.like_imagebutton.setTag("heartfullred");

@@ -129,6 +129,7 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
 
     public static final String backgroundcolor = "color";
     RelativeLayout mainlayout;
+    LinearLayout commentboxlayout;
     String colorcodes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,6 +165,18 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
 
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
+
+        commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
+        back = (ImageButton)findViewById(R.id.btn_back);
+        if(colorcodes.equals("#FFFFFFFF")){
+            commentboxlayout.setBackgroundColor(Color.WHITE);
+            back.setImageResource(R.mipmap.backtamilone);
+        }
+        else{
+            commentboxlayout.setBackgroundColor(Color.BLACK);
+            back.setImageResource(R.mipmap.back);
+        }
+
         if(colorcodes.length()==0){
             int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
             GradientDrawable gd = new GradientDrawable(
@@ -384,6 +397,9 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
         if(colorcodes == "#FFFFFFFF"){
 
             comment_title.setTextColor(Color.BLACK);
+            comment_title.setText("Comment here...");
+            post.setTextColor(Color.BLACK);
+            post.setText("Post");
             loadmore_title.setTextColor(Color.BLACK);
             ingredients.setTextColor(Color.BLACK);
             steps.setTextColor(Color.BLACK);
@@ -394,6 +410,9 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
         }
         else{
             comment_title.setTextColor(Color.WHITE);
+            comment_title.setText("Comment here...");
+            post.setTextColor(Color.WHITE);
+            post.setText("Post");
             loadmore_title.setTextColor(Color.WHITE);
             ingredients.setTextColor(Color.WHITE);
             steps.setTextColor(Color.WHITE);

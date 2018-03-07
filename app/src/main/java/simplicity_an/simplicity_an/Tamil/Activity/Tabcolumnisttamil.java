@@ -282,6 +282,12 @@ public class Tabcolumnisttamil extends Fragment {
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                 }
+                else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
+                    fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                }
             }
         }
         // getData();

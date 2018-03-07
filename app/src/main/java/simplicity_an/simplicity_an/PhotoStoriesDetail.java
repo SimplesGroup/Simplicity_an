@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -33,6 +34,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -138,6 +140,10 @@ public class PhotoStoriesDetail extends AppCompatActivity {
     String description_comment, URLTWO_comment;
     private int requestCount = 1;
     JsonObjectRequest jsonReq;
+    String colorcodes;
+    public static final String backgroundcolor = "color";
+    RelativeLayout mainlayout;
+    LinearLayout commentlayout;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,6 +172,10 @@ public class PhotoStoriesDetail extends AppCompatActivity {
             my_profileimage=sharedpreferences.getString(USERIMAGE,"");
 
         }
+        colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        Log.e("Colorcodes",colorcodes);
+        mainlayout=(RelativeLayout)findViewById(R.id.main_layout_explore);
+        commentlayout=(LinearLayout) findViewById(R.id.commentbox_city);
         scrollView=(ScrollView)findViewById(R.id.scroll);
         String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
@@ -206,6 +216,80 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        if(colorcodes.length()==0){
+            int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+            GradientDrawable gd = new GradientDrawable(
+                    GradientDrawable.Orientation.TOP_BOTTOM,
+                    colors);
+            gd.setCornerRadius(0f);
+
+            mainlayout.setBackgroundDrawable(gd);
+
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(backgroundcolor, "#383838");
+            editor.commit();
+        }else {
+            if(colorcodes.equalsIgnoreCase("004")){
+                Log.e("Msg","hihihi"+colorcodes);
+                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+                mainlayout.setBackgroundDrawable(gd);
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#383838");
+                editor.commit();
+            }else {
+
+                if(colorcodes!=null){
+                    if(colorcodes == "#FFFFFFFF"){
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(gd);
+                    } else {
+                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(gd);
+
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#383838");
+
+                        editor.commit();
+                    }
+                }else {
+                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                    GradientDrawable gd = new GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM,
+                            colors);
+                    gd.setCornerRadius(0f);
+
+                    mainlayout.setBackgroundDrawable(gd);
+
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(backgroundcolor, "#383838");
+
+                    editor.commit();
+                }
+            }
+        }
+
+
+
       if(myprofileid!=null) {
           // URLTWO_comment=URLCOMMENT+notifiid;
           //comment_title.setText("Post your Comment Here - ");
@@ -304,6 +388,26 @@ public class PhotoStoriesDetail extends AppCompatActivity {
 
         photostory_date.setTypeface(tf);
         photostory_title.setTypeface(tf_regular);
+
+        if(colorcodes.equals( "#FFFFFFFF")){
+            photostory_date.setTextColor(Color.BLACK);
+            photostory_title.setTextColor(Color.BLACK);
+            commentbox.setBackgroundColor(Color.WHITE);
+            post.setTextColor(Color.BLACK);
+            comment_title.setTextColor(Color.BLACK);
+            back.setImageResource(R.mipmap.backtamilone);
+            commentlayout.setBackgroundColor(Color.WHITE);
+
+        }
+        else{
+            photostory_date.setTextColor(Color.WHITE);
+            photostory_title.setTextColor(Color.WHITE);
+            commentbox.setBackgroundColor(Color.BLACK);
+            post.setTextColor(Color.WHITE);
+            comment_title.setTextColor(Color.WHITE);
+            back.setImageResource(R.mipmap.back);
+            commentlayout.setBackgroundColor(Color.WHITE);
+        }
           /*  if (photostory_title != null) {
                 photostory_title.setText(Html.fromHtml(title));
             } else {

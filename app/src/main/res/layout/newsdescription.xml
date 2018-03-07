@@ -312,15 +312,17 @@ android:visibility="gone"
             android:layout_width="0dp"
             android:orientation="horizontal"
             android:layout_height="match_parent">
-            <ImageButton android:id="@+id/btn_back"
-                android:layout_weight="0.13"
-                android:layout_margin="1dp"
+
+            <ImageButton
+                android:id="@+id/btn_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/back"
-                android:background="@drawable/buttonselector"
                 android:layout_gravity="center"
+                android:layout_margin="1dp"
+                android:layout_weight="0.13"
+                android:background="@drawable/buttonselector"
                 android:gravity="center_horizontal"
+                android:src="@mipmap/back"
 
                 />
 

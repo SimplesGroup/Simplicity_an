@@ -215,6 +215,10 @@ SwipeRefreshLayout swipeRefresh;
                     fab.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                 }
+                else if(colorcodes.equalsIgnoreCase("#00B09B")){
+                    fab.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                    fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
+                }
             }
         }
         swipeRefresh = (SwipeRefreshLayout)view.findViewById(R.id.swipe);
