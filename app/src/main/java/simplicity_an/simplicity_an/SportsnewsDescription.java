@@ -211,7 +211,7 @@ public class SportsnewsDescription extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    if(colorcodes == "#FFFFFFFF"){
+                    if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -338,7 +338,7 @@ public class SportsnewsDescription extends AppCompatActivity {
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);
 
-        if(colorcodes == "#FFFFFFFF"){
+        if(colorcodes.equals("#FFFFFFFF")){
             title.setTextColor(Color.BLACK);
             post.setTextColor(Color.BLACK);
             comment_title.setTextColor(Color.BLACK);

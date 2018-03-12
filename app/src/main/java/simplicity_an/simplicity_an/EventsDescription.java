@@ -217,7 +217,7 @@ public class EventsDescription extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    if(colorcodes == "#FFFFFFFF"){
+                    if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -226,6 +226,9 @@ public class EventsDescription extends AppCompatActivity {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#FFFFFFFF");
+                        editor.commit();
                     } else {
                         int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -357,7 +360,7 @@ public class EventsDescription extends AppCompatActivity {
         website_text.setText("Website:");
         venuecontactinfo.setText("VENUE  CONTACT INFORMATION");
 
-        if(colorcodes == "#FFFFFFFF"){
+        if(colorcodes.equals("#FFFFFFFF")){
             venue_text.setTextColor(Color.BLACK);
 //            comment_title.setTextColor(Color.BLACK);
            // loadmore_title.setTextColor(Color.BLACK);

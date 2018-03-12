@@ -232,6 +232,9 @@ public class EntertainmentFragment extends Fragment  {
                         mainlayout.setBackgroundDrawable(g);
                         explore.setBackgroundResource(R.color.theme13);
                         explore.setImageResource(R.mipmap.specialone);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#FFFFFFFF");
+                        editor.commit();
                     }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};

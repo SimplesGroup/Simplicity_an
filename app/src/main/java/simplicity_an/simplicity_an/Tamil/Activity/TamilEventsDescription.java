@@ -230,7 +230,7 @@ ProgressDialog pdialog;
             }else {
 
                 if(colorcodes!=null){
-                    if(colorcodes == "#FFFFFFFF"){
+                    if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -371,7 +371,7 @@ booknow.setText("பதிவு செய்ய");
         location_text.setTypeface(tf);
         website_text.setTypeface(tf);
 
-        if(colorcodes == "#FFFFFFFF"){
+        if(colorcodes.equals("#FFFFFFFF")){
             venue_text.setTextColor(Color.BLACK);
 //            comment_title.setTextColor(Color.BLACK);
             // loadmore_title.setTextColor(Color.BLACK);

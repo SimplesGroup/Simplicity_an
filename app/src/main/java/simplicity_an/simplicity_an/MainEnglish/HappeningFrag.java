@@ -242,6 +242,9 @@ public class HappeningFrag extends Fragment {
                         mainlayout.setBackgroundDrawable(g);
                         beyond.setBackgroundResource(R.color.theme13);
                         beyond.setImageResource(R.mipmap.eventone);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#FFFFFFFF");
+                        editor.commit();
                     }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};

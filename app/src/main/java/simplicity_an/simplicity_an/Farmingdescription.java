@@ -207,7 +207,7 @@ public class Farmingdescription extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    if(colorcodes == "#FFFFFFFF"){
+                    if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -343,7 +343,7 @@ public class Farmingdescription extends AppCompatActivity {
 
         thump=(NetworkImageView)findViewById(R.id.thumbnailone);
 
-        if(colorcodes == "#FFFFFFFF"){
+        if(colorcodes.equals("#FFFFFFFF")){
             tv.setTextColor(Color.BLACK);
             post.setTextColor(Color.BLACK);
             comment_title.setTextColor(Color.BLACK);

@@ -961,7 +961,7 @@ public class Tabphotostories extends Fragment {
                 userViewHolder.date.setTypeface(seguiregular);
                 if(colorcodes.equals("#FFFFFFFF"))
                 {
-                    Log.e("colorcode",colorcodes);
+                    Log.e("colorcodeLikes",colorcodes);
                     userViewHolder.shortdescription.setTextColor(Color.GRAY);
                     userViewHolder.title_item.setTextColor(Color.BLACK);
                     userViewHolder.item_type_name.setTextColor(Color.GRAY);
@@ -1421,7 +1421,7 @@ public class Tabphotostories extends Fragment {
                 userViewHolder.share_button.setTransformationMethod(null);
                 if(colorcodes.equals("#FFFFFFFF"))
                 {
-                    Log.e("colorcode",colorcodes);
+                    Log.e("colorcodePhoto",colorcodes);
                     userViewHolder.shortdescription.setTextColor(Color.GRAY);
                     userViewHolder.title_item.setTextColor(Color.BLACK);
                     userViewHolder.item_type_name.setTextColor(Color.GRAY);

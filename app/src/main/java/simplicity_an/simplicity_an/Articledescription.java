@@ -141,6 +141,7 @@ int favcount;
     String description_comment;
     ScrollView scrollView;
     RelativeLayout mainlayout;
+    LinearLayout commentboxlayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -205,6 +206,7 @@ if(activity==null){
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
 
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
+        commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
         if(colorcodes.length()==0){
             int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
             GradientDrawable gd = new GradientDrawable(
@@ -234,14 +236,33 @@ if(activity==null){
             }else {
 
                 if(colorcodes!=null){
-                    int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
 
-                    mainlayout.setBackgroundDrawable(gd);
+                        mainlayout.setBackgroundDrawable(gd);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#FFFFFFFF");
+                        editor.commit();
+                    } else {
+                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(gd);
+
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#383838");
+
+                        editor.commit();
+                    }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -311,13 +332,39 @@ if(activity==null){
         comment_title.setTypeface(tf);
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);
-commentbox_editext.setHint("Comments Here");
+        commentbox_editext.setHint("Comments Here");
 
        // articleoftheday.setTypeface(tf_regular);
         hashtags_title.setTypeface(tf_regular);
         source_reporter_name.setTypeface(tf_regular);
 //        authorname.setTypeface(tf_regular);
 //        pdate.setTypeface(tf);
+        if(colorcodes.equals("#FFFFFFFF")){
+            tv.setTextColor(Color.BLACK);
+            comment_title.setTextColor(Color.BLACK);
+            loadmore_title.setTextColor(Color.BLACK);
+            source_reporter_name.setTextColor(Color.BLACK);
+            sourcelinknews.setTextColor(Color.BLACK);
+            sourcelinksimplicity.setTextColor(Color.BLACK);
+            pdate.setTextColor(Color.BLACK);
+            post.setTextColor(Color.BLACK);
+            back.setImageResource(R.mipmap.backtamilone);
+            commentboxlayout.setBackgroundColor(Color.WHITE);
+
+        }
+        else{
+            tv.setTextColor(Color.WHITE);
+            comment_title.setTextColor(Color.WHITE);
+            loadmore_title.setTextColor(Color.WHITE);
+            source_reporter_name.setTextColor(Color.WHITE);
+            sourcelinknews.setTextColor(Color.WHITE);
+            sourcelinksimplicity.setTextColor(Color.WHITE);
+            pdate.setTextColor(Color.WHITE);
+            post.setTextColor(Color.WHITE);
+            back.setImageResource(R.mipmap.backtamil);
+            commentboxlayout.setBackgroundColor(Color.BLACK);
+        }
+
         thump = (NetworkImageView) findViewById(R.id.thumbnailone);
         pdialog = new ProgressDialog(this);
         pdialog.show();
@@ -347,7 +394,7 @@ commentbox_editext.setHint("Comments Here");
            requestQueue.add(jsonreq);
 
 
-            back.setOnClickListener(new View.OnClickListener() {
+            back.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onBackPressed();
@@ -640,7 +687,14 @@ try {
                         "\t\t</style>\n" +
                         "\t</head>";
 
-                description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
+                String rep = String.valueOf(descrition);
+                rep =  rep.replaceAll("color:#fff","color:#000");
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    description.loadDataWithBaseURL("", fonts + rep + "</head>", "text/html", "utf-8", "");
+                }else{
+                    description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
+                }
+
                 description.setWebViewClient(new MyBrowser());
                 description.setBackgroundColor(Color.TRANSPARENT);
                 modelList.add(model);
@@ -1186,7 +1240,7 @@ try {
 
 
                 recyclerView
-                        .addOnScrollListener(new RecyclerView.OnScrollListener() {
+                        .addOnScrollListener( new RecyclerView.OnScrollListener() {
                             @Override
                             public void onScrolled(RecyclerView recyclerView,
                                                    int dx, int dy) {

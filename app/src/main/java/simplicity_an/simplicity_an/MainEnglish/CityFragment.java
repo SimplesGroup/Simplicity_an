@@ -263,6 +263,7 @@ public class CityFragment extends Fragment {
                         city.setBackgroundResource(R.color.theme13);
                         city.setImageResource(R.mipmap.newsone);
 
+
                     }
 
                 }else {

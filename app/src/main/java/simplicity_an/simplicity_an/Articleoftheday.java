@@ -315,11 +315,6 @@ notification=(ImageButton)findViewById(R.id.btn_artcileprofile);
                         startActivity(i);
                     }
                 }
-
-
-
-
-
             }
 
         @Override

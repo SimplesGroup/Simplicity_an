@@ -247,14 +247,30 @@ public class Columnistdetail extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
 
-                    mainlayout.setBackgroundDrawable(gd);
+                        mainlayout.setBackgroundDrawable(gd);
+                    } else {
+                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(gd);
+
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#383838");
+
+                        editor.commit();
+                    }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -325,7 +341,27 @@ public class Columnistdetail extends AppCompatActivity {
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);
         commentbox_editext.setHint("Comments Here");
+        if(colorcodes.equals("#FFFFFFFF")){
+            tv.setTextColor(Color.BLACK);
+            comment_title.setTextColor(Color.BLACK);
+            loadmore_title.setTextColor(Color.BLACK);
+            source_reporter_name.setTextColor(Color.BLACK);
+            sourcelinknews.setTextColor(Color.BLACK);
+            sourcelinksimplicity.setTextColor(Color.BLACK);
+            pdate.setTextColor(Color.BLACK);
+            post.setTextColor(Color.BLACK);
 
+        }
+        else{
+            tv.setTextColor(Color.WHITE);
+            comment_title.setTextColor(Color.WHITE);
+            loadmore_title.setTextColor(Color.WHITE);
+            source_reporter_name.setTextColor(Color.WHITE);
+            sourcelinknews.setTextColor(Color.WHITE);
+            sourcelinksimplicity.setTextColor(Color.WHITE);
+            pdate.setTextColor(Color.WHITE);
+            post.setTextColor(Color.WHITE);
+        }
         //articleoftheday.setTypeface(tf_regular);
         hashtags_title.setTypeface(tf_regular);
         source_reporter_name.setTypeface(tf_regular);
@@ -650,11 +686,24 @@ Log.e("DATA",feedArray.toString());
                         "\t\t</style>\n" +
                         "\t</head>";
                 String date = "<p><font color=\"white\">" + obj.getString("pdate") + "</font></p>";
-                description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
+                String rep = String.valueOf(descrition);
+                rep =  rep.replaceAll("color:#fff","color:#000");
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    description.loadDataWithBaseURL("", fonts + rep + "</head>", "text/html", "utf-8", "");
+                }else{
+                    description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
+                }
                 description.setWebViewClient(new MyBrowser());
                 description.setBackgroundColor(Color.TRANSPARENT);
                 modelList.add(model);
-                if (favcount == 1) {                     favourite.setImageResource(R.mipmap.likered);                     favourite.setTag("heartfullred");                 } else {                    favourite.setImageResource(R.mipmap.like);                     favourite.setTag("heart");                 }
+                if (favcount == 1) {
+                    favourite.setImageResource(R.mipmap.likered);
+                    favourite.setTag("heartfullred");
+                } else {
+                    favourite.setImageResource(R.mipmap.like);
+                    favourite.setTag("heart");
+                }
+
                 favourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -674,8 +723,29 @@ Log.e("DATA",feedArray.toString());
                             StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                   String res;                                     try {                                                                 Log.e("RES", "START");                                           JSONObject data = new JSONObject(response.toString());                                            String dir = data.getString("result");                                           Log.d("RES", dir);                                                            JSONObject object=new JSONObject(dir);                                           String dir2=object.getString("message");                                            Log.d("RES", dir2);                                                        for (int i = 0; i < object.length(); i++) {                                                   String dirs = object.getString("message");                                                 Log.d("RES", dirs);                                                        res=object.getString("message");                                                                                            if(res.equals("Liked")){                                                       favourite.setImageResource(R.mipmap.likered);                                                  favourite.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                    favourite.setImageResource(R.mipmap.like);                                                  favourite.setTag("heart");                                                }                                                }                                             }catch (JSONException e){                                                                                  }
+                                   String res;
+                                   try {
+                                       Log.e("RES", "START");
+                                       JSONObject data = new JSONObject(response.toString());
+                                       String dir = data.getString("result");
+                                       Log.d("RES", dir);
+                                       JSONObject object=new JSONObject(dir);
+                                       String dir2=object.getString("message");
+                                       Log.d("RES", dir2);
+                                       for (int i = 0; i < object.length(); i++) {
+                                           String dirs = object.getString("message");
+                                           Log.d("RES", dirs);
+                                           res=object.getString("message");
+                                           if(res.equals("Liked")){
+                                               favourite.setImageResource(R.mipmap.likered);
+                                               favourite.setTag("heartfullred");
+                                           }else if(res.equals("Like")){
+                                               favourite.setImageResource(R.mipmap.like);
+                                               favourite.setTag("heart");
+                                           }                                                }                                             }catch (JSONException e){                                                                                  }
+
                                 }
+
                             }, new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
