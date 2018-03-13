@@ -772,7 +772,7 @@ public class TabEntertainmentAll extends Fragment {
         NetworkImageView   feedImageView_typetwo_one,feedImageView_typetwo_two;
         NetworkImageView   feed_typethree_ones,feed_typethree_twos,feed_typethree_threes;
         NetworkImageView   feedImageView_typefour_one,feedImageView_typefour_two,feedImageView_typefour_three,feedImageView_typefour_four;
-
+        View line;
         public RelativeLayout countlayout,listLayout;
         // LinearLayout ;
         RecyclerView_OnClickListener.OnClickListener onClickListener;
@@ -791,7 +791,7 @@ public class TabEntertainmentAll extends Fragment {
             this. save_button=(Button)itemView.findViewById(R.id.taball_savepage);
             this. share_button=(Button)itemView.findViewById(R.id.taball_sharepost);
             this. comment_button=(Button)itemView.findViewById(R.id.taball_comment);
-
+            this.line = itemView.findViewById(R.id.line_separter);
             this.listLayout=(RelativeLayout) itemView.findViewById(R.id.listlayout_taball);
             this.countlayout=(RelativeLayout)itemView.findViewById(R.id.counts_layout);
             this.likes_button.setOnClickListener(this);
@@ -1463,6 +1463,27 @@ public class TabEntertainmentAll extends Fragment {
                 userViewHolder.share_button.setTransformationMethod(null);
 
                 save_item_count=itemmodel.getFavcount();
+                if(colorcodes.equals("#FFFFFFFF"))
+                {
+                    userViewHolder.shortdescription.setTextColor(Color.GRAY);
+                    userViewHolder.title_item.setTextColor(Color.BLACK);
+                    userViewHolder.item_type_name.setTextColor(Color.GRAY);
+                    userViewHolder.date.setTextColor(Color.GRAY);
+                    userViewHolder.likescount.setTextColor(Color.BLACK);
+                    userViewHolder.commentscount.setTextColor(Color.BLACK);
+                    userViewHolder.line.setBackgroundColor(Color.LTGRAY);
+
+                }
+                else if(colorcodes.equals("#00B09B")){
+                    userViewHolder.shortdescription.setTextColor(Color.WHITE);
+                    userViewHolder.title_item.setTextColor(Color.WHITE);
+                    userViewHolder.item_type_name.setTextColor(Color.WHITE);
+                    userViewHolder.likescount.setTextColor(Color.WHITE);
+                    userViewHolder.commentscount.setTextColor(Color.WHITE);
+                    userViewHolder.line.setBackgroundColor(R.color.whitefood);
+                    userViewHolder.date.setTextColor(Color.WHITE);
+
+                }
                 if(itemmodel.getCounttype()==1){
 
                     userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
