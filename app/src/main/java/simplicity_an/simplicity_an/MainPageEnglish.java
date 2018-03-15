@@ -138,29 +138,7 @@ public class MainPageEnglish extends AppCompatActivity implements Tab_All.OnFrag
         city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*  if(colorcodes.equals("#FFFFFFFF")){
-                    //city.setBackgroundResource(R.color.white);
-                    happening.setBackgroundResource(R.color.white);
-                    search.setBackgroundResource(R.color.white);
-                    audio_video.setBackgroundResource(R.color.white);
-                    settings.setBackgroundResource(R.color.white);
-                    //city.setImageResource(R.mipmap.newsone);
-                    happening.setImageResource(R.mipmap.eventone);
-                    search.setImageResource(R.mipmap.searchone);
-                    audio_video.setImageResource(R.mipmap.specialone);
-                    settings.setImageResource(R.mipmap.moreone);
-                }
-                else{
-                    happening.setBackgroundResource(R.color.mytransparent);
-                    search.setBackgroundResource(R.color.mytransparent);
-                    audio_video.setBackgroundResource(R.color.mytransparent);
-                    settings.setBackgroundResource(R.color.mytransparent);
-                   city.setImageResource(R.mipmap.news);
-                    happening.setImageResource(R.mipmap.events);
-                    search.setImageResource(R.mipmap.search);
-                    audio_video.setImageResource(R.mipmap.specials);
-                    settings.setImageResource(R.mipmap.more);
-                }*/
+
                 Fragment selectedFragment = null;
                 selectedFragment = CityFragment.newInstance();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

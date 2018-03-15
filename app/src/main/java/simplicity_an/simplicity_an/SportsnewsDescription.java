@@ -348,6 +348,8 @@ public class SportsnewsDescription extends AppCompatActivity {
             short_description.setTextColor(Color.BLACK);
             date.setTextColor(Color.BLACK);
             textview_date.setTextColor(Color.BLACK);
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
 
         }
         else{

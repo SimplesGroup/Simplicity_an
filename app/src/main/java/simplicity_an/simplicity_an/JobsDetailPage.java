@@ -335,13 +335,11 @@ public class JobsDetailPage extends AppCompatActivity {
         phonenumber_textview.setTypeface(tf);
         title.setTypeface(tf_bold);
         title_qype.setTypeface(tf);
-
+//        commentbox_editext.setTypeface(tf);
         jobrequest= Volley.newRequestQueue(getApplicationContext());
 
         if(colorcodes.equals("#FFFFFFFF")){
-                      // comment_title.setTextColor(Color.BLACK);
-            post.setTextColor(Color.BLACK);
-            //loadmore_title.setTextColor(Color.BLACK);
+
              jobtypelabel.setTextColor(Color.BLACK);
             jobtype.setTextColor(Color.BLACK);
             salarylabel.setTextColor(Color.BLACK);
@@ -360,10 +358,12 @@ public class JobsDetailPage extends AppCompatActivity {
             phonenumber_textview.setTextColor(Color.BLACK);
             title.setTextColor(Color.BLACK);
             title_qype.setTextColor(Color.BLACK);
+
+            interviewdate.setBackgroundResource(R.drawable.whiteback);
+            interviewdate_data.setBackgroundResource(R.drawable.whiteback);
         }
         else{
-            comment_title.setTextColor(Color.WHITE);
-            post.setTextColor(Color.WHITE);
+
             jobtypelabel.setTextColor(Color.WHITE);
             jobtype.setTextColor(Color.WHITE);
             salarylabel.setTextColor(Color.WHITE);

@@ -369,16 +369,16 @@ public class EventsDescription extends AppCompatActivity {
             website_text.setTextColor(Color.BLACK);
             venue_text.setTextColor(Color.BLACK);
             title.setTextColor(Color.BLACK);
-            title_qype.setTextColor(Color.BLACK);
+            //title_qype.setTextColor(Color.BLACK);
             eventdetaildata.setTextColor(Color.BLACK);
             venuedetails.setTextColor(Color.BLACK);
             timing.setTextColor(Color.BLACK);
             timingdetails.setTextColor(Color.BLACK);
             date.setTextColor(Color.BLACK);
-            date.setTextColor(Color.BLACK);
             datedetails.setTextColor(Color.BLACK);
             contactname.setTextColor(Color.BLACK);
             booknow.setTextColor(Color.BLACK);
+            //booknow.setBackgroundResource(R.drawable.editextboxwhite);
             contactnamedetails.setTextColor(Color.BLACK);
             email.setTextColor(Color.BLACK);
             emaildetails.setTextColor(Color.BLACK);
@@ -387,6 +387,14 @@ public class EventsDescription extends AppCompatActivity {
             location_details.setTextColor(Color.BLACK);
             website_details.setTextColor(Color.BLACK);
             venuecontactinfo.setTextColor(Color.BLACK);
+
+            date.setBackgroundResource(R.drawable.whiteback);
+            datedetails.setBackgroundResource(R.drawable.whiteback);
+            timing.setBackgroundResource(R.drawable.whiteback);
+            timingdetails.setBackgroundResource(R.drawable.whiteback);
+            venuecontactinfo.setBackgroundResource(R.drawable.whiteback);
+
+
 
         }
         else{

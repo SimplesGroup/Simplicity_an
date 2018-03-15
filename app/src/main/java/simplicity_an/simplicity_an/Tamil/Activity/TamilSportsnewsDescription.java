@@ -354,7 +354,8 @@ String searchnonitiid,searchactivity_sports;
             short_description.setTextColor(Color.BLACK);
             date.setTextColor(Color.BLACK);
             textview_date.setTextColor(Color.BLACK);
-
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
         }
         else{
             title.setTextColor(Color.WHITE);

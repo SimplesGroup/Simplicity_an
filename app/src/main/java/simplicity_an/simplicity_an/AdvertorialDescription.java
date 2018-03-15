@@ -339,6 +339,9 @@ ScrollView scrollView;
             sourcelinknews.setTextColor(Color.BLACK);
             sourcelinksimplicity.setTextColor(Color.BLACK);
             pdate.setTextColor(Color.BLACK);
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
+
 
         }
         else{

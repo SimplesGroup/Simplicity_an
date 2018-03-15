@@ -357,7 +357,8 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
             image_description.setTextColor(Color.BLACK);
             short_description.setTextColor(Color.BLACK);
             date.setTextColor(Color.BLACK);
-
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
         }
         else{
             titlename.setTextColor(Color.WHITE);

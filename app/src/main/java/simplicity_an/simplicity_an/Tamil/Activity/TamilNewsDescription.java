@@ -373,7 +373,8 @@ public class TamilNewsDescription extends AppCompatActivity {
             sourcelinksimplicity.setTextColor(Color.BLACK);
             image_description.setTextColor(Color.BLACK);
             short_description.setTextColor(Color.BLACK);
-
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
         }
         else{
             tv.setTextColor(Color.WHITE);

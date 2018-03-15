@@ -361,7 +361,8 @@ public class Healthylivingdescription extends AppCompatActivity {
             pdate.setTextColor(Color.BLACK);
             textview_date.setTextColor(Color.GRAY);
             source_reporter_name.setTextColor(Color.GRAY);
-
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
 
         }
         else{

@@ -399,6 +399,11 @@ booknow.setText("பதிவு செய்ய");
             website_details.setTextColor(Color.BLACK);
             venueandcontact.setTextColor(Color.BLACK);
 
+            date.setBackgroundResource(R.drawable.whiteback);
+            datedetails.setBackgroundResource(R.drawable.whiteback);
+            timing.setBackgroundResource(R.drawable.whiteback);
+            timingdetails.setBackgroundResource(R.drawable.whiteback);
+            venueandcontact.setBackgroundResource(R.drawable.whiteback);
         }
         else{
             venue_text.setTextColor(Color.WHITE);

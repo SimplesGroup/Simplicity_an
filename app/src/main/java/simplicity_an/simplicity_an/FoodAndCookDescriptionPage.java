@@ -373,6 +373,7 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);
         date.setTypeface(tf);
+        commentbox_editext.setTypeface(tf);
         ingredients.setBackgroundColor(0x31ffffff);
         steps.setBackgroundColor(0x0affffff);
         ingredients.setOnClickListener(new View.OnClickListener() {
@@ -396,6 +397,7 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
 
         if(colorcodes.equals("#FFFFFFFF")){
 
+
             comment_title.setTextColor(Color.BLACK);
             comment_title.setText("Comment here...");
             post.setTextColor(Color.BLACK);
@@ -405,10 +407,14 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
             steps.setTextColor(Color.BLACK);
             date.setTextColor(Color.BLACK);
             titleofrecipie.setTextColor(Color.BLACK);
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
 
 
         }
         else{
+            commentbox_editext.setHint("Comment here...");
+            commentbox_editext.setHintTextColor(Color.WHITE);
             comment_title.setTextColor(Color.WHITE);
             comment_title.setText("Comment here...");
             post.setTextColor(Color.WHITE);

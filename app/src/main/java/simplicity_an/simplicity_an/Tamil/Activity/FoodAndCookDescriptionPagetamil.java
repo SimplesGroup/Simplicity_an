@@ -401,7 +401,8 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
             steps.setTextColor(Color.BLACK);
             date.setTextColor(Color.BLACK);
             titleofrecipie.setTextColor(Color.BLACK);
-
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
 
         }
         else{
