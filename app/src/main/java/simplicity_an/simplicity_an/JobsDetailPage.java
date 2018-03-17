@@ -358,9 +358,18 @@ public class JobsDetailPage extends AppCompatActivity {
             phonenumber_textview.setTextColor(Color.BLACK);
             title.setTextColor(Color.BLACK);
             title_qype.setTextColor(Color.BLACK);
+            applyjob.setTextColor(Color.BLACK);
 
             interviewdate.setBackgroundResource(R.drawable.whiteback);
             interviewdate_data.setBackgroundResource(R.drawable.whiteback);
+            jobtype.setBackgroundResource(R.drawable.whiteback);
+            jobtypelabel.setBackgroundResource(R.drawable.whiteback);
+            salarylabel.setBackgroundResource(R.drawable.whiteback);
+            salaryamt.setBackgroundResource(R.drawable.whiteback);
+            candidateprofile.setBackgroundResource(R.drawable.whiteback);
+            interviewtim_label.setBackgroundResource(R.drawable.whiteback);
+            interviewtiming.setBackgroundResource(R.drawable.whiteback);
+            venue.setBackgroundResource(R.drawable.whiteback);
         }
         else{
 

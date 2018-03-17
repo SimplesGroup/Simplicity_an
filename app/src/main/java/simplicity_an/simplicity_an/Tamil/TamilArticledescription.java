@@ -353,6 +353,37 @@ if(activity==null){
         hashtags_title.setTypeface(tf_regular);
         source_reporter_name.setTypeface(tf_regular);
         pdate.setTypeface(tf);
+
+        if(colorcodes.equals("#FFFFFFFF")){
+            tv.setTextColor(Color.BLACK);
+            comment_title.setTextColor(Color.BLACK);
+            loadmore_title.setTextColor(Color.BLACK);
+            source_reporter_name.setTextColor(Color.BLACK);
+            sourcelinknews.setTextColor(Color.BLACK);
+            sourcelinksimplicity.setTextColor(Color.BLACK);
+            pdate.setTextColor(Color.BLACK);
+            post.setTextColor(Color.BLACK);
+            back.setImageResource(R.mipmap.backtamilone);
+            commentboxlayout.setBackgroundColor(Color.WHITE);
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
+
+        }
+        else{
+            tv.setTextColor(Color.WHITE);
+            comment_title.setTextColor(Color.WHITE);
+            loadmore_title.setTextColor(Color.WHITE);
+            source_reporter_name.setTextColor(Color.WHITE);
+            sourcelinknews.setTextColor(Color.WHITE);
+            sourcelinksimplicity.setTextColor(Color.WHITE);
+            pdate.setTextColor(Color.WHITE);
+            post.setTextColor(Color.WHITE);
+            back.setImageResource(R.mipmap.backtamil);
+            commentboxlayout.setBackgroundColor(Color.BLACK);
+            commentbox_editext.setBackgroundResource(R.drawable.editextbox);
+            comment_title.setBackgroundResource(R.drawable.editextbox);
+        }
+
         thump = (NetworkImageView) findViewById(R.id.thumbnailone);
         pdialog = new ProgressDialog(this);
         pdialog.show();
@@ -680,8 +711,13 @@ if(myprofileid!=null){
                         "}\n" +
                         "\t\t</style>\n" +
                         "\t</head>";
-                description.loadDataWithBaseURL("", fonts+descrition+"</head>", "text/html", "utf-8", "");
-
+                String rep = String.valueOf(descrition);
+                rep =  rep.replaceAll("color:#fff","color:#000");
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    description.loadDataWithBaseURL("", fonts + rep + "</head>", "text/html", "utf-8", "");
+                }else{
+                    description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
+                }
                 description.setWebViewClient(new MyBrowser());
                 // description.loadUrl(fonts+descrition+"</head>");
 

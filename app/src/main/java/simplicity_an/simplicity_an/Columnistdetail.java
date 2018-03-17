@@ -350,6 +350,8 @@ public class Columnistdetail extends AppCompatActivity {
             sourcelinksimplicity.setTextColor(Color.BLACK);
             pdate.setTextColor(Color.BLACK);
             post.setTextColor(Color.BLACK);
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
 
         }
         else{

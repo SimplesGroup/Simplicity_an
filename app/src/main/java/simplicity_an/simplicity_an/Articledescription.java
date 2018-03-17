@@ -350,6 +350,8 @@ if(activity==null){
             post.setTextColor(Color.BLACK);
             back.setImageResource(R.mipmap.backtamilone);
             commentboxlayout.setBackgroundColor(Color.WHITE);
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
 
         }
         else{
