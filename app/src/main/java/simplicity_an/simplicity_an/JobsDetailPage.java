@@ -283,7 +283,7 @@ public class JobsDetailPage extends AppCompatActivity {
             my_profileimage=sharedpreferences.getString(USERIMAGE,"");
 
         }
-    ;
+
         requestQueue=Volley.newRequestQueue(getApplicationContext());
 
 
@@ -448,7 +448,8 @@ public class JobsDetailPage extends AppCompatActivity {
                     StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            String res;                                     try {                                                                 Log.e("RES", "START");                                           JSONObject data = new JSONObject(response.toString());                                            String dir = data.getString("result");                                           Log.d("RES", dir);                                                            JSONObject object=new JSONObject(dir);                                           String dir2=object.getString("message");                                            Log.d("RES", dir2);                                                        for (int i = 0; i < object.length(); i++) {                                                   String dirs = object.getString("message");                                                 Log.d("RES", dirs);                                                        res=object.getString("message");                                                                                            if(res.equals("Liked")){                                                       favourite.setImageResource(R.mipmap.likered);                                                  favourite.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                    favourite.setImageResource(R.mipmap.like);                                                  favourite.setTag("heart");                                                }                                                }                                             }catch (JSONException e){                                                                                  }
+                            String res;
+                            try {                                                                 Log.e("RES", "START");                                           JSONObject data = new JSONObject(response.toString());                                            String dir = data.getString("result");                                           Log.d("RES", dir);                                                            JSONObject object=new JSONObject(dir);                                           String dir2=object.getString("message");                                            Log.d("RES", dir2);                                                        for (int i = 0; i < object.length(); i++) {                                                   String dirs = object.getString("message");                                                 Log.d("RES", dirs);                                                        res=object.getString("message");                                                                                            if(res.equals("Liked")){                                                       favourite.setImageResource(R.mipmap.likered);                                                  favourite.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                    favourite.setImageResource(R.mipmap.like);                                                  favourite.setTag("heart");                                                }                                                }                                             }catch (JSONException e){                                                                                  }
                         }
                     }, new Response.ErrorListener() {
                         @Override
@@ -491,15 +492,15 @@ public class JobsDetailPage extends AppCompatActivity {
 
 
 
-applyjob.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
+       applyjob.setOnClickListener(new View.OnClickListener() {
+       @Override
+       public void onClick(View v) {
         Intent applypage=new Intent(getApplicationContext(),JobApplyPage.class);
         applypage.putExtra("TITLE",titl);
         applypage.putExtra("COMPANY",company);
         startActivity(applypage);
-    }
-});
+      }
+     });
 
 
 
