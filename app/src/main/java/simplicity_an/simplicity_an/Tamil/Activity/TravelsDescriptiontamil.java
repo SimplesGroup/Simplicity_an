@@ -326,7 +326,7 @@ public class TravelsDescriptiontamil extends AppCompatActivity {
         menu=(ImageButton)findViewById(R.id.btn_3);
         back=(ImageButton)findViewById(R.id.btn_back);
         favourite=(ImageButton)findViewById(R.id.btn_like);
-        description=(WebView)findViewById(R.id.textView_desc_sports);
+        description=(WebView)findViewById(R.id.textView_desc);
         description.getSettings().setLoadsImagesAutomatically(true);
         description.getSettings().setPluginState(WebSettings.PluginState.ON);
         description.getSettings().setAllowFileAccess(true);
@@ -357,7 +357,7 @@ public class TravelsDescriptiontamil extends AppCompatActivity {
         comment_title.setTypeface(tf);
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);
-        image=(NetworkImageView)findViewById(R.id.sports_desc_image);
+        image=(NetworkImageView)findViewById(R.id.thumbnailone);
         if(colorcodes.equals("#FFFFFFFF")){
             title.setTextColor(Color.BLACK);
             commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
