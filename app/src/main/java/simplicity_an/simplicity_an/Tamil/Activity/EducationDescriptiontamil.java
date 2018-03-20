@@ -340,6 +340,8 @@ public class EducationDescriptiontamil extends AppCompatActivity {
         if(colorcodes.equals("#FFFFFFFF")){
             tv.setTextColor(Color.BLACK);
             textview_date.setTextColor(Color.BLACK);
+            post.setTextColor(Color.BLACK);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
             comment_title.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
             sourcelinknews.setTextColor(Color.BLACK);
@@ -354,6 +356,8 @@ public class EducationDescriptiontamil extends AppCompatActivity {
         }
         else{
             tv.setTextColor(Color.WHITE);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
+            post.setTextColor(Color.WHITE);
             textview_date.setTextColor(Color.WHITE);
             comment_title.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);

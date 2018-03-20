@@ -360,6 +360,8 @@ public class TravelsDescriptiontamil extends AppCompatActivity {
         image=(NetworkImageView)findViewById(R.id.sports_desc_image);
         if(colorcodes.equals("#FFFFFFFF")){
             title.setTextColor(Color.BLACK);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
+            post.setTextColor(Color.BLACK);
             comment_title.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
             source_reporter_name.setTextColor(Color.BLACK);
@@ -374,6 +376,8 @@ public class TravelsDescriptiontamil extends AppCompatActivity {
         }
         else{
             title.setTextColor(Color.WHITE);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
+            post.setTextColor(Color.WHITE);
             comment_title.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);
             source_reporter_name.setTextColor(Color.WHITE);

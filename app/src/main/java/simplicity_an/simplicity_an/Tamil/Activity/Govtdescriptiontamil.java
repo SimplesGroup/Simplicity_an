@@ -364,6 +364,7 @@ requestQueue=Volley.newRequestQueue(this);
         if(colorcodes.equals("#FFFFFFFF")){
             titlename.setTextColor(Color.BLACK);
             comment_title.setTextColor(Color.BLACK);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
             post.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
             source_reporter_name.setTextColor(Color.BLACK);
@@ -378,6 +379,7 @@ requestQueue=Volley.newRequestQueue(this);
         else{
             titlename.setTextColor(Color.WHITE);
             post.setTextColor(Color.WHITE);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
             comment_title.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);
             source_reporter_name.setTextColor(Color.WHITE);

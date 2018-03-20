@@ -364,7 +364,9 @@ public class Farmingdescriptiontamil extends AppCompatActivity {
 
         if(colorcodes == "#FFFFFFFF"){
             tv.setTextColor(Color.BLACK);
+            post.setTextColor(Color.BLACK);
             comment_title.setTextColor(Color.BLACK);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
             loadmore_title.setTextColor(Color.BLACK);
             source_reporter_name.setTextColor(Color.BLACK);
             image_description.setTextColor(Color.BLACK);
@@ -376,7 +378,9 @@ public class Farmingdescriptiontamil extends AppCompatActivity {
         }
         else{
             tv.setTextColor(Color.WHITE);
+            post.setTextColor(Color.WHITE);
             comment_title.setTextColor(Color.WHITE);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
             loadmore_title.setTextColor(Color.WHITE);
             source_reporter_name.setTextColor(Color.WHITE);
             image_description.setTextColor(Color.WHITE);

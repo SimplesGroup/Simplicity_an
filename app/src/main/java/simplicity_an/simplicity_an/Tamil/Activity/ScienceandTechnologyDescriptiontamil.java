@@ -322,6 +322,8 @@ requestQueue=Volley.newRequestQueue(this);
 
         if(colorcodes == "#FFFFFFFF"){
             titlename.setTextColor(Color.BLACK);
+            post.setTextColor(Color.BLACK);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
             textview_date.setTextColor(Color.BLACK);
             comment_title.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
@@ -338,6 +340,8 @@ requestQueue=Volley.newRequestQueue(this);
         }
         else{
             titlename.setTextColor(Color.WHITE);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
+            post.setTextColor(Color.WHITE);
             textview_date.setTextColor(Color.WHITE);
             comment_title.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);
@@ -370,7 +374,7 @@ requestQueue=Volley.newRequestQueue(this);
         pdialog.show();
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        commentbox_editext.setHint("Comments Here");
+        //commentbox_editext.setHint("Comments Here");
         if (notifiid != null) {
             JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
 
