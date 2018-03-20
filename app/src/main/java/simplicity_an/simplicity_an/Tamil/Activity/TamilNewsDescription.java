@@ -720,9 +720,7 @@ public class TamilNewsDescription extends AppCompatActivity {
                         "\t\t</style>\n" +
                         "\t</head>";
                 String s="";
-
-
-Log.e("DESC",descrition);
+                Log.e("DESC",descrition);
 
                 String rep = String.valueOf(descrition);
                 rep =  rep.replaceAll("color:#fff","color:#000");
@@ -751,7 +749,14 @@ Log.e("DESC",descrition);
                     }
                 });
 
-                 if (favcount == 1) {                     favourite.setImageResource(R.mipmap.likered);                     favourite.setTag("heartfullred");                 } else {                    favourite.setImageResource(R.mipmap.like);                     favourite.setTag("heart");                 }
+                 if (favcount == 1) {
+                     favourite.setImageResource(R.mipmap.likered);
+                     favourite.setTag("heartfullred");
+                 } else {
+                     favourite.setImageResource(R.mipmap.like);
+                     favourite.setTag("heart");
+                 }
+
                 favourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -771,8 +776,32 @@ Log.e("DESC",descrition);
                             StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    String res;                                     try {                                                                 Log.e("RES", "START");                                           JSONObject data = new JSONObject(response.toString());                                            String dir = data.getString("result");                                           Log.d("RES", dir);                                                            JSONObject object=new JSONObject(dir);                                           String dir2=object.getString("message");                                            Log.d("RES", dir2);                                                        for (int i = 0; i < object.length(); i++) {                                                   String dirs = object.getString("message");                                                 Log.d("RES", dirs);                                                        res=object.getString("message");                                                                                            if(res.equals("Liked")){                                                       favourite.setImageResource(R.mipmap.likered);                                                  favourite.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                    favourite.setImageResource(R.mipmap.like);                                                  favourite.setTag("heart");                                                }                                                }                                             }catch (JSONException e){                                                                                  }
+                                    String res;
+                                    try {
+                                        Log.e("RES", "START");
+                                        JSONObject data = new JSONObject(response.toString());
+                                        String dir = data.getString("result");
+                                        Log.d("RES", dir);
+                                        JSONObject object=new JSONObject(dir);
+                                        String dir2=object.getString("message");
+                                        Log.d("RES", dir2);
+                                        for (int i = 0; i < object.length(); i++) {
+                                            String dirs = object.getString("message");
+                                            Log.d("RES", dirs);
+                                            res=object.getString("message");
+                                            if(res.equals("Liked")){
+                                                favourite.setImageResource(R.mipmap.likered);
+                                                favourite.setTag("heartfullred");
+                                            }else if(res.equals("Like")){
+                                                favourite.setImageResource(R.mipmap.like);
+                                                favourite.setTag("heart");
+                                            }
+                                        }
+                                    }catch (JSONException e){
+
+                                    }
                                 }
+
                             }, new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
