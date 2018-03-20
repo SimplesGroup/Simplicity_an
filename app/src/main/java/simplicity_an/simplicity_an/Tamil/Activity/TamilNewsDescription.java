@@ -365,6 +365,7 @@ public class TamilNewsDescription extends AppCompatActivity {
         thump = (NetworkImageView) findViewById(R.id.thumbnailone);
         if(colorcodes.equals("#FFFFFFFF")){
             tv.setTextColor(Color.BLACK);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
             comment_title.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
             post.setTextColor(Color.BLACK);
@@ -378,6 +379,7 @@ public class TamilNewsDescription extends AppCompatActivity {
         }
         else{
             tv.setTextColor(Color.WHITE);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
             comment_title.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);
             post.setTextColor(Color.WHITE);
