@@ -142,6 +142,13 @@ private OnFragmentInteractionListener mListener;
         recyclerview_tab_all.setLayoutManager(lLayout);
         pdialog = new ProgressDialog(getActivity());
         fabentertainmenttheatre=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
+
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabentertainmenttheatre.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabentertainmenttheatre.setImageResource(R.mipmap.uparrow);
+        }
         fabentertainmenttheatre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

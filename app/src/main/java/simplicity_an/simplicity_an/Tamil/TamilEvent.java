@@ -172,6 +172,12 @@ public class TamilEvent extends Fragment {
         recyclerview_tab_all.setLayoutManager(lLayout);
         pdialog = new ProgressDialog(getActivity());
         fabevent=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabevent.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabevent.setImageResource(R.mipmap.uparrow);
+        }
         fabevent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

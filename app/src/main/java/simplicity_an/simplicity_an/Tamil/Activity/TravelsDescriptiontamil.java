@@ -219,7 +219,7 @@ public class TravelsDescriptiontamil extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    if(colorcodes == "#FFFFFFFF"){
+                    if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -326,7 +326,7 @@ public class TravelsDescriptiontamil extends AppCompatActivity {
         menu=(ImageButton)findViewById(R.id.btn_3);
         back=(ImageButton)findViewById(R.id.btn_back);
         favourite=(ImageButton)findViewById(R.id.btn_like);
-        description=(WebView)findViewById(R.id.textView_desc_sports);
+        description=(WebView)findViewById(R.id.textView_desc);
         description.getSettings().setLoadsImagesAutomatically(true);
         description.getSettings().setPluginState(WebSettings.PluginState.ON);
         description.getSettings().setAllowFileAccess(true);
@@ -357,9 +357,11 @@ public class TravelsDescriptiontamil extends AppCompatActivity {
         comment_title.setTypeface(tf);
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);
-        image=(NetworkImageView)findViewById(R.id.sports_desc_image);
-        if(colorcodes == "#FFFFFFFF"){
+        image=(NetworkImageView)findViewById(R.id.thumbnailone);
+        if(colorcodes.equals("#FFFFFFFF")){
             title.setTextColor(Color.BLACK);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
+            post.setTextColor(Color.BLACK);
             comment_title.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
             source_reporter_name.setTextColor(Color.BLACK);
@@ -369,10 +371,13 @@ public class TravelsDescriptiontamil extends AppCompatActivity {
             short_description.setTextColor(Color.BLACK);
             date.setTextColor(Color.BLACK);
             textview_date.setTextColor(Color.BLACK);
-
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
         }
         else{
             title.setTextColor(Color.WHITE);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
+            post.setTextColor(Color.WHITE);
             comment_title.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);
             source_reporter_name.setTextColor(Color.WHITE);

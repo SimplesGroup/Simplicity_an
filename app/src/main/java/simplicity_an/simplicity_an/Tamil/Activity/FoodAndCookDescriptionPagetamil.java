@@ -217,7 +217,7 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
             }else {
 
                 if(colorcodes!=null){
-                    if(colorcodes == "#FFFFFFFF"){
+                    if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -393,20 +393,22 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
         post.setTypeface(tf);
         date.setTypeface(tf);
 
-        if(colorcodes == "#FFFFFFFF"){
-
+        if(colorcodes.equals("#FFFFFFFF")){
             comment_title.setTextColor(Color.BLACK);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
             post.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
             ingredients.setTextColor(Color.BLACK);
             steps.setTextColor(Color.BLACK);
             date.setTextColor(Color.BLACK);
             titleofrecipie.setTextColor(Color.BLACK);
-
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
 
         }
         else{
             comment_title.setTextColor(Color.WHITE);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
             post.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);
             ingredients.setTextColor(Color.WHITE);

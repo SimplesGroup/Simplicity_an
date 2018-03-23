@@ -206,7 +206,7 @@ public class JobsDetailPage extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    if(colorcodes == "#FFFFFFFF"){
+                    if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -283,7 +283,7 @@ public class JobsDetailPage extends AppCompatActivity {
             my_profileimage=sharedpreferences.getString(USERIMAGE,"");
 
         }
-    ;
+
         requestQueue=Volley.newRequestQueue(getApplicationContext());
 
 
@@ -335,13 +335,11 @@ public class JobsDetailPage extends AppCompatActivity {
         phonenumber_textview.setTypeface(tf);
         title.setTypeface(tf_bold);
         title_qype.setTypeface(tf);
-
+//        commentbox_editext.setTypeface(tf);
         jobrequest= Volley.newRequestQueue(getApplicationContext());
 
-        if(colorcodes == "#FFFFFFFF"){
-                      // comment_title.setTextColor(Color.BLACK);
-            post.setTextColor(Color.BLACK);
-            //loadmore_title.setTextColor(Color.BLACK);
+        if(colorcodes.equals("#FFFFFFFF")){
+
              jobtypelabel.setTextColor(Color.BLACK);
             jobtype.setTextColor(Color.BLACK);
             salarylabel.setTextColor(Color.BLACK);
@@ -360,10 +358,21 @@ public class JobsDetailPage extends AppCompatActivity {
             phonenumber_textview.setTextColor(Color.BLACK);
             title.setTextColor(Color.BLACK);
             title_qype.setTextColor(Color.BLACK);
+            applyjob.setTextColor(Color.BLACK);
+
+            interviewdate.setBackgroundResource(R.drawable.whiteback);
+            interviewdate_data.setBackgroundResource(R.drawable.whiteback);
+            jobtype.setBackgroundResource(R.drawable.whiteback);
+            jobtypelabel.setBackgroundResource(R.drawable.whiteback);
+            salarylabel.setBackgroundResource(R.drawable.whiteback);
+            salaryamt.setBackgroundResource(R.drawable.whiteback);
+            candidateprofile.setBackgroundResource(R.drawable.whiteback);
+            interviewtim_label.setBackgroundResource(R.drawable.whiteback);
+            interviewtiming.setBackgroundResource(R.drawable.whiteback);
+            venue.setBackgroundResource(R.drawable.whiteback);
         }
         else{
-            comment_title.setTextColor(Color.WHITE);
-            post.setTextColor(Color.WHITE);
+
             jobtypelabel.setTextColor(Color.WHITE);
             jobtype.setTextColor(Color.WHITE);
             salarylabel.setTextColor(Color.WHITE);
@@ -439,7 +448,8 @@ public class JobsDetailPage extends AppCompatActivity {
                     StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            String res;                                     try {                                                                 Log.e("RES", "START");                                           JSONObject data = new JSONObject(response.toString());                                            String dir = data.getString("result");                                           Log.d("RES", dir);                                                            JSONObject object=new JSONObject(dir);                                           String dir2=object.getString("message");                                            Log.d("RES", dir2);                                                        for (int i = 0; i < object.length(); i++) {                                                   String dirs = object.getString("message");                                                 Log.d("RES", dirs);                                                        res=object.getString("message");                                                                                            if(res.equals("Liked")){                                                       favourite.setImageResource(R.mipmap.likered);                                                  favourite.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                    favourite.setImageResource(R.mipmap.like);                                                  favourite.setTag("heart");                                                }                                                }                                             }catch (JSONException e){                                                                                  }
+                            String res;
+                            try {                                                                 Log.e("RES", "START");                                           JSONObject data = new JSONObject(response.toString());                                            String dir = data.getString("result");                                           Log.d("RES", dir);                                                            JSONObject object=new JSONObject(dir);                                           String dir2=object.getString("message");                                            Log.d("RES", dir2);                                                        for (int i = 0; i < object.length(); i++) {                                                   String dirs = object.getString("message");                                                 Log.d("RES", dirs);                                                        res=object.getString("message");                                                                                            if(res.equals("Liked")){                                                       favourite.setImageResource(R.mipmap.likered);                                                  favourite.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                    favourite.setImageResource(R.mipmap.like);                                                  favourite.setTag("heart");                                                }                                                }                                             }catch (JSONException e){                                                                                  }
                         }
                     }, new Response.ErrorListener() {
                         @Override
@@ -482,15 +492,15 @@ public class JobsDetailPage extends AppCompatActivity {
 
 
 
-applyjob.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
+       applyjob.setOnClickListener(new View.OnClickListener() {
+       @Override
+       public void onClick(View v) {
         Intent applypage=new Intent(getApplicationContext(),JobApplyPage.class);
         applypage.putExtra("TITLE",titl);
         applypage.putExtra("COMPANY",company);
         startActivity(applypage);
-    }
-});
+      }
+     });
 
 
 

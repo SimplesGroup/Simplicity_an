@@ -1,5 +1,6 @@
 package simplicity_an.simplicity_an.Tamil;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -172,7 +173,12 @@ public class TamilEntertainmentall extends Fragment {
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         fabradio=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
-
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabradio.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabradio.setImageResource(R.mipmap.uparrow);
+        }
         fabradio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -295,7 +301,9 @@ public class TamilEntertainmentall extends Fragment {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                 swipeRefresh.setRefreshing(true);                 modelList.clear();                 recyclerview_tab_all_adapter.notifyDataSetChanged();                  requestCount=0;                 getData();                                ( new Handler()).postDelayed(new Runnable() {                     @Override                     public void run() {                         swipeRefresh.setRefreshing(false);                     }                 }, 3000);
+                 swipeRefresh.setRefreshing(true);
+                 modelList.clear();
+                 recyclerview_tab_all_adapter.notifyDataSetChanged();                  requestCount=0;                 getData();                                ( new Handler()).postDelayed(new Runnable() {                     @Override                     public void run() {                         swipeRefresh.setRefreshing(false);                     }                 }, 3000);
 
             }
         });
@@ -783,7 +791,7 @@ public class TamilEntertainmentall extends Fragment {
         NetworkImageView   feedImageView_typetwo_one,feedImageView_typetwo_two;
         NetworkImageView   feed_typethree_ones,feed_typethree_twos,feed_typethree_threes;
         NetworkImageView   feedImageView_typefour_one,feedImageView_typefour_two,feedImageView_typefour_three,feedImageView_typefour_four;
-
+        View line;
         public RelativeLayout countlayout,listLayout;
         // LinearLayout ;
         RecyclerView_OnClickListener.OnClickListener onClickListener;
@@ -802,7 +810,7 @@ public class TamilEntertainmentall extends Fragment {
             this. save_button=(Button)itemView.findViewById(R.id.taball_savepage);
             this. share_button=(Button)itemView.findViewById(R.id.taball_sharepost);
             this. comment_button=(Button)itemView.findViewById(R.id.taball_comment);
-
+            this.line = itemView.findViewById(R.id.line_separter);
             this.listLayout=(RelativeLayout) itemView.findViewById(R.id.listlayout_taball);
             this.countlayout=(RelativeLayout)itemView.findViewById(R.id.counts_layout);
             this.likes_button.setOnClickListener(this);
@@ -947,6 +955,7 @@ public class TamilEntertainmentall extends Fragment {
 
             return null;
         }
+        @SuppressLint("ResourceAsColor")
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof Userviewholdertaball) {
@@ -1027,20 +1036,28 @@ public class TamilEntertainmentall extends Fragment {
                 String simplycity_title = "fonts/robotoSlabRegular.ttf";
                 final Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
                 userViewHolder.shortdescription.setTypeface(tf_play);
-                if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){                      userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
+                if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){
+                    userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {
+                    if(itemmodel.getShortdescription().equals(""))
+                    {
+                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
 
 
                 userViewHolder.editername.setTypeface(seguiregular);
                 userViewHolder.editername.setText(itemmodel.getEditername());
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
                 userViewHolder.title_item.setTypeface(seguiregular);
-                if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }
+                if(itemmodel.getEditername().equals("")){
+                    userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));
+                }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }
                 userViewHolder.item_type_name.setTypeface(tf_play);
                // userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(tf_play);
                 userViewHolder.commentscount.setTypeface(tf_play);
                 userViewHolder.date.setTypeface(seguiregular);
-                if(itemmodel.getLikescount()==0){                         userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"விருப்பு"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"விருப்பு"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"கருத்து"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"கருத்து"));                     }                     userViewHolder.countlayout.setVisibility(View.VISIBLE);
+                if(itemmodel.getLikescount()==0){
+                    userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"விருப்பு"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"விருப்பு"));                      }                     if(itemmodel.getCommentscount()==0){
+                    userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"கருத்து"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"கருத்து"));                     }                     userViewHolder.countlayout.setVisibility(View.VISIBLE);
                 if(itemmodel.getImage()!=null){
                     userViewHolder.item_image.setImageUrl(itemmodel.getImage(),mImageLoader);
                 }else {
@@ -1461,6 +1478,27 @@ public class TamilEntertainmentall extends Fragment {
                 userViewHolder.share_button.setTransformationMethod(null);
                 post_likes_count=itemmodel.getCounttype();
                 save_item_count=itemmodel.getFavcount();
+                if(colorcodes.equals("#FFFFFFFF"))
+                {
+                    userViewHolder.shortdescription.setTextColor(Color.GRAY);
+                    userViewHolder.title_item.setTextColor(Color.BLACK);
+                    userViewHolder.item_type_name.setTextColor(Color.GRAY);
+                    userViewHolder.date.setTextColor(Color.GRAY);
+                    userViewHolder.likescount.setTextColor(Color.BLACK);
+                    userViewHolder.commentscount.setTextColor(Color.BLACK);
+                    userViewHolder.line.setBackgroundColor(Color.LTGRAY);
+
+                }
+                else if(colorcodes.equals("#00B09B")){
+                    userViewHolder.shortdescription.setTextColor(Color.WHITE);
+                    userViewHolder.title_item.setTextColor(Color.WHITE);
+                    userViewHolder.item_type_name.setTextColor(Color.WHITE);
+                    userViewHolder.likescount.setTextColor(Color.WHITE);
+                    userViewHolder.commentscount.setTextColor(Color.WHITE);
+                    userViewHolder.line.setBackgroundColor(R.color.whitefood);
+                    userViewHolder.date.setTextColor(Color.WHITE);
+
+                }
                 if(itemmodel.getCounttype()==1){
 
                     userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);

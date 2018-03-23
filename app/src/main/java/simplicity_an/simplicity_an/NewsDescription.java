@@ -169,6 +169,7 @@ public class NewsDescription extends AppCompatActivity {
         }
         requestQueue = Volley.newRequestQueue(this);
         colorcodes = sharedpreferences.getString(backgroundcolor, "");
+        Log.e("ColorCodeNews",colorcodes);
         mainlayout = (RelativeLayout) findViewById(R.id.version_main_layout);
 
         commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
@@ -213,7 +214,7 @@ public class NewsDescription extends AppCompatActivity {
             } else {
 
                 if (colorcodes != null) {
-                    if(colorcodes == "#FFFFFFFF"){
+                    if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -222,6 +223,9 @@ public class NewsDescription extends AppCompatActivity {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#FFFFFFFF");
+                        editor.commit();
                     } else {
                         int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -309,7 +313,7 @@ public class NewsDescription extends AppCompatActivity {
         String playfair = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
 
-        if(colorcodes == "#FFFFFFFF"){
+        if(colorcodes.equals("#FFFFFFFF")){
             tv.setTextColor(Color.BLACK);
             comment_title.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
@@ -319,6 +323,8 @@ public class NewsDescription extends AppCompatActivity {
             sourcelinksimplicity.setTextColor(Color.BLACK);
             image_description.setTextColor(Color.BLACK);
             short_description.setTextColor(Color.BLACK);
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
 
         }
         else{

@@ -156,6 +156,12 @@ SwipeRefreshLayout swipeRefresh;
 
         pdialog = new ProgressDialog(getActivity());
         fab=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
+        if(colorcodes.equals("#FFFFFFFF")){
+            fab.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fab.setImageResource(R.mipmap.uparrow);
+        }
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

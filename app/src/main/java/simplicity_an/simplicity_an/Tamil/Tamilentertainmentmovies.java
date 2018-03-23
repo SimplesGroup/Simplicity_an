@@ -171,7 +171,12 @@ SwipeRefreshLayout swipeRefresh;
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         fabnews=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
-
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabnews.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabnews.setImageResource(R.mipmap.uparrow);
+        }
         fabnews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

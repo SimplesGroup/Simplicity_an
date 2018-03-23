@@ -143,7 +143,7 @@ String searchnonitiid,searchactivity_sports;
     public static final String QID="qid";
     public static final String QTYPE="qtype";
     ScrollView scrollView;
-
+    LinearLayout commentboxlayout;
     public static final String backgroundcolor = "color";
     RelativeLayout mainlayout;
     String colorcodes;
@@ -177,8 +177,17 @@ String searchnonitiid,searchactivity_sports;
         }
 
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
-
+        back = (ImageButton)findViewById(R.id.btn_back);
+        commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
+        if(colorcodes.equals("#FFFFFFFF")){
+            commentboxlayout.setBackgroundColor(Color.WHITE);
+            back.setImageResource(R.mipmap.backtamilone);
+        }
+        else{
+            commentboxlayout.setBackgroundColor(Color.BLACK);
+            back.setImageResource(R.mipmap.back);
+        }
         if(colorcodes.length()==0){
             int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
             GradientDrawable gd = new GradientDrawable(
@@ -208,7 +217,7 @@ String searchnonitiid,searchactivity_sports;
             }else {
 
                 if(colorcodes!=null){
-                    if(colorcodes == "#FFFFFFFF"){
+                    if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -345,8 +354,10 @@ String searchnonitiid,searchactivity_sports;
         date.setTypeface(tf);
         image=(NetworkImageView)findViewById(R.id.thumbnailone);
 
-        if(colorcodes == "#FFFFFFFF"){
+        if(colorcodes.equals("#FFFFFFFF")){
             title.setTextColor(Color.BLACK);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
+            post.setTextColor(Color.BLACK);
             comment_title.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
             source_reporter_name.setTextColor(Color.BLACK);
@@ -354,10 +365,13 @@ String searchnonitiid,searchactivity_sports;
             short_description.setTextColor(Color.BLACK);
             date.setTextColor(Color.BLACK);
             textview_date.setTextColor(Color.BLACK);
-
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
         }
         else{
             title.setTextColor(Color.WHITE);
+            post.setTextColor(Color.WHITE);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
             comment_title.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);
             source_reporter_name.setTextColor(Color.WHITE);

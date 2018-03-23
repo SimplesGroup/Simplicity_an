@@ -203,7 +203,7 @@ public class JobsDetailPagetamil extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    if(colorcodes == "#FFFFFFFF"){
+                    if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -334,7 +334,7 @@ public class JobsDetailPagetamil extends AppCompatActivity {
 
         jobrequest= Volley.newRequestQueue(getApplicationContext());
 
-        if(colorcodes == "#FFFFFFFF"){
+        if(colorcodes.equals("#FFFFFFFF")){
 
             //comment_title.setTextColor(Color.BLACK);
             //loadmore_title.setTextColor(Color.BLACK);
@@ -356,6 +356,18 @@ public class JobsDetailPagetamil extends AppCompatActivity {
             phonenumber_textview.setTextColor(Color.BLACK);
             title.setTextColor(Color.BLACK);
             title_qype.setTextColor(Color.BLACK);
+            applyjob.setTextColor(Color.BLACK);
+
+            interviewdate.setBackgroundResource(R.drawable.whiteback);
+            interviewdate_data.setBackgroundResource(R.drawable.whiteback);
+            jobtype.setBackgroundResource(R.drawable.whiteback);
+            jobtypelabel.setBackgroundResource(R.drawable.whiteback);
+            salarylabel.setBackgroundResource(R.drawable.whiteback);
+            salaryamt.setBackgroundResource(R.drawable.whiteback);
+            candidateprofile.setBackgroundResource(R.drawable.whiteback);
+            interviewtim_label.setBackgroundResource(R.drawable.whiteback);
+            interviewtiming.setBackgroundResource(R.drawable.whiteback);
+            venue.setBackgroundResource(R.drawable.whiteback);
         }
         else{
 //            comment_title.setTextColor(Color.WHITE);

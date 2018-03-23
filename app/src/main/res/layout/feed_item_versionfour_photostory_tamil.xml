@@ -352,6 +352,7 @@
                     android:minHeight="2dp"
                     android:layout_height="wrap_content">
                     <View
+                        android:id="@+id/line_separter"
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:background="@color/whitefood"/>

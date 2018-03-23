@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -109,6 +110,9 @@ TextView title;
     public static final String CONTENTID = "contentid";
     String contentid,activity;
     ProgressDialog pdialog;
+    public static final String backgroundcolor = "color";
+    RelativeLayout mainlayout;
+    String colorcodes;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,7 +142,7 @@ TextView title;
         }
         }
         requestQueue = Volley.newRequestQueue(this);
-
+        colorcodes=sharedpreferences.getString(backgroundcolor,"");
         url_notification_count_valueget=url_noti_count+myprofileid;
         URLPOSTQTYPE=urlpost;
         if(myprofileid!=null) {
@@ -190,6 +194,13 @@ TextView title;
         title.setText("Photo Stories");
         menu=(ImageButton)findViewById(R.id.btn_photohome);
         back=(ImageButton)findViewById(R.id.btn_photoback);
+
+        if(colorcodes.equals("#FFFFFFFF")){
+            title.setTextColor(Color.WHITE);
+        }
+        else{
+            title.setTextColor(Color.BLACK);
+        }
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -660,6 +671,15 @@ commentsbut.setText("Comment");
 commentsbut.setTransformationMethod(null);
             sharepost.setTransformationMethod(null);
             likes.setTransformationMethod(null);
+
+           if(backgroundcolor.equals("#FFFFFFFF")){
+               commentsbut.setTextColor(Color.WHITE);
+               name.setTextColor(Color.WHITE);
+           }
+           else{
+               commentsbut.setTextColor(Color.BLACK);
+               name.setTextColor(Color.BLACK);
+           }
 
         }
     }

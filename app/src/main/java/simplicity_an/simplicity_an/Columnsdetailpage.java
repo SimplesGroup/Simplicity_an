@@ -351,6 +351,8 @@ if(activity==null){
             sourcelinknews.setTextColor(Color.BLACK);
             sourcelinksimplicity.setTextColor(Color.BLACK);
             pdate.setTextColor(Color.BLACK);
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
 
         }
         else{
@@ -361,6 +363,8 @@ if(activity==null){
             sourcelinknews.setTextColor(Color.WHITE);
             sourcelinksimplicity.setTextColor(Color.WHITE);
             pdate.setTextColor(Color.WHITE);
+            commentbox_editext.setBackgroundResource(R.drawable.editextbox);
+            comment_title.setBackgroundResource(R.drawable.editextbox);
         }
 
         pdialog = new ProgressDialog(this);

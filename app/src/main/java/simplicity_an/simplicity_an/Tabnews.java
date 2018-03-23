@@ -146,6 +146,12 @@ SwipeRefreshLayout swipeRefresh;
     pdialog.setContentView(R.layout.custom_progressdialog);
     pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     fabnews=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
+    if(colorcodes.equals("#FFFFFFFF")){
+        fabnews.setImageResource(R.mipmap.uptamil);
+    }
+    else{
+        fabnews.setImageResource(R.mipmap.uparrow);
+    }
     fabnews.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -742,7 +748,7 @@ SwipeRefreshLayout swipeRefresh;
         NetworkImageView   feedImageView_typetwo_one,feedImageView_typetwo_two;
         NetworkImageView   feed_typethree_ones,feed_typethree_twos,feed_typethree_threes;
         NetworkImageView   feedImageView_typefour_one,feedImageView_typefour_two,feedImageView_typefour_three,feedImageView_typefour_four;
-
+        View line;
         public RelativeLayout countlayout,listLayout;
         // LinearLayout ;
         RecyclerView_OnClickListener.OnClickListener onClickListener;
@@ -767,7 +773,7 @@ SwipeRefreshLayout swipeRefresh;
             this.comment_imagebutton=(ImageButton)itemView.findViewById(R.id.button_comment);
             this.like_imagebutton=(ImageButton)itemView.findViewById(R.id.button_likes) ;
             this.share_imagebutton=(ImageButton)itemView.findViewById(R.id.button_share) ;
-
+            this.line = itemView.findViewById(R.id.line_separter);
             this.listLayout=(RelativeLayout) itemView.findViewById(R.id.listlayout_taball);
             this.countlayout=(RelativeLayout)itemView.findViewById(R.id.counts_layout);
             this.likes_button.setOnClickListener(this);
@@ -1514,6 +1520,24 @@ SwipeRefreshLayout swipeRefresh;
                 userViewHolder.share_button.setTransformationMethod(null);
 
                 save_item_count=itemmodel.getFavcount();
+                if(colorcodes.equals("#FFFFFFFF"))
+                {
+                    userViewHolder.shortdescription.setTextColor(Color.GRAY);
+                    userViewHolder.title_item.setTextColor(Color.BLACK);
+                    userViewHolder.item_type_name.setTextColor(Color.GRAY);
+                    userViewHolder.likescount.setTextColor(Color.BLACK);
+                    userViewHolder.commentscount.setTextColor(Color.BLACK);
+                    userViewHolder.line.setBackgroundColor(Color.LTGRAY);
+
+                }
+                else if(colorcodes.equals("#00B09B")){
+                    userViewHolder.shortdescription.setTextColor(Color.WHITE);
+                    userViewHolder.title_item.setTextColor(Color.WHITE);
+                    userViewHolder.item_type_name.setTextColor(Color.WHITE);
+                    userViewHolder.likescount.setTextColor(Color.WHITE);
+                    userViewHolder.commentscount.setTextColor(Color.WHITE);
+                    userViewHolder.line.setBackgroundColor(R.color.whitefood);
+                }
                 if(itemmodel.getCounttype()==1){
 
                     userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);

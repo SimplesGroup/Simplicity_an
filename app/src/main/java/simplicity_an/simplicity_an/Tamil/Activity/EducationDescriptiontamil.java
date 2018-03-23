@@ -222,7 +222,7 @@ public class EducationDescriptiontamil extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    if(colorcodes == "#FFFFFFFF"){
+                    if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -337,9 +337,11 @@ public class EducationDescriptiontamil extends AppCompatActivity {
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);
         thump = (NetworkImageView) findViewById(R.id.thumbnailone);
-        if(colorcodes == "#FFFFFFFF"){
+        if(colorcodes.equals("#FFFFFFFF")){
             tv.setTextColor(Color.BLACK);
             textview_date.setTextColor(Color.BLACK);
+            post.setTextColor(Color.BLACK);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
             comment_title.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
             sourcelinknews.setTextColor(Color.BLACK);
@@ -348,10 +350,14 @@ public class EducationDescriptiontamil extends AppCompatActivity {
             short_description.setTextColor(Color.BLACK);
             pdate.setTextColor(Color.BLACK);
             source_reporter_name.setTextColor(Color.BLACK);
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
 
         }
         else{
             tv.setTextColor(Color.WHITE);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
+            post.setTextColor(Color.WHITE);
             textview_date.setTextColor(Color.WHITE);
             comment_title.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);

@@ -205,7 +205,7 @@ public class ScienceandTechnologyDescription extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    if(colorcodes == "#FFFFFFFF"){
+                    if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -337,7 +337,7 @@ requestQueue=Volley.newRequestQueue(this);
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        if(colorcodes == "#FFFFFFFF"){
+        if(colorcodes.equals("#FFFFFFFF")){
             titlename.setTextColor(Color.BLACK);
             post.setTextColor(Color.BLACK);
             textview_date.setTextColor(Color.BLACK);
@@ -350,6 +350,8 @@ requestQueue=Volley.newRequestQueue(this);
             textview_date.setTextColor(Color.BLACK);
             date.setTextColor(Color.BLACK);
             source_reporter_name.setTextColor(Color.BLACK);
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
 
         }
         else{

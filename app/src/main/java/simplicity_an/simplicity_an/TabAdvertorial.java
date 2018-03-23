@@ -147,6 +147,12 @@ SwipeRefreshLayout swipeRefresh;
     pdialog.setContentView(R.layout.custom_progressdialog);
     pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     fabnews=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
+    if(colorcodes.equals("#FFFFFFFF")){
+        fabnews.setImageResource(R.mipmap.uptamil);
+    }
+    else{
+        fabnews.setImageResource(R.mipmap.uparrow);
+    }
     fabnews.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -654,7 +660,8 @@ SwipeRefreshLayout swipeRefresh;
     static class Userviewholdertaball extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView likescount,dislikescount,commentscount,title_item,item_type_name,date;
 
-        public Button share_button,comment_button,likes_button,save_button;
+        public ImageButton share_button,comment_button,likes_button;
+        public  Button save_button;
         public NetworkImageView item_image;
         public RelativeLayout countlayout,listLayout;
         ImageButton play;
@@ -668,10 +675,10 @@ SwipeRefreshLayout swipeRefresh;
             this. likescount=(TextView)itemView.findViewById(R.id.alltab_likescount);
             this.play=(ImageButton)itemView.findViewById(R.id.taball_play_pause_main);
             this.  commentscount=(TextView)itemView.findViewById(R.id.alltab_commentscount);
-            this.  likes_button=(Button)itemView.findViewById(R.id.taball_likes);
+            this.  likes_button=(ImageButton)itemView.findViewById(R.id.taball_likes);
             this. save_button=(Button)itemView.findViewById(R.id.taball_savepage);
-            this. share_button=(Button)itemView.findViewById(R.id.taball_sharepost);
-            this. comment_button=(Button)itemView.findViewById(R.id.taball_comment);
+            this. share_button=(ImageButton)itemView.findViewById(R.id.taball_sharepost);
+            this. comment_button=(ImageButton)itemView.findViewById(R.id.taball_comment);
             this. item_image=(NetworkImageView)itemView.findViewById(R.id.image_alltab);
             this.listLayout=(RelativeLayout) itemView.findViewById(R.id.listlayout_taball);
             this.countlayout=(RelativeLayout)itemView.findViewById(R.id.counts_layout);
@@ -879,12 +886,12 @@ SwipeRefreshLayout swipeRefresh;
 
 
                 final ItemModel itemmodel = modelList.get(position);
-                userViewHolder.comment_button.setText("Comment");
+                /*userViewHolder.comment_button.setText("Comment");
                 userViewHolder.comment_button.setTypeface(seguiregular);
                 userViewHolder.comment_button.setTransformationMethod(null);
                 userViewHolder.share_button.setText("Share");
                 userViewHolder.share_button.setTypeface(seguiregular);
-                userViewHolder.share_button.setTransformationMethod(null);
+                userViewHolder.share_button.setTransformationMethod(null);*/
 
                 save_item_count=itemmodel.getFavcount();
            if(colorcodes.equals("#FFFFFFFF"))
@@ -892,9 +899,9 @@ SwipeRefreshLayout swipeRefresh;
                     //userViewHolder.shortdescription.setTextColor(Color.GRAY);
                     userViewHolder.title_item.setTextColor(Color.BLACK);
                     userViewHolder.item_type_name.setTextColor(Color.GRAY);
-                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.Black));
+                    //userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.Black));
                     userViewHolder.likescount.setTextColor(Color.BLACK);
-                    userViewHolder.likescount.setBackgroundColor(Color.GREEN);
+                   // userViewHolder.likescount.setBackgroundColor(Color.BLACK);
                     userViewHolder.commentscount.setTextColor(Color.BLACK);
                     userViewHolder.line.setBackgroundColor(Color.LTGRAY);
 
@@ -908,29 +915,25 @@ SwipeRefreshLayout swipeRefresh;
                     userViewHolder.line.setBackgroundColor(R.color.whitefood);
                 }
                 if(itemmodel.getCounttype()==1){
-                    userViewHolder.likes_button.setText("Liked");
-                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
-                    userViewHolder.likes_button.setTypeface(seguiregular);
-                    userViewHolder.likes_button.setTransformationMethod(null);
-                    userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.likered,0,0,0);
+                    userViewHolder.likes_button.setImageResource(R.mipmap.heartfullred);
+                    userViewHolder.likes_button.setTag("heartfullred");
+
                 }else {
-                    userViewHolder.likes_button.setText("Like");
-                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
-                    userViewHolder.likes_button.setTypeface(seguiregular);
-                    userViewHolder.likes_button.setTransformationMethod(null);
-                    userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.like,0,0,0);
+                    userViewHolder.likes_button.setImageResource(R.mipmap.heart);
+                    userViewHolder.likes_button.setTag("heart");
+
                 }
 
                 if(itemmodel.getFavcount()==1){
                     userViewHolder.save_button.setText("Saved");
-                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
+                   // userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
                     userViewHolder.save_button.setTypeface(seguiregular);
                     userViewHolder.save_button.setTransformationMethod(null);
                 }else {
                     userViewHolder.save_button.setText("Save");
                     userViewHolder.save_button.setTypeface(seguiregular);
                     userViewHolder.save_button.setTransformationMethod(null);
-                    userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
+                    //userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.white));
                 }
                 if(itemmodel.getQtypemain().equalsIgnoreCase("radio")||itemmodel.getQtypemain().equalsIgnoreCase("theatre")||itemmodel.getQtype().equals("Independent Movies")){
                     userViewHolder.play.setVisibility(View.VISIBLE);
@@ -947,6 +950,21 @@ SwipeRefreshLayout swipeRefresh;
                 userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(seguiregular);
                 userViewHolder.date.setTypeface(seguiregular);
+                if(itemmodel.getLikescount()==0){
+                    userViewHolder.likescount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Like"));
+                }else {
+                    userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));
+                }
+                if(itemmodel.getCommentscount()==0){
+                    userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Comment"));
+                }else {
+                    userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));
+                }
+                if(itemmodel.getCommentscount()==0){
+                    userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));
+                }else {
+                    userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));
+                }
                 if(itemmodel.getCommentscount()>0||itemmodel.getLikescount()>0){
                     if(itemmodel.getLikescount()==0){
                         userViewHolder.likescount.setVisibility(View.GONE);
@@ -1156,51 +1174,50 @@ SwipeRefreshLayout swipeRefresh;
 
                             case R.id.taball_likes:
                                 if(myprofileid!=null) {
+                                    String backgroundImageName = String.valueOf(userViewHolder.likes_button.getTag());
+                                    Log.e("RUN","with"+backgroundImageName);
+                                    if(backgroundImageName.equals("heart")){
+                                        userViewHolder.likes_button.setImageResource(R.mipmap.heartfullred);
+                                        userViewHolder.likes_button.setTag("heartfullred");
+                                    }else if(backgroundImageName.equals("heartfullred")) {
+                                        userViewHolder.likes_button.setImageResource(R.mipmap.heart);
+                                        userViewHolder.likes_button.setTag("heart");
+                                    }else {
 
+                                    }
                                     StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
-                                            String res=response.toString();
-                                            res = res.replace(" ", "");
-                                            res = res.trim();
-                                            if(res.equalsIgnoreCase("yes")){
-                                                System.out.println(itemmodel.getId());
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount()+1;
-                                                }
-
-                                                userViewHolder.likes_button.setText("Liked");
-                                                userViewHolder.likes_button.setTextColor(getActivity().getResources().getColor(R.color.red));
-                                                userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.likered,0,0,0);
-                                                userViewHolder.likes_button.setTypeface(seguiregular);
-                                                userViewHolder.likes_button.setTransformationMethod(null);
-                                            }else if(res.equalsIgnoreCase("no")){
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount()-1;
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }
-                                                System.out.println(itemmodel.getId());
-
-                                                userViewHolder.likes_button.setText("Like");
-                                                userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.like,0,0,0);
-                                                userViewHolder.likes_button.setTypeface(seguiregular);
-                                                userViewHolder.likes_button.setTransformationMethod(null);
+                                            String res;
+                                            Log.e("RES",response.toString());
+                                            try {
+                                                Log.e("RES", "START");
+                                                JSONObject data = new JSONObject(response.toString());
+                                                String dir = data.getString("result");
+                                                Log.d("RES", dir);
+                                                JSONObject object=new JSONObject(dir);
+                                                String dir2=object.getString("message");
+                                                Log.d("RES", dir2);
+                                                for (int i = 0; i < object.length(); i++) {
+                                                    String dirs = object.getString("message");
+                                                    Log.d("RES", dirs);
+                                                    res=object.getString("message");
+                                                    like_finalvalues=object.getInt("total_likes");
+                                                    Log.e("RES",res.toString());
+                                                    if(res.equals("Liked")){
+                                                        System.out.println(itemmodel.getId());
+                                                        like_finalvalues=object.getInt("total_likes");
+                                                Log.e("RES",String.valueOf(like_finalvalues));
+                                                userViewHolder.likes_button.setImageResource(R.mipmap.heartfullred);
+                                                userViewHolder.likes_button.setTag("heartfullred");
+                                            }else if(res.equals("Like")){
+                                                like_finalvalues=object.getInt("total_likes");
+                                                Log.e("RES","dis"+String.valueOf(like_finalvalues));
+                                                userViewHolder.likes_button.setImageResource(R.mipmap.heart);
+                                                userViewHolder.likes_button.setTag("heart");
                                             }
-                                            if(like_finalvalues==0||like_finalvalues==-1){
-                                                System.out.println(itemmodel.getId());
-                                                userViewHolder.    likescount.setVisibility(View.GONE);
-                                            }else {
-                                                System.out.println(itemmodel.getId());
-                                                System.out.println(like_finalvalues);
-                                                userViewHolder.    countlayout.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
-
-                                                like_finalvalues=0;
-                                            }
+                                            userViewHolder.likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
+                                                }                                              }catch (JSONException e){                                              }
                                         }
                                     }, new Response.ErrorListener() {
                                         @Override
@@ -1231,7 +1248,6 @@ SwipeRefreshLayout swipeRefresh;
                                     startActivity(sign);
 
                                 }
-
 
                                 break;
                             case R.id.taball_savepage:

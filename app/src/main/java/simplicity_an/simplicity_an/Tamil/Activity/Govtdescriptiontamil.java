@@ -219,7 +219,7 @@ public class Govtdescriptiontamil extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    if(colorcodes == "#FFFFFFFF"){
+                    if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -361,9 +361,10 @@ requestQueue=Volley.newRequestQueue(this);
         pdialog.show();
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        if(colorcodes == "#FFFFFFFF"){
+        if(colorcodes.equals("#FFFFFFFF")){
             titlename.setTextColor(Color.BLACK);
             comment_title.setTextColor(Color.BLACK);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
             post.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
             source_reporter_name.setTextColor(Color.BLACK);
@@ -372,11 +373,13 @@ requestQueue=Volley.newRequestQueue(this);
             image_description.setTextColor(Color.BLACK);
             short_description.setTextColor(Color.BLACK);
             date.setTextColor(Color.BLACK);
-
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
         }
         else{
             titlename.setTextColor(Color.WHITE);
             post.setTextColor(Color.WHITE);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
             comment_title.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);
             source_reporter_name.setTextColor(Color.WHITE);

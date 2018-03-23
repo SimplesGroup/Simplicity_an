@@ -145,6 +145,14 @@ public class TabentertainmentRadio extends Fragment {
         recyclerview_tab_all.setLayoutManager(lLayout);
         pdialog = new ProgressDialog(getActivity());
         fabentertainmentradio=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
+
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabentertainmentradio.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabentertainmentradio.setImageResource(R.mipmap.uparrow);
+        }
+
         fabentertainmentradio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

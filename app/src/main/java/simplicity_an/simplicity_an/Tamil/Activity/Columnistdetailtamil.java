@@ -259,14 +259,30 @@ public class Columnistdetailtamil extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
 
-                    mainlayout.setBackgroundDrawable(gd);
+                        mainlayout.setBackgroundDrawable(gd);
+                    } else {
+                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                        GradientDrawable gd = new GradientDrawable(
+                                GradientDrawable.Orientation.TOP_BOTTOM,
+                                colors);
+                        gd.setCornerRadius(0f);
+
+                        mainlayout.setBackgroundDrawable(gd);
+
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#383838");
+
+                        editor.commit();
+                    }
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -352,6 +368,33 @@ public class Columnistdetailtamil extends AppCompatActivity {
         source_reporter_name.setTypeface(tf_regular);
 //        authorname.setTypeface(tf_regular);
         pdate.setTypeface(tf);
+
+        if(colorcodes.equals("#FFFFFFFF")){
+            tv.setTextColor(Color.BLACK);
+            textview_date.setTextColor(Color.BLACK);
+            comment_title.setTextColor(Color.BLACK);
+            loadmore_title.setTextColor(Color.BLACK);
+            sourcelinknews.setTextColor(Color.BLACK);
+            sourcelinksimplicity.setTextColor(Color.BLACK);
+            image_description.setTextColor(Color.BLACK);
+            short_description.setTextColor(Color.BLACK);
+            pdate.setTextColor(Color.BLACK);
+            source_reporter_name.setTextColor(Color.BLACK);
+
+        }
+        else{
+            tv.setTextColor(Color.WHITE);
+            textview_date.setTextColor(Color.WHITE);
+            comment_title.setTextColor(Color.WHITE);
+            loadmore_title.setTextColor(Color.WHITE);
+            sourcelinknews.setTextColor(Color.WHITE);
+            sourcelinksimplicity.setTextColor(Color.WHITE);
+            image_description.setTextColor(Color.WHITE);
+            short_description.setTextColor(Color.WHITE);
+            textview_date.setTextColor(Color.WHITE);
+            pdate.setTextColor(Color.WHITE);
+            source_reporter_name.setTextColor(Color.WHITE);
+        }
         thump = (NetworkImageView) findViewById(R.id.thumbnailone);
         pdialog = new ProgressDialog(this);
         pdialog.show();

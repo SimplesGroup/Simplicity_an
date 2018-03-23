@@ -210,7 +210,7 @@ public class Healthylivingdescription extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    if(colorcodes == "#FFFFFFFF"){
+                    if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -349,7 +349,7 @@ public class Healthylivingdescription extends AppCompatActivity {
        // health.setText("Health & Living");
         thump=(NetworkImageView)findViewById(R.id.thumbnailone);
 
-        if(colorcodes == "#FFFFFFFF"){
+        if(colorcodes.equals("#FFFFFFFF")){
 
             comment_title.setTextColor(Color.BLACK);
             post.setTextColor(Color.BLACK);
@@ -359,7 +359,10 @@ public class Healthylivingdescription extends AppCompatActivity {
             sourcelinksimplicity.setTextColor(Color.BLACK);
             sourcelinknews.setTextColor(Color.BLACK);
             pdate.setTextColor(Color.BLACK);
-
+            textview_date.setTextColor(Color.GRAY);
+            source_reporter_name.setTextColor(Color.GRAY);
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
 
         }
         else{
@@ -371,7 +374,8 @@ public class Healthylivingdescription extends AppCompatActivity {
             sourcelinksimplicity.setTextColor(Color.WHITE);
             sourcelinknews.setTextColor(Color.WHITE);
             pdate.setTextColor(Color.WHITE);
-
+            textview_date.setTextColor(Color.WHITE);
+            source_reporter_name.setTextColor(Color.WHITE);
         }
 
         if(notifiid!=null) {

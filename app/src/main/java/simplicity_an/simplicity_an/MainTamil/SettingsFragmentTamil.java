@@ -340,8 +340,6 @@ public class SettingsFragmentTamil extends Fragment {
                 btsearch.setImageResource(R.mipmap.searchtamil);
                 specials.setImageResource(R.mipmap.specialtamil);
             }
-
-
         }
 
 

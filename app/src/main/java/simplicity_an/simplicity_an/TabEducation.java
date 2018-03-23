@@ -101,7 +101,7 @@ FloatingActionButton fabeducation,fabplus;
 int like_finalvalues;
     FloatingActionButton fabsearch,fabinnerplus;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
-SwipeRefreshLayout swipeRefresh;
+         SwipeRefreshLayout swipeRefresh;
     private OnFragmentInteractionListener mListener;
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -142,6 +142,12 @@ SwipeRefreshLayout swipeRefresh;
         recyclerview_tab_all.setLayoutManager(lLayout);
         pdialog = new ProgressDialog(getActivity());
         fabeducation=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabeducation.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabeducation.setImageResource(R.mipmap.uparrow);
+        }
         fabeducation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1018,18 +1024,39 @@ SwipeRefreshLayout swipeRefresh;
                 Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), playfair);
 
                 userViewHolder.shortdescription.setTypeface(tf_play);
-                if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){                     userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
+                if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){                     userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));
+                }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {
+                    userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
 
                 userViewHolder.editername.setTypeface(seguiregular);
                 userViewHolder.editername.setText(itemmodel.getEditername());
 
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
                 userViewHolder.title_item.setTypeface(seguiregular);
-                if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular_bold);
+                if(itemmodel.getEditername().equals("")){
+                    userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));
+                }else {
+                    userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));
+                }
+                    userViewHolder.item_type_name.setTypeface(seguiregular_bold);
                 userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(seguiregular);
                 userViewHolder.date.setTypeface(seguiregular);
-                 if(itemmodel.getLikescount()==0){                         userViewHolder.likescount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Like"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Comment"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                     }                                        if(itemmodel.getCommentscount()==0){                      userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));                 }else {                     userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                 }
+                 if(itemmodel.getLikescount()==0){
+                     userViewHolder.likescount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Like"));
+                 }else {
+                     userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));
+                 }
+                 if(itemmodel.getCommentscount()==0){
+                     userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Comment"));
+                 }else {
+                     userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));
+                 }
+                     if(itemmodel.getCommentscount()==0){
+                     userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));
+                 }else {
+                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));
+                     }
                 if(itemmodel.getImage()!=null){
                     userViewHolder.item_image.setImageUrl(itemmodel.getImage(),mImageLoader);
                 }else {

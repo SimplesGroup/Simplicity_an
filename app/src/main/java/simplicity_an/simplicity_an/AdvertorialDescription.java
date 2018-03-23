@@ -209,7 +209,7 @@ ScrollView scrollView;
             }else {
 
                 if(colorcodes!=null){
-                    if(colorcodes == "#FFFFFFFF"){
+                    if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -330,7 +330,7 @@ ScrollView scrollView;
         pdate.setTypeface(tf);
         thump = (NetworkImageView) findViewById(R.id.thumbnailone);
 
-        if(colorcodes == "#FFFFFFFF"){
+        if(colorcodes.equals("#FFFFFFFF")){
             tv.setTextColor(Color.BLACK);
             post.setTextColor(Color.BLACK);
             comment_title.setTextColor(Color.BLACK);
@@ -339,6 +339,9 @@ ScrollView scrollView;
             sourcelinknews.setTextColor(Color.BLACK);
             sourcelinksimplicity.setTextColor(Color.BLACK);
             pdate.setTextColor(Color.BLACK);
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
+
 
         }
         else{

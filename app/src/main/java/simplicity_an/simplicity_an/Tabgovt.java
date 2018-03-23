@@ -140,6 +140,12 @@ OnFragmentInteractionListener mListener;
         recyclerview_tab_all.setLayoutManager(lLayout);
         pdialog = new ProgressDialog(getActivity());
         fabgovt=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabgovt.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabgovt.setImageResource(R.mipmap.uparrow);
+        }
         fabgovt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

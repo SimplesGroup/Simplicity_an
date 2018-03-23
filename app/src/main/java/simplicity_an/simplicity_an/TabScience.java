@@ -144,6 +144,12 @@ OnFragmentInteractionListener mListener;
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         fabscience=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabscience.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabscience.setImageResource(R.mipmap.uparrow);
+        }
         fabscience.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -157,6 +157,12 @@ public class Tabphotostoriestamil extends Fragment {
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         fabnews=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabnews.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabnews.setImageResource(R.mipmap.uparrow);
+        }
         fabnews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1403,7 +1409,7 @@ public class Tabphotostoriestamil extends Fragment {
                     userViewHolder.date.setTextColor(Color.GRAY);
                     userViewHolder.likescount.setTextColor(Color.BLACK);
                     userViewHolder.commentscount.setTextColor(Color.BLACK);
-                    userViewHolder.line.setBackgroundColor(Color.LTGRAY);
+//                    userViewHolder.line.setBackgroundColor(Color.LTGRAY);
 
                 }
                 else if(colorcodes.equals("#00B09B")){
@@ -1413,7 +1419,7 @@ public class Tabphotostoriestamil extends Fragment {
                     userViewHolder.item_type_name.setTextColor(Color.WHITE);
                     userViewHolder.likescount.setTextColor(Color.WHITE);
                     userViewHolder.commentscount.setTextColor(Color.WHITE);
-                    userViewHolder.line.setBackgroundColor(R.color.whitefood);
+                   // userViewHolder.line.setBackgroundColor(R.color.whitefood);
                     userViewHolder.date.setTextColor(Color.WHITE);
 
                 }

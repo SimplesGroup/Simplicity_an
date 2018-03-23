@@ -148,7 +148,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
             @Override
             public void onClick(View v) {
 
-                if(colorcodes.equals("#FFFFFFFF")){
+                /*if(colorcodes.equals("#FFFFFFFF")){
                     //city.setBackgroundResource(R.color.white);
                     happening.setBackgroundResource(R.color.white);
                     search.setBackgroundResource(R.color.white);
@@ -170,7 +170,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     search.setImageResource(R.mipmap.searchtamil);
                     audio_video.setImageResource(R.mipmap.specialtamil);
                     settings.setImageResource(R.mipmap.moretamil);
-                }
+                }*/
                 Fragment selectedFragment = null;
                 selectedFragment = CityFragmentTamil.newInstance();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -184,28 +184,148 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     }else {
                         if(colorcodes.equalsIgnoreCase("#383838")){
                             city.setBackgroundResource(R.color.theme1button);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#59247c")){
                             city.setBackgroundResource(R.color.theme2);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#1d487a")){
                             city.setBackgroundResource(R.color.theme3);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#7A4100")){
                             city.setBackgroundResource(R.color.theme4);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#6E0138")){
                             city.setBackgroundResource(R.color.theme5);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#00BFD4")){
                             city.setBackgroundResource(R.color.theme6);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#185546")){
                             city.setBackgroundResource(R.color.theme7);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#D0A06F")){
                             city.setBackgroundResource(R.color.theme8);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#82C6E6")){
                             city.setBackgroundResource(R.color.theme9);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#339900")){
                             city.setBackgroundResource(R.color.theme10);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#CC9C00")){
                             city.setBackgroundResource(R.color.theme11);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                             city.setBackgroundResource(R.color.theme12);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
+                        }
+                        else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")) {
+                            city.setBackgroundResource(R.color.theme13);
+                            happening.setBackgroundResource(R.color.white);
+                            search.setBackgroundResource(R.color.white);
+                            audio_video.setBackgroundResource(R.color.white);
+                            settings.setBackgroundResource(R.color.white);
+                            //city.setImageResource(R.mipmap.newsone);
+                            happening.setImageResource(R.mipmap.eventstamilone);
+                            search.setImageResource(R.mipmap.searchtamilone);
+                            audio_video.setImageResource(R.mipmap.specialstamilone);
+                            settings.setImageResource(R.mipmap.moretamilone);
                         }
                     }
                 }
@@ -214,7 +334,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
         happening.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(colorcodes.equals("#FFFFFFFF")){
+               /* if(colorcodes.equals("#FFFFFFFF")){
                     city.setBackgroundResource(R.color.white);
                     //happening.setBackgroundResource(R.color.white);
                     search.setBackgroundResource(R.color.white);
@@ -237,7 +357,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     search.setImageResource(R.mipmap.searchtamil);
                     audio_video.setImageResource(R.mipmap.specialtamil);
                     settings.setImageResource(R.mipmap.moretamil);
-                }
+                }*/
                 Fragment selectedFragment = null;
                 selectedFragment = HappeningFragTamil.newInstance();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -251,28 +371,149 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     }else {
                         if(colorcodes.equalsIgnoreCase("#383838")){
                             happening.setBackgroundResource(R.color.theme1button);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#59247c")){
                             happening.setBackgroundResource(R.color.theme2);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#1d487a")){
                             happening.setBackgroundResource(R.color.theme3);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#7A4100")){
                             happening.setBackgroundResource(R.color.theme4);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#6E0138")){
                             happening.setBackgroundResource(R.color.theme5);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#00BFD4")){
                             happening.setBackgroundResource(R.color.theme6);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#185546")){
                             happening.setBackgroundResource(R.color.theme7);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#D0A06F")){
                             happening.setBackgroundResource(R.color.theme8);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#82C6E6")){
                             happening.setBackgroundResource(R.color.theme9);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#339900")){
                             happening.setBackgroundResource(R.color.theme10);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#CC9C00")){
                             happening.setBackgroundResource(R.color.theme11);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                             happening.setBackgroundResource(R.color.theme12);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
+                        }
+                        else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
+                            happening.setBackgroundResource(R.color.theme13);
+                            city.setBackgroundResource(R.color.white);
+                            //happening.setBackgroundResource(R.color.white);
+                            search.setBackgroundResource(R.color.white);
+                            audio_video.setBackgroundResource(R.color.white);
+                            settings.setBackgroundResource(R.color.white);
+                            city.setImageResource(R.mipmap.newstamilone);
+                            //happening.setImageResource(R.mipmap.eventone);
+                            search.setImageResource(R.mipmap.searchtamilone);
+                            audio_video.setImageResource(R.mipmap.specialstamilone);
+                            settings.setImageResource(R.mipmap.moretamilone);
                         }
                     }
                 }
@@ -282,7 +523,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
             @Override
             public void onClick(View v) {
                 //  if(myprofileid!=null) {
-                if(colorcodes.equals("#FFFFFFFF")){
+                /*if(colorcodes.equals("#FFFFFFFF")){
                     city.setBackgroundResource(R.color.white);
                     happening.setBackgroundResource(R.color.white);
                     //search.setBackgroundResource(R.color.white);
@@ -295,16 +536,16 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     settings.setImageResource(R.mipmap.moretamilone);
                 }
                 else{
-                    happening.setBackgroundResource(R.color.Black);
-                    city.setBackgroundResource(R.color.Black);
-                    audio_video.setBackgroundResource(R.color.Black);
-                    settings.setBackgroundResource(R.color.Black);
+                    happening.setBackgroundResource(R.color.mytransparent);
+                    city.setBackgroundResource(R.color.mytransparent);
+                    audio_video.setBackgroundResource(R.color.mytransparent);
+                    settings.setBackgroundResource(R.color.mytransparent);
                     city.setImageResource(R.mipmap.newstamil);
                     happening.setImageResource(R.mipmap.eventstamil);
                     search.setImageResource(R.mipmap.searchtamil);
                     audio_video.setImageResource(R.mipmap.specialtamil);
                     settings.setImageResource(R.mipmap.moretamil);
-                }
+                }*/
             /*    Intent in = new Intent(getApplicationContext(), ExploreMain.class);
                     startActivity(in);*/
               FragmentManager fragmentManager= getSupportFragmentManager();
@@ -320,28 +561,148 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     } else {
                         if (colorcodes.equalsIgnoreCase("#383838")) {
                             search.setBackgroundResource(R.color.theme1button);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         } else if (colorcodes.equalsIgnoreCase("#59247c")) {
                             search.setBackgroundResource(R.color.theme2);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         } else if (colorcodes.equalsIgnoreCase("#1d487a")) {
                             search.setBackgroundResource(R.color.theme3);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         } else if (colorcodes.equalsIgnoreCase("#7A4100")) {
                             search.setBackgroundResource(R.color.theme4);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         } else if (colorcodes.equalsIgnoreCase("#6E0138")) {
                             search.setBackgroundResource(R.color.theme5);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         } else if (colorcodes.equalsIgnoreCase("#00BFD4")) {
                             search.setBackgroundResource(R.color.theme6);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         } else if (colorcodes.equalsIgnoreCase("#185546")) {
                             search.setBackgroundResource(R.color.theme7);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         } else if (colorcodes.equalsIgnoreCase("#D0A06F")) {
                             search.setBackgroundResource(R.color.theme8);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         } else if (colorcodes.equalsIgnoreCase("#82C6E6")) {
                             search.setBackgroundResource(R.color.theme9);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         } else if (colorcodes.equalsIgnoreCase("#339900")) {
                             search.setBackgroundResource(R.color.theme10);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         } else if (colorcodes.equalsIgnoreCase("#CC9C00")) {
                             search.setBackgroundResource(R.color.theme11);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         } else if (colorcodes.equalsIgnoreCase("#00B09B")) {
                             search.setBackgroundResource(R.color.theme12);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
+                        }else if (colorcodes.equalsIgnoreCase("#FFFFFFFF")) {
+                            search.setBackgroundResource(R.color.theme13);
+                            city.setBackgroundResource(R.color.white);
+                            happening.setBackgroundResource(R.color.white);
+                            //search.setBackgroundResource(R.color.white);
+                            audio_video.setBackgroundResource(R.color.white);
+                            settings.setBackgroundResource(R.color.white);
+                            city.setImageResource(R.mipmap.newstamilone);
+                            happening.setImageResource(R.mipmap.eventstamilone);
+                            //search.setImageResource(R.mipmap.searchone);
+                            audio_video.setImageResource(R.mipmap.specialstamilone);
+                            settings.setImageResource(R.mipmap.moretamilone);
                         }
                     }
                 }
@@ -354,7 +715,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
         audio_video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(colorcodes.equals("#FFFFFFFF")){
+              /*  if(colorcodes.equals("#FFFFFFFF")){
                     city.setBackgroundResource(R.color.white);
                     happening.setBackgroundResource(R.color.white);
                     search.setBackgroundResource(R.color.white);
@@ -376,7 +737,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     search.setImageResource(R.mipmap.searchtamil);
                     audio_video.setImageResource(R.mipmap.specialtamil);
                     settings.setImageResource(R.mipmap.moretamil);
-                }
+                }*/
                 Fragment selectedFragment = null;
                 selectedFragment = EntertainmentFragmentTamil.newInstance();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -390,28 +751,149 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     }else {
                         if(colorcodes.equalsIgnoreCase("#383838")){
                             audio_video.setBackgroundResource(R.color.theme1button);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#59247c")){
                             audio_video.setBackgroundResource(R.color.theme2);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#1d487a")){
                             audio_video.setBackgroundResource(R.color.theme3);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#7A4100")){
                             audio_video.setBackgroundResource(R.color.theme4);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#6E0138")){
                             audio_video.setBackgroundResource(R.color.theme5);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#00BFD4")){
                             audio_video.setBackgroundResource(R.color.theme6);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#185546")){
                             audio_video.setBackgroundResource(R.color.theme7);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#D0A06F")){
                             audio_video.setBackgroundResource(R.color.theme8);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#82C6E6")){
                             audio_video.setBackgroundResource(R.color.theme9);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
+
                         }else if(colorcodes.equalsIgnoreCase("#339900")){
                             audio_video.setBackgroundResource(R.color.theme10);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#CC9C00")){
                             audio_video.setBackgroundResource(R.color.theme11);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                             audio_video.setBackgroundResource(R.color.theme12);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            settings.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
+                        }else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
+                            audio_video.setBackgroundResource(R.color.theme13);
+                            city.setBackgroundResource(R.color.white);
+                            happening.setBackgroundResource(R.color.white);
+                            search.setBackgroundResource(R.color.white);
+                            //audio_video.setBackgroundResource(R.color.white);
+                            settings.setBackgroundResource(R.color.white);
+                            city.setImageResource(R.mipmap.newstamilone);
+                            happening.setImageResource(R.mipmap.eventstamilone);
+                            search.setImageResource(R.mipmap.searchtamilone);
+                            //audio_video.setImageResource(R.mipmap.specialone);
+                            settings.setImageResource(R.mipmap.moretamilone);
                         }
                     }
                 }
@@ -420,7 +902,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(colorcodes.equals("#FFFFFFFF")){
+                /*if(colorcodes.equals("#FFFFFFFF")){
                     city.setBackgroundResource(R.color.white);
                     happening.setBackgroundResource(R.color.white);
                     search.setBackgroundResource(R.color.white);
@@ -442,7 +924,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     search.setImageResource(R.mipmap.searchtamil);
                     audio_video.setImageResource(R.mipmap.specialtamil);
                     settings.setImageResource(R.mipmap.moretamil);
-                }
+                }*/
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 SettingsFragmentTamil fragment = new SettingsFragmentTamil();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -456,31 +938,148 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     }else {
                         if(colorcodes.equalsIgnoreCase("#383838")){
                             settings.setBackgroundResource(R.color.theme1button);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#59247c")){
                             settings.setBackgroundResource(R.color.theme2);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#1d487a")){
                             settings.setBackgroundResource(R.color.theme3);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#7A4100")){
                             settings.setBackgroundResource(R.color.theme4);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#6E0138")){
                             settings.setBackgroundResource(R.color.theme5);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#00BFD4")){
                             settings.setBackgroundResource(R.color.theme6);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#185546")){
                             settings.setBackgroundResource(R.color.theme7);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#D0A06F")){
                             settings.setBackgroundResource(R.color.theme8);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#82C6E6")){
                             settings.setBackgroundResource(R.color.theme9);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#339900")){
                             settings.setBackgroundResource(R.color.theme10);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#CC9C00")){
                             settings.setBackgroundResource(R.color.theme11);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }else if(colorcodes.equalsIgnoreCase("#00B09B")){
                             settings.setBackgroundResource(R.color.theme12);
+                            happening.setBackgroundResource(R.color.mytransparent);
+                            search.setBackgroundResource(R.color.mytransparent);
+                            audio_video.setBackgroundResource(R.color.mytransparent);
+                            city.setBackgroundResource(R.color.mytransparent);
+                            city.setImageResource(R.mipmap.newstamil);
+                            happening.setImageResource(R.mipmap.eventstamil);
+                            search.setImageResource(R.mipmap.searchtamil);
+                            audio_video.setImageResource(R.mipmap.specialtamil);
+                            settings.setImageResource(R.mipmap.moretamil);
                         }
-                        else if(colorcodes.equalsIgnoreCase("#ffffff")){
+                        else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
                             city.setBackgroundResource(R.color.theme13);
+                            city.setBackgroundResource(R.color.white);
+                            happening.setBackgroundResource(R.color.white);
+                            search.setBackgroundResource(R.color.white);
+                            audio_video.setBackgroundResource(R.color.white);
+                            //settings.setBackgroundResource(R.color.white);
+                            city.setImageResource(R.mipmap.newstamilone);
+                            happening.setImageResource(R.mipmap.eventstamilone);
+                            search.setImageResource(R.mipmap.searchtamilone);
+                            audio_video.setImageResource(R.mipmap.specialstamilone);
                         }
                     }
                 }

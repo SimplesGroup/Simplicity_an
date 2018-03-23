@@ -221,7 +221,7 @@ public class Healthdescriptiontamil extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    if(colorcodes == "#FFFFFFFF"){
+                    if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
                         GradientDrawable gd = new GradientDrawable(
@@ -370,9 +370,10 @@ public class Healthdescriptiontamil extends AppCompatActivity {
         sourcelinknews.setTypeface(tf);
         sourcelinksimplicity.setTypeface(tf);
 
-        if(colorcodes == "#FFFFFFFF"){
+        if(colorcodes.equals("#FFFFFFFF")){
 
             comment_title.setTextColor(Color.BLACK);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
             post.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
             textview_date.setTextColor(Color.BLACK);
@@ -380,11 +381,15 @@ public class Healthdescriptiontamil extends AppCompatActivity {
             sourcelinksimplicity.setTextColor(Color.BLACK);
             sourcelinknews.setTextColor(Color.BLACK);
             pdate.setTextColor(Color.BLACK);
-
+            title_category.setTextColor(Color.BLACK);
+            source_reporter_name.setTextColor(Color.BLACK);
+            commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            comment_title.setBackgroundResource(R.drawable.editextboxwhite);
 
         }
         else{
             comment_title.setTextColor(Color.WHITE);
+            commentbox_editext.setHint("கருத்தை தெரிவிக்கவும்...");
             post.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);
             textview_date.setTextColor(Color.WHITE);
@@ -392,6 +397,7 @@ public class Healthdescriptiontamil extends AppCompatActivity {
             sourcelinksimplicity.setTextColor(Color.WHITE);
             sourcelinknews.setTextColor(Color.WHITE);
             pdate.setTextColor(Color.WHITE);
+            title_category.setTextColor(Color.WHITE);
 
         }
 

@@ -142,6 +142,12 @@ FloatingActionButton fabfarming,fabplus;
         recyclerview_tab_all.setLayoutManager(lLayout);
         pdialog = new ProgressDialog(getActivity());
         fabfarming=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
+        if(colorcodes.equals("#FFFFFFFF")){
+            fabfarming.setImageResource(R.mipmap.uptamil);
+        }
+        else{
+            fabfarming.setImageResource(R.mipmap.uparrow);
+        }
         fabfarming.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
