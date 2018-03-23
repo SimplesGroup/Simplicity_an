@@ -631,7 +631,7 @@ try {
                 //sourcelinknews.setText(Html.fromHtml("Source:"));
                 //sourcelinksimplicity.setText(Html.fromHtml("<u>" + obj.getString("publisher_name") + "</u>"));
                 // Toast.makeText(Second.this,ss,Toast.LENGTH_LONG).show();
-                Log.e("TYPE",obj.getString("qtype"));
+                //Log.e("TYPE",obj.getString("qtype"));
 
 
                 Log.e("DESC",descrition);

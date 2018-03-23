@@ -1,8 +1,11 @@
 package simplicity_an.simplicity_an.MainTamil;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -15,11 +18,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -55,13 +62,16 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
     String myprofileid;
     public static final String MYUSERID= "myprofileid";
     public static final String GcmId = "gcmid";
-    String playerid;
+
     String id,radio_title,radio_url;
     RelativeLayout topLevelLayout;
-
+    public static final String Language = "lamguage";
+    Dialog dialog;
     String UPLOAD_CHECK_USER="http://simpli-city.in/request2.php?rtype=checkplayer&key=simples";
     boolean doubleBackToExitPressedOnce = false;
-
+    String language_data,radio_button_values;
+    String url_change_lang="http://simpli-city.in/request2.php?rtype=updatelanguage&key=simples";
+    String playerid;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +110,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
         });
 
         CheckPlayerid();
+        isFirstTime();
         city=(ImageButton)findViewById(R.id.btn_versiontwocity);
         happening=(ImageButton)findViewById(R.id.btn_versiontwobeyond);
         search=(ImageButton)findViewById(R.id.btn_versiontwosearch);
@@ -528,6 +539,18 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
     }
     private boolean isFirstTime()
     {
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        boolean ranBefore = preferences.getBoolean("RanBefore", false);
+        if (!ranBefore) {
+
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("RanBefore", true);
+            editor.commit();
+            themeselection();
+
+        }
+
+
         /*SharedPreferences preferences = getPreferences(MODE_PRIVATE);
         boolean ranBefore = preferences.getBoolean("RanBefore", false);*/
        /* if (!ranBefore) {
@@ -535,7 +558,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("RanBefore", true);
             editor.commit();*/
-        topLevelLayout.setVisibility(View.VISIBLE);
+       /* topLevelLayout.setVisibility(View.VISIBLE);
         topLevelLayout.setOnTouchListener(new View.OnTouchListener(){
 
             @Override
@@ -544,7 +567,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                 return false;
             }
 
-        });
+        });*/
 
 
         // }
@@ -851,5 +874,369 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
             }
         }, 2000);
     }
+    private void themeselection(){
+        dialog = new Dialog(MainPageTamil.this);
+        dialog.setContentView(R.layout.themeandlaguageselect);
 
+        ImageButton colorone = (ImageButton) dialog.findViewById(R.id.color);
+        ImageButton colortwo = (ImageButton) dialog.findViewById(R.id.color2);
+        ImageButton colorthree = (ImageButton) dialog.findViewById(R.id.color3);
+        ImageButton colorfour = (ImageButton) dialog.findViewById(R.id.color4);
+        ImageButton colorfive = (ImageButton) dialog.findViewById(R.id.color5);
+        ImageButton colorsix = (ImageButton) dialog.findViewById(R.id.color6);
+        ImageButton colorseven = (ImageButton) dialog.findViewById(R.id.color7);
+        ImageButton coloreight= (ImageButton) dialog.findViewById(R.id.color8);
+        ImageButton colornine = (ImageButton) dialog.findViewById(R.id.color9);
+        ImageButton colorten = (ImageButton) dialog.findViewById(R.id.color10);
+        ImageButton coloreleven = (ImageButton) dialog.findViewById(R.id.color11);
+        ImageButton colortwelve = (ImageButton) dialog.findViewById(R.id.color12);
+        ImageButton colorthirteen = (ImageButton) dialog.findViewById(R.id.color13);
+        Button closebutton=(Button)dialog.findViewById(R.id.close_button);
+        Button continue_button=(Button)dialog.findViewById(R.id.continue_button);
+        final RadioGroup radioGroup = (RadioGroup)dialog. findViewById(R.id.radiogroup);
+        colorone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#383838");
+                editor.commit();
+
+            }
+        });
+        colortwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int[] colors = {Color.parseColor("#59247c"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#59247c");
+
+
+                editor.commit();
+
+            }
+        });
+        colorthree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int[] colors = {Color.parseColor("#1d487a"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#1d487a");
+                editor.commit();
+
+            }
+        });
+        colorfour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int[] colors = {Color.parseColor("#7A4100"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#7A4100");
+                editor.commit();
+
+            }
+        });
+        colorfive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int[] colors = {Color.parseColor("#6E0138"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#6E0138");
+
+                editor.commit();
+            }
+        });
+        colorsix.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int[] colors = {Color.parseColor("#00BFD4"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#00BFD4");
+
+                editor.commit();
+            }
+        });
+        colorseven.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int[] colors = {Color.parseColor("#185546"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#185546");
+
+                editor.commit();
+            }
+        });
+        coloreight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int[] colors = {Color.parseColor("#D0A06F"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#D0A06F");
+
+                editor.commit();
+            }
+        });
+        colornine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int[] colors = {Color.parseColor("#82C6E6"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#82C6E6");
+
+                editor.commit();
+            }
+        });
+        colorten.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int[] colors = {Color.parseColor("#339900"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#339900");
+
+                editor.commit();
+            }
+        });
+        coloreleven.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int[] colors = {Color.parseColor("#CC9C00"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#CC9C00");
+
+                editor.commit();
+            }
+        });
+        colortwelve.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int[] colors = {Color.parseColor("#00B09B"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#00B09B");
+
+                editor.commit();
+            }
+        });
+        colorthirteen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#FFFFFFFF");
+
+                editor.commit();
+            }
+        });
+
+
+        closebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //prefManager.setFirstTimeLaunch(false);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Language, "English");
+
+                editor.commit();
+                if(playerid!=null){
+                    StringRequest language=new StringRequest(Request.Method.POST, url_change_lang, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.e("CHANGE LAMG",response.toString());
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+
+                            Map<String,String>params=new Hashtable<String, String>();
+                            params.put("playerid",playerid);
+                            params.put("language","1");
+                            return params;
+                        }
+                    };
+                    RequestQueue likesqueue= Volley.newRequestQueue(getApplicationContext());
+                    language.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                    likesqueue.add(language);
+                }else {
+
+                }
+                dialog.dismiss();
+                Intent i = new Intent(getApplicationContext(), MainPageEnglish.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        continue_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //prefManager.setFirstTimeLaunch(false);
+                int selected=radioGroup.getCheckedRadioButtonId();
+                RadioButton new_radiobutton=(RadioButton)dialog.findViewById(selected);
+                radio_button_values=new_radiobutton.getText().toString();
+                //Toast.makeText(getApplicationContext(),radio_button_values, Toast.LENGTH_LONG).show();
+                if(radio_button_values.equals("Tamil")){
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(Language, "Tamil");
+
+                    editor.commit();
+                    if(playerid!=null){
+                        StringRequest language=new StringRequest(Request.Method.POST, url_change_lang, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.e("CHANGE LAMG",response.toString());
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        }){
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+
+                                Map<String,String>params=new Hashtable<String, String>();
+                                params.put("playerid",playerid);
+                                params.put("language","2");
+                                return params;
+                            }
+                        };
+                        RequestQueue likesqueue= Volley.newRequestQueue(getApplicationContext());
+                        language.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                        likesqueue.add(language);
+                    }
+                    Intent i = new Intent(getApplicationContext(), MainPageTamil.class);
+                    startActivity(i);
+                    finish();
+                }else {
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(Language, "English");
+
+                    editor.commit();
+                    if(playerid!=null){
+                        StringRequest language=new StringRequest(Request.Method.POST, url_change_lang, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.e("CHANGE LAMG",response.toString());
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        }){
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+
+                                Map<String,String>params=new Hashtable<String, String>();
+                                params.put("playerid",playerid);
+                                params.put("language","1");
+                                return params;
+                            }
+                        };
+                        RequestQueue likesqueue= Volley.newRequestQueue(getApplicationContext());
+                        language.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                        likesqueue.add(language);
+                    }
+                    //dialog.dismiss();
+                    Intent i = new Intent(getApplicationContext(), MainPageEnglish.class);
+                    startActivity(i);
+                    finish();
+                }
+            }
+        });
+
+        dialog.show();
+
+    }
 }

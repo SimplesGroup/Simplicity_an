@@ -71,7 +71,7 @@ import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
 
 public class TabColumns extends Fragment {
     RecyclerView recyclerview_tab_all;
-    String URL = "http://simpli-city.in/request2.php?rtype=ent_alldatatest&key=simples&qtype=columns";
+    String URL = "http://simpli-city.in/request2.php?rtype=ent_alldatatest&key=simples&qtype=article";
     String URLLIKES = "http://simpli-city.in/request2.php?rtype=articlelikes&key=simples";
     String URLSAVE = "http://simpli-city.in/request2.php?rtype=addfav&key=simples";
     String URLALL;

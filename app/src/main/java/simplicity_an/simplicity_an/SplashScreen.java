@@ -109,22 +109,23 @@ public class SplashScreen extends AppCompatActivity {
                 try {
                     prefManager = new PrefManager(getApplicationContext());
                     if (!prefManager.isFirstTimeLaunch()) {
+                        Log.e("RES","hi");
                         if(language_data!=null){
                             if(language_data.equals("English")) {
-                                Intent i = new Intent(SplashScreen.this, MainPageEnglish.class);
+                               /* Intent i = new Intent(SplashScreen.this, MainPageEnglish.class);
                                 startActivity(i);
-                                finish();
+                                finish();*/
                             }else {
-                                Intent i = new Intent(SplashScreen.this, MainPageTamil.class);
+                                /*Intent i = new Intent(SplashScreen.this, MainPageTamil.class);
                                 startActivity(i);
-                                finish();
+                                finish();*/
                             }
                         }
 
 
                     }else {
-
-                         dialog = new Dialog(SplashScreen.this);
+                        Log.e("RES","hid");
+                         dialog = new Dialog(getApplicationContext());
                         dialog.setContentView(R.layout.themeandlaguageselect);
 
                         ImageButton colorone = (ImageButton) dialog.findViewById(R.id.color);
@@ -401,9 +402,9 @@ public class SplashScreen extends AppCompatActivity {
 
                                 }
                                 dialog.dismiss();
-                                Intent i = new Intent(SplashScreen.this, MainPageEnglish.class);
+                               /* Intent i = new Intent(SplashScreen.this, MainPageEnglish.class);
                                 startActivity(i);
-                                finish();
+                                finish();*/
                             }
                         });
                         continue_button.setOnClickListener(new View.OnClickListener() {
@@ -444,9 +445,9 @@ public class SplashScreen extends AppCompatActivity {
                                       language.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                                       likesqueue.add(language);
                                   }
-                                    Intent i = new Intent(SplashScreen.this, MainPageTamil.class);
+                                   /* Intent i = new Intent(SplashScreen.this, MainPageTamil.class);
                                     startActivity(i);
-                                    finish();
+                                    finish();*/
                                 }else {
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
                                     editor.putString(Language, "English");
@@ -477,9 +478,9 @@ public class SplashScreen extends AppCompatActivity {
                                       language.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                                       likesqueue.add(language);
                                   }
-                                    Intent i = new Intent(SplashScreen.this, MainPageEnglish.class);
+                                   /* Intent i = new Intent(SplashScreen.this, MainPageEnglish.class);
                                     startActivity(i);
-                                    finish();
+                                    finish();*/
                                 }
                             }
                         });

@@ -18,8 +18,10 @@ import com.android.volley.toolbox.Volley;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private static Context mCtx;
-
+   private static MySingleton uniqInstance;
     private MySingleton(Context context) {
+
+
         mCtx = context;
         mRequestQueue = getRequestQueue();
 
