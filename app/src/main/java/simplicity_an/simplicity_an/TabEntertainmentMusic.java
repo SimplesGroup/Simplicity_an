@@ -63,6 +63,7 @@ import java.util.List;
 import java.util.Map;
 
 import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
+import simplicity_an.simplicity_an.Utils.Configurl;
 
 /**
  * Created by kuppusamy on 9/28/2016.
@@ -70,7 +71,8 @@ import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
 public class TabEntertainmentMusic extends Fragment {
     RecyclerView recyclerview_tab_all;
     String URL="\thttp://simpli-city.in/request2.php?rtype=ent_alldatatest&key=simples&qtype=music";
-    String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples"; 				String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
+    String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples";
+    String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
     String URLALL;
     RequestQueue requestQueue;
     private int requestCount = 1;
@@ -333,14 +335,68 @@ public class TabEntertainmentMusic extends Fragment {
     }
      public interface OnFragmentInteractionListener {         public void onFragmentInteraction(String playurl, String title,String image);     }
     private
-    JsonObjectRequest getDataFromTheServer( int requestCount) {
+    StringRequest getDataFromTheServer(final int requestCount) {
         if(myprofileid!=null){
             URLALL=URL+"&page="+requestCount+"&user_id="+myprofileid;
         }else {
             URLALL=URL+"&page="+requestCount;
         }
 
-        Cache cache = AppControllers.getInstance().getRequestQueue().getCache();
+
+        StringRequest request=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("Response",response.toString());
+                try{
+                    JSONObject object=new JSONObject(response.toString());
+                    JSONArray array=object.getJSONArray("result");
+                    String data=array.optString(1);
+                    JSONArray jsonArray=new JSONArray(data.toString());
+                    Log.e("Response",data.toString());
+                    if (response != null) {
+                        dissmissDialog();
+                        parseJsonFeed(jsonArray);
+                    }
+                }catch (JSONException e){
+
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>param=new HashMap<>();
+                param.put("Key","Simplicity");
+                param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                param.put("language","1");
+                param.put("rtype","alldata");
+                param.put("qtype","music");
+                param.put("page",String.valueOf(requestCount));
+
+                return param;
+            }
+        };
+
+        request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 3, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        requestQueue.add(request);
+
+        return request;
+
+
+
+
+
+
+
+
+        /*Cache cache = AppControllers.getInstance().getRequestQueue().getCache();
         Cache.Entry entry = cache.get(URLALL);
         if (entry != null) {
             // fetch the data from cache
@@ -388,14 +444,14 @@ public class TabEntertainmentMusic extends Fragment {
 
             //requestQueue.add(jsonReq);
         }
-        return jsonReq;
+        return jsonReq;*/
     }
-    private void parseJsonFeed(JSONObject response){
+    private void parseJsonFeed(JSONArray response){
         try {
-            JSONArray feedArray = response.getJSONArray("result");
+            // JSONArray feedArray = response.getJSONArray("");
 
-            for (int i = 0; i < feedArray.length(); i++) {
-                JSONObject obj = (JSONObject) feedArray.get(i);
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject obj = (JSONObject) response.get(i);
 
                 ItemModel model = new ItemModel();
                 //FeedItem model=new FeedItem();
@@ -404,26 +460,38 @@ public class TabEntertainmentMusic extends Fragment {
                 model.setImage(image);
 
                 model.setId(obj.getString("id"));
-                model.setPdate(obj.getString("pdate"));
+                String date = obj.isNull("date") ? null : obj
+                        .getString("date");
+                model.setPdate(date);
+                // model.setPdate(obj.getString("pdate"));
                 model.setTitle(obj.getString("title"));
                 model.setQtype(obj.getString("qtype"));
                 model.setLikescount(obj.getInt("likes_count"));
                 model.setCommentscount(obj.getInt("commentscount"));
+                //  model.setFavcount(obj.getInt("fav"));
                 model.setSharingurl(obj.getString("sharingurl"));
                 model.setQtypemain(obj.getString("qtypemain"));
-                model.setAds(obj.getString("ad_url"));
+                model.setAds(obj.getString("url"));
+                String reportername = obj.isNull("reporter_name") ? null : obj
+                        .getString("reporter_name");
+                model.setEditername(reportername);
+                String shortdesc = obj.isNull("short_description") ? null : obj
+                        .getString("short_description");
+                model.setShortdescription(shortdesc);
+                // model.setEditername(obj.getString("reporter_name"));
+                // model.setShortdescription(obj.getString("short_description"));
                 // model.setDislikecount(obj.getInt("dislikes_count"));
                 model.setCounttype(obj.getInt("like_type"));
-                model.setEditername(obj.getString("reporter_name"));
-                model.setShortdescription(obj.getString("short_description"));
-                model.setPlayurl(obj.getString("file"));
+
+                model.setPlayurl(obj.getString("radio_file"));
+                model.setYoutubelink(obj.getString("youtube_link"));
                 int typevalue = obj.isNull("album_count") ? null : obj
                         .getInt("album_count");
                 model.setAlbumcount(typevalue);
                 List<ItemModel> albums = new ArrayList<>();
                 ArrayList<String> album = new ArrayList<String>();
                 try {
-                    JSONArray feedArraygallery = obj.getJSONArray("palbum");
+                    JSONArray feedArraygallery = obj.getJSONArray("album");
 
 
                     for (int k = 0; k < feedArraygallery.length(); k++) {
@@ -503,6 +571,15 @@ public class TabEntertainmentMusic extends Fragment {
         String sharingurl;
         int likescount,dislikecount,commentscount,counttype;
         String shortdescription,editername;
+        String youtubelink;
+
+        public String getYoutubelink() {
+            return youtubelink;
+        }
+
+        public void setYoutubelink(String youtubelink) {
+            this.youtubelink = youtubelink;
+        }
 
         public String getEditername() {
             return editername;
@@ -995,7 +1072,6 @@ public class TabEntertainmentMusic extends Fragment {
                 userViewHolder.commentscount.setTypeface(tf_play);
                 userViewHolder.date.setTypeface(seguiregular);
                  if(itemmodel.getLikescount()==0){                         userViewHolder.likescount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Like"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Comment"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                     }                                        if(itemmodel.getCommentscount()==0){                      userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));                 }else {                     userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                 }
-
                 if(itemmodel.getImage()!=null){
                     userViewHolder.item_image.setImageUrl(itemmodel.getImage(),mImageLoader);
                 }else {
@@ -1105,7 +1181,7 @@ public class TabEntertainmentMusic extends Fragment {
                                     Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);
                                     intent.putExtra("ID", ids);
                                     intent.putExtra("TITLE",itemmodel.getTitle());
-                                    intent.putExtra("URL","");
+                                    intent.putExtra("URL",itemmodel.getYoutubelink());
                                     startActivity(intent);
 
                                 } else if(type.equals("lifestyle")){
