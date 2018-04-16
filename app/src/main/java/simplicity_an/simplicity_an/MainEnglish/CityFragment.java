@@ -20,10 +20,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.TextPaint;
-import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +59,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
+import simplicity_an.simplicity_an.PrefManager;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SimplicitySearchview;
 import simplicity_an.simplicity_an.TabAdvertorial;
@@ -90,7 +87,7 @@ public class CityFragment extends Fragment {
     int cDay,cMonth,cYear,cHour,cMinute,cSecond;
     String selectedMonth,selectedYear;
     String URLPOSTQTYPE,postid;
-
+    private PrefManager prefManager;
     private String KEY_QTYPE = "qtype";
     private String KEY_MYUID = "user_id";
     private String KEY_POSTID = "id";
@@ -167,7 +164,7 @@ public class CityFragment extends Fragment {
 
         requestQueue= Volley.newRequestQueue(getActivity());
 
-
+        // prefManager = new PrefManager(getActivity().getApplicationContext());
         contentid=sharedpreferences.getString(CONTENTID,"");
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
         //   colorcodes = colorcodes.replaceAll("\\D+","");
@@ -189,6 +186,7 @@ public class CityFragment extends Fragment {
             editor.apply();
 
         }
+
         fabplus=(FloatingActionButton)view.findViewById(R.id.fabButtonplus) ;
         fabsearch=(FloatingActionButton)view.findViewById(R.id.fabsearch) ;
         fabinnerplus=(FloatingActionButton)view.findViewById(R.id.fabinnerplus) ;

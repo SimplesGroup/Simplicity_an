@@ -93,6 +93,7 @@ import simplicity_an.simplicity_an.Tamil.Activity.TamilNewsDescription;
 import simplicity_an.simplicity_an.Tamil.Activity.TamilSportsnewsDescription;
 import simplicity_an.simplicity_an.Tamil.Activity.TipsDescriptionTamil;
 import simplicity_an.simplicity_an.Tamil.Activity.TravelsDescriptiontamil;
+import simplicity_an.simplicity_an.Utils.Configurl;
 import simplicity_an.simplicity_an.YoutubeVideoPlayer;
 
 /**
@@ -115,6 +116,7 @@ public class Tamiljob extends Fragment {
     public static final String USERID="user_id";
     public static final String QID="qid";
     public static final String QTYPE="qtype";
+    public static final String GcmId = "gcmid";
     FloatingActionButton fabjobs,fabplus;
     String myprofileid,colorcodes;
     LinearLayoutManager lLayout;
@@ -126,6 +128,7 @@ public class Tamiljob extends Fragment {
     public static final String CONTENTID = "contentid";
     int post_likes_count=0,save_item_count,like_finalvalues;
     private Boolean isFabOpen = false;
+    String Tokenid;
     FloatingActionButton fabsearch,fabinnerplus;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
 OnFragmentInteractionListener mListener;
@@ -159,6 +162,7 @@ OnFragmentInteractionListener mListener;
             myprofileid = myprofileid.replaceAll("\\D+","");
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        Tokenid=sharedpreferences.getString(GcmId,"");
         Log.e("coloR",colorcodes);
 
         requestQueue = Volley.newRequestQueue(getActivity());
@@ -360,71 +364,69 @@ OnFragmentInteractionListener mListener;
         //Incrementing the request counter
         requestCount++;
     }
-    private JsonObjectRequest getDataFromTheServer(int requestCount) {
-        if(myprofileid!=null){
-            URLALL=URL+"&page="+requestCount+"&user_id="+myprofileid;
-        }else {
-            URLALL=URL+"&page="+requestCount;
+    StringRequest getDataFromTheServer(final int requestCount) {
+        if (myprofileid != null) {
+            URLALL = URL + "&page=" + requestCount + "&user_id=" + myprofileid;
+        } else {
+            URLALL = URL + "&page=" + requestCount;
         }
 
-        Cache cache = AppControllers.getInstance().getRequestQueue().getCache();
-        Cache.Entry entry = cache.get(URLALL);
-        if (entry != null) {
-            // fetch the data from cache
-            try {
-                String data = new String(entry.data, "UTF-8");
+
+        StringRequest request = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("Response", response.toString());
                 try {
-                    dissmissDialog();
-                    parseJsonFeed(new JSONObject(data));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            // making fresh volley request and getting json
-            jsonReq = new JsonObjectRequest(Request.Method.GET,
-                    URLALL,  new Response.Listener<JSONObject>() {
-
-                @Override
-                public void onResponse(JSONObject response) {
-                    VolleyLog.d(TAG_REQUEST, "Response: " + response.toString());
+                    JSONObject object = new JSONObject(response.toString());
+                    JSONArray array = object.getJSONArray("result");
+                    String data = array.optString(1);
+                    JSONArray jsonArray = new JSONArray(data.toString());
+                    Log.e("Response", data.toString());
                     if (response != null) {
                         dissmissDialog();
-                        parseJsonFeed(response);
+                        parseJsonFeed(jsonArray);
                     }
-                }
-            }, new Response.ErrorListener() {
+                } catch (JSONException e) {
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d(TAG_REQUEST, "Error: " + error.getMessage());
                 }
-            }){
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/json; charset=utf-8");
-                    return headers;
-                }
-            };
 
-            jsonReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 5, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-            requestQueue.add(jsonReq);
-        }
-        return jsonReq;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> param = new HashMap<>();
+                param.put("Key", "Simplicity");
+                Log.e("Response", "token" + Tokenid);
+                param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                param.put("language", "2");
+                param.put("rtype", "alldata");
+                param.put("qtype", "job");
+                param.put("page", String.valueOf(requestCount));
+
+                return param;
+            }
+        };
+
+        request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 3, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        requestQueue.add(request);
+
+        return request;
     }
      public interface OnFragmentInteractionListener {         public void onFragmentInteraction(String playurl, String title,String image);     }
 
-    private void parseJsonFeed(JSONObject response){
+    private void parseJsonFeed(JSONArray response){
         try {
-            JSONArray feedArray = response.getJSONArray("result");
+            // JSONArray feedArray = response.getJSONArray("");
 
-            for (int i = 0; i < feedArray.length(); i++) {
-                JSONObject obj = (JSONObject) feedArray.get(i);
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject obj = (JSONObject) response.get(i);
 
                 ItemModel model = new ItemModel();
                 //FeedItem model=new FeedItem();
@@ -433,32 +435,46 @@ OnFragmentInteractionListener mListener;
                 model.setImage(image);
 
                 model.setId(obj.getString("id"));
-                model.setPdate(obj.getString("pdate"));
+                String date = obj.isNull("date") ? null : obj
+                        .getString("date");
+                model.setPdate(date);
+                // model.setPdate(obj.getString("pdate"));
                 model.setTitle(obj.getString("title"));
                 model.setQtype(obj.getString("qtype"));
                 model.setLikescount(obj.getInt("likes_count"));
                 model.setCommentscount(obj.getInt("commentscount"));
+                //  model.setFavcount(obj.getInt("fav"));
                 model.setSharingurl(obj.getString("sharingurl"));
                 model.setQtypemain(obj.getString("qtypemain"));
-                model.setEditername(obj.getString("reporter_name"));
-                model.setShortdescription(obj.getString("short_description"));
+                model.setAds(obj.getString("url"));
+                String reportername = obj.isNull("reporter_name") ? null : obj
+                        .getString("reporter_name");
+                model.setEditername(reportername);
+                String shortdesc = obj.isNull("short_description") ? null : obj
+                        .getString("short_description");
+                model.setShortdescription(shortdesc);
+                // model.setEditername(obj.getString("reporter_name"));
+                // model.setShortdescription(obj.getString("short_description"));
                 // model.setDislikecount(obj.getInt("dislikes_count"));
                 model.setCounttype(obj.getInt("like_type"));
-                model.setAds(obj.getString("ad_url"));
-                model.setPlayurl(obj.getString("file"));
+
+                model.setPlayurl(obj.getString("radio_file"));
+                model.setYoutubelink(obj.getString("youtube_link"));
                 int typevalue = obj.isNull("album_count") ? null : obj
                         .getInt("album_count");
                 model.setAlibumcount(typevalue);
-
+                List<ItemModel> albums = new ArrayList<>();
                 ArrayList<String> album = new ArrayList<String>();
                 try {
-                    JSONArray feedArraygallery = obj.getJSONArray("palbum");
+                    JSONArray feedArraygallery = obj.getJSONArray("album");
 
 
                     for (int k = 0; k < feedArraygallery.length(); k++) {
 
                         JSONObject object = (JSONObject) feedArraygallery.get(k);
-
+                        ItemModel models = new ItemModel();
+                        models.setAlbumimage(object.getString("image"));
+                        albums.add(models);
 
                         String images=object.getString("image");
                         album.add(images);
@@ -466,6 +482,7 @@ OnFragmentInteractionListener mListener;
                 }catch (JSONException e){
 
                 }
+                model.setAlbumlist(albums);
                 model.setAlbum(album);
                 modelList.add(model);
 
@@ -508,8 +525,9 @@ OnFragmentInteractionListener mListener;
         private String description;
         private String title;
         int alibumcount;
-        String playurl;
+        String playurl,albumimage;
         private ArrayList<String> album;
+        private List<ItemModel> albumlist;
         /******** start the Food category names****/
         private String id;
         /******** start the Food category names****/
@@ -521,7 +539,31 @@ OnFragmentInteractionListener mListener;
             return playurl;
         }
         String ads;
-        String shortdescription,editername;
+        String shortdescription,editername,youtubelink;
+
+        public String getAlbumimage() {
+            return albumimage;
+        }
+
+        public void setAlbumimage(String albumimage) {
+            this.albumimage = albumimage;
+        }
+
+        public List<ItemModel> getAlbumlist() {
+            return albumlist;
+        }
+
+        public void setAlbumlist(List<ItemModel> albumlist) {
+            this.albumlist = albumlist;
+        }
+
+        public String getYoutubelink() {
+            return youtubelink;
+        }
+
+        public void setYoutubelink(String youtubelink) {
+            this.youtubelink = youtubelink;
+        }
 
         public String getEditername() {
             return editername;
@@ -1122,7 +1164,7 @@ OnFragmentInteractionListener mListener;
                                     Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);
                                     intent.putExtra("ID", ids);
                                     intent.putExtra("TITLE",itemmodel.getTitle());
-                                    intent.putExtra("URL",itemmodel.getPlayurl());
+                                    intent.putExtra("URL",itemmodel.getYoutubelink());
                                     startActivity(intent);
                                 }else if(type.equalsIgnoreCase("columns")){
                                     Intent intent = new Intent(getActivity(), Columnsdetailpage.class);

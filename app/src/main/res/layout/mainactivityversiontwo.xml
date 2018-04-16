@@ -96,7 +96,6 @@
                             android:id="@+id/language_versiontwo"
                             android:textAlignment="center"
                             android:textColor="@android:color/white"
-
                             android:textSize="12dp"
                             android:layout_height="wrap_content" />
                         <ImageButton
@@ -257,7 +256,6 @@
             android:src="@mipmap/plus"
             app:borderWidth="0dp"
             />
-
 
 
     </android.support.design.widget.CoordinatorLayout>

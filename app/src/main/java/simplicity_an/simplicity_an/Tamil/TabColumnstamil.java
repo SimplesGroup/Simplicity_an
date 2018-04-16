@@ -90,9 +90,11 @@ import simplicity_an.simplicity_an.ScienceandTechnologyDescription;
 import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.SimplicitySearchview;
 import simplicity_an.simplicity_an.SportsnewsDescription;
+import simplicity_an.simplicity_an.Tab_All;
 import simplicity_an.simplicity_an.Tamil.Activity.Columnistdetailtamil;
 import simplicity_an.simplicity_an.TipsDescription;
 import simplicity_an.simplicity_an.TravelsDescription;
+import simplicity_an.simplicity_an.Utils.Configurl;
 import simplicity_an.simplicity_an.YoutubeVideoPlayer;
 
 /**
@@ -117,25 +119,26 @@ public class TabColumnstamil extends Fragment {
     public static final String USERID = "user_id";
     public static final String QID = "qid";
     public static final String QTYPE = "qtype";
-
-    String myprofileid,colorcodes;
+    public static final String GcmId = "gcmid";
+    String myprofileid, colorcodes;
     public static final String backgroundcolor = "color";
 
     LinearLayoutManager lLayout;
     Recyclerviewtaballadapter recyclerview_tab_all_adapter;
     List<ItemModel> modelList = new ArrayList<ItemModel>();
     private boolean isFragmentLoaded = false;
-
+    String Tokenid;
     public static final String Activity = "activity";
     public static final String CONTENTID = "contentid";
     int post_likes_count = 0, save_item_count;
-    FloatingActionButton fabnews,fabplus;
+    FloatingActionButton fabnews, fabplus;
     private Boolean isFabOpen = false;
-    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
-    FloatingActionButton fabsearch,fabinnerplus;
+    private Animation fab_open, fab_close, rotate_forward, rotate_backward;
+    FloatingActionButton fabsearch, fabinnerplus;
     SwipeRefreshLayout swipeRefresh;
     int like_finalvalues;
-    private OnFragmentInteractionListener  mlListener;
+    private OnFragmentInteractionListener mlListener;
+
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !isFragmentLoaded) {
@@ -165,9 +168,10 @@ public class TabColumnstamil extends Fragment {
         if (sharedpreferences.contains(MYUSERID)) {
 
             myprofileid = sharedpreferences.getString(MYUSERID, "");
-            myprofileid = myprofileid.replaceAll("\\D+","");
+            myprofileid = myprofileid.replaceAll("\\D+", "");
         }
-        colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        colorcodes = sharedpreferences.getString(backgroundcolor, "");
+        Tokenid = sharedpreferences.getString(GcmId, "");
         requestQueue = Volley.newRequestQueue(getActivity());
 
         getData();
@@ -181,11 +185,10 @@ public class TabColumnstamil extends Fragment {
         pdialog.show();
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        fabnews=(FloatingActionButton)view.findViewById(R.id.fabButton) ;
-        if(colorcodes.equals("#FFFFFFFF")){
+        fabnews = (FloatingActionButton) view.findViewById(R.id.fabButton);
+        if (colorcodes.equals("#FFFFFFFF")) {
             fabnews.setImageResource(R.mipmap.uptamil);
-        }
-        else{
+        } else {
             fabnews.setImageResource(R.mipmap.uparrow);
         }
         fabnews.setOnClickListener(new View.OnClickListener() {
@@ -195,9 +198,9 @@ public class TabColumnstamil extends Fragment {
                 recyclerview_tab_all.smoothScrollToPosition(0);
             }
         });
-        fabplus=(FloatingActionButton)getActivity().findViewById(R.id.fabButtonplus) ;
-        fabinnerplus=(FloatingActionButton)getActivity().findViewById(R.id.fabinnerplus) ;
-        fabsearch=(FloatingActionButton)getActivity().findViewById(R.id.fabsearch) ;
+        fabplus = (FloatingActionButton) getActivity().findViewById(R.id.fabButtonplus);
+        fabinnerplus = (FloatingActionButton) getActivity().findViewById(R.id.fabinnerplus);
+        fabsearch = (FloatingActionButton) getActivity().findViewById(R.id.fabsearch);
         fab_open = AnimationUtils.loadAnimation(getActivity(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getActivity(), R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate_forward);
@@ -213,85 +216,84 @@ public class TabColumnstamil extends Fragment {
         fabinnerplus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent report=new Intent(getActivity(),ReportNewsOrComplaints.class);
+                Intent report = new Intent(getActivity(), ReportNewsOrComplaints.class);
                 startActivity(report);
             }
         });
         fabsearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent report=new Intent(getActivity(),SimplicitySearchview.class);
+                Intent report = new Intent(getActivity(), SimplicitySearchview.class);
                 startActivity(report);
             }
         });
-        if(colorcodes.length()==0){
+        if (colorcodes.length() == 0) {
 
-        }else {
-            if(colorcodes.equalsIgnoreCase("004")){
-                Log.e("Msg","hihihi");
-            }else {
-                if(colorcodes.equalsIgnoreCase("#383838")){
+        } else {
+            if (colorcodes.equalsIgnoreCase("004")) {
+                Log.e("Msg", "hihihi");
+            } else {
+                if (colorcodes.equalsIgnoreCase("#383838")) {
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
-                }else if(colorcodes.equalsIgnoreCase("#59247c")){
+                } else if (colorcodes.equalsIgnoreCase("#59247c")) {
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
-                }else if(colorcodes.equalsIgnoreCase("#1d487a")){
+                } else if (colorcodes.equalsIgnoreCase("#1d487a")) {
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme3));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme3));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme3));
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme3));
-                }else if(colorcodes.equalsIgnoreCase("#7A4100")){
+                } else if (colorcodes.equalsIgnoreCase("#7A4100")) {
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme4));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme4));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme4));
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme4));
-                }else if(colorcodes.equalsIgnoreCase("#6E0138")){
+                } else if (colorcodes.equalsIgnoreCase("#6E0138")) {
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
-                }else if(colorcodes.equalsIgnoreCase("#00BFD4")){
+                } else if (colorcodes.equalsIgnoreCase("#00BFD4")) {
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
-                }else if(colorcodes.equalsIgnoreCase("#185546")){
+                } else if (colorcodes.equalsIgnoreCase("#185546")) {
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
-                }else if(colorcodes.equalsIgnoreCase("#D0A06F")){
+                } else if (colorcodes.equalsIgnoreCase("#D0A06F")) {
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
-                }else if(colorcodes.equalsIgnoreCase("#82C6E6")){
+                } else if (colorcodes.equalsIgnoreCase("#82C6E6")) {
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
-                }else if(colorcodes.equalsIgnoreCase("#339900")){
+                } else if (colorcodes.equalsIgnoreCase("#339900")) {
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
-                }else if(colorcodes.equalsIgnoreCase("#CC9C00")){
+                } else if (colorcodes.equalsIgnoreCase("#CC9C00")) {
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
-                }else if(colorcodes.equalsIgnoreCase("#00B09B")){
+                } else if (colorcodes.equalsIgnoreCase("#00B09B")) {
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                     fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
-                }
-                else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
+                } else if (colorcodes.equalsIgnoreCase("#FFFFFFFF")) {
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
@@ -321,7 +323,7 @@ public class TabColumnstamil extends Fragment {
             }
         });
 
-        swipeRefresh = (SwipeRefreshLayout)view.findViewById(R.id.swipe);
+        swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe);
         swipeRefresh.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
@@ -331,7 +333,17 @@ public class TabColumnstamil extends Fragment {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                 swipeRefresh.setRefreshing(true);                 modelList.clear();                 recyclerview_tab_all_adapter.notifyDataSetChanged();                  requestCount=0;                 getData();                                ( new Handler()).postDelayed(new Runnable() {                     @Override                     public void run() {                         swipeRefresh.setRefreshing(false);                     }                 }, 3000);
+                swipeRefresh.setRefreshing(true);
+                modelList.clear();
+                recyclerview_tab_all_adapter.notifyDataSetChanged();
+                requestCount = 0;
+                getData();
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefresh.setRefreshing(false);
+                    }
+                }, 3000);
 
             }
         });
@@ -341,9 +353,10 @@ public class TabColumnstamil extends Fragment {
 
 
     }
-    public void animateFAB(){
 
-        if(isFabOpen){
+    public void animateFAB() {
+
+        if (isFabOpen) {
 
             fabplus.startAnimation(rotate_backward);
             fabinnerplus.startAnimation(fab_close);
@@ -363,10 +376,11 @@ public class TabColumnstamil extends Fragment {
             fabsearch.setClickable(true);
 
             isFabOpen = true;
-            Log.d("Raj","open");
+            Log.d("Raj", "open");
 
         }
     }
+
     private void getData() {
         //Adding the method to the queue by calling the method getDataFromServer
         requestQueue.add(getDataFromTheServer(requestCount));
@@ -374,80 +388,73 @@ public class TabColumnstamil extends Fragment {
         //Incrementing the request counter
         requestCount++;
     }
-
-
-
-
-    private JsonObjectRequest getDataFromTheServer(int requestCount) {
-        if (myprofileid != null) {
-            URLALL = URL + "&page=" + requestCount + "&user_id=" + myprofileid;
-        } else {
-            URLALL = URL + "&page=" + requestCount;
+    StringRequest getDataFromTheServer(final int requestCount) {
+        if(myprofileid!=null){
+            URLALL=URL+"&page="+requestCount+"&user_id="+myprofileid;
+        }else {
+            URLALL=URL+"&page="+requestCount;
         }
 
-        Cache cache = AppControllers.getInstance().getRequestQueue().getCache();
-        Cache.Entry entry = cache.get(URLALL);
-        if (entry != null) {
-            // fetch the data from cache
+    StringRequest request = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            Log.e("Response", response.toString());
             try {
-                String data = new String(entry.data, "UTF-8");
-                try {
-                    pdialog.dismiss();
-                    parseJsonFeed(new JSONObject(data));
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                JSONObject object = new JSONObject(response.toString());
+                JSONArray array = object.getJSONArray("result");
+                String data = array.optString(1);
+                JSONArray jsonArray = new JSONArray(data.toString());
+                Log.e("Response", data.toString());
+                if (response != null) {
+                    dissmissDialog();
+                    parseJsonFeed(jsonArray);
                 }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+            } catch (JSONException e) {
+
             }
 
-        } else {
 
-
-
-            // making fresh volley request and getting json
-            jsonReq = new JsonObjectRequest(Request.Method.GET,
-                    URLALL, new Response.Listener<JSONObject>() {
-
-                @Override
-                public void onResponse(JSONObject response) {
-                    VolleyLog.d(TAG_REQUEST, "Response: " + response.toString());
-                    if (response != null) {
-                        dissmissDialog();
-                        parseJsonFeed(response);
-                    }
-                }
-            }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d(TAG_REQUEST, "Error: " + error.getMessage());
-                    pdialog.dismiss();
-                }
-            }){
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/json; charset=utf-8");
-                    return headers;
-                }
-            };
-
-            // jsonReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            jsonReq.setRetryPolicy(new DefaultRetryPolicy(7 * 1000, 1,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         }
-        return jsonReq;
-    }
+    }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+
+        }
+    }) {
+        @Override
+        protected Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> param = new HashMap<>();
+            param.put("Key", "Simplicity");
+            Log.e("Response", "token" + Tokenid);
+            param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+            param.put("language", "2");
+            param.put("rtype", "alldata");
+            param.put("qtype", "article");
+            param.put("page", String.valueOf(requestCount));
+
+            return param;
+        }
+    };
+
+        request.setRetryPolicy(new
+
+    DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS *3, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        requestQueue.add(request);
+
+        return request;
+
+}
+
      public interface OnFragmentInteractionListener {         public void onFragmentInteraction(String playurl, String title,String image);     }
 
 
-    private void parseJsonFeed(JSONObject response){
+    private void parseJsonFeed(JSONArray response){
         try {
-            JSONArray feedArray = response.getJSONArray("result");
+            // JSONArray feedArray = response.getJSONArray("");
 
-            for (int i = 0; i < feedArray.length(); i++) {
-                JSONObject obj = (JSONObject) feedArray.get(i);
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject obj = (JSONObject) response.get(i);
 
                 ItemModel model = new ItemModel();
                 //FeedItem model=new FeedItem();
@@ -456,26 +463,38 @@ public class TabColumnstamil extends Fragment {
                 model.setImage(image);
 
                 model.setId(obj.getString("id"));
-                model.setPdate(obj.getString("pdate"));
+                String date = obj.isNull("date") ? null : obj
+                        .getString("date");
+                model.setPdate(date);
+                // model.setPdate(obj.getString("pdate"));
                 model.setTitle(obj.getString("title"));
                 model.setQtype(obj.getString("qtype"));
                 model.setLikescount(obj.getInt("likes_count"));
                 model.setCommentscount(obj.getInt("commentscount"));
+                //  model.setFavcount(obj.getInt("fav"));
                 model.setSharingurl(obj.getString("sharingurl"));
                 model.setQtypemain(obj.getString("qtypemain"));
-                model.setAds(obj.getString("ad_url"));
+                model.setAds(obj.getString("url"));
+                String reportername = obj.isNull("reporter_name") ? null : obj
+                        .getString("reporter_name");
+                model.setEditername(reportername);
+                String shortdesc = obj.isNull("short_description") ? null : obj
+                        .getString("short_description");
+                model.setShortdescription(shortdesc);
+                // model.setEditername(obj.getString("reporter_name"));
+                // model.setShortdescription(obj.getString("short_description"));
                 // model.setDislikecount(obj.getInt("dislikes_count"));
                 model.setCounttype(obj.getInt("like_type"));
-                model.setEditername(obj.getString("reporter_name"));
-                model.setShortdescription(obj.getString("short_description"));
-                model.setPlayurl(obj.getString("file"));
+
+                model.setPlayurl(obj.getString("radio_file"));
+                model.setYoutubelink(obj.getString("youtube_link"));
                 int typevalue = obj.isNull("album_count") ? null : obj
                         .getInt("album_count");
                 model.setAlbumcount(typevalue);
                 List<ItemModel> albums = new ArrayList<>();
                 ArrayList<String> album = new ArrayList<String>();
                 try {
-                    JSONArray feedArraygallery = obj.getJSONArray("palbum");
+                    JSONArray feedArraygallery = obj.getJSONArray("album");
 
 
                     for (int k = 0; k < feedArraygallery.length(); k++) {
@@ -554,7 +573,15 @@ public class TabColumnstamil extends Fragment {
         int favcount;
         String sharingurl;
         int likescount,dislikecount,commentscount,counttype;
-        String shortdescription,editername;
+        String shortdescription,editername,youtubelink;
+
+        public String getYoutubelink() {
+            return youtubelink;
+        }
+
+        public void setYoutubelink(String youtubelink) {
+            this.youtubelink = youtubelink;
+        }
 
         public String getEditername() {
             return editername;
@@ -1180,7 +1207,7 @@ public class TabColumnstamil extends Fragment {
                                     Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);
                                     intent.putExtra("ID", ids);
                                     intent.putExtra("TITLE",itemmodel.getTitle());
-                                    intent.putExtra("URL","");
+                                    intent.putExtra("URL",itemmodel.getYoutubelink());
                                     startActivity(intent);
 
                                 } else if(type.equals("lifestyle")){
