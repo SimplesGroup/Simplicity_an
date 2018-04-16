@@ -310,7 +310,7 @@ public class NewsDescription extends AppCompatActivity {
         String simplycity_title_bold = "fonts/Lora-Regular.ttf";
         Typeface tf_bold = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
 
-        String playfair = "fonts/playfairDisplayRegular.ttf";
+        String playfair = "fonts/PlayfairDisplayBold.ttf";
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
 
         if(colorcodes.equals("#FFFFFFFF")){

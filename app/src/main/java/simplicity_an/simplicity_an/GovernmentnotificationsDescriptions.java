@@ -165,9 +165,10 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
             my_profileimage=sharedpreferences.getString(USERIMAGE,"");
 
         }
-        colorcodes=sharedpreferences.getString(backgroundcolor,"");
-
-        mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
+        requestQueue = Volley.newRequestQueue(this);
+        colorcodes = sharedpreferences.getString(backgroundcolor, "");
+        Log.e("ColorCodeNews",colorcodes);
+        mainlayout = (RelativeLayout) findViewById(R.id.version_main_layout);
 
         commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
         back = (ImageButton)findViewById(R.id.btn_back);
@@ -180,7 +181,9 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
             back.setImageResource(R.mipmap.back);
         }
 
-        if(colorcodes.length()==0){
+
+
+        if (colorcodes.length() == 0) {
             int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
@@ -192,9 +195,9 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(backgroundcolor, "#383838");
             editor.commit();
-        }else {
-            if(colorcodes.equalsIgnoreCase("004")){
-                Log.e("Msg","hihihi"+colorcodes);
+        } else {
+            if (colorcodes.equalsIgnoreCase("004")) {
+                Log.e("Msg", "hihihi" + colorcodes);
                 int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
@@ -206,9 +209,9 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(backgroundcolor, "#383838");
                 editor.commit();
-            }else {
+            } else {
 
-                if(colorcodes!=null){
+                if (colorcodes != null) {
                     if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
@@ -218,6 +221,9 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#FFFFFFFF");
+                        editor.commit();
                     } else {
                         int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -233,7 +239,7 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
 
                         editor.commit();
                     }
-                }else {
+                } else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                     GradientDrawable gd = new GradientDrawable(
@@ -250,139 +256,116 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
                 }
             }
         }
-       /* Intent getnotifi=getIntent();
-        notifiid=getnotifi.getStringExtra("ID");*/
-        if(activity==null){
-            Intent getnotifi=getIntent();
-            notifiid=getnotifi.getStringExtra("ID");
-            searchnonitiid = getnotifi.getStringExtra("IDSEARCH");
-            notifiid = notifiid.replaceAll("\\D+","");
-            Log.e("ID",notifiid);
 
+
+        Intent getnotifi = getIntent();
+        searchnonitiid = getnotifi.getStringExtra("IDSEARCH");
+        notifiid = getnotifi.getStringExtra("ID");
+        Log.e("ID", notifiid);
+
+        if (myprofileid != null) {
+            URLTWO = URL + notifiid + "&user_id=" + myprofileid;
+            Log.e("URL", URLTWO);
         } else {
-            if(activity.equalsIgnoreCase("govtdesc")){
-                notifiid=contentid;
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.remove(Activity);
-                editor.remove(CONTENTID);
-                editor.apply();
-
-            }else {
-                Intent getnotifi=getIntent();
-                notifiid=getnotifi.getStringExtra("ID");
-                searchnonitiid = getnotifi.getStringExtra("IDSEARCH");
-                notifiid = notifiid.replaceAll("\\D+","");
-                Log.e("ID",notifiid);
-            }
+            URLTWO = URL + notifiid;
+            Log.e("URL", URLTWO);
         }
 
-
-        if(myprofileid!=null){
-            URLTWO=URL+notifiid+"&user_id="+myprofileid;
-        }else {
-            URLTWO=URL+notifiid;
-        }
-
-
-        commentbox=(LinearLayout)findViewById(R.id.comments_versiontwo) ;
-        comment_title=(TextView)findViewById(R.id.comments_title);
-        loadmore_title=(TextView)findViewById(R.id.loadmore);
-        commentbox_editext=(EditText)findViewById(R.id.comment_description);
-        post=(Button)findViewById(R.id.post_button) ;
-        recycler_comment=(RecyclerView)findViewById(R.id.commentpagelist_recyclerview) ;
-
-       // recycler_comment.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
-
+        commentbox = (LinearLayout) findViewById(R.id.comments_versiontwo);
+        comment_title = (TextView) findViewById(R.id.comments_title);
+        loadmore_title = (TextView) findViewById(R.id.loadmore);
+        commentbox_editext = (EditText) findViewById(R.id.comment_description);
+        post = (Button) findViewById(R.id.post_button);
+        recycler_comment = (RecyclerView) findViewById(R.id.commentpagelist_recyclerview);
         recycler_comment.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        scrollView = (ScrollView) findViewById(R.id.scroll);
 
-        scrollView=(ScrollView)findViewById(R.id.scroll);
-
-        titlename=(TextView)findViewById(R.id.textView_titlename);
-        date=(TextView)findViewById(R.id.textView_date);
-        textview_date=(TextView) findViewById(R.id.textView_datenew);
-        RequestQueue  queues = simplicity_an.simplicity_an.MySingleton.getInstance(this.getApplicationContext()).
-                getRequestQueue();
-        requestQueue=Volley.newRequestQueue(this);
+        titlename = (TextView) findViewById(R.id.textView_titlename);
+       date = (TextView) findViewById(R.id.textView_date);
+        textview_date = (TextView) findViewById(R.id.textView_datenew);
         sourcelinknews = (TextView) findViewById(R.id.sourcelink);
         sourcelinksimplicity = (TextView) findViewById(R.id.sourcelinkredsimplicity);
-
-        source_reporter_name=(TextView)findViewById(R.id.textView_sourcename) ;
-        sourcereprterdivider=(TextView)findViewById(R.id.centerdivider);
-        hashtags_title=(TextView) findViewById(R.id.textView_hashtags);
-        reporter_profile_image=(ImageView)findViewById(R.id.profile_reporter);
-        image_description=(TextView)findViewById(R.id.textView_photodescription);
-        short_description=(TextView)findViewById(R.id.textView_shortdescription);
-        title_category=(TextView)findViewById(R.id.textView_qtypename) ;
-        comment=(ImageButton)findViewById(R.id.btn_4);
-        share=(ImageButton)findViewById(R.id.btn_share);
-        menu=(ImageButton)findViewById(R.id.btn_3);
-        back=(ImageButton)findViewById(R.id.btn_back);
-        favourite=(ImageButton)findViewById(R.id.btn_like);
-        description=(WebView)findViewById(R.id.textView_desc);
+        source_reporter_name = (TextView) findViewById(R.id.textView_sourcename);
+        sourcereprterdivider = (TextView) findViewById(R.id.centerdivider);
+        hashtags_title = (TextView) findViewById(R.id.textView_hashtags);
+        reporter_profile_image = (ImageView) findViewById(R.id.profile_reporter);
+        image_description = (TextView) findViewById(R.id.textView_photodescription);
+        short_description = (TextView) findViewById(R.id.textView_shortdescription);
+        title_category = (TextView) findViewById(R.id.textView_qtypename);
+        comment = (ImageButton) findViewById(R.id.btn_4);
+        share = (ImageButton) findViewById(R.id.btn_share);
+        menu = (ImageButton) findViewById(R.id.btn_3);
+        favourite = (ImageButton) findViewById(R.id.btn_like);
+        description = (WebView) findViewById(R.id.textView_desc);
         description.getSettings().setLoadsImagesAutomatically(true);
         description.getSettings().setPluginState(WebSettings.PluginState.ON);
         description.getSettings().setAllowFileAccess(true);
+
         description.getSettings().setJavaScriptEnabled(true);
+
         String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
-        String simplycity_title_bold= "fonts/robotoSlabBold.ttf";
+        String simplycity_title_bold = "fonts/Lora-Regular.ttf";
         Typeface tf_bold = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
 
-         String playfair ="fonts/playfairDisplayRegular.ttf";
+        String playfair = "fonts/PlayfairDisplayBold.ttf";
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
-
-        titlename.setTypeface(tf_play);
-        date.setTypeface(tf);
-        textview_date.setTypeface(tf);
-        sourcelinknews.setTypeface(tf);
-        comment_title.setTypeface(tf);
-        commentbox_editext.setHint("Comments Here");
-        loadmore_title.setTypeface(tf);
-        post.setTypeface(tf);
-        sourcelinksimplicity.setTypeface(tf);
-        thump=(NetworkImageView)findViewById(R.id.thumbnailone);
-        pdialog = new ProgressDialog(this);
-        pdialog.show();
-        pdialog.setContentView(R.layout.custom_progressdialog);
-        pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         if(colorcodes.equals("#FFFFFFFF")){
             titlename.setTextColor(Color.BLACK);
             comment_title.setTextColor(Color.BLACK);
-            post.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
+            post.setTextColor(Color.BLACK);
             source_reporter_name.setTextColor(Color.BLACK);
             sourcelinknews.setTextColor(Color.BLACK);
             sourcelinksimplicity.setTextColor(Color.BLACK);
             image_description.setTextColor(Color.BLACK);
             short_description.setTextColor(Color.BLACK);
-            date.setTextColor(Color.BLACK);
             commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
             comment_title.setBackgroundResource(R.drawable.editextboxwhite);
+
         }
         else{
             titlename.setTextColor(Color.WHITE);
             comment_title.setTextColor(Color.WHITE);
-            post.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);
+            post.setTextColor(Color.WHITE);
             source_reporter_name.setTextColor(Color.WHITE);
             sourcelinknews.setTextColor(Color.WHITE);
             sourcelinksimplicity.setTextColor(Color.WHITE);
             image_description.setTextColor(Color.WHITE);
             short_description.setTextColor(Color.WHITE);
-            date.setTextColor(Color.WHITE);
         }
 
-        if(notifiid!=null) {
+        titlename.setTypeface(tf_play);
+        textview_date.setTypeface(tf_bold);
+        comment_title.setTypeface(tf_bold);
+        loadmore_title.setTypeface(tf_bold);
+        post.setTypeface(tf_bold);
+        sourcelinknews.setTypeface(tf_bold);
+        sourcelinksimplicity.setTypeface(tf_bold);
+        source_reporter_name.setTypeface(tf_bold);
+        image_description.setTypeface(tf_bold);
+        short_description.setTypeface(tf_bold);
+        title_category.setTypeface(tf_bold);
+        commentbox_editext.setHint("Post your Comments Here");
+        date.setTypeface(tf_bold);
+        thump = (NetworkImageView) findViewById(R.id.thumbnailone);
+        pdialog = new ProgressDialog(this);
+        pdialog.show();
+        pdialog.setContentView(R.layout.custom_progressdialog);
+        pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        if (notifiid != null) {
             JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
 
 
                 public void onResponse(JSONObject response) {
 
-                    //VolleyLog.d(TAG, "Response: " + response.toString());
+
                     if (response != null) {
-                        //dissmissDialog();
                         pdialog.dismiss();
+
+
                         parseJsonFeed(response);
                     }
                 }
@@ -392,39 +375,37 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
 
                 }
             });
+
             jsonreq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-           // AppControllers.getInstance().addToRequestQueue(jsonreq);
             requestQueue.add(jsonreq);
-        }else {
+
+        } else {
 
 
         }
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 onBackPressed();
-
             }
         });
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              if( MusicplayerBottom.mediaPlayer.isPlaying()){
-                  Log.e("PLAYING","YES");
-                  MusicplayerBottom.mediaPlayer.stop();
-              }
-
-
-
-                Intent menugovtdesc = new Intent(getApplicationContext(), MainPageEnglish.class);
-                startActivity(menugovtdesc);
-
+                if (MusicplayerBottom.mediaPlayer.isPlaying()) {
+                    Log.e("NEWSSONG", "ISPLAYING");
+                    MusicplayerBottom.mediaPlayer.pause();
+                } else {
+                    Log.e("NEWSSONG", "NO");
+                }
+                Intent menudesc = new Intent(getApplicationContext(), MainActivityVersiontwo.class);
+                startActivity(menudesc);
+                finish();
             }
         });
-        if(myprofileid!=null){
-            // URLTWO_comment=URLCOMMENT+notifiid;
-            //comment_title.setText("Post your Comment Here - ");
+        if (myprofileid != null) {
+
             post.setText("Post");
 
             commentbox.setVisibility(View.VISIBLE);
@@ -432,22 +413,21 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
             post.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    String url = "http://simpli-city.in/request.php?rtype=comments2&key=simples";
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(commentbox_editext.getWindowToken(), 0);
 
-                    //Showing the progress dialog
-                    //final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, urlpost,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String s) {
-                                    //Disimissing the progress dialog
-                                    //  loading.dismiss();
-                                    //Showing toast message of the response
+                                    Log.e("Res", s.toString().trim());
+
+
                                     if (s.equalsIgnoreCase("error")) {
                                         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
                                     } else {
-                                        //MyDialogFragment.this.dismiss();
+
                                         commentbox_editext.setText("");
                                         AddnewCommnent();
                                         scrollView.post(new Runnable() {
@@ -479,13 +459,10 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
 
                             //Creating parameters
                             Map<String, String> params = new Hashtable<String, String>();
-
-                            //Adding parameters
-
-                                    params.put(KEY_COMMENT, description_comment);
-                                    params.put(KEY_TYPE, "govt");
-                                    params.put(KEY_POSTID, notifiid);
-                                    params.put(KEY_MYUID, myprofileid);
+                            params.put("qtype", "news");
+                            params.put("comment", description_comment);
+                            params.put("id", notifiid);
+                            params.put("user_id", myprofileid);
 
                             return params;
                         }
@@ -493,6 +470,7 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
 
                     //Creating a Request Queue
                     RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                    stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
                     //Adding request to the queue
                     requestQueue.add(stringRequest);
@@ -500,7 +478,7 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
                 }
 
             });
-            rcAdapter = new RecyclerViewAdapter(commentlist,recycler_comment);
+            rcAdapter = new RecyclerViewAdapter(commentlist, recycler_comment);
             recycler_comment.setAdapter(rcAdapter);
             getData();
             rcAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -526,8 +504,8 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    MyDialogFragment frag;
-                    frag = new MyDialogFragment();
+                    NewsDescription.MyDialogFragment frag;
+                    frag = new NewsDescription.MyDialogFragment();
                     Bundle args = new Bundle();
                     args.putString("POSTID", notifiid);
                     args.putString("USERID", myprofileid);
@@ -536,13 +514,13 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
                 }
             });
 
-        }else {
+        } else {
             commentbox.setVisibility(View.GONE);
         }
         comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(myprofileid!=null) {
+                if (myprofileid != null) {
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     MyDialogFragment frag;
                     frag = new MyDialogFragment();
@@ -551,12 +529,12 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
                     args.putString("USERID", myprofileid);
                     frag.setArguments(args);
                     frag.show(ft, "txn_tag");
-                }else {
+                } else {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(Activity, "govtdesc");
+                    editor.putString(Activity, "newsdesc");
                     editor.putString(CONTENTID, notifiid);
                     editor.commit();
-                    Intent signin=new Intent(GovernmentnotificationsDescriptions.this,SigninpageActivity.class);
+                    Intent signin = new Intent(getApplicationContext(), SigninpageActivity.class);
                     startActivity(signin);
                     finish();
                 }

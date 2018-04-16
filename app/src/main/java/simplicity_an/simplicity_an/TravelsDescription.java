@@ -330,7 +330,7 @@ public class TravelsDescription extends AppCompatActivity {
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         String simplycity_title_bold= "fonts/robotoSlabBold.ttf";
         Typeface tf_bold = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
-         String playfair ="fonts/playfairDisplayRegular.ttf";
+         String playfair = "fonts/PlayfairDisplayBold.ttf";;
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
         title.setTypeface(tf_play);
         textview_date.setTypeface(tf);

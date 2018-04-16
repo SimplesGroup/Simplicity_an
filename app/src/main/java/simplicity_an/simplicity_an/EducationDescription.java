@@ -322,7 +322,7 @@ public class EducationDescription extends AppCompatActivity {
         // description=(TextView)findViewById(R.id.textView_desc);
         String simplycity_title_fontPath = "fonts/robotoSlabBold.ttf";
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
-         String playfair ="fonts/playfairDisplayRegular.ttf";
+         String playfair = "fonts/PlayfairDisplayBold.ttf";;
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
 
         tv.setTypeface(tf_play);

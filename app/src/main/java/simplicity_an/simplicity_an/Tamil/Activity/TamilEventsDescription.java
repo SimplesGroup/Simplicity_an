@@ -133,7 +133,7 @@ ProgressDialog pdialog;
     LinearLayoutManager mLayoutManager;
     String postid, myuserid;
     LinearLayout commentbox;
-    TextView comment_title,loadmore_title;
+    TextView comment_title,loadmore_title,textview_organizedby;
     EditText commentbox_editext;
     Button post;
     RecyclerView recycler_comment;
@@ -319,6 +319,7 @@ booknow.setText("பதிவு செய்ய");
         title = (TextView) findViewById(R.id.textView_titlename);
         title_qype=(TextView)findViewById(R.id.textView_qtypename) ;
 
+        textview_organizedby=(TextView)findViewById(R.id.text_org);
 
         eventdetaildata=(TextView)findViewById(R.id.eventdetaildata);
         description=(WebView)findViewById(R.id.webview_eventdescription);
@@ -404,6 +405,7 @@ booknow.setText("பதிவு செய்ய");
             timing.setBackgroundResource(R.drawable.whiteback);
             timingdetails.setBackgroundResource(R.drawable.whiteback);
             venueandcontact.setBackgroundResource(R.drawable.whiteback);
+            textview_organizedby.setTextColor(Color.BLACK);
         }
         else{
             venue_text.setTextColor(Color.WHITE);
@@ -433,9 +435,11 @@ booknow.setText("பதிவு செய்ய");
             website_details.setTextColor(Color.WHITE);
             venueandcontact.setTextColor(Color.WHITE);
             venueandcontact.setBackgroundColor(R.color.eventcolor);
+            textview_organizedby.setTextColor(Color.WHITE);
         }
 
         title.setTypeface(tf_bold);
+        textview_organizedby.setTypeface(tf);
         eventdetaildata.setTypeface(tf);
        venuedetails.setTypeface(tf);
        timing.setTypeface(tf);
@@ -688,7 +692,8 @@ booknow.setText("பதிவு செய்ய");
                     }
 
                 }
-
+                textview_organizedby.setText("ஒருங்கிணைப்புக் குழு:"+obj
+                        .getString("organized_by"));
                 String descrition = obj.isNull("description") ? null : obj
                         .getString("description");
                 String ss = descrition;

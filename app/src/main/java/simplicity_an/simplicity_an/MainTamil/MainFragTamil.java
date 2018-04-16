@@ -46,6 +46,7 @@ import simplicity_an.simplicity_an.MusicActivity;
 import simplicity_an.simplicity_an.PhotoStories;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SimplicitySearchview;
+import simplicity_an.simplicity_an.SimplicitySearchviews;
 import simplicity_an.simplicity_an.Tamil.Activity.Educationtamil;
 import simplicity_an.simplicity_an.Tamil.Activity.FarmingAgricultureActivitytamil;
 import simplicity_an.simplicity_an.Tamil.Activity.FoodActivityTamil;
@@ -354,7 +355,7 @@ public class MainFragTamil extends Fragment {
 
                 search_value = query;
 
-                Intent simplicity = new Intent(getActivity(), SimplicitySearchview.class);
+                Intent simplicity = new Intent(getActivity(), SimplicitySearchviews.class);
                 simplicity.putExtra("QUERY", search_value);
                 startActivity(simplicity);
 

@@ -898,6 +898,7 @@ Log.e("CHANGE LAMG",response.toString());
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#383838");
                         editor.commit();
+                       // dialog.dismiss();
 
                     }
                 });
@@ -933,9 +934,8 @@ Log.e("CHANGE LAMG",response.toString());
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#59247c");
-
-
                         editor.commit();
+                     //   dialog.dismiss();
 
                     }
                 });
@@ -972,6 +972,7 @@ Log.e("CHANGE LAMG",response.toString());
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#1d487a");
                         editor.commit();
+                     //   dialog.dismiss();
 
                     }
                 });
@@ -1007,6 +1008,7 @@ Log.e("CHANGE LAMG",response.toString());
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#7A4100");
                         editor.commit();
+                       // dialog.dismiss();
 
                     }
                 });
@@ -1042,8 +1044,8 @@ Log.e("CHANGE LAMG",response.toString());
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#6E0138");
-
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 colorsix.setOnClickListener(new View.OnClickListener() {
@@ -1078,8 +1080,8 @@ Log.e("CHANGE LAMG",response.toString());
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#00BFD4");
-
                         editor.commit();
+                     //   dialog.dismiss();
                     }
                 });
                 colorseven.setOnClickListener(new View.OnClickListener() {
@@ -1114,8 +1116,8 @@ Log.e("CHANGE LAMG",response.toString());
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#185546");
-
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 coloreight.setOnClickListener(new View.OnClickListener() {
@@ -1150,8 +1152,8 @@ Log.e("CHANGE LAMG",response.toString());
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#D0A06F");
-
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 colornine.setOnClickListener(new View.OnClickListener() {
@@ -1186,8 +1188,8 @@ Log.e("CHANGE LAMG",response.toString());
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#82C6E6");
-
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 colorten.setOnClickListener(new View.OnClickListener() {
@@ -1222,8 +1224,8 @@ Log.e("CHANGE LAMG",response.toString());
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#339900");
-
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 coloreleven.setOnClickListener(new View.OnClickListener() {
@@ -1258,8 +1260,8 @@ Log.e("CHANGE LAMG",response.toString());
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#CC9C00");
-
                         editor.commit();
+                      //  dialog.dismiss();
                     }
                 });
                 colortwelve.setOnClickListener(new View.OnClickListener() {
@@ -1294,8 +1296,8 @@ Log.e("CHANGE LAMG",response.toString());
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#00B09B");
-
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
 
@@ -1331,8 +1333,9 @@ Log.e("CHANGE LAMG",response.toString());
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#FFFFFFFF");
-
                         editor.commit();
+
+                       // dialog.dismiss();
                     }
                 });
 

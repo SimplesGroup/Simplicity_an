@@ -334,7 +334,7 @@ public class Healthylivingdescription extends AppCompatActivity {
 
         String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
-         String playfair ="fonts/playfairDisplayRegular.ttf";
+         String playfair = "fonts/PlayfairDisplayBold.ttf";;
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
         comment_title.setTypeface(tf);
         loadmore_title.setTypeface(tf);

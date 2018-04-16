@@ -341,7 +341,8 @@ public class EntertainmentFragmentTamil extends Fragment  {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)layout.getLayoutParams();
         params.setMargins(0, 170, 0, 0);
         layout.setLayoutParams(params);
-
+        String simplycity_title= "fonts/robotoSlabRegular.ttf";
+        Typeface tf_roboto= Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
         if(colorcodes.equals("#FFFFFFFF"))
         {
             title_coimbatore.setTextColor(Color.BLACK);
@@ -512,6 +513,9 @@ public class EntertainmentFragmentTamil extends Fragment  {
                 btnsearch.setImageResource(R.mipmap.searchtamil);
             }
         }
+
+        date_text.setTypeface(tf_roboto);
+
         StringRequest weather=new StringRequest(Request.Method.GET, WEATHER_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -812,6 +816,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#383838");
                         editor.commit();
+                       // dialog.dismiss();
 
                     }
                 });
@@ -854,6 +859,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
 
 
                         editor.commit();
+                       // dialog.dismiss();
 
                     }
                 });
@@ -884,6 +890,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#1d487a");
                         editor.commit();
+                       // dialog.dismiss();
 
                     }
                 });
@@ -922,6 +929,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#7A4100");
                         editor.commit();
+                       // dialog.dismiss();
 
                     }
                 });
@@ -962,6 +970,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
                         editor.putString(backgroundcolor, "#6E0138");
 
                         editor.commit();
+                     //   dialog.dismiss();
                     }
                 });
                 colorsix.setOnClickListener(new View.OnClickListener() {
@@ -1001,6 +1010,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
                         editor.putString(backgroundcolor, "#00BFD4");
 
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 colorseven.setOnClickListener(new View.OnClickListener() {
@@ -1040,6 +1050,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
                         editor.putString(backgroundcolor, "#185546");
 
                         editor.commit();
+                      //  dialog.dismiss();
                     }
                 });
                 coloreight.setOnClickListener(new View.OnClickListener() {
@@ -1079,6 +1090,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
                         editor.putString(backgroundcolor, "#D0A06F");
 
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 colornine.setOnClickListener(new View.OnClickListener() {
@@ -1118,6 +1130,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
                         editor.putString(backgroundcolor, "#82C6E6");
 
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 colorten.setOnClickListener(new View.OnClickListener() {
@@ -1157,6 +1170,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
                         editor.putString(backgroundcolor, "#339900");
 
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 coloreleven.setOnClickListener(new View.OnClickListener() {
@@ -1196,6 +1210,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
                         editor.putString(backgroundcolor, "#CC9C00");
 
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 colortwelve.setOnClickListener(new View.OnClickListener() {
@@ -1234,6 +1249,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
                         editor.putString(backgroundcolor, "#00B09B");
 
                         editor.commit();
+                      // dialog.dismiss();
                     }
                 });
                 colorthirteen.setOnClickListener(new View.OnClickListener() {
@@ -1270,6 +1286,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
                         editor.putString(backgroundcolor, "#FFFFFFFF");
 
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 closebutton.setOnClickListener(new View.OnClickListener() {

@@ -1,5 +1,6 @@
 package simplicity_an.simplicity_an;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -38,7 +39,7 @@ import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 /**
  * Created by kuppusamy on 12/2/2015.
  */
-public class SplashScreen extends AppCompatActivity {
+public class SplashScreen extends Activity {
 
   PackageInfo info;
     SharedPreferences sharedpreferences;
@@ -72,8 +73,8 @@ public class SplashScreen extends AppCompatActivity {
         } catch (Exception e) {
             Log.e("exception", e.toString());
         }*/
-      //requestWindowFeature(Window.FEATURE_NO_TITLE);
-      supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+      requestWindowFeature(Window.FEATURE_NO_TITLE);
+     // supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splashscreentwo);
@@ -112,20 +113,20 @@ public class SplashScreen extends AppCompatActivity {
                         Log.e("RES","hi");
                         if(language_data!=null){
                             if(language_data.equals("English")) {
-                               /* Intent i = new Intent(SplashScreen.this, MainPageEnglish.class);
+                               Intent i = new Intent(SplashScreen.this, MainPageEnglish.class);
                                 startActivity(i);
-                                finish();*/
+                                finish();
                             }else {
-                                /*Intent i = new Intent(SplashScreen.this, MainPageTamil.class);
+                                Intent i = new Intent(SplashScreen.this, MainPageTamil.class);
                                 startActivity(i);
-                                finish();*/
+                                finish();
                             }
                         }
 
 
                     }else {
                         Log.e("RES","hid");
-                         dialog = new Dialog(getApplicationContext());
+                         dialog = new Dialog(SplashScreen.this);
                         dialog.setContentView(R.layout.themeandlaguageselect);
 
                         ImageButton colorone = (ImageButton) dialog.findViewById(R.id.color);
@@ -402,9 +403,9 @@ public class SplashScreen extends AppCompatActivity {
 
                                 }
                                 dialog.dismiss();
-                               /* Intent i = new Intent(SplashScreen.this, MainPageEnglish.class);
+                               Intent i = new Intent(SplashScreen.this, MainPageEnglish.class);
                                 startActivity(i);
-                                finish();*/
+                                finish();
                             }
                         });
                         continue_button.setOnClickListener(new View.OnClickListener() {
@@ -445,9 +446,9 @@ public class SplashScreen extends AppCompatActivity {
                                       language.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                                       likesqueue.add(language);
                                   }
-                                   /* Intent i = new Intent(SplashScreen.this, MainPageTamil.class);
+                                   Intent i = new Intent(SplashScreen.this, MainPageTamil.class);
                                     startActivity(i);
-                                    finish();*/
+                                    finish();
                                 }else {
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
                                     editor.putString(Language, "English");
@@ -478,9 +479,9 @@ public class SplashScreen extends AppCompatActivity {
                                       language.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                                       likesqueue.add(language);
                                   }
-                                   /* Intent i = new Intent(SplashScreen.this, MainPageEnglish.class);
+                                   Intent i = new Intent(SplashScreen.this, MainPageEnglish.class);
                                     startActivity(i);
-                                    finish();*/
+                                    finish();
                                 }
                             }
                         });

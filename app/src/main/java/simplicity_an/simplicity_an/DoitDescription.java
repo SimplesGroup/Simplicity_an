@@ -288,7 +288,7 @@ public class DoitDescription extends AppCompatActivity {
         String simplycity_title_fontPathone = "fonts/robotoSlabBold.ttf";
         Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPathone);
 
-         String playfair ="fonts/playfairDisplayRegular.ttf";
+         String playfair = "fonts/PlayfairDisplayBold.ttf";;
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
 
         titlename.setTypeface(tf_play);

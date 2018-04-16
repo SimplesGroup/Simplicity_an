@@ -335,8 +335,10 @@ public class HappeningFrag extends Fragment {
         Date d1full = new Date();
          sMonthNamefull =  fmt.format(d1full);
         Log.e("DAY_OF_MONTH: ", "DAY_OF_MONTH: " + calendar.get(Calendar.DAY_OF_MONTH)+sMonthName);
-        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
+        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
+        String simplycity_title= "fonts/playfairDisplayRegular.ttf";
+        Typeface tf_pala = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
         title_coimbatore=(TextView)view.findViewById(R.id.title_versiontwo) ;
         date_text=(TextView)view.findViewById(R.id.date_versiontwo) ;
         language_title=(TextView)view.findViewById(R.id.language_versiontwo) ;
@@ -346,7 +348,7 @@ public class HappeningFrag extends Fragment {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)layout.getLayoutParams();
         params.setMargins(0, 180, 0, 0);
         layout.setLayoutParams(params);
-        title_coimbatore.setTypeface(tf);
+        title_coimbatore.setTypeface(tf_pala);
         date_text.setTypeface(tf);
         weather_update.setTypeface(tf);
         title_coimbatore.setText("Events");
@@ -802,6 +804,7 @@ public class HappeningFrag extends Fragment {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#383838");
                         editor.commit();
+                       // dialog.dismiss();
 
                     }
                 });
@@ -843,6 +846,7 @@ public class HappeningFrag extends Fragment {
 
 
                         editor.commit();
+                     //   dialog.dismiss();
 
                     }
                 });
@@ -881,6 +885,7 @@ public class HappeningFrag extends Fragment {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#1d487a");
                         editor.commit();
+                       // dialog.dismiss();
 
                     }
                 });
@@ -918,6 +923,7 @@ public class HappeningFrag extends Fragment {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#7A4100");
                         editor.commit();
+                       // dialog.dismiss();
 
                     }
                 });
@@ -957,6 +963,7 @@ public class HappeningFrag extends Fragment {
                         editor.putString(backgroundcolor, "#6E0138");
 
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 colorsix.setOnClickListener(new View.OnClickListener() {
@@ -995,6 +1002,7 @@ public class HappeningFrag extends Fragment {
                         editor.putString(backgroundcolor, "#00BFD4");
 
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 colorseven.setOnClickListener(new View.OnClickListener() {
@@ -1033,6 +1041,7 @@ public class HappeningFrag extends Fragment {
                         editor.putString(backgroundcolor, "#185546");
 
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 coloreight.setOnClickListener(new View.OnClickListener() {
@@ -1071,6 +1080,7 @@ public class HappeningFrag extends Fragment {
                         editor.putString(backgroundcolor, "#D0A06F");
 
                         editor.commit();
+                      //  dialog.dismiss();
                     }
                 });
                 colornine.setOnClickListener(new View.OnClickListener() {
@@ -1109,6 +1119,7 @@ public class HappeningFrag extends Fragment {
                         editor.putString(backgroundcolor, "#82C6E6");
 
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 colorten.setOnClickListener(new View.OnClickListener() {
@@ -1147,6 +1158,7 @@ public class HappeningFrag extends Fragment {
                         editor.putString(backgroundcolor, "#339900");
 
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 coloreleven.setOnClickListener(new View.OnClickListener() {
@@ -1185,6 +1197,7 @@ public class HappeningFrag extends Fragment {
                         editor.putString(backgroundcolor, "#CC9C00");
 
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 colortwelve.setOnClickListener(new View.OnClickListener() {
@@ -1222,6 +1235,7 @@ public class HappeningFrag extends Fragment {
                         editor.putString(backgroundcolor, "#00B09B");
 
                         editor.commit();
+                       // dialog.dismiss();
                     }
                 });
                 colorthirteen.setOnClickListener(new View.OnClickListener() {
@@ -1259,6 +1273,7 @@ public class HappeningFrag extends Fragment {
                         editor.putString(backgroundcolor, "#FFFFFFFF");
 
                         editor.commit();
+                      //  dialog.dismiss();
                     }
                 });
 

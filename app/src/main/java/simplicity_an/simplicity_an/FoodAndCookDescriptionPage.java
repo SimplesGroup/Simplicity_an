@@ -351,6 +351,9 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
         Typeface tf = Typeface.createFromAsset(FoodAndCookDescriptionPage.this.getAssets(), simplycity_title_fontPath);
         String simplycity_title_bold = "fonts/Lora-Regular.ttf";;
         Typeface tf_bold = Typeface.createFromAsset(FoodAndCookDescriptionPage.this.getAssets(), simplycity_title_bold);
+        String simplycity_tit = "fonts/robotoSlabBold.ttf";
+        Typeface tf_tit = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_tit);
+
         titleofrecipie=(TextView)findViewById(R.id.textView_titlename);
         fooditemimage=(NetworkImageView)findViewById(R.id.thumbnailone);
        date=(TextView)findViewById(R.id.author);
@@ -368,7 +371,7 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
         steps=(Button)findViewById(R.id.steps_button);
         ingredientsdescription.setVisibility(View.VISIBLE);
         stepsdescriptions.setVisibility(View.GONE);
-        titleofrecipie.setTypeface(tf_bold);
+        titleofrecipie.setTypeface(tf_tit);
         comment_title.setTypeface(tf);
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);

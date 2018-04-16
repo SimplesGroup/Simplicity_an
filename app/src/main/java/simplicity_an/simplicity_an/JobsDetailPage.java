@@ -255,6 +255,8 @@ public class JobsDetailPage extends AppCompatActivity {
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         String simplycity_title_bold = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_bold = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
+        String simplycity_tit = "fonts/PlayfairDisplayBold.ttf";
+        Typeface tf_tit = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_tit);
 
         applyjob=(Button)findViewById(R.id.applynow_button);
 
@@ -333,7 +335,7 @@ public class JobsDetailPage extends AppCompatActivity {
         venue.setTypeface(tf);
         emailabel.setTypeface(tf);
         phonenumber_textview.setTypeface(tf);
-        title.setTypeface(tf_bold);
+        title.setTypeface(tf_tit);
         title_qype.setTypeface(tf);
 //        commentbox_editext.setTypeface(tf);
         jobrequest= Volley.newRequestQueue(getApplicationContext());

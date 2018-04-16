@@ -110,7 +110,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
         });
 
         CheckPlayerid();
-        isFirstTime();
+       // isFirstTime();
         city=(ImageButton)findViewById(R.id.btn_versiontwocity);
         happening=(ImageButton)findViewById(R.id.btn_versiontwobeyond);
         search=(ImageButton)findViewById(R.id.btn_versiontwosearch);

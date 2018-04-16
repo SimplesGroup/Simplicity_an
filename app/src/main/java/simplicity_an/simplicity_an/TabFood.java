@@ -944,7 +944,7 @@ FloatingActionButton fabfood,fabplus;
                 String simplycity_title_fontPath =  "fonts/playfairDisplayRegular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
 
-                String simplycity_title_reqular = "fonts/robotoSlabBold.ttf";
+                String simplycity_title_reqular = "fonts/Lora-Regular.ttf";
                 final Typeface seguiregular_bold = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reqular);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
@@ -1032,7 +1032,8 @@ FloatingActionButton fabfood,fabplus;
                 userViewHolder.title_item.setTypeface(seguiregular);
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular_bold);
                 //userViewHolder.date.setText(itemmodel.getPdate());
-                userViewHolder.likescount.setTypeface(seguiregular);
+                userViewHolder.likescount.setTypeface(seguiregular_bold);
+                userViewHolder.commentscount.setTypeface(seguiregular_bold);
                 userViewHolder.date.setTypeface(seguiregular);
                  if(itemmodel.getLikescount()==0){                         userViewHolder.likescount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Like"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Comment"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                     }                                        if(itemmodel.getCommentscount()==0){                      userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));                 }else {                     userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                 }
 

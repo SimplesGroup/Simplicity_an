@@ -1009,7 +1009,8 @@ public class TamilTaball extends Fragment {
                 final Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
                 userViewHolder.shortdescription.setTypeface(tf_play);
 
-
+                String simplycity_special = "fonts/playfairDisplayRegular.ttf";
+                final Typeface tf_special = Typeface.createFromAsset(getActivity().getAssets(), simplycity_special);
                 userViewHolder.editername.setTypeface(seguiregular);
                 userViewHolder.editername.setText(itemmodel.getEditername());
 
@@ -1029,14 +1030,18 @@ public class TamilTaball extends Fragment {
                 }else {
                     userViewHolder.item_image.setVisibility(View.GONE);
                 }
-                if(itemmodel.getQtypemain().equals("Job")){
-                    userViewHolder.editername.setTypeface(tf_play);
-                    userViewHolder.title_item.setTypeface(tf_play);
-                    userViewHolder.item_type_name.setTypeface(tf_play);
+                if(itemmodel.getQtypemain().equals("job")){
+                    userViewHolder.editername.setTypeface(tf_special);
+                    userViewHolder.title_item.setTypeface(tf_special);
+                    userViewHolder.title_item.setTextSize(21);
+                    userViewHolder.item_type_name.setTypeface(tf_special);
+                    userViewHolder.shortdescription.setTypeface(tf_special);
                 }else if(itemmodel.getQtypemain().equals("event")){
-                    userViewHolder.editername.setTypeface(tf_play);
-                    userViewHolder.title_item.setTypeface(tf_play);
-                    userViewHolder.item_type_name.setTypeface(tf_play);
+                    userViewHolder.editername.setTypeface(tf_special);
+                    userViewHolder.title_item.setTypeface(tf_special);
+                    userViewHolder.title_item.setTextSize(21);
+                    userViewHolder.item_type_name.setTypeface(tf_special);
+                    userViewHolder.shortdescription.setTypeface(tf_special);
                 }
 
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {

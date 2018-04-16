@@ -142,8 +142,9 @@ public class EventsDescription extends AppCompatActivity {
     public static final String backgroundcolor = "color";
     RelativeLayout mainlayout;
     String colorcodes;
-    TextView venuecontactinfo;
+    TextView venuecontactinfo,textview_organizedby;
     LinearLayout commentboxlayout;
+
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -305,6 +306,7 @@ public class EventsDescription extends AppCompatActivity {
 
         title = (TextView) findViewById(R.id.textView_titlename);
         title_qype=(TextView)findViewById(R.id.textView_qtypename) ;
+       textview_organizedby=(TextView)findViewById(R.id.text_org);
 
         eventdetaildata = (TextView) findViewById(R.id.eventdetaildata);
         description = (WebView) findViewById(R.id.webview_eventdescription);
@@ -347,12 +349,13 @@ public class EventsDescription extends AppCompatActivity {
         String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
-        String simplycity_title_bold = "fonts/playfairDisplayRegular.ttf";
+        String simplycity_title_bold = "fonts/PlayfairDisplayBold.ttf";
         Typeface tf_bold = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
 
 
 
         venue_text.setTypeface(tf);
+        textview_organizedby.setTypeface(tf);
         location_text.setTypeface(tf);
         website_text.setTypeface(tf);
         venue_text.setText("Venue:");
@@ -387,6 +390,7 @@ public class EventsDescription extends AppCompatActivity {
             location_details.setTextColor(Color.BLACK);
             website_details.setTextColor(Color.BLACK);
             venuecontactinfo.setTextColor(Color.BLACK);
+            textview_organizedby.setTextColor(Color.BLACK);
 
             date.setBackgroundResource(R.drawable.whiteback);
             datedetails.setBackgroundResource(R.drawable.whiteback);
@@ -425,6 +429,7 @@ public class EventsDescription extends AppCompatActivity {
             website_details.setTextColor(Color.WHITE);
             venuecontactinfo.setTextColor(Color.WHITE);
             venuecontactinfo.setBackgroundColor(R.color.eventcolor);
+            textview_organizedby.setTextColor(Color.WHITE);
         }
 
         title.setTypeface(tf_bold);
@@ -647,7 +652,8 @@ JSONArray array=obj.getJSONArray("amt");
                 event_place = obj.getString("venue");
                 event_startdate = obj.getString("event_start_date");
                 event_enddate = obj.getString("event_end_date");
-
+                textview_organizedby.setText("Organized by:"+obj
+                        .getString("organized_by"));
                 if (organizedby.equals("")||organizedby.equals("null")) {
 
 

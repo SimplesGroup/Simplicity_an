@@ -103,7 +103,8 @@ public class Tamilnews extends Fragment {
     RecyclerView recyclerview_tab_all_news;
 
     String URL="http://simpli-city.in/request2.php?rtype=alldatatest&key=simples&qtype=news&language=2";
-    String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples"; 				String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
+    String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples";
+    String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
     String URLALL;
     RequestQueue requestQueue;
     private int requestCount = 1;
@@ -1000,11 +1001,12 @@ public class Tamilnews extends Fragment {
                 }
                 mediaPlayer=new MediaPlayer();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
+                String type = ((ItemModel) modelList.get(position)).getQtypemain();
                 String simplycity_title = "fonts/robotoSlabRegular.ttf";
                 final Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
                 userViewHolder.shortdescription.setTypeface(tf_play);
-
+                String simplycity_special = "fonts/playfairDisplayRegular.ttf";
+                final Typeface tf_special = Typeface.createFromAsset(getActivity().getAssets(), simplycity_special);
 
                 userViewHolder.editername.setTypeface(seguiregular);
                 userViewHolder.editername.setText(itemmodel.getEditername());
@@ -1044,14 +1046,19 @@ public class Tamilnews extends Fragment {
                 }else {
                     userViewHolder.item_image.setVisibility(View.GONE);
                 }
-if(itemmodel.getQtypemain().equals("Job")){
-    userViewHolder.editername.setTypeface(tf_play);
-    userViewHolder.title_item.setTypeface(tf_play);
-    userViewHolder.item_type_name.setTypeface(tf_play);
-}else if(itemmodel.getQtypemain().equals("event")){
-    userViewHolder.editername.setTypeface(tf_play);
-    userViewHolder.title_item.setTypeface(tf_play);
-    userViewHolder.item_type_name.setTypeface(tf_play);
+                Log.e("msg","hi"+"jobe");
+if(itemmodel.getQtypemain().equalsIgnoreCase("job")){
+                    Log.e("msg","hi"+"jobenter");
+    userViewHolder.editername.setTypeface(tf_special);
+    userViewHolder.title_item.setTypeface(tf_special);
+    userViewHolder.title_item.setTextSize(21);
+    userViewHolder.item_type_name.setTypeface(tf_special);
+
+}else if(itemmodel.getQtypemain().equalsIgnoreCase("event")){
+    userViewHolder.editername.setTypeface(tf_special);
+    userViewHolder.title_item.setTypeface(tf_special);
+    userViewHolder.title_item.setTextSize(21);
+    userViewHolder.item_type_name.setTypeface(tf_special);
 }
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 

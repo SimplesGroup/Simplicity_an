@@ -326,7 +326,7 @@ public class Farmingdescription extends AppCompatActivity {
         String simplycity_title_fontPathone = "fonts/robotoSlabBold.ttf";
         Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPathone);
 
-         String playfair ="fonts/playfairDisplayRegular.ttf";
+         String playfair = "fonts/PlayfairDisplayBold.ttf";;
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
         tv.setTypeface(tf_play);
         textview_date.setTypeface(tf);

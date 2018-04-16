@@ -173,7 +173,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
 
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
-        Log.e("Colorcodes",colorcodes);
+        Log.e("Colorcodes","photo"+colorcodes);
         mainlayout=(RelativeLayout)findViewById(R.id.main_layout_explore);
         commentlayout=(LinearLayout) findViewById(R.id.commentbox_city);
         scrollView=(ScrollView)findViewById(R.id.scroll);
@@ -181,7 +181,10 @@ public class PhotoStoriesDetail extends AppCompatActivity {
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         String simplycity_title_fontPathone = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPathone);
-      share = (ImageButton) findViewById(R.id.btn_share);
+        String simplycity_tit = "fonts/robotoSlabBold.ttf";
+        final Typeface tf_tit = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_tit);
+
+        share = (ImageButton) findViewById(R.id.btn_share);
         back = (ImageButton) findViewById(R.id.btn_back);
         favourite = (ImageButton) findViewById(R.id.btn_like);
         commentbox=(LinearLayout)findViewById(R.id.comments_versiontwo) ;
@@ -216,8 +219,15 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
-        if(colorcodes.length()==0){
+        if(colorcodes.equals("#FFFFFFFF")){
+            commentlayout.setBackgroundColor(Color.WHITE);
+            back.setImageResource(R.mipmap.backtamilone);
+        }
+        else{
+            commentlayout.setBackgroundColor(Color.BLACK);
+            back.setImageResource(R.mipmap.back);
+        }
+        if (colorcodes.length() == 0) {
             int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
@@ -229,9 +239,9 @@ public class PhotoStoriesDetail extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(backgroundcolor, "#383838");
             editor.commit();
-        }else {
-            if(colorcodes.equalsIgnoreCase("004")){
-                Log.e("Msg","hihihi"+colorcodes);
+        } else {
+            if (colorcodes.equalsIgnoreCase("004")) {
+                Log.e("Msg", "hihihi" + colorcodes);
                 int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
@@ -243,9 +253,9 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(backgroundcolor, "#383838");
                 editor.commit();
-            }else {
+            } else {
 
-                if(colorcodes!=null){
+                if (colorcodes != null) {
                     if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
 
@@ -255,6 +265,9 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#FFFFFFFF");
+                        editor.commit();
                     } else {
                         int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
@@ -270,7 +283,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
 
                         editor.commit();
                     }
-                }else {
+                } else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 
                     GradientDrawable gd = new GradientDrawable(
@@ -290,7 +303,8 @@ public class PhotoStoriesDetail extends AppCompatActivity {
 
 
 
-      if(myprofileid!=null) {
+
+        if(myprofileid!=null) {
           // URLTWO_comment=URLCOMMENT+notifiid;
           //comment_title.setText("Post your Comment Here - ");
           post.setText("Post");
@@ -406,7 +420,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
             post.setTextColor(Color.WHITE);
             comment_title.setTextColor(Color.WHITE);
             back.setImageResource(R.mipmap.back);
-            commentlayout.setBackgroundColor(Color.WHITE);
+            commentlayout.setBackgroundColor(Color.BLACK);
         }
           /*  if (photostory_title != null) {
                 photostory_title.setText(Html.fromHtml(title));
@@ -445,6 +459,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                             for (int k = 0; k < array.length(); k++) {
                                 JSONObject object = (JSONObject) array.get(k);
                                 photostory_title.setText(Html.fromHtml(object.getString("title")));
+                                photostory_title.setTypeface(tf_tit);
                                 photostory_date.setText(Html.fromHtml(object.getString("source")) +"\n"+Html.fromHtml(object.getString("pdate")));
                             }
 

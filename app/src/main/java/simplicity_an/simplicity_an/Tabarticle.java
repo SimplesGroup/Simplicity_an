@@ -944,7 +944,7 @@ FloatingActionButton fabnews,fabplus;
 
                 String simplycity_title_reqular = "fonts/robotoSlabBold.ttf";
                 final Typeface seguiregular_bold = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reqular);
-                 String playfair ="fonts/playfairDisplayRegular.ttf";
+                 String playfair = "fonts/PlayfairDisplayBold.ttf";;
                 Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), playfair);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
@@ -1462,7 +1462,7 @@ FloatingActionButton fabnews,fabplus;
 
                 String simplycity_title_fontPath =  "fonts/Lora-Regular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
-                 String playfair ="fonts/playfairDisplayRegular.ttf";
+                 String playfair = "fonts/PlayfairDisplayBold.ttf";;
                 Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), playfair);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();

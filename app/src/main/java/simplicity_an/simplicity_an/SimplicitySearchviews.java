@@ -52,6 +52,19 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
+import simplicity_an.simplicity_an.Tamil.Activity.DoitDescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.Farmingdescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.Govtdescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.Healthdescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.ScienceandTechnologyDescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.TamilEventsDescription;
+import simplicity_an.simplicity_an.Tamil.Activity.TamilNewsDescription;
+import simplicity_an.simplicity_an.Tamil.Activity.TamilSportsnewsDescription;
+import simplicity_an.simplicity_an.Tamil.Activity.TipsDescriptionTamil;
+import simplicity_an.simplicity_an.Tamil.Activity.TravelsDescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.TamilArticledescription;
+
 /**
  * Created by KuppuSamy on 8/22/2017.
  */
@@ -123,11 +136,11 @@ public class SimplicitySearchviews extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(value==0){
-                    Intent notification_page = new Intent(getApplicationContext(), MainPageEnglish.class);
+                    Intent notification_page = new Intent(getApplicationContext(), MainPageTamil.class);
                     notification_page.putExtra("ID","1");
                     startActivity(notification_page);
                 }else {
-                    Intent notification_page = new Intent(getApplicationContext(), MainPageEnglish.class);
+                    Intent notification_page = new Intent(getApplicationContext(), MainPageTamil.class);
                     notification_page.putExtra("ID","1");
                     startActivity(notification_page);
                 }
@@ -148,7 +161,7 @@ public class SimplicitySearchviews extends AppCompatActivity {
         enternainment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent entairnment=new Intent(getApplicationContext(), MainPageEnglish.class);
+                Intent entairnment=new Intent(getApplicationContext(), MainPageTamil.class);
                 entairnment.putExtra("ID","2");
                 startActivity(entairnment);
             }
@@ -172,7 +185,7 @@ public class SimplicitySearchviews extends AppCompatActivity {
         events_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent event_page = new Intent(getApplicationContext(), MainPageEnglish.class);
+                Intent event_page = new Intent(getApplicationContext(), MainPageTamil.class);
                 event_page.putExtra("ID","3");
                 startActivity(event_page);
 
@@ -262,49 +275,49 @@ public class SimplicitySearchviews extends AppCompatActivity {
                 String bid = ((ItemModel)  modelListsearch.get(position)).getId();
                 String type= ((ItemModel)  modelListsearch.get(position)).getQtype();
                 if(type.equals("news")) {
-                    Intent i = new Intent(getApplicationContext(), NewsDescription.class);
+                    Intent i = new Intent(getApplicationContext(), TamilNewsDescription.class);
                     i.putExtra("ID", bid);
                     i.putExtra("IDSEARCH",search_value);
 
                     startActivity(i);
                 }else if(type.equals("article")){
-                    Intent i = new Intent(getApplicationContext(), Articledescription.class);
+                    Intent i = new Intent(getApplicationContext(), TamilArticledescription.class);
                     i.putExtra("ID", bid);
                     startActivity(i);
                 }else if(type.equals("govt")){
-                    Intent i = new Intent(getApplicationContext(), GovernmentnotificationsDescriptions.class);
+                    Intent i = new Intent(getApplicationContext(), Govtdescriptiontamil.class);
                     i.putExtra("ID", bid);
                     startActivity(i);
                 }else if(type.equals("events")||type.equals("event")){
-                    Intent i = new Intent(getApplicationContext(), EventsDescription.class);
+                    Intent i = new Intent(getApplicationContext(), TamilEventsDescription.class);
                     i.putExtra("ID", bid);
                     startActivity(i);
                 }else if(type.equals("sports")){
-                    Intent i = new Intent(getApplicationContext(), SportsnewsDescription.class);
+                    Intent i = new Intent(getApplicationContext(), TamilSportsnewsDescription.class);
                     i.putExtra("ID", bid);
                     startActivity(i);
                 }else if(type.equals("science")){
-                    Intent i = new Intent(getApplicationContext(), ScienceandTechnologyDescription.class);
+                    Intent i = new Intent(getApplicationContext(), ScienceandTechnologyDescriptiontamil.class);
                     i.putExtra("ID", bid);
                     startActivity(i);
                 }else if(type.equals("health")){
-                    Intent i = new Intent(getApplicationContext(), Healthylivingdescription.class);
+                    Intent i = new Intent(getApplicationContext(), Healthdescriptiontamil.class);
                     i.putExtra("ID", bid);
                     startActivity(i);
                 }else if(type.equals("farming")){
-                    Intent i = new Intent(getApplicationContext(), Farmingdescription.class);
+                    Intent i = new Intent(getApplicationContext(), Farmingdescriptiontamil.class);
                     i.putExtra("ID", bid);
                     startActivity(i);
                 }else  if(type.equals("doit")){
-                    Intent i = new Intent(getApplicationContext(), DoitDescription.class);
+                    Intent i = new Intent(getApplicationContext(), DoitDescriptiontamil.class);
                     i.putExtra("ID", bid);
                     startActivity(i);
                 }else if(type.equals("foodtip")){
-                    Intent i = new Intent(getApplicationContext(), TipsDescription.class);
+                    Intent i = new Intent(getApplicationContext(), TipsDescriptionTamil.class);
                     i.putExtra("ID", bid);
                     startActivity(i);
                 }else if(type.equals("travels")){
-                    Intent i = new Intent(getApplicationContext(), TravelsDescription.class);
+                    Intent i = new Intent(getApplicationContext(), TravelsDescriptiontamil.class);
                     i.putExtra("ID", bid);
                     startActivity(i);
                 }else if(type.equals("theatre")){
