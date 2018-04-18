@@ -96,7 +96,7 @@ LinearLayout footer;
         radio_title=get.getStringExtra("TITLE");
         radio_url=get.getStringExtra("URL");
 //Check();
-isFirstTime();
+//isFirstTime();
         Instructions();
         OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
             @Override

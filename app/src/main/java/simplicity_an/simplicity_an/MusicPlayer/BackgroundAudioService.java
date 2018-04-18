@@ -19,10 +19,11 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaBrowserServiceCompat;
 import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.media.app.NotificationCompat;
 import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.support.v7.app.NotificationCompat;
+//import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
 
 import java.io.IOException;
@@ -132,13 +133,13 @@ instance=this;
     }
 
     private void showPlayingNotification() {
-        NotificationCompat.Builder builder = MediaStyleHelper.from(BackgroundAudioService.this, mMediaSessionCompat);
+        android.support.v4.app.NotificationCompat.Builder builder = MediaStyleHelper.from(BackgroundAudioService.this, mMediaSessionCompat);
         if( builder == null ) {
             return;
         }
 
-
-        builder.addAction(new NotificationCompat.Action(android.R.drawable.ic_media_pause, "Pause", MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)));
+        builder.addAction(new android.support.v4.app.NotificationCompat.Action(android.R.drawable.ic_media_pause,"Pause",MediaButtonReceiver.buildMediaButtonPendingIntent(this,PlaybackStateCompat.ACTION_PAUSE)));
+        //builder.addAction(new NotificationCompat.Action(android.R.drawable.ic_media_pause, "Pause", MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)));
         builder.setStyle(new NotificationCompat.MediaStyle().setShowActionsInCompactView(0).setMediaSession(mMediaSessionCompat.getSessionToken()));
         builder.setSmallIcon(R.drawable.ic_launcher);
 
@@ -149,12 +150,12 @@ instance=this;
     }
 
     private void showPausedNotification() {
-        NotificationCompat.Builder builder = MediaStyleHelper.from(this, mMediaSessionCompat);
+        android.support.v4.app.NotificationCompat.Builder builder = MediaStyleHelper.from(this, mMediaSessionCompat);
         if( builder == null ) {
             return;
         }
-
-        builder.addAction(new NotificationCompat.Action(android.R.drawable.ic_media_play, "Play", MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)));
+        builder.addAction(new android.support.v4.app.NotificationCompat.Action(android.R.drawable.ic_media_play,"Play",MediaButtonReceiver.buildMediaButtonPendingIntent(this,PlaybackStateCompat.ACTION_PAUSE)));
+       // builder.addAction(new NotificationCompat.Action(android.R.drawable.ic_media_play, "Play", MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)));
         builder.setStyle(new NotificationCompat.MediaStyle().setShowActionsInCompactView(0).setMediaSession(mMediaSessionCompat.getSessionToken()));
 
         builder.setSmallIcon(R.drawable.ic_launcher);

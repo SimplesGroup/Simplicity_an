@@ -339,7 +339,6 @@ try{
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String>param=new HashMap<>();
                 param.put("Key","Simplicity");
-                Log.e("Response","token"+Tokenid);
                 param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
                 param.put("language","1");
                 param.put("rtype","alldata");

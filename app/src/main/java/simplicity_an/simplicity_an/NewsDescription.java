@@ -62,9 +62,12 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+
+import simplicity_an.simplicity_an.Utils.Configurl;
 
 /**
  * Created by kuppusamy on 2/3/2016.
@@ -358,25 +361,46 @@ public class NewsDescription extends AppCompatActivity {
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         if (notifiid != null) {
-            JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
+            StringRequest jsonreq = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
 
 
-                public void onResponse(JSONObject response) {
+                public void onResponse(String response) {
+                    Log.e("Response",response.toString());
+                    try{
+                        JSONObject object=new JSONObject(response.toString());
+                        JSONArray array=object.getJSONArray("result");
+                        String data=array.optString(1);
+                        JSONArray jsonArray=new JSONArray(data.toString());
+                        Log.e("Response",data.toString());
+                        if (response != null) {
+                            pdialog.dismiss();
+                            parseJsonFeed(jsonArray);
+                        }
+                    }catch (JSONException e){
 
-
-                    if (response != null) {
-                        pdialog.dismiss();
-
-
-                        parseJsonFeed(response);
                     }
+
+
+
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
 
                 }
-            });
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String,String>param=new HashMap<>();
+                    param.put("Key","Simplicity");
+                    param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                    param.put("language","1");
+                    param.put("rtype","news");
+                    param.put("id",notifiid);
+
+                    return param;
+                }
+            };
 
             jsonreq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             requestQueue.add(jsonreq);
@@ -561,43 +585,43 @@ public class NewsDescription extends AppCompatActivity {
         rcAdapter.notifyItemRangeInserted(curSize, commentlist.size());
     }
 
-    private void parseJsonFeed(JSONObject response) {
+    private void parseJsonFeed(JSONArray response) {
         ImageLoader mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
         try {
-            JSONArray feedArray = response.getJSONArray("result");
+           // JSONArray feedArray = response.getJSONArray("result");
 
-            for (int i = 0; i < feedArray.length(); i++) {
-                JSONObject obj = (JSONObject) feedArray.get(i);
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject obj = (JSONObject) response.get(i);
 
 
                 ItemModel model = new ItemModel();
 
-                String image = obj.isNull("thumb") ? null : obj
-                        .getString("thumb");
+                String image = obj.isNull("image") ? null : obj
+                        .getString("image");
                 model.setImage(image);
 
                 model.setDescription(obj.getString("description"));
-                model.setTypeid(obj.getInt("type"));
-                model.setPdate(obj.getString("pdate"));
+                //model.setTypeid(obj.getInt("type"));
+                model.setPdate(obj.getString("date"));
                 model.setTitle(obj.getString("title"));
 
                 model.setSource(obj.getString("source"));
                 tv.setText(Html.fromHtml(obj.getString("title")));
-                model.setFavcount(obj.getInt("fav_count"));
+                model.setFavcount(obj.getInt("like_type"));
                 model.setShareurl(obj.getString("sharingurl"));
                 model.setShortdescription(obj.getString("short_description"));
-                model.setReporterid(obj.getString("reporter_id"));
+//                model.setReporterid(obj.getString("reporter_id"));
                 model.setReportername(obj.getString("reporter_name"));
                 model.setReporterimage(obj.getString("reporter_image"));
-                model.setReporterurl(obj.getString("reporter_url"));
-                model.setPhotocreditid(obj.getString("photo_credits_id"));
-                model.setPhotocreditimage(obj.getString("photo_credits_image"));
-                model.setPhotocreditname(obj.getString("photo_credits_name"));
-                model.setPhotocrediturl(obj.getString("photo_credits_url"));
+//                model.setReporterurl(obj.getString("reporter_url"));
+//                model.setPhotocreditid(obj.getString("photo_credit_id"));
+                model.setPhotocreditimage(obj.getString("photo_credit_image"));
+                model.setPhotocreditname(obj.getString("photo_credit_name"));
+//                model.setPhotocrediturl(obj.getString("photo_credit_url"));
 
 
-                favcount = obj.getInt("fav_count");
-                post_likes_count = obj.getInt("fav_count");
+                favcount = obj.getInt("like_type");
+                post_likes_count = obj.getInt("like_type");
                 shareurl = obj.getString("sharingurl");
                 sharetitle = obj.getString("title");
 
@@ -635,12 +659,12 @@ public class NewsDescription extends AppCompatActivity {
 
                 }
                 pdate.setText(Html.fromHtml("&nbsp;"+obj.getString("source")));
-                textview_date.setText(obj.getString("pdate"));
-                if(obj.getString("photo_credits_name").equals("")){
+                textview_date.setText(obj.getString("date"));
+                if(obj.getString("photo_credit_name").equals("")){
 
                 }else {
                     image_description.setVisibility(View.VISIBLE);
-                   image_description.setText("Photography by:"+obj.getString("photo_credits_name"));
+                   image_description.setText("Photography by:"+obj.getString("photo_credit_name"));
                 }
                 String descrition = obj.isNull("description") ? null : obj
                         .getString("description");
@@ -692,7 +716,7 @@ public class NewsDescription extends AppCompatActivity {
                         "\t</head>";
                 String rep = String.valueOf(descrition);
                 rep =  rep.replaceAll("color:#fff","color:#000");
-                String date = "<p><font color=\"white\">" + obj.getString("pdate") + "</font></p>";
+                String date = "<p><font color=\"white\">" + obj.getString("date") + "</font></p>";
                 if(colorcodes.equals("#FFFFFFFF")) {
                     description.loadDataWithBaseURL("", fonts + rep + "</head>", "text/html", "utf-8", "");
                 }else{
@@ -710,7 +734,7 @@ public class NewsDescription extends AppCompatActivity {
                 } else {
 
                 }
-                final String sourcelink = obj.getString("source_link");
+              //  final String sourcelink = obj.getString("source_link");
                 sourcelinksimplicity.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
