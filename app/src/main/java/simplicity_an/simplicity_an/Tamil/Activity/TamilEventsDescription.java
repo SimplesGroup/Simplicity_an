@@ -68,6 +68,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -75,11 +76,13 @@ import java.util.Map;
 import simplicity_an.simplicity_an.AdvertisementPage;
 import simplicity_an.simplicity_an.AppControllers;
 import simplicity_an.simplicity_an.DividerItemDecoration;
+import simplicity_an.simplicity_an.EventsDescription;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.MySingleton;
 import simplicity_an.simplicity_an.OnLoadMoreListener;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SigninpageActivity;
+import simplicity_an.simplicity_an.Utils.Configurl;
 
 
 /**
@@ -466,26 +469,48 @@ booknow.setText("பதிவு செய்ய");
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         if(notifiid!=null) {
-            JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
+            StringRequest jsonreq = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
 
 
-                public void onResponse(JSONObject response) {
+                public void onResponse(String response) {
+                    Log.e("Response",response.toString());
+                    try{
+                        JSONObject object=new JSONObject(response.toString());
+                        JSONArray array=object.getJSONArray("result");
+                        String data=array.optString(1);
+                        JSONArray jsonArray=new JSONArray(data.toString());
+                        Log.e("Response",data.toString());
+                        if (response != null) {
+                            pdialog.dismiss();
+                            parseJsonFeed(jsonArray);
+                        }
+                    }catch (JSONException e){
 
-                    //VolleyLog.d(TAG, "Response: " + response.toString());
-                    if (response != null) {
-                        pdialog.dismiss();
-                        //dissmissDialog();
-                        parseJsonFeed(response);
                     }
+
+
+
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
 
                 }
-            });
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String,String>param=new HashMap<>();
+                    param.put("Key","Simplicity");
+                    param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                    param.put("language","2");
+                    param.put("rtype","event");
+                    param.put("id",notifiid);
+
+                    return param;
+                }
+            };
+
             jsonreq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            //AppControllers.getInstance().addToRequestQueue(jsonreq);
             requestQueue.add(jsonreq);
         }
         booknow.setOnClickListener(new View.OnClickListener() {
@@ -600,19 +625,19 @@ booknow.setText("பதிவு செய்ய");
             requestQueue.cancelAll(TAG_REQUEST);
         }
     }
-    private void parseJsonFeed(JSONObject response) {
-        ImageLoader  mImageLoader ;
+    private void parseJsonFeed(JSONArray response) {
+        ImageLoader mImageLoader;
 
-            mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
+        mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getApplicationContext()).getImageLoader();
         try {
-            JSONArray feedArray = response.getJSONArray("result");
+            //  JSONArray feedArray = response.getJSONArray("result");
 
-            for (int i = 0; i < feedArray.length(); i++) {
-                JSONObject obj = (JSONObject) feedArray.get(i);
+            for (int i = 0; i < response.length(); i++) {
+                final JSONObject obj = (JSONObject) response.get(i);
                 ItemModel model=new ItemModel();
                 //FeedItem model=new FeedItem();
-                String image = obj.isNull("thumb") ? null : obj
-                        .getString("thumb");
+                String image = obj.isNull("image") ? null : obj
+                        .getString("image");
                 model.setImage(image);
                 String venue = obj.isNull("venue") ? null : obj
                         .getString("venue");
@@ -636,8 +661,8 @@ booknow.setText("பதிவு செய்ய");
                 // model.setBimage(bimage);
                 // model.setName(obj.getString("pub_by"));
                 model.setDescription(obj.getString("description"));
-                //model.setTypeid(obj.getInt("type"));
-                model.setPdate(obj.getString("pdate"));
+                // model.setTypeid(obj.getInt("type"));
+                // model.setPdate(obj.getString("date"));
                 model.setTitle(obj.getString("title"));
                 model.setEventstartdate(obj.getString("event_start_date"));
                 model.setEventenddate(obj.getString("event_end_date"));
@@ -645,19 +670,12 @@ booknow.setText("பதிவு செய்ய");
                 model.setVenue(obj.getString("venue"));
                 model.setLocation(obj.getString("location"));
                 model.setTiming(obj.getString("timing"));
-                model.setOrganizedby(obj.getString("organized_by"));
-                model.setEtype(obj.getString("etype"));
-                model.setEmt(obj.getString("emt"));
+                // model.setOrganizedby(obj.getString("organized_by"));
+                //  model.setEtype(obj.getString("etype"));
+                //  model.setEmt(obj.getString("emt"));
                 model.setContactphone(obj.getString("contact_phone"));
                 model.setContactemail(obj.getString("contact_email"));
-                model.setContactwebsite(obj.getString("contact_website"));
-
-                thump.setImageUrl(obj.getString("thumb"), mImageLoader);
-                 title.setText(Html.fromHtml(obj.getString("title")));
-              event_title=obj.getString("title");
-               event_place=obj.getString("venue");
-                event_startdate=obj.getString("event_start_date");
-                event_enddate=obj.getString("event_end_date");
+               // model.setContactwebsite(obj.getString("contact_website"));
                 JSONArray array=obj.getJSONArray("amt");
                 JSONObject object=null;
                 for(int n = 0; n < array.length(); n++)
@@ -665,31 +683,43 @@ booknow.setText("பதிவு செய்ய");
                     object = array.getJSONObject(n);
                     // do some stuff....
                 }
+
+                thump.setImageUrl(image, mImageLoader);
+                //  Picasso.with(getApplicationContext()).load(obj.getString("image")).into(thump);
+                title.setText(Html.fromHtml(obj.getString("title")));
+                event_title = obj.getString("title");
+                event_place = obj.getString("venue");
+                event_startdate = obj.getString("event_start_date");
+                event_enddate = obj.getString("event_end_date");
+                textview_organizedby.setText("Organized by:"+obj
+                        .getString("organized_by"));
                 if (organizedby.equals("")||organizedby.equals("null")) {
 
-                    if (entrytype != null) {
-                        if (object.getString("amont").contentEquals("0")) {
-                            eventdetaildata.setText(Html.fromHtml("அனுமதி"+"&nbsp;"+":" +"&nbsp;"+"Free"));
-                        } else {
-                            eventdetaildata.setText(Html.fromHtml("அனுமதி"+"&nbsp;"+ ":"+ "&nbsp;"+"Paid" +"\n" + "நுழைவுகட்டணம்" + obj.getString("amont")));
 
-
-                        }
+                    if (object.getString("amount").contentEquals("0")) {
+                        eventdetaildata.setText(Html.fromHtml("Entry Type"+"&nbsp;"+":" +"&nbsp;"+ "Free"));
                     } else {
-                        eventdetaildata.setVisibility(View.GONE);
+                        eventdetaildata.setText(Html.fromHtml("Entry Type"+"&nbsp;"+ ":"+ "&nbsp;"+"Paid" + "\n" + "Entry Fee" + object.getString("amount")));
+
                     }
+
                 } else {
                     eventdetaildata.setVisibility(View.VISIBLE);
+                    if (object.getString("amount").contentEquals("0")) {
+                        eventdetaildata.setText(Html.fromHtml("Entry Type"+"&nbsp;"+":" +"&nbsp;"+ "Free"));
+                    } else {
+                        eventdetaildata.setText(Html.fromHtml("Entry Type"+"&nbsp;"+ ":"+ "&nbsp;"+"Paid" + "\n" + "Entry Fee" + object.getString("amount")));
 
-                    if (entrytype != null) {
-                        if (object.getString("amont").contentEquals("0")) {
-                            eventdetaildata.setText(Html.fromHtml("ஒருங்கிணைப்புக் குழு"+"&nbsp;"+":"+"&nbsp;" + organizedby+"\n"+"அனுமதி"+"&nbsp;"+":"+"&nbsp;"  + "Paid" + "\n" + "நுழைவுகட்டணம்"+"&nbsp;"+":"+"&nbsp;"  + obj.getString("amont")));
+                    }
+                   /* if (entrytype != null) {
+                        if (obj.getString("etype").contentEquals("paid")) {
+                            eventdetaildata.setText(Html.fromHtml("Organized by"+"&nbsp;"+":"+"&nbsp;" + organizedby+"\n"+"Entry Type"+"&nbsp;"+":"+"&nbsp;"  + entrytype + "\n" + "Entry Fee"+"&nbsp;"+":"+"&nbsp;"  + obj.getString("emt")));
                         } else {
-                            eventdetaildata.setText(Html.fromHtml("ஒருங்கிணைப்புக் குழு"+"&nbsp;"+":"+"&nbsp;"  + organizedby+"\n"+"அனுமதி"+"&nbsp;"+":"+"&nbsp;"  + "Free"));
+                            eventdetaildata.setText(Html.fromHtml("Organized by"+"&nbsp;"+":"+"&nbsp;"  + organizedby+"\n"+"Entry Type"+"&nbsp;"+":"+"&nbsp;"  + entrytype));
                         }
                     } else {
                         eventdetaildata.setVisibility(View.GONE);
-                    }
+                    }*/
 
                 }
                 textview_organizedby.setText("ஒருங்கிணைப்புக் குழு:"+obj
@@ -762,72 +792,67 @@ booknow.setText("பதிவு செய்ய");
                     description.loadDataWithBaseURL("", fonts + rep + "</head>", "text/html", "utf-8", "");
                 }else{
                     description.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
-                }
-                description.setWebViewClient(new MyBrowser());
-                // description.loadUrl(fonts+descrition+"</head>");
-
+                }                // description.setBackgroundColor(0x0a000000);
                 description.setBackgroundColor(Color.TRANSPARENT);
-             venuedetails.setText(venue );
-              location_details.setText(obj.getString("location"));
+                description.setWebViewClient(new MyBrowser());
+                venuedetails.setText(venue);
+                location_details.setText(obj.getString("location"));
                 website_details.setText(obj.getString("contact_website"));
-
+                timing.setText("Timing");
+                date.setText("Date");
                 timingdetails.setText(obj.getString("timing"));
-                datedetails.setText(event_startdate+"-"+event_enddate);
-                if(obj.getString("contact_name").equals("")||obj.getString("contact_name").equals("null")){
+                datedetails.setText(event_startdate + "-" + event_enddate);
+                if (obj.getString("contact_name").equals("") || obj.getString("contact_name").equals("null")) {
                     contactname.setVisibility(View.GONE);
                     contactnamedetails.setVisibility(View.GONE);
-                }else {
-                    contactname.setText("பெயர்:");
+                } else {
+                    contactname.setText("Name:");
                     contactnamedetails.setText(obj.getString("contact_name"));
                 }
-                if(obj.getString("contact_email").equals("")||obj.getString("contact_email").equals("null")){
-emaildetails.setVisibility(View.GONE);
+                if (obj.getString("contact_email").equals("") || obj.getString("contact_email").equals("null")) {
+                    emaildetails.setVisibility(View.GONE);
                     email.setVisibility(View.GONE);
-                }else {
-                    email.setText("இ-மெயில்:");
+                } else {
+                    email.setText("Email:");
                     emaildetails.setText(obj.getString("contact_email"));
                 }
 
-                if(obj.getString("contact_phone").equals("")||obj.getString("contact_phone").equals("null")){
+                if (obj.getString("contact_phone").equals("") || obj.getString("contact_phone").equals("null")) {
                     phonenumberdetails.setVisibility(View.GONE);
                     phone.setVisibility(View.GONE);
-                }else {
-                    phone.setText("தொலைபேசி:");
+                } else {
+                    phone.setText("Phone:");
                     phonenumberdetails.setText(obj.getString("contact_phone"));
                 }
-                if(obj.getString("venue").equals("")||obj.getString("venue").equals("null")){
+                if (obj.getString("venue").equals("") || obj.getString("venue").equals("null")) {
                     venue_text.setVisibility(View.GONE);
                     venuedetails.setVisibility(View.GONE);
-                }else {
-                    venue_text.setText("நடைபெறும் இடம்:");
-                   venuedetails .setText(obj.getString("venue"));
+                } else {
+                    venue_text.setText("Venue:");
+                    venuedetails.setText(obj.getString("venue"));
                 }
-                if(obj.getString("contact_website").equals("")||obj.getString("contact_website").equals("null")){
+                if (obj.getString("contact_website").equals("") || obj.getString("contact_website").equals("null")) {
                     website_text.setVisibility(View.GONE);
                     website_details.setVisibility(View.GONE);
-                }else {
-                    website_text.setText("இணையதளம்:");
-                    website_details .setText(obj.getString("contact_website"));
+                } else {
+                    website_text.setText("Website:");
+                    website_details.setText(obj.getString("contact_website"));
                 }
-                if(obj.getString("location").equals("")||obj.getString("location").equals("null")){
+                if (obj.getString("location").equals("") || obj.getString("location").equals("null")) {
                     location_text.setVisibility(View.GONE);
                     location_details.setVisibility(View.GONE);
-                }else {
-                    location_text.setText("ஊர்:");
-                    location_details .setText(obj.getString("location"));
+                } else {
+                    location_text.setText("Location:");
+                    location_details.setText(obj.getString("location"));
                 }
 
 
-
-
-
-                model.setFavcount(obj.getInt("fav_count"));
+                model.setFavcount(obj.getInt("like_type"));
                 model.setShareurl(obj.getString("sharingurl"));
-                favcount=obj.getInt("fav_count");
-                post_likes_count=obj.getInt("fav_count");
-                shareurl=obj.getString("sharingurl");
-                sharetitle=obj.getString("title");
-
+                favcount = obj.getInt("like_type");
+                post_likes_count = obj.getInt("like_type");
+                shareurl = obj.getString("sharingurl");
+                sharetitle = obj.getString("title");
 
 
                  if (favcount == 1) {                     favourite.setImageResource(R.mipmap.likered);                     favourite.setTag("heartfullred");                 } else {                    favourite.setImageResource(R.mipmap.like);                     favourite.setTag("heart");                 }

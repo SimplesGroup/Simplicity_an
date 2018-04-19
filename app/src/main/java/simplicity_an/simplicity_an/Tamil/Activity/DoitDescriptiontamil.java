@@ -63,6 +63,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -70,11 +71,13 @@ import java.util.Map;
 import simplicity_an.simplicity_an.AdvertisementPage;
 import simplicity_an.simplicity_an.AppControllers;
 import simplicity_an.simplicity_an.DividerItemDecoration;
+import simplicity_an.simplicity_an.DoitDescription;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.MySingleton;
 import simplicity_an.simplicity_an.OnLoadMoreListener;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SigninpageActivity;
+import simplicity_an.simplicity_an.Utils.Configurl;
 
 
 /**
@@ -318,27 +321,48 @@ ScrollView scrollView;
 
         thump=(NetworkImageView)findViewById(R.id.thumbnailone);
         if(notifiid!=null) {
-            JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
+            StringRequest jsonreq = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
 
 
-                public void onResponse(JSONObject response) {
+                public void onResponse(String response) {
+                    Log.e("Response",response.toString());
+                    try{
+                        JSONObject object=new JSONObject(response.toString());
+                        JSONArray array=object.getJSONArray("result");
+                        String data=array.optString(1);
+                        JSONArray jsonArray=new JSONArray(data.toString());
+                        Log.e("Response",data.toString());
+                        if (response != null) {
+                            pdialog.dismiss();
+                            parseJsonFeed(jsonArray);
+                        }
+                    }catch (JSONException e){
 
-                    //VolleyLog.d(TAG, "Response: " + response.toString());
-                    if (response != null) {
-                        pdialog.dismiss();
-                        //dissmissDialog();
-                        parseJsonFeed(response);
                     }
+
+
+
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
 
                 }
-            });
-            int socketTimeout = 3000;//30 seconds - change to what you want
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String,String>param=new HashMap<>();
+                    param.put("Key","Simplicity");
+                    param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                    param.put("language","2");
+                    param.put("rtype","doit");
+                    param.put("id",notifiid);
+
+                    return param;
+                }
+            };
+
             jsonreq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            //AppControllers.getInstance().addToRequestQueue(jsonreq);
             requestQueue.add(jsonreq);
 
         }else {
@@ -550,40 +574,30 @@ ScrollView scrollView;
         rcAdapter.notifyDataSetChanged();
         rcAdapter.notifyItemRangeInserted(curSize, commentlist.size());
     }
-    private void parseJsonFeed(JSONObject response) {
-        ImageLoader    mImageLoader = MySingleton.getInstance(DoitDescriptiontamil.this).getImageLoader();
+    private void parseJsonFeed(JSONArray response) {
+        ImageLoader    mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(DoitDescriptiontamil.this).getImageLoader();
         try {
-            JSONArray feedArray = response.getJSONArray("result");
+            // JSONArray feedArray = response.getJSONArray("result");
 
-            for (int i = 0; i < feedArray.length(); i++) {
-                JSONObject obj = (JSONObject) feedArray.get(i);
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject obj = (JSONObject) response.get(i);
 
                 ItemModel model=new ItemModel();
                 //FeedItem model=new FeedItem();
-                String image = obj.isNull("thumb") ? null : obj
-                        .getString("thumb");
+                String image = obj.isNull("image") ? null : obj
+                        .getString("image");
                 model.setImage(image);
 
-                model.setShortdescription(obj.getString("short_description"));
-                model.setReporterid(obj.getString("reporter_id"));
-                model.setReportername(obj.getString("reporter_name"));
-                model.setReporterimage(obj.getString("reporter_image"));
-                model.setReporterurl(obj.getString("reporter_url"));
-                model.setPhotocreditid(obj.getString("photo_credits_id"));
-                model.setPhotocreditimage(obj.getString("photo_credits_image"));
-                model.setPhotocreditname(obj.getString("photo_credits_name"));
-                model.setPhotocrediturl(obj.getString("photo_credits_url"));
-
                 model.setDescription(obj.getString("description"));
-                model.setTypeid(obj.getInt("type"));
-                model.setPdate(obj.getString("pdate"));
+                // model.setTypeid(obj.getInt("type"));
+                model.setPdate(obj.getString("date"));
                 model.setTitle(obj.getString("title"));
                 titlename.setText(Html.fromHtml(obj.getString("title")));
                 thump.setImageUrl(image, mImageLoader);
                 image_description.setText("");
                 short_description.setText(obj.getString("short_description"));
                 hashtags_title.setText("");
-              //  title_category.setText(obj.getString("qtype"));
+                //title_category.setText(obj.getString("qtype"));
                 String reporterimage=obj.getString("reporter_image");
                 if(reporterimage.equals("null")||reporterimage.equals("")){
 
@@ -595,14 +609,19 @@ ScrollView scrollView;
                             .into(reporter_profile_image);
                 }
                 String by = "By&nbsp;";
-               if (obj.getString("reporter_name").equals("") || obj.getString("reporter_name").equals("null")) {                     source_reporter_name.setText(Html.fromHtml(obj.getString("source")));                 } else {                     if(obj.getString("source").equals("")){                         source_reporter_name.setText(Html.fromHtml(obj.getString("reporter_name")+"&nbsp;"));                     }else {                         source_reporter_name.setText(Html.fromHtml(obj.getString("reporter_name") + "&nbsp;"+"|"+"&nbsp;"+obj.getString("source")));                     }                  }
-               date.setText(Html.fromHtml( obj.getString("source")));
-                textview_date.setText(obj.getString("pdate"));
-                if(short_description!=null){
-                    short_description.setText(obj.getString("short_description"));
-                }else {
-                    short_description.setVisibility(View.GONE);
-                }
+                if (obj.getString("reporter_name").equals("") || obj.getString("reporter_name").equals("null")) {                     source_reporter_name.setText(Html.fromHtml(obj.getString("source")));                 } else {                     if(obj.getString("source").equals("")){                         source_reporter_name.setText(Html.fromHtml(obj.getString("reporter_name")+"&nbsp;"));                     }else {                         source_reporter_name.setText(Html.fromHtml(obj.getString("reporter_name") + "&nbsp;"+"|"+"&nbsp;"+obj.getString("source")));                     }                  }
+                date.setText(Html.fromHtml( obj.getString("source")));
+
+                model.setShortdescription(obj.getString("short_description"));
+                // model.setReporterid(obj.getString("reporter_id"));
+                model.setReportername(obj.getString("reporter_name"));
+                model.setReporterimage(obj.getString("reporter_image"));
+                //   model.setReporterurl(obj.getString("reporter_url"));
+                //  model.setPhotocreditid(obj.getString("photo_credits_id"));
+                model.setPhotocreditimage(obj.getString("photo_credit_image"));
+                model.setPhotocreditname(obj.getString("photo_credit_name"));
+                //  model.setPhotocrediturl(obj.getString("photo_credits_url"));
+
 
                 String descrition = obj.isNull("description") ? null : obj
                         .getString("description");
@@ -679,10 +698,10 @@ ScrollView scrollView;
 
 
                 modelList.add(model);
-                model.setFavcount(obj.getInt("fav_count"));
+                model.setFavcount(obj.getInt("like_type"));
                 model.setShareurl(obj.getString("sharingurl"));
-                favcount=obj.getInt("fav_count");
-                post_likes_count=obj.getInt("fav_count");
+                favcount=obj.getInt("like_type");
+                post_likes_count=obj.getInt("like_type");
                 shareurl=obj.getString("sharingurl");
                 sharetitle=obj.getString("title");
 

@@ -63,6 +63,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -71,9 +72,11 @@ import simplicity_an.simplicity_an.AdvertisementPage;
 import simplicity_an.simplicity_an.AppControllers;
 import simplicity_an.simplicity_an.DividerItemDecoration;
 import simplicity_an.simplicity_an.MainPageEnglish;
+import simplicity_an.simplicity_an.MySingleton;
 import simplicity_an.simplicity_an.OnLoadMoreListener;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SigninpageActivity;
+import simplicity_an.simplicity_an.Utils.Configurl;
 
 /**
  * Created by Kuppusamy on 11/12/2017.
@@ -402,24 +405,47 @@ public class Columnistdetailtamil extends AppCompatActivity {
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         //if(notifiid!=null) {
-        JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
+        StringRequest jsonreq = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
 
 
-            public void onResponse(JSONObject response) {
+            public void onResponse(String response) {
+                Log.e("Response",response.toString());
+                try{
+                    JSONObject object=new JSONObject(response.toString());
+                    JSONArray array=object.getJSONArray("result");
+                    String data=array.optString(1);
+                    JSONArray jsonArray=new JSONArray(data.toString());
+                    Log.e("Response",data.toString());
+                    if (response != null) {
+                        pdialog.dismiss();
+                        parseJsonFeed(jsonArray);
+                    }
+                }catch (JSONException e){
 
-                //VolleyLog.d(TAG, "Response: " + response.toString());
-                if (response != null) {
-                    pdialog.dismiss();
-                    //dissmissDialog();
-                    parseJsonFeed(response);
                 }
+
+
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
             }
-        });
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>param=new HashMap<>();
+                param.put("Key","Simplicity");
+                param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                param.put("language","2");
+                param.put("rtype","columnist");
+                param.put("id",notifiid);
+
+                return param;
+            }
+        };
+
         jsonreq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(jsonreq);
 
@@ -585,34 +611,38 @@ public class Columnistdetailtamil extends AppCompatActivity {
     }
 
 
-    private void parseJsonFeed(JSONObject response) {
-        ImageLoader mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getApplicationContext()).getImageLoader();
+    private void parseJsonFeed(JSONArray response) {
+        ImageLoader mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
         try {
-            JSONArray feedArray = response.getJSONArray("result");
+            // JSONArray feedArray = response.getJSONArray("result");
 
-            for (int i = 0; i < feedArray.length(); i++) {
-                final JSONObject obj = (JSONObject) feedArray.get(i);
-
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject obj = (JSONObject) response.get(i);
 
                 ItemModel model = new ItemModel();
 
                 String image = obj.isNull("image") ? null : obj
                         .getString("image");
                 model.setImage(image);
-                String profileimage = obj.isNull("profile_image") ? null : obj
-                        .getString("profile_image");
-                model.setProfileimage(profileimage);
 
+                model.setDescription(obj.getString("description"));
+                //model.setTypeid(obj.getInt("type"));
+                model.setPdate(obj.getString("date"));
+                model.setTitle(obj.getString("title"));
+
+                model.setSource(obj.getString("source"));
+                tv.setText(Html.fromHtml(obj.getString("title")));
+                model.setFavcount(obj.getInt("like_type"));
+                model.setShareurl(obj.getString("sharingurl"));
                 model.setShortdescription(obj.getString("short_description"));
-                model.setReporterid(obj.getString("reporter_id"));
+//                model.setReporterid(obj.getString("reporter_id"));
                 model.setReportername(obj.getString("reporter_name"));
                 model.setReporterimage(obj.getString("reporter_image"));
-                model.setReporterurl(obj.getString("reporter_url"));
-                model.setPhotocreditid(obj.getString("photo_credits_id"));
-                model.setPhotocreditimage(obj.getString("photo_credits_image"));
-                model.setPhotocreditname(obj.getString("photo_credits_name"));
-                model.setPhotocrediturl(obj.getString("photo_credits_url"));
-
+//                model.setReporterurl(obj.getString("reporter_url"));
+//                model.setPhotocreditid(obj.getString("photo_credit_id"));
+                model.setPhotocreditimage(obj.getString("photo_credit_image"));
+                model.setPhotocreditname(obj.getString("photo_credit_name"));
+//                model.setPhotocrediturl(obj.getString("photo_credit_url"));
                 model.setName(obj.getString("publisher_name"));
                 model.setDescription(obj.getString("description"));
 
@@ -650,7 +680,7 @@ public class Columnistdetailtamil extends AppCompatActivity {
                 String by = "By&nbsp;";
                if (obj.getString("reporter_name").equals("") || obj.getString("reporter_name").equals("null")) {                     source_reporter_name.setText(Html.fromHtml(obj.getString("source")));                 } else {                     if(obj.getString("source").equals("")){                         source_reporter_name.setText(Html.fromHtml(obj.getString("reporter_name")+"&nbsp;"));                     }else {                         source_reporter_name.setText(Html.fromHtml(obj.getString("reporter_name") + "&nbsp;"+"|"+"&nbsp;"+obj.getString("source")));                     }                  }
                 pdate.setText(Html.fromHtml( obj.getString("source")));
-                textview_date.setText(obj.getString("pdate"));
+                textview_date.setText(obj.getString("date"));
                 if(short_description!=null){
                     short_description.setText(obj.getString("short_description"));
                 }else {
@@ -1103,7 +1133,7 @@ public class Columnistdetailtamil extends AppCompatActivity {
                         .getString("thumb");
                 model.setProfilepic(image);
                 model.setComment(obj.getString("comment"));
-                model.setPadate(obj.getString("pdate"));
+                model.setPadate(obj.getString("date"));
                 model.setName(obj.getString("name"));
                 model.setId(obj.getString("id"));
                 if(feedArray.length()==0){
