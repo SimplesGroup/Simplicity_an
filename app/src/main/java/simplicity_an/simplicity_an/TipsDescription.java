@@ -60,9 +60,12 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+
+import simplicity_an.simplicity_an.Utils.Configurl;
 
 /**
  * Created by kuppusamy on 1/30/2016.
@@ -352,30 +355,53 @@ public class TipsDescription extends AppCompatActivity {
             titleofrecipie.setTextColor(Color.WHITE);
             comment_title.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);
-            date.setTextColor(Color.WHITE);}
+            date.setTextColor(Color.WHITE);
+        }
 
-            JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
+        StringRequest jsonreq = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
 
 
-                public void onResponse(JSONObject response) {
-
-                    //VolleyLog.d(TAG, "Response: " + response.toString());
+            public void onResponse(String response) {
+                Log.e("Response",response.toString());
+                try{
+                    JSONObject object=new JSONObject(response.toString());
+                    JSONArray array=object.getJSONArray("result");
+                    String data=array.optString(1);
+                    JSONArray jsonArray=new JSONArray(data.toString());
+                    Log.e("Response",data.toString());
                     if (response != null) {
                         pdialog.dismiss();
-                        //dissmissDialog();
-                        parseJsonFeed(response);
+                        parseJsonFeed(jsonArray);
                     }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
+                }catch (JSONException e){
 
                 }
-            });
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>param=new HashMap<>();
+                param.put("Key","Simplicity");
+                param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                param.put("language","1");
+                param.put("rtype","foodtip");
+                param.put("id",notifiid);
+
+                return param;
+            }
+        };
 
         jsonreq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        //AppControllers.getInstance().addToRequestQueue(jsonreq);
         requestQueue.add(jsonreq);
+
 
 
         if(myprofileid!=null){
@@ -519,28 +545,28 @@ public class TipsDescription extends AppCompatActivity {
                 requestQueue.cancelAll(TAG_REQUEST);
             }
         }*/
-    private void parseJsonFeed(JSONObject response) {
+    private void parseJsonFeed(JSONArray response) {
         ImageLoader  mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
         try {
-            JSONArray feedArray = response.getJSONArray("result");
+           // JSONArray feedArray = response.getJSONArray("result");
 
-            for (int i = 0; i < feedArray.length(); i++) {
-                JSONObject obj = (JSONObject) feedArray.get(i);
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject obj = (JSONObject) response.get(i);
 
                 ItemModel model=new ItemModel();
                 //FeedItem model=new FeedItem();
-                String image = obj.isNull("thumb") ? null : obj
-                        .getString("thumb");
+                String image = obj.isNull("image") ? null : obj
+                        .getString("image");
                 model.setImage(image);
                 // bimage=obj.isNull("bimage")?null:obj.getString("bimage");
                 // model.setBimage(bimage);
                // model.setName(obj.getString("pub_by"));
                 model.setDescription(obj.getString("description"));
-                model.setTypeid(obj.getInt("type"));
-                model.setPdate(obj.getString("pdate"));
+                //model.setTypeid(obj.getInt("type"));
+                model.setPdate(obj.getString("date"));
                 model.setTitle(obj.getString("title"));
                  titleofrecipie.setText(Html.fromHtml(obj.getString("title")));
-                date.setText(obj.getString("pdate"));
+                date.setText(obj.getString("date"));
                 String ingredients = obj.isNull("description") ? null : obj
                         .getString("description");
                 fooditemimage.setImageUrl(image, mImageLoader);
@@ -598,7 +624,7 @@ public class TipsDescription extends AppCompatActivity {
                         "\t</head>";
                 String rep = String.valueOf(s);
                 rep =  rep.replaceAll("color:#fff","color:#000");
-                String date = "<p><font color=\"white\">" + obj.getString("pdate") + "</font></p>";
+                String date = "<p><font color=\"white\">" + obj.getString("date") + "</font></p>";
                 if(colorcodes.equals("#FFFFFFFF")) {
                     desc.loadDataWithBaseURL("", fonts + rep + "</head>", "text/html", "utf-8", "");
                 }else{
@@ -606,10 +632,10 @@ public class TipsDescription extends AppCompatActivity {
                 }                   desc.setWebViewClient(new MyBrowser());
                 desc.setBackgroundColor(Color.TRANSPARENT);
 
-                model.setFavcount(obj.getInt("fav_count"));
+                model.setFavcount(obj.getInt("like_type"));
                 model.setShareurl(obj.getString("sharingurl"));
-                favcount=obj.getInt("fav_count");
-                post_likes_count=obj.getInt("fav_count");
+                favcount=obj.getInt("like_type");
+                post_likes_count=obj.getInt("like_type");
                 shareurl=obj.getString("sharingurl");
                 sharetitle=obj.getString("title");
 

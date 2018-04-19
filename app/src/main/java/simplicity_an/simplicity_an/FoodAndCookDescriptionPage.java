@@ -60,9 +60,12 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+
+import simplicity_an.simplicity_an.Utils.Configurl;
 
 /**
  * Created by kuppusamy on 1/30/2016.
@@ -294,27 +297,50 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
         recycler_comment.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         if(notifiid!=null) {
-            JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
+            StringRequest jsonreq = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
 
 
-                public void onResponse(JSONObject response) {
+                public void onResponse(String response) {
+                    Log.e("Response",response.toString());
+                    try{
+                        JSONObject object=new JSONObject(response.toString());
+                        JSONArray array=object.getJSONArray("result");
+                        String data=array.optString(1);
+                        JSONArray jsonArray=new JSONArray(data.toString());
+                        Log.e("Response",data.toString());
+                        if (response != null) {
+                            pdialog.dismiss();
+                            parseJsonFeed(jsonArray);
+                        }
+                    }catch (JSONException e){
 
-                    //VolleyLog.d(TAG, "Response: " + response.toString());
-                    if (response != null) {
-                        //dissmissDialog();
-                        pdialog.dismiss();
-                        parseJsonFeed(response);
                     }
+
+
+
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
 
                 }
-            });
-            jsonreq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String,String>param=new HashMap<>();
+                    param.put("Key","Simplicity");
+                    param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                    param.put("language","1");
+                    param.put("rtype","food");
+                    param.put("id",notifiid);
 
+                    return param;
+                }
+            };
+
+            jsonreq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             requestQueue.add(jsonreq);
+
         }else {
 
         }
@@ -588,36 +614,36 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
             requestQueue.cancelAll(TAG_REQUEST);
         }
     }
-    private void parseJsonFeed(JSONObject response) {
+    private void parseJsonFeed(JSONArray response) {
         ImageLoader  mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getApplicationContext()).getImageLoader();
         try {
-            JSONArray feedArray = response.getJSONArray("result");
+           // JSONArray feedArray = response.getJSONArray("result");
 
-            for (int i = 0; i < feedArray.length(); i++) {
-                JSONObject obj = (JSONObject) feedArray.get(i);
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject obj = (JSONObject) response.get(i);
 
 
                 ItemModel model = new ItemModel();
                 //FeedItem model=new FeedItem();
-                String image = obj.isNull("thumb") ? null : obj
-                        .getString("thumb");
+                String image = obj.isNull("image") ? null : obj
+                        .getString("image");
                 model.setImage(image);
                 model.setId(obj.getString("id"));
-               // model.setName(obj.getString("pub_by"));
-                model.setDescription(obj.getString("ingredient"));
+               model.setName(obj.getString("pub_by"));
+                model.setDescription(obj.getString("ingredients"));
                // model.setTypeid(obj.getInt("type"));
-                model.setPdate(obj.getString("pdate"));
-                model.setTitle(obj.getString("title"));
+                model.setPdate(obj.getString("date"));
+                model.setTitle(obj.getString("category_name"));
 
                 model.setPublisher(obj.getString("steps"));
-                 titleofrecipie.setText(Html.fromHtml(obj.getString("title")));
-                date.setText(obj.getString("pdate"));
+                 titleofrecipie.setText(Html.fromHtml(obj.getString("category_name")));
+                date.setText(obj.getString("date"));
                 fooditemimage.setDefaultImageResId(R.mipmap.ic_launcher);
                 fooditemimage.setErrorImageResId(R.mipmap.ic_launcher);
                 fooditemimage.setImageUrl(image, mImageLoader);
                 //thump.setImageUrl(image, imageLoader);
-                String descrition = obj.isNull("ingredient") ? null : obj
-                        .getString("ingredient");
+                String descrition = obj.isNull("ingredients") ? null : obj
+                        .getString("ingredients");
 
                 ingredientsdescription.getSettings().setJavaScriptEnabled(true);
                 String fonts="<html>\n" +         "\t<head>\n" +         "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" +         "\t\t<style>\n" +         "\t\t@font-face {\n" +         "  font-family: 'segeoui-light';\n" +         " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-regular';\n" +         "src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "  font-family: 'segeoui-sbold';\n" +         " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "  font-style: normal;\n" +         "}\n" +         "\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Bold';\n" +         "   src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Light';\n" +         "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Regular';\n" +         "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "@font-face {\n" +         "    font-family: 'RobotoSlab-Thin';\n" +         "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +         "    font-style: normal;\n" +         "}\n" +         "\t\t</style>\n" +         "\t</head>";
@@ -691,10 +717,10 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
                     ingredientsdescription.loadDataWithBaseURL("", fonts + descrition + "</head>", "text/html", "utf-8", "");
                 }
                 ingredientsdescription.setWebViewClient(new MyBrowser());
-                model.setFavcount(obj.getInt("fav_count"));
+                model.setFavcount(obj.getInt("like_type"));
                 model.setShareurl(obj.getString("sharingurl"));
-                favcount=obj.getInt("fav_count");
-                post_likes_count=obj.getInt("fav_count");
+                favcount=obj.getInt("like_type");
+                post_likes_count=obj.getInt("like_type");
                 shareurl=obj.getString("sharingurl");
                 sharetitle=obj.getString("title");
 

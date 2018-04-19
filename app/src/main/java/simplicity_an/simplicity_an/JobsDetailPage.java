@@ -51,6 +51,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
@@ -62,9 +63,12 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+
+import simplicity_an.simplicity_an.Utils.Configurl;
 
 /**
  * Created by kuppusamy on 1/23/2016.
@@ -94,7 +98,7 @@ public class JobsDetailPage extends AppCompatActivity {
     TextView title,title_qype;
     TextView jobtypelabel,jobtype,salarylabel,salaryamt,candidateprofile,Candidateprofiledetails,walininterviewlabel,interviewdate,interviewdate_data,interviewtim_label,interviewtiming;
     TextView venue,emailabel,Candidateprofileeducation,Candidateprofileskills;
-    WebView jobdescrion_web,job_address_web;
+    WebView jobdescrion_web,job_address_web,job_web_info;
     ProgressDialog pdialog;
 
     RequestQueue jobrequest;
@@ -407,20 +411,49 @@ public class JobsDetailPage extends AppCompatActivity {
             URLFULL=URL+notifiid;
             Log.e("URL",URLFULL);
         }
-        JsonObjectRequest job_desc=new JsonObjectRequest(Request.Method.GET, URLFULL, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-               // pdialog.dismiss();
-                ParseJsonFeed(response);
+        StringRequest jsonreq = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
+
+
+            public void onResponse(String response) {
+                Log.e("Response",response.toString());
+                try{
+                    JSONObject object=new JSONObject(response.toString());
+                    JSONArray array=object.getJSONArray("result");
+                    String data=array.optString(1);
+                    JSONArray jsonArray=new JSONArray(data.toString());
+                    Log.e("Response",data.toString());
+                    if (response != null) {
+//                        pdialog.dismiss();
+                        parseJsonFeed(jsonArray);
+                    }
+                }catch (JSONException e){
+
+                }
+
+
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
             }
-        });
-        job_desc.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        jobrequest.add(job_desc);
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>param=new HashMap<>();
+                param.put("Key","Simplicity");
+                param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                param.put("language","1");
+                param.put("rtype","job");
+                param.put("id",notifiid);
+
+                return param;
+            }
+        };
+
+        jsonreq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(jsonreq);
 
 
 
@@ -513,7 +546,7 @@ public class JobsDetailPage extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
-    private void ParseJsonFeed(JSONObject response) {
+    private void parseJsonFeed(JSONArray response) {
 
         ImageLoader mImageLoader;
 
@@ -522,19 +555,19 @@ public class JobsDetailPage extends AppCompatActivity {
 
 
         try {
-            JSONArray feedArray = response.getJSONArray("result");
+            //JSONArray feedArray = response.getJSONArray("result");
 
-            for (int i = 0; i < feedArray.length(); i++) {
-                JSONObject obj = (JSONObject) feedArray.get(i);
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject obj = (JSONObject) response.get(i);
 
 
                ItemModel model=new ItemModel();
                 //FeedItem model=new FeedItem();
-                String image = obj.isNull("images") ? null : obj
-                        .getString("images");
+                String image = obj.isNull("image") ? null : obj
+                        .getString("image");
                 model.setImage(image);
-                String timin = obj.isNull("timing") ? null : obj
-                        .getString("timing");
+                String timin = obj.isNull("time") ? null : obj
+                        .getString("time");
                 model.setTiming(timin);
                 //bimage=obj.isNull("bimage")?null:obj.getString("bimage");
                 String id = obj.isNull("id") ? null : obj
@@ -549,17 +582,17 @@ public class JobsDetailPage extends AppCompatActivity {
                         .getString("location");
                 model.setLocation(location);
                 // model.setLocation(obj.getString("location"));
-                int types = obj.isNull("type") ? null : obj
+              /*  int types = obj.isNull("type") ? null : obj
                         .getInt("type");
-                model.setTypeid(types);
+                model.setTypeid(types);*/
                 // model.setTypeid(obj.getInt("type"));
                 String jobdates = obj.isNull("job_date") ? null : obj
                         .getString("job_date");
                 model.setJob_date(jobdates);
                 // model.setJob_date(obj.getString("job_date"));
                 model.setTitle(obj.getString("title"));
-                String jobdesc = obj.isNull("job_description") ? null : obj
-                        .getString("job_description");
+                String jobdesc = obj.isNull("description") ? null : obj
+                        .getString("description");
                 model.setJob_description(jobdesc);
                 // model.setJob_description(obj.getString("job_description"));
 
@@ -571,8 +604,8 @@ public class JobsDetailPage extends AppCompatActivity {
                         .getString("company_name");
                 model.setCompany(jobcomp);
                 // model.setCompany(obj.getString("company_name"));
-                String jobcompabout = obj.isNull("about_company") ? null : obj
-                        .getString("about_company");
+                String jobcompabout = obj.isNull("about_us") ? null : obj
+                        .getString("about_us");
                 model.setAbout_company(jobcompabout);
                 // model.setAbout_company(obj.getString("about_company"));
                 String jobcompadd = obj.isNull("address") ? null : obj
@@ -606,8 +639,8 @@ public class JobsDetailPage extends AppCompatActivity {
                 String imageurl = obj.isNull("image_url") ? null : obj
                         .getString("image_url");
                 model.setImageurl(imageurl);
-                String adurl = obj.isNull("ad_url") ? null : obj
-                        .getString("ad_url");
+                String adurl = obj.isNull("url") ? null : obj
+                        .getString("url");
                 model.setAdurl(adurl);
                 thump.setImageUrl(image, mImageLoader);
                 //  Picasso.with(getApplicationContext()).load(obj.getString("image")).into(thump);
@@ -694,9 +727,9 @@ public class JobsDetailPage extends AppCompatActivity {
                 String reps = sad;
                 reps =  rep.replaceAll("color:#fff","color:#000");
                 if(colorcodes.equals("#FFFFFFFF")) {
-                    jobdescrion_web.loadDataWithBaseURL("", fonts + reps + "</head>", "text/html", "utf-8", "");
+                    job_address_web.loadDataWithBaseURL("", fonts + reps + "</head>", "text/html", "utf-8", "");
                 }else{
-                    jobdescrion_web.loadDataWithBaseURL("", fonts + sad + "</head>", "text/html", "utf-8", "");
+                    job_address_web.loadDataWithBaseURL("", fonts + sad + "</head>", "text/html", "utf-8", "");
                 }
 
                 job_address_web.setWebViewClient(new MyBrowser());
@@ -709,9 +742,9 @@ public class JobsDetailPage extends AppCompatActivity {
                 String repss = sinfo;
                 repss =  rep.replaceAll("color:#fff","color:#000");
                 if(colorcodes.equals("#FFFFFFFF")) {
-                    jobdescrion_web.loadDataWithBaseURL("", fonts + repss + "</head>", "text/html", "utf-8", "");
+                    infodescrtion.loadDataWithBaseURL("", fonts + repss + "</head>", "text/html", "utf-8", "");
                 }else{
-                    jobdescrion_web.loadDataWithBaseURL("", fonts + sinfo + "</head>", "text/html", "utf-8", "");
+                    infodescrtion.loadDataWithBaseURL("", fonts + sinfo + "</head>", "text/html", "utf-8", "");
                 }
                 infodescrtion.setBackgroundColor(Color.TRANSPARENT);
                 String addsinfo=jobcompadd;

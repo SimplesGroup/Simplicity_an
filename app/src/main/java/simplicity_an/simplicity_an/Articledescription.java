@@ -62,9 +62,12 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+
+import simplicity_an.simplicity_an.Utils.Configurl;
 
 /**
  * Created by kuppusamy on 2/1/2016.
@@ -74,7 +77,7 @@ public class Articledescription extends AppCompatActivity {
     NetworkImageView thump;
     WebView description;
     ImageView reporter_profile_image;
-    TextView source_reporter_name,sourcereprterdivider,hashtags_title,image_description,short_description,title_category;
+    TextView source_columnist_name,sourcereprterdivider,hashtags_title,image_description,short_description,title_category;
 
 
 
@@ -284,7 +287,7 @@ if(activity==null){
         sourcelinknews = (TextView) findViewById(R.id.sourcelink);
         sourcelinksimplicity = (TextView) findViewById(R.id.sourcelinkredsimplicity);
 
-        source_reporter_name=(TextView)findViewById(R.id.textView_sourcename) ;
+        source_columnist_name=(TextView)findViewById(R.id.textView_sourcename) ;
         sourcereprterdivider=(TextView)findViewById(R.id.centerdivider);
         hashtags_title=(TextView) findViewById(R.id.textView_hashtags);
         reporter_profile_image=(ImageView)findViewById(R.id.profile_reporter);
@@ -322,7 +325,7 @@ if(activity==null){
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         String simplycity_title_fontPathone = "fonts/robotoSlabBold.ttf";
         Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPathone);
-         String playfair = "fonts/PlayfairDisplayBold.ttf";;
+         String playfair ="fonts/playfairDisplayRegular.ttf";
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
 
         tv.setTypeface(tf_play);
@@ -336,14 +339,14 @@ if(activity==null){
 
        // articleoftheday.setTypeface(tf_regular);
         hashtags_title.setTypeface(tf_regular);
-        source_reporter_name.setTypeface(tf_regular);
+        source_columnist_name.setTypeface(tf_regular);
 //        authorname.setTypeface(tf_regular);
 //        pdate.setTypeface(tf);
         if(colorcodes.equals("#FFFFFFFF")){
             tv.setTextColor(Color.BLACK);
             comment_title.setTextColor(Color.BLACK);
             loadmore_title.setTextColor(Color.BLACK);
-            source_reporter_name.setTextColor(Color.BLACK);
+            source_columnist_name.setTextColor(Color.BLACK);
             sourcelinknews.setTextColor(Color.BLACK);
             sourcelinksimplicity.setTextColor(Color.BLACK);
             pdate.setTextColor(Color.BLACK);
@@ -358,7 +361,7 @@ if(activity==null){
             tv.setTextColor(Color.WHITE);
             comment_title.setTextColor(Color.WHITE);
             loadmore_title.setTextColor(Color.WHITE);
-            source_reporter_name.setTextColor(Color.WHITE);
+            source_columnist_name.setTextColor(Color.WHITE);
             sourcelinknews.setTextColor(Color.WHITE);
             sourcelinksimplicity.setTextColor(Color.WHITE);
             pdate.setTextColor(Color.WHITE);
@@ -374,29 +377,53 @@ if(activity==null){
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         //if(notifiid!=null) {
-            JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
+        StringRequest jsonreq = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
 
 
-                public void onResponse(JSONObject response) {
-
-                    //VolleyLog.d(TAG, "Response: " + response.toString());
+            public void onResponse(String response) {
+                Log.e("Response",response.toString());
+                try{
+                    JSONObject object=new JSONObject(response.toString());
+                    JSONArray array=object.getJSONArray("result");
+                    String data=array.optString(1);
+                    JSONArray jsonArray=new JSONArray(data.toString());
+                    Log.e("Response",data.toString());
                     if (response != null) {
                         pdialog.dismiss();
-                        //dissmissDialog();
-                        parseJsonFeed(response);
+                        parseJsonFeed(jsonArray);
                     }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
+                }catch (JSONException e){
 
                 }
-            });
-            jsonreq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-           requestQueue.add(jsonreq);
 
 
-            back.setOnClickListener( new View.OnClickListener() {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>param=new HashMap<>();
+                param.put("Key","Simplicity");
+                param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                param.put("language","1");
+                param.put("rtype","article");
+                param.put("id",notifiid);
+
+                return param;
+            }
+        };
+
+        jsonreq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(jsonreq);
+
+
+
+        back.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onBackPressed();
@@ -557,13 +584,13 @@ try {
     }
 
 
-    private void parseJsonFeed(JSONObject response) {
-        ImageLoader  mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getApplicationContext()).getImageLoader();
+    private void parseJsonFeed(JSONArray response) {
+        ImageLoader  mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
         try {
-            JSONArray feedArray = response.getJSONArray("result");
+           // JSONArray feedArray = response.getJSONArray("result");
 
-            for (int i = 0; i < feedArray.length(); i++) {
-                final JSONObject obj = (JSONObject) feedArray.get(i);
+            for (int i = 0; i < response.length(); i++) {
+                final JSONObject obj = (JSONObject) response.get(i);
 
 
                 ItemModel model = new ItemModel();
@@ -575,30 +602,30 @@ try {
 
                 model.setName(obj.getString("publisher_name"));
                 model.setDescription(obj.getString("description"));
-                model.setTypeid(obj.getInt("type"));
-                model.setPdate(obj.getString("pdate"));
+              //  model.setTypeid(obj.getInt("type"));
+                model.setPdate(obj.getString("date"));
                 model.setTitle(obj.getString("title"));
-                model.setPublisher(obj.getString("pub_designation"));
+               // model.setPublisher(obj.getString("pub_designation"));
                 model.setCompany(obj.getString("company"));
                 model.setSource(obj.getString("source"));
                 model.setSource_link(obj.getString("source_link"));
                 model.setId(obj.getString("id"));
                 tv.setText(Html.fromHtml(obj.getString("title")));
-                model.setFavcount(obj.getInt("fav_count"));
+                model.setFavcount(obj.getInt("like_type"));
                 model.setShareurl(obj.getString("sharingurl"));
-                favcount=obj.getInt("fav_count");
-                post_likes_count=obj.getInt("fav_count");
+                favcount=obj.getInt("like_type");
+                post_likes_count=obj.getInt("like_type");
                 shareurl=obj.getString("sharingurl");
                 sharetitle=obj.getString("title");
                 model.setShortdescription(obj.getString("short_description"));
-                model.setReporterid(obj.getString("reporter_id"));
-                model.setReportername(obj.getString("reporter_name"));
-                model.setReporterimage(obj.getString("reporter_image"));
-                model.setReporterurl(obj.getString("reporter_url"));
-                model.setPhotocreditid(obj.getString("photo_credits_id"));
-                model.setPhotocreditimage(obj.getString("photo_credits_image"));
-                model.setPhotocreditname(obj.getString("photo_credits_name"));
-                model.setPhotocrediturl(obj.getString("photo_credits_url"));
+              //  model.setReporterid(obj.getString("reporter_id"));
+                model.setReportername(obj.getString("columnist_name"));
+                model.setReporterimage(obj.getString("columnist_image"));
+              //  model.setReporterurl(obj.getString("reporter_url"));
+              //  model.setPhotocreditid(obj.getString("photo_credits_id"));
+                model.setPhotocreditimage(obj.getString("photo_credit_image"));
+                model.setPhotocreditname(obj.getString("photo_credit_name"));
+               // model.setPhotocrediturl(obj.getString("photo_credit_url"));
                 thump.setDefaultImageResId(R.mipmap.ic_launcher);
                 thump.setErrorImageResId(R.mipmap.ic_launcher);
                 thump.setImageUrl(image, mImageLoader);
@@ -613,7 +640,7 @@ try {
                 }
                 hashtags_title.setText("");
                 title_category.setText(obj.getString("qtype"));
-                String reporterimage=obj.getString("reporter_image");
+                String reporterimage=obj.getString("columnist_image");
                 if(reporterimage.equals("null")||reporterimage.equals("")){
 
                 }else {
@@ -624,9 +651,9 @@ try {
                             .into(reporter_profile_image);
                 }
 
-               if (obj.getString("reporter_name").equals("") || obj.getString("reporter_name").equals("null")) {                     source_reporter_name.setText(Html.fromHtml(obj.getString("source")));                 } else {                     if(obj.getString("source").equals("")){                         source_reporter_name.setText(Html.fromHtml(obj.getString("reporter_name")+"&nbsp;"));                     }else {                         source_reporter_name.setText(Html.fromHtml(obj.getString("reporter_name") + "&nbsp;"+"|"+"&nbsp;"+obj.getString("source")));                     }                  }
+               if (obj.getString("columnist_name").equals("") || obj.getString("columnist_name").equals("null")) {                     source_columnist_name.setText(Html.fromHtml(obj.getString("source")));                 } else {                     if(obj.getString("source").equals("")){                         source_columnist_name.setText(Html.fromHtml(obj.getString("columnist_name")+"&nbsp;"));                     }else {                         source_columnist_name.setText(Html.fromHtml(obj.getString("columnist_name") + "&nbsp;"+"|"+"&nbsp;"+obj.getString("source")));                     }                  }
                 pdate.setText(Html.fromHtml( obj.getString("source")));
-                textview_date.setText(obj.getString("pdate"));
+                textview_date.setText(obj.getString("date"));
                 // authorname.setText(Html.fromHtml("By&nbsp;" + "" + obj.getString("publisher_name")));
                // pdate.setText(obj.getString("pdate"));
                 String descrition = obj.isNull("description") ? null : obj
@@ -642,7 +669,7 @@ try {
                 String s = ss;
                 // s = s.replace("\"", "'");
                 s = s.replace("\\", "");
-                String date="<p><font color=\"white\">"+obj.getString("pdate")+"</font></p>";
+                String date="<p><font color=\"white\">"+obj.getString("date")+"</font></p>";
 
                 String fonts = "<html>\n" +
                         "\t<head>\n" +
@@ -1290,7 +1317,7 @@ try {
                 String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
-                    mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getApplicationContext()).getImageLoader();
+                    mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
 
 
                 ItemModels itemmodel = commentlist.get(position);
@@ -1783,7 +1810,7 @@ try {
                     String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
-                        mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getActivity()).getImageLoader();
+                        mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
 
 
                     ItemModels itemmodel = commentlist.get(position);
