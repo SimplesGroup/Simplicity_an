@@ -36,13 +36,14 @@
                 android:layout_marginTop="33dp"
                 android:layout_below="@+id/textView_titlename"
                 android:layout_width="fill_parent"
-                android:layout_height="380dp" >
+                android:layout_height="wrap_content" >
 
                 <com.android.volley.toolbox.NetworkImageView
                     android:id="@+id/thumbnailone"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
                     />
 
             </RelativeLayout>

@@ -430,8 +430,8 @@ public class EventsDescription extends AppCompatActivity {
             phonenumberdetails.setTextColor(Color.WHITE);
             location_details.setTextColor(Color.WHITE);
             website_details.setTextColor(Color.WHITE);
-            venuecontactinfo.setTextColor(Color.WHITE);
-            venuecontactinfo.setBackgroundColor(R.color.eventcolor);
+           // venuecontactinfo.setTextColor(Color.WHITE);
+           //venuecontactinfo.setBackgroundColor(R.color.whiteevent);
             textview_organizedby.setTextColor(Color.WHITE);
         }
 
@@ -683,12 +683,12 @@ JSONArray array=obj.getJSONArray("amt");
                 if (organizedby.equals("")||organizedby.equals("null")) {
 
 
-                        if (object.getString("amount").contentEquals("0")) {
+                       /* if (object.getString("amount").contentEquals("0")) {
                             eventdetaildata.setText(Html.fromHtml("Entry Type"+"&nbsp;"+":" +"&nbsp;"+ "Free"));
                         } else {
                             eventdetaildata.setText(Html.fromHtml("Entry Type"+"&nbsp;"+ ":"+ "&nbsp;"+"Paid" + "\n" + "Entry Fee" + object.getString("amount")));
 
-                        }
+                        }*/
 
                 } else {
                     eventdetaildata.setVisibility(View.VISIBLE);

@@ -60,8 +60,8 @@
         android:id="@+id/photo_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:maxHeight="350dp"
+        android:scaleType="centerCrop"
+        android:maxHeight="300dp"
         android:adjustViewBounds="true"
 
         />
@@ -122,7 +122,7 @@
             android:textColor="@android:color/white"
             android:padding="12dp"
             android:paddingLeft="45dp"
-            android:background="@color/whitegradient"
+            android:background="#1effffff"
             android:text="VENUE  CONTACT INFORMATION"
             android:layout_height="wrap_content" />
         <LinearLayout
