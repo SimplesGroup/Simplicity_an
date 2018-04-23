@@ -266,6 +266,8 @@ if(activity==null){
 
                         editor.commit();
                     }
+
+
                 }else {
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
 

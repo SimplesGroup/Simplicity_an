@@ -1025,8 +1025,9 @@ public class TamilEvent extends Fragment {
                     userViewHolder.line.setBackgroundColor(R.color.whitefood);
                 }
                 int imgResource = R.mipmap.likered;
-                String likecount=String.valueOf(itemmodel.getCounttype());
+                final String likecount=String.valueOf(itemmodel.getCounttype());
                 if(likecount.equals("0")){
+
                     userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
                     userViewHolder.like_imagebutton.setTag("heart");
 
@@ -1034,7 +1035,6 @@ public class TamilEvent extends Fragment {
                     userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
                     userViewHolder.like_imagebutton.setTag("heartfullred");
                 }
-
                 if(itemmodel.getFavcount()==1){
                     userViewHolder.save_button.setText("Saved");
                     userViewHolder.likes_button.setTextColor(getResources().getColor(R.color.red));
@@ -1259,11 +1259,64 @@ public class TamilEvent extends Fragment {
                                     }else {
 
                                     }
-                                    StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
+                                    StringRequest likes=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
-                                             String res;                                             Log.e("RES",response.toString());                                             try {                                                 Log.e("RES", "START");                                                 JSONObject data = new JSONObject(response.toString());                                                 String dir = data.getString("result");                                                 Log.d("RES", dir);                                                 JSONObject object=new JSONObject(dir);                                                 String dir2=object.getString("message");                                                 Log.d("RES", dir2);                                                 for (int i = 0; i < object.length(); i++) {                                                     String dirs = object.getString("message");                                                     Log.d("RES", dirs);                                                     res=object.getString("message");                                                     like_finalvalues=object.getInt("total_likes");                                                     Log.e("RES",res.toString());                                                     if(res.equals("Liked")){                                                         System.out.println(itemmodel.getId());                                                         like_finalvalues=object.getInt("total_likes");                                                         Log.e("RES",String.valueOf(like_finalvalues));                                                         userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);                                                         userViewHolder.like_imagebutton.setTag("heartfullred");                                                     }else if(res.equals("Like")){                                                         like_finalvalues=object.getInt("total_likes");                                                         Log.e("RES","dis"+String.valueOf(like_finalvalues));                                                         userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);                                                         userViewHolder.like_imagebutton.setTag("heart");                                                     }                                                     userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "விருப்பு"));                                                 }                                             }catch (JSONException e){                                              }
-                                        }
+
+                                            Log.e("RES",response.toString());
+                                            try {
+                                                Log.e("RES", "START");
+
+                                                JSONObject object=new JSONObject(response.toString());
+                                                JSONArray array=object.getJSONArray("result");
+                                                String data=array.optString(1);
+                                                Log.d("RES", data);
+                                                // JSONArray jsonArray=new JSONArray(data.toString());
+
+
+                                                /*JSONObject data = new JSONObject(response.toString());
+                                                String dir = data.getString("result");
+                                                Log.d("RES", dir);
+                                                JSONObject object=new JSONObject(dir);
+                                                String dir2=object.getString("message");
+                                                Log.d("RES", dir2);*/
+
+                                                // for (int i = 0; i < jsonArray.length(); i++) {
+                                                JSONObject obj = new JSONObject(data.toString());
+
+
+
+
+                                                String           res=obj.getString("like_type");
+
+                                                like_finalvalues=Integer.parseInt(likecount);
+
+
+
+                                                if(res.equals("Liked")){
+                                                    //  System.out.println(itemmodel.getId());
+                                                    String likescount=obj.getString("like_count");
+                                                    like_finalvalues=Integer.parseInt(likescount);
+                                                    Log.e("RESS",String.valueOf(like_finalvalues));
+
+
+
+                                                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
+                                                }else if(res.equals("Like")){
+                                                    like_finalvalues=Integer.parseInt(obj.getString("like_count"));
+                                                    Log.e("RES","dis"+String.valueOf(like_finalvalues));
+
+
+
+                                                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart); 				userViewHolder.like_imagebutton.setTag("heart");
+                                                }
+
+                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
+
+
+                                            }catch (JSONException e){
+
+                                            } }
                                     }, new Response.ErrorListener() {
                                         @Override
                                         public void onErrorResponse(VolleyError error) {
@@ -1273,9 +1326,13 @@ public class TamilEvent extends Fragment {
                                         protected Map<String,String> getParams()throws AuthFailureError{
                                             Map<String,String> param=new Hashtable<String, String>();
                                             String ids=itemmodel.getId();
-                                            param.put(QID, ids);
-                                            param.put(USERID, myprofileid);
-                                            param.put(QTYPE, itemmodel.getQtypemain());
+                                            param.put("Key","Simplicity");
+                                            param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                                            param.put("rtype","like");
+                                            param.put("id", ids);
+                                            Log.e("RESS",myprofileid);
+                                            param.put("user_id", myprofileid);
+                                            param.put("qtype", itemmodel.getQtypemain());
                                             return param;
                                         }
                                     };
@@ -1894,11 +1951,61 @@ public class TamilEvent extends Fragment {
                                     }else {
 
                                     }
-                                    StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
+                                    StringRequest likes=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
-                                             String res;                                             Log.e("RES",response.toString());                                             try {                                                 Log.e("RES", "START");                                                 JSONObject data = new JSONObject(response.toString());                                                 String dir = data.getString("result");                                                 Log.d("RES", dir);                                                 JSONObject object=new JSONObject(dir);                                                 String dir2=object.getString("message");                                                 Log.d("RES", dir2);                                                 for (int i = 0; i < object.length(); i++) {                                                     String dirs = object.getString("message");                                                     Log.d("RES", dirs);                                                     res=object.getString("message");                                                     like_finalvalues=object.getInt("total_likes");                                                     Log.e("RES",res.toString());                                                     if(res.equals("Liked")){                                                         System.out.println(itemmodel.getId());                                                         like_finalvalues=object.getInt("total_likes");                                                         Log.e("RES",String.valueOf(like_finalvalues));                                                         userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);                                                         userViewHolder.like_imagebutton.setTag("heartfullred");                                                     }else if(res.equals("Like")){                                                         like_finalvalues=object.getInt("total_likes");                                                         Log.e("RES","dis"+String.valueOf(like_finalvalues));                                                         userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);                                                         userViewHolder.like_imagebutton.setTag("heart");                                                     }                                                     userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "விருப்பு"));                                                 }                                             }catch (JSONException e){                                              }
-                                        }
+                                            String res;
+                                            try {
+                                                Log.e("RES", "START");
+
+                                                JSONObject object=new JSONObject(response.toString());
+                                                JSONArray array=object.getJSONArray("result");
+                                                String data=array.optString(1);
+                                                JSONArray jsonArray=new JSONArray(data.toString());
+
+
+                                                /*JSONObject data = new JSONObject(response.toString());
+                                                String dir = data.getString("result");
+                                                Log.d("RES", dir);
+                                                JSONObject object=new JSONObject(dir);
+                                                String dir2=object.getString("message");
+                                                Log.d("RES", dir2);*/
+
+                                                for (int i = 0; i < jsonArray.length(); i++) {
+                                                    JSONObject obj = (JSONObject) jsonArray.get(i);
+                                                    String dirs = obj.getString("like_type");
+
+                                                    Log.d("RES", dirs);
+                                                    res=object.getString("like_type");
+                                                    like_finalvalues=object.getInt("like_count");
+                                                    Log.e("RES",res.toString());
+
+
+                                                    if(res.equals("Liked")){
+                                                        System.out.println(itemmodel.getId());
+                                                        like_finalvalues=object.getInt("like_count");
+                                                        Log.e("RES",String.valueOf(like_finalvalues));
+
+
+
+                                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
+                                                    }else if(res.equals("Like")){
+                                                        like_finalvalues=object.getInt("like_count");
+                                                        Log.e("RES","dis"+String.valueOf(like_finalvalues));
+
+
+
+                                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart); 				userViewHolder.like_imagebutton.setTag("heart");
+                                                    }
+
+                                                    userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
+
+
+                                                }
+
+                                            }catch (JSONException e){
+
+                                            } }
                                     }, new Response.ErrorListener() {
                                         @Override
                                         public void onErrorResponse(VolleyError error) {
@@ -1908,9 +2015,13 @@ public class TamilEvent extends Fragment {
                                         protected Map<String,String> getParams()throws AuthFailureError{
                                             Map<String,String> param=new Hashtable<String, String>();
                                             String ids=itemmodel.getId();
-                                            param.put(QID, ids);
-                                            param.put(USERID, myprofileid);
-                                            param.put(QTYPE, itemmodel.getQtypemain());
+                                            param.put("Key","Simplicity");
+                                            param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                                            param.put("rtype","like");
+                                            param.put("id", ids);
+                                            Log.e("RESS",myprofileid);
+                                            param.put("user_id", myprofileid);
+                                            param.put("qtype", itemmodel.getQtypemain());
                                             return param;
                                         }
                                     };
