@@ -872,10 +872,51 @@ booknow.setText("பதிவு செய்ய");
                             }else {
 
                             }
-                            StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
+                            StringRequest likes=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    String res;                                     try {                                                                 Log.e("RES", "START");                                           JSONObject data = new JSONObject(response.toString());                                            String dir = data.getString("result");                                           Log.d("RES", dir);                                                            JSONObject object=new JSONObject(dir);                                           String dir2=object.getString("message");                                            Log.d("RES", dir2);                                                        for (int i = 0; i < object.length(); i++) {                                                   String dirs = object.getString("message");                                                 Log.d("RES", dirs);                                                        res=object.getString("message");                                                                                            if(res.equals("Liked")){                                                       favourite.setImageResource(R.mipmap.likered);                                                  favourite.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                    favourite.setImageResource(R.mipmap.like);                                                  favourite.setTag("heart");                                                }                                                }                                             }catch (JSONException e){                                                                                  }
+                                    String res;
+                                    Log.e("RES",response.toString());
+                                    try {
+                                        Log.e("RES", "START");
+
+                                        JSONObject object=new JSONObject(response.toString());
+                                        JSONArray array=object.getJSONArray("result");
+                                        String data=array.optString(1);
+                                        JSONArray jsonArray=new JSONArray(data.toString());
+
+
+                                        for (int i = 0; i < jsonArray.length(); i++) {
+                                            JSONObject obj = (JSONObject) jsonArray.get(i);
+                                            String dirs = obj.getString("like_type");
+
+                                            Log.d("RES", dirs);
+                                            res=object.getString("like_type");
+
+                                            Log.e("RES",res.toString());
+
+
+                                            if(res.equals("Liked")){
+
+                                                favourite.setImageResource(R.mipmap.heartfullred);
+                                                favourite.setTag("heartfullred");
+                                            }else if(res.equals("Like")){
+
+
+
+                                                favourite.setImageResource(R.mipmap.heart);
+                                                favourite.setTag("heart");
+                                            }
+
+
+
+
+
+                                        }
+
+                                    }catch (JSONException e){
+
+                                    }
                                 }
                             }, new Response.ErrorListener() {
                                 @Override
@@ -885,22 +926,19 @@ booknow.setText("பதிவு செய்ய");
                             }){
                                 protected Map<String,String> getParams()throws AuthFailureError{
                                     Map<String,String> param=new Hashtable<String, String>();
+                                    String type=null;
+                                    try {
+                                        type=obj.getString("qtypemain");
+                                    }catch (JSONException e){
 
-                                    String postid = notifiid;
-                                    //Adding parameters
-                                    param.put(QID, postid);
-                                    param.put(USERID, myprofileid);
-                                    param.put(QTYPE, "event");
-                                   /* if (postid != null) {
+                                    }
 
-
-                                        param.put(QID, ids);
-                                        param.put(USERID, myprofileid);
-                                        param.put(QTYPE, itemmodel.getQtypemain());
-                                    } else {
-
-
-                                    }*/
+                                    param.put("Key","Simplicity");
+                                    param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                                    param.put("rtype","like");
+                                    param.put("id", notifiid);
+                                    param.put("user_id", myprofileid);
+                                    param.put("qtype", type);
                                     return param;
                                 }
                             };

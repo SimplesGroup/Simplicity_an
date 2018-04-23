@@ -1,5 +1,6 @@
 package simplicity_an.simplicity_an.Tamil.Activity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -154,6 +155,7 @@ public class TamilNewsDescription extends AppCompatActivity {
     RelativeLayout mainlayout;
     String colorcodes;
     LinearLayout commentboxlayout;
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -469,6 +471,7 @@ public class TamilNewsDescription extends AppCompatActivity {
             commentbox.setVisibility(View.VISIBLE);
 
             post.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("NewApi")
                 @Override
                 public void onClick(View v) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -618,13 +621,14 @@ public class TamilNewsDescription extends AppCompatActivity {
         rcAdapter.notifyDataSetChanged();
         rcAdapter.notifyItemRangeInserted(curSize, commentlist.size());
     }
+    @SuppressLint("NewApi")
     private void parseJsonFeed(JSONArray response) {
         ImageLoader mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
         try {
             // JSONArray feedArray = response.getJSONArray("result");
 
             for (int i = 0; i < response.length(); i++) {
-                JSONObject obj = (JSONObject) response.get(i);
+                final JSONObject obj = (JSONObject) response.get(i);
 
 
                 ItemModel model = new ItemModel();
@@ -812,35 +816,52 @@ public class TamilNewsDescription extends AppCompatActivity {
                             }else {
 
                             }
-                            StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
+                            StringRequest likes=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
                                     String res;
+                                    Log.e("RES",response.toString());
                                     try {
                                         Log.e("RES", "START");
-                                        JSONObject data = new JSONObject(response.toString());
-                                        String dir = data.getString("result");
-                                        Log.d("RES", dir);
-                                        JSONObject object=new JSONObject(dir);
-                                        String dir2=object.getString("message");
-                                        Log.d("RES", dir2);
-                                        for (int i = 0; i < object.length(); i++) {
-                                            String dirs = object.getString("message");
+
+                                        JSONObject object=new JSONObject(response.toString());
+                                        JSONArray array=object.getJSONArray("result");
+                                        String data=array.optString(1);
+                                        JSONArray jsonArray=new JSONArray(data.toString());
+
+
+                                        for (int i = 0; i < jsonArray.length(); i++) {
+                                            JSONObject obj = (JSONObject) jsonArray.get(i);
+                                            String dirs = obj.getString("like_type");
+
                                             Log.d("RES", dirs);
-                                            res=object.getString("message");
+                                            res=object.getString("like_type");
+
+                                            Log.e("RES",res.toString());
+
+
                                             if(res.equals("Liked")){
-                                                favourite.setImageResource(R.mipmap.likered);
+
+                                                favourite.setImageResource(R.mipmap.heartfullred);
                                                 favourite.setTag("heartfullred");
                                             }else if(res.equals("Like")){
-                                                favourite.setImageResource(R.mipmap.like);
+
+
+
+                                                favourite.setImageResource(R.mipmap.heart);
                                                 favourite.setTag("heart");
                                             }
+
+
+
+
+
                                         }
+
                                     }catch (JSONException e){
 
                                     }
                                 }
-
                             }, new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
@@ -849,13 +870,19 @@ public class TamilNewsDescription extends AppCompatActivity {
                             }){
                                 protected Map<String,String> getParams()throws AuthFailureError{
                                     Map<String,String> param=new Hashtable<String, String>();
+                                    String type=null;
+                                    try {
+                                        type=obj.getString("qtypemain");
+                                    }catch (JSONException e){
 
-                                    String postid = notifiid;
-                                    //Adding parameters
-                                    param.put(QID, postid);
-                                    param.put(USERID, myprofileid);
-                                    param.put(QTYPE, "article");
+                                    }
 
+                                    param.put("Key","Simplicity");
+                                    param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                                    param.put("rtype","like");
+                                    param.put("id", notifiid);
+                                    param.put("user_id", myprofileid);
+                                    param.put("qtype", type);
                                     return param;
                                 }
                             };

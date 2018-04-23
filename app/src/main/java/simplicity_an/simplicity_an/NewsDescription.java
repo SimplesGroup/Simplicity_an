@@ -1,5 +1,6 @@
 package simplicity_an.simplicity_an;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -141,6 +142,7 @@ public class NewsDescription extends AppCompatActivity {
     String colorcodes;
     LinearLayout commentboxlayout;
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
