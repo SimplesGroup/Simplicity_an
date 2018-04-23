@@ -1328,7 +1328,7 @@ public class TamilEntertainmentall extends Fragment {
                                                     userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart); 				userViewHolder.like_imagebutton.setTag("heart");
                                                 }
 
-                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
+                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "விருப்பு"));
 
                                             }catch (JSONException e){
 
@@ -2042,7 +2042,7 @@ public class TamilEntertainmentall extends Fragment {
                                                         userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart); 				userViewHolder.like_imagebutton.setTag("heart");
                                                     }
 
-                                                    userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
+                                                    userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "விருப்பு"));
 
 
                                                 }
