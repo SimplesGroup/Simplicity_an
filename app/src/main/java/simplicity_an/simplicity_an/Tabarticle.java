@@ -1265,46 +1265,60 @@ FloatingActionButton fabnews,fabplus;
                                     }else {
 
                                     }
-                                    StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
+                                    StringRequest likes=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
-                                            String res=response.toString();
-                                            res = res.replace(" ", "");
-                                            res = res.trim();
-                                            if(res.equalsIgnoreCase("yes")){
-                                                System.out.println(itemmodel.getId());
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount()+1;
+                                            String res;
+                                            try {
+                                                Log.e("RES", "START");
+
+                                                JSONObject object=new JSONObject(response.toString());
+                                                JSONArray array=object.getJSONArray("result");
+                                                String data=array.optString(1);
+                                                JSONArray jsonArray=new JSONArray(data.toString());
+
+
+                                                /*JSONObject data = new JSONObject(response.toString());
+                                                String dir = data.getString("result");
+                                                Log.d("RES", dir);
+                                                JSONObject object=new JSONObject(dir);
+                                                String dir2=object.getString("message");
+                                                Log.d("RES", dir2);*/
+
+                                                for (int i = 0; i < jsonArray.length(); i++) {
+                                                    JSONObject obj = (JSONObject) jsonArray.get(i);
+                                                    String dirs = obj.getString("like_type");
+
+                                                    Log.d("RES", dirs);
+                                                    res=object.getString("like_type");
+                                                    like_finalvalues=object.getInt("like_count");
+                                                    Log.e("RES",res.toString());
+
+
+                                                    if(res.equals("Liked")){
+                                                        System.out.println(itemmodel.getId());
+                                                        like_finalvalues=object.getInt("like_count");
+                                                        Log.e("RES",String.valueOf(like_finalvalues));
+
+
+
+                                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
+                                                    }else if(res.equals("Like")){
+                                                        like_finalvalues=object.getInt("like_count");
+                                                        Log.e("RES","dis"+String.valueOf(like_finalvalues));
+
+
+
+                                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart); 				userViewHolder.like_imagebutton.setTag("heart");
+                                                    }
+
+                                                    userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
+
+
                                                 }
 
-                                                userViewHolder.like_imagebutton.setTag("heartfullred");
-                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+                                            }catch (JSONException e){
 
-                                            }else if(res.equalsIgnoreCase("no")){
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount()-1;
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }
-                                                System.out.println(itemmodel.getId());
-
-                                                userViewHolder.like_imagebutton.setTag("heart");
-                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
-
-                                            }
-                                            if(like_finalvalues==0||like_finalvalues==-1){
-                                                System.out.println(itemmodel.getId());
-                                                userViewHolder.    likescount.setVisibility(View.GONE);
-                                            }else {
-                                                System.out.println(itemmodel.getId());
-                                                System.out.println(like_finalvalues);
-                                                userViewHolder.    countlayout.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
-
-                                                like_finalvalues=0;
                                             }
                                         }
                                     }, new Response.ErrorListener() {
@@ -1316,9 +1330,13 @@ FloatingActionButton fabnews,fabplus;
                                         protected Map<String,String> getParams()throws AuthFailureError{
                                             Map<String,String> param=new Hashtable<String, String>();
                                             String ids=itemmodel.getId();
-                                            param.put(QID, ids);
-                                            param.put(USERID, myprofileid);
-                                            param.put(QTYPE, itemmodel.getQtypemain());
+                                            param.put("Key","Simplicity");
+                                            param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                                            param.put("rtype","like");
+                                            param.put("id", ids);
+                                            Log.e("RESS",myprofileid);
+                                            param.put("user_id", myprofileid);
+                                            param.put("qtype", itemmodel.getQtypemain());
                                             return param;
                                         }
                                     };
@@ -1326,6 +1344,7 @@ FloatingActionButton fabnews,fabplus;
                                     likes.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
                                     likesqueue.add(likes);
+
 
                                 }else {
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -1927,47 +1946,60 @@ FloatingActionButton fabnews,fabplus;
                                     }else {
 
                                     }
-                                    StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
+                                    StringRequest likes=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
-                                            String res=response.toString();
-                                            res = res.replace(" ", "");
-                                            res = res.trim();
-                                            if(res.equalsIgnoreCase("yes")){
-                                                System.out.println(itemmodel.getId());
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount()+1;
+                                            String res;
+                                            try {
+                                                Log.e("RES", "START");
+
+                                                JSONObject object=new JSONObject(response.toString());
+                                                JSONArray array=object.getJSONArray("result");
+                                                String data=array.optString(1);
+                                                JSONArray jsonArray=new JSONArray(data.toString());
+
+
+                                                /*JSONObject data = new JSONObject(response.toString());
+                                                String dir = data.getString("result");
+                                                Log.d("RES", dir);
+                                                JSONObject object=new JSONObject(dir);
+                                                String dir2=object.getString("message");
+                                                Log.d("RES", dir2);*/
+
+                                                for (int i = 0; i < jsonArray.length(); i++) {
+                                                    JSONObject obj = (JSONObject) jsonArray.get(i);
+                                                    String dirs = obj.getString("like_type");
+
+                                                    Log.d("RES", dirs);
+                                                    res=object.getString("like_type");
+                                                    like_finalvalues=object.getInt("like_count");
+                                                    Log.e("RES",res.toString());
+
+
+                                                    if(res.equals("Liked")){
+                                                        System.out.println(itemmodel.getId());
+                                                        like_finalvalues=object.getInt("like_count");
+                                                        Log.e("RES",String.valueOf(like_finalvalues));
+
+
+
+                                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
+                                                    }else if(res.equals("Like")){
+                                                        like_finalvalues=object.getInt("like_count");
+                                                        Log.e("RES","dis"+String.valueOf(like_finalvalues));
+
+
+
+                                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart); 				userViewHolder.like_imagebutton.setTag("heart");
+                                                    }
+
+                                                    userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
+
+
                                                 }
 
-                                                userViewHolder.like_imagebutton.setTag("heartfullred");
-                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
+                                            }catch (JSONException e){
 
-                                            }else if(res.equalsIgnoreCase("no")){
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount()-1;
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }
-                                                System.out.println(itemmodel.getId());
-
-                                                userViewHolder.like_imagebutton.setTag("heart");
-                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
-                                                userViewHolder.likes_button.setTypeface(seguiregular);
-                                                userViewHolder.likes_button.setTransformationMethod(null);
-                                            }
-                                            if(like_finalvalues==0||like_finalvalues==-1){
-                                                System.out.println(itemmodel.getId());
-                                                userViewHolder.    likescount.setVisibility(View.GONE);
-                                            }else {
-                                                System.out.println(itemmodel.getId());
-                                                System.out.println(like_finalvalues);
-                                                userViewHolder.    countlayout.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
-
-                                                like_finalvalues=0;
                                             }
                                         }
                                     }, new Response.ErrorListener() {
@@ -1979,9 +2011,13 @@ FloatingActionButton fabnews,fabplus;
                                         protected Map<String,String> getParams()throws AuthFailureError{
                                             Map<String,String> param=new Hashtable<String, String>();
                                             String ids=itemmodel.getId();
-                                            param.put(QID, ids);
-                                            param.put(USERID, myprofileid);
-                                            param.put(QTYPE, itemmodel.getQtypemain());
+                                            param.put("Key","Simplicity");
+                                            param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                                            param.put("rtype","like");
+                                            param.put("id", ids);
+                                            Log.e("RESS",myprofileid);
+                                            param.put("user_id", myprofileid);
+                                            param.put("qtype", itemmodel.getQtypemain());
                                             return param;
                                         }
                                     };
@@ -1989,6 +2025,7 @@ FloatingActionButton fabnews,fabplus;
                                     likes.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
                                     likesqueue.add(likes);
+
 
                                 }else {
                                     SharedPreferences.Editor editor = sharedpreferences.edit();

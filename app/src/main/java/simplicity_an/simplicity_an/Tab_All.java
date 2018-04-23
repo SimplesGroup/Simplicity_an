@@ -100,12 +100,12 @@ public class Tab_All extends Fragment {
     public static final String Activity = "activity";
     public static final String CONTENTID = "contentid";
     int post_likes_count=0,save_item_count;
-    public    FloatingActionButton fab,fabplus;
+ public    FloatingActionButton fab,fabplus;
     int  like_finalvalues;
-    String Tokenid;
+String Tokenid;
     LinearLayout musicplayerlayout;
     TextView musictitle;
-    SwipeRefreshLayout swipeRefresh;
+SwipeRefreshLayout swipeRefresh;
     private OnFragmentInteractionListener mListener;
 
     public Tab_All() {
@@ -148,11 +148,11 @@ public class Tab_All extends Fragment {
         Log.e("coloR",colorcodes);
         requestQueue = Volley.newRequestQueue(getActivity());
 
-        getData();
+            getData();
 
         lLayout = new LinearLayoutManager(getActivity());
         recyclerview_tab_all = (RecyclerView) view.findViewById(R.id.tab_all_recyclerview);
-        //  recyclerview_tab_all.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+      //  recyclerview_tab_all.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         recyclerview_tab_all.setLayoutManager(lLayout);
 
 
@@ -188,7 +188,7 @@ public class Tab_All extends Fragment {
                 Log.e("Msg","hihihi");
             }else {
                 if(colorcodes.equalsIgnoreCase("#383838")){
-                    fab.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
+                   fab.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                 }else if(colorcodes.equalsIgnoreCase("#59247c")){
                     fab.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
@@ -241,7 +241,7 @@ public class Tab_All extends Fragment {
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
-        // getData();
+       // getData();
         recyclerview_tab_all_adapter = new Recyclerviewtaballadapter(modelList,recyclerview_tab_all);
         recyclerview_tab_all.setAdapter(recyclerview_tab_all_adapter);
         recyclerview_tab_all_adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -267,7 +267,7 @@ public class Tab_All extends Fragment {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefresh.setRefreshing(true);
+ swipeRefresh.setRefreshing(true);
                 modelList.clear();
 
                 recyclerview_tab_all_adapter.notifyDataSetChanged();
@@ -312,20 +312,20 @@ public class Tab_All extends Fragment {
         StringRequest request=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("Response",response.toString());
-                try{
-                    JSONObject object=new JSONObject(response.toString());
-                    JSONArray array=object.getJSONArray("result");
-                    String data=array.optString(1);
-                    JSONArray jsonArray=new JSONArray(data.toString());
-                    Log.e("Response",data.toString());
-                    if (response != null) {
-                        dissmissDialog();
-                        parseJsonFeed(jsonArray);
-                    }
-                }catch (JSONException e){
+Log.e("Response",response.toString());
+try{
+    JSONObject object=new JSONObject(response.toString());
+    JSONArray array=object.getJSONArray("result");
+    String data=array.optString(1);
+    JSONArray jsonArray=new JSONArray(data.toString());
+    Log.e("Response",data.toString());
+    if (response != null) {
+        dissmissDialog();
+        parseJsonFeed(jsonArray);
+    }
+}catch (JSONException e){
 
-                }
+}
 
 
             }
@@ -374,7 +374,7 @@ public class Tab_All extends Fragment {
             }
 
         } else {*/
-        // making fresh volley request and getting json
+            // making fresh volley request and getting json
             /*jsonReq = new JsonObjectRequest(Request.Method.GET,
                     URLALL,  new Response.Listener<JSONObject>() {
 
@@ -410,7 +410,7 @@ public class Tab_All extends Fragment {
     }
     private void parseJsonFeed(JSONArray response){
         try {
-            // JSONArray feedArray = response.getJSONArray("");
+           // JSONArray feedArray = response.getJSONArray("");
 
             for (int i = 0; i < response.length(); i++) {
                 JSONObject obj = (JSONObject) response.get(i);
@@ -422,53 +422,53 @@ public class Tab_All extends Fragment {
                 model.setImage(image);
 
                 model.setId(obj.getString("id"));
-                String date = obj.isNull("date") ? null : obj
+               String date = obj.isNull("date") ? null : obj
                         .getString("date");
                 model.setPdate(date);
-                // model.setPdate(obj.getString("pdate"));
+               // model.setPdate(obj.getString("pdate"));
                 model.setTitle(obj.getString("title"));
                 model.setQtype(obj.getString("qtype"));
                 model.setLikescount(obj.getInt("likes_count"));
                 model.setCommentscount(obj.getInt("commentscount"));
-                //  model.setFavcount(obj.getInt("fav"));
+              //  model.setFavcount(obj.getInt("fav"));
                 model.setSharingurl(obj.getString("sharingurl"));
                 model.setQtypemain(obj.getString("qtypemain"));
                 model.setAds(obj.getString("url"));
-                String reportername = obj.isNull("reporter_name") ? null : obj
+               String reportername = obj.isNull("reporter_name") ? null : obj
                         .getString("reporter_name");
                 model.setEditername(reportername);
                 String shortdesc = obj.isNull("short_description") ? null : obj
                         .getString("short_description");
                 model.setShortdescription(shortdesc);
-                // model.setEditername(obj.getString("reporter_name"));
-                // model.setShortdescription(obj.getString("short_description"));
+               // model.setEditername(obj.getString("reporter_name"));
+               // model.setShortdescription(obj.getString("short_description"));
                 // model.setDislikecount(obj.getInt("dislikes_count"));
                 model.setCounttype(obj.getInt("like_type"));
 
-                model.setPlayurl(obj.getString("radio_file"));
-                model.setYoutubelink(obj.getString("youtube_link"));
-                int typevalue = obj.isNull("album_count") ? null : obj
+             model.setPlayurl(obj.getString("radio_file"));
+             model.setYoutubelink(obj.getString("youtube_link"));
+              int typevalue = obj.isNull("album_count") ? null : obj
                         .getInt("album_count");
                 model.setAlbumcount(typevalue);
                 List<ItemModel> albums = new ArrayList<>();
                 ArrayList<String> album = new ArrayList<String>();
-                try {
-                    JSONArray feedArraygallery = obj.getJSONArray("album");
+  try {
+    JSONArray feedArraygallery = obj.getJSONArray("album");
 
 
-                    for (int k = 0; k < feedArraygallery.length(); k++) {
+    for (int k = 0; k < feedArraygallery.length(); k++) {
 
-                        JSONObject object = (JSONObject) feedArraygallery.get(k);
-                        ItemModel models = new ItemModel();
-                        models.setAlbumimage(object.getString("image"));
-                        albums.add(models);
+        JSONObject object = (JSONObject) feedArraygallery.get(k);
+        ItemModel models = new ItemModel();
+        models.setAlbumimage(object.getString("image"));
+        albums.add(models);
 
-                        String images=object.getString("image");
-                        album.add(images);
-                    }
-                }catch (JSONException e){
+        String images=object.getString("image");
+        album.add(images);
+    }
+}catch (JSONException e){
 
-                }
+}
                 model.setAlbumlist(albums);
                 model.setAlbum(album);
                 modelList.add(model);
@@ -508,7 +508,7 @@ public class Tab_All extends Fragment {
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
-            // throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
+           // throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -520,7 +520,7 @@ public class Tab_All extends Fragment {
         private String pdate;
         private String description;
         private String title;
-        int albumcount;
+       int albumcount;
         String playurl,albumimage;
         private ArrayList<String> album;
         private List<ItemModel> albumlist;
@@ -889,7 +889,7 @@ public class Tab_All extends Fragment {
         private int visibleThreshold = 5;
         private int lastVisibleItem, totalItemCount;
         Context context;
-        private  int currentvisiblecount;
+private  int currentvisiblecount;
         String urlaudio;
 
         @Override
@@ -1001,7 +1001,7 @@ public class Tab_All extends Fragment {
                     userViewHolder.commentscount.setTextColor(Color.WHITE);
                     userViewHolder.line.setBackgroundColor(R.color.whitefood);
                 }
-                final String likecount=String.valueOf(itemmodel.getCounttype());
+                String likecount=String.valueOf(itemmodel.getCounttype());
                 if(likecount.equals("0")){
 
                     userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
@@ -1030,17 +1030,17 @@ public class Tab_All extends Fragment {
                     userViewHolder.play.setVisibility(View.GONE);
                 }
 
-                if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){
+               if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){
 
                     userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));
                 }else {
-                    if(itemmodel.getShortdescription().equals("")){
-                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));
+                   if(itemmodel.getShortdescription().equals("")){
+                       userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));
 
-                    }else {
-                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));
+                   }else {
+                       userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));
 
-                    }
+                   }
                 }
                 if(itemmodel.getEditername().equals("")){
                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));
@@ -1055,11 +1055,11 @@ public class Tab_All extends Fragment {
                 userViewHolder.title_item.setTypeface(seguiregular);
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }
                 userViewHolder.item_type_name.setTypeface(seguiregular_bold);
-                // userViewHolder.date.setText(itemmodel.getPdate());
+               // userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(seguiregular_bold);
                 userViewHolder.commentscount.setTypeface(seguiregular_bold);
                 userViewHolder.date.setTypeface(seguiregular_bold);
-                if(itemmodel.getLikescount()==0){                         userViewHolder.likescount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Like"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Comment"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                     }                                        if(itemmodel.getCommentscount()==0){                      userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));                 }else {                     userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                 }
+               if(itemmodel.getLikescount()==0){                         userViewHolder.likescount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Like"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Comment"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                     }                                        if(itemmodel.getCommentscount()==0){                      userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));                 }else {                     userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                 }
 
 
 
@@ -1195,19 +1195,19 @@ public class Tab_All extends Fragment {
 
                                     startActivity(intent);
                                 }else
-                                if(itemmodel.getQtype().equals("Sponsered")||itemmodel.getQtype().equals("Sponsored")){
-                                    if(itemmodel.getAds().startsWith("http://simpli")){
-                                        Intent intent = new Intent(getActivity(), AdvertisementPage.class);
-                                        intent.putExtra("ID", itemmodel.getAds());
-                                        startActivity(intent);
-                                    }else {
-                                        Intent intent = new Intent(getActivity(), AdvertisementPage.class);
-                                        intent.putExtra("ID", itemmodel.getAds());
-                                        startActivity(intent);
+                                    if(itemmodel.getQtype().equals("Sponsered")||itemmodel.getQtype().equals("Sponsored")){
+                                        if(itemmodel.getAds().startsWith("http://simpli")){
+                                            Intent intent = new Intent(getActivity(), AdvertisementPage.class);
+                                            intent.putExtra("ID", itemmodel.getAds());
+                                            startActivity(intent);
+                                        }else {
+                                           Intent intent = new Intent(getActivity(), AdvertisementPage.class);
+                                            intent.putExtra("ID", itemmodel.getAds());
+                                            startActivity(intent);
+                                        }
+
+
                                     }
-
-
-                                }
                                 break;
                             case R.id.taball_play_pause_main:
                                 Log.e("CLick","MainRaio");
@@ -1219,7 +1219,7 @@ public class Tab_All extends Fragment {
                                     intent.putExtra("URL",itemmodel.getPlayurl());
                                     startActivity(intent);
                                 }else {
-                                    urlaudio = itemmodel.getId();
+                                     urlaudio = itemmodel.getId();
                                     onButtonPressed(itemmodel.getPlayurl(), itemmodel.getTitle(),itemmodel.getImage());
                                     userViewHolder.play.setVisibility(View.GONE);
                                 }
@@ -1253,7 +1253,7 @@ public class Tab_All extends Fragment {
                                     StringRequest likes=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
-
+                                            String res;
                                             Log.e("RES",response.toString());
                                             try {
                                                 Log.e("RES", "START");
@@ -1261,8 +1261,7 @@ public class Tab_All extends Fragment {
                                                 JSONObject object=new JSONObject(response.toString());
                                                 JSONArray array=object.getJSONArray("result");
                                                 String data=array.optString(1);
-                                                Log.d("RES", data);
-                                                // JSONArray jsonArray=new JSONArray(data.toString());
+                                                JSONArray jsonArray=new JSONArray(data.toString());
 
 
                                                 /*JSONObject data = new JSONObject(response.toString());
@@ -1272,40 +1271,37 @@ public class Tab_All extends Fragment {
                                                 String dir2=object.getString("message");
                                                 Log.d("RES", dir2);*/
 
-                                                // for (int i = 0; i < jsonArray.length(); i++) {
-                                                JSONObject obj = new JSONObject(data.toString());
+                                                for (int i = 0; i < jsonArray.length(); i++) {
+                                                    JSONObject obj = (JSONObject) jsonArray.get(i);
+                                                    String dirs = obj.getString("like_type");
+
+                                                    Log.d("RES", dirs);
+                                                    res=object.getString("like_type");
+                                                    like_finalvalues=object.getInt("like_count");
+                                                    Log.e("RES",res.toString());
 
 
-
-
-                                                String           res=obj.getString("like_type");
-
-                                                like_finalvalues=Integer.parseInt(likecount);
-
-
-
-                                                if(res.equals("Liked")){
-                                                    //  System.out.println(itemmodel.getId());
-                                                    String likescount=obj.getString("like_count");
-                                                    like_finalvalues=Integer.parseInt(likescount);
-                                                    Log.e("RESS",String.valueOf(like_finalvalues));
+                                                    if(res.equals("Liked")){
+                                                        System.out.println(itemmodel.getId());
+                                                        like_finalvalues=object.getInt("like_count");
+                                                        Log.e("RES",String.valueOf(like_finalvalues));
 
 
 
                                                     userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
                                                 }else if(res.equals("Like")){
-                                                    like_finalvalues=Integer.parseInt(obj.getString("like_count"));
+                                                    like_finalvalues=object.getInt("like_count");
                                                     Log.e("RES","dis"+String.valueOf(like_finalvalues));
 
 
 
-                                                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart); 				userViewHolder.like_imagebutton.setTag("heart");
+                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart); 				userViewHolder.like_imagebutton.setTag("heart");
+                                            }
+
+                                                    userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
+
+
                                                 }
-
-                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
-
-
-                                                // }
 
                                             }catch (JSONException e){
 
@@ -1591,7 +1587,7 @@ public class Tab_All extends Fragment {
                 userViewHolder.title_item.setTypeface(seguiregular);
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }
                 userViewHolder.item_type_name.setTypeface(seguiregular);
-                // userViewHolder.date.setText(itemmodel.getPdate());
+               // userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(seguiregular);
                 userViewHolder.date.setTypeface(seguiregular);
                 if(itemmodel.getCommentscount()>0||itemmodel.getLikescount()>0){
@@ -1751,11 +1747,11 @@ public class Tab_All extends Fragment {
                 }
                 int albumcountsdata=itemmodel.getAlbumcount();
                 if(albumcountsdata>4){
-                    userViewHolder.moreimagescount_textview.setVisibility(View.VISIBLE);
+                   userViewHolder.moreimagescount_textview.setVisibility(View.VISIBLE);
                     int result=albumcountsdata-4;
-                    userViewHolder.moreimagescount_textview.setText(Html.fromHtml("+"+result+"&nbsp;"+"Images"));
+                  userViewHolder.moreimagescount_textview.setText(Html.fromHtml("+"+result+"&nbsp;"+"Images"));
                 }else {
-                    userViewHolder.moreimagescount_textview.setVisibility(View.GONE);
+                   userViewHolder.moreimagescount_textview.setVisibility(View.GONE);
                 }
 
 
@@ -1966,7 +1962,7 @@ public class Tab_All extends Fragment {
                                     }else {
 
                                     }
-                                    StringRequest likes=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
+                                    StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
                                             String res;

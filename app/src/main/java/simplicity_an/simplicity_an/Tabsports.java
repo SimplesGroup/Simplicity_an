@@ -1040,7 +1040,7 @@ SwipeRefreshLayout swipeRefresh;
                     userViewHolder.line.setBackgroundColor(R.color.whitefood);
                 }
                 int imgResource = R.mipmap.likered;
-                final String likecount=String.valueOf(itemmodel.getCounttype());
+                String likecount=String.valueOf(itemmodel.getCounttype());
                 if(likecount.equals("0")){
 
                     userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
@@ -1286,16 +1286,14 @@ SwipeRefreshLayout swipeRefresh;
                                     StringRequest likes=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
-
-                                            Log.e("RES",response.toString());
+                                            String res;
                                             try {
                                                 Log.e("RES", "START");
 
                                                 JSONObject object=new JSONObject(response.toString());
                                                 JSONArray array=object.getJSONArray("result");
                                                 String data=array.optString(1);
-                                                Log.d("RES", data);
-                                                // JSONArray jsonArray=new JSONArray(data.toString());
+                                                JSONArray jsonArray=new JSONArray(data.toString());
 
 
                                                 /*JSONObject data = new JSONObject(response.toString());
@@ -1305,40 +1303,37 @@ SwipeRefreshLayout swipeRefresh;
                                                 String dir2=object.getString("message");
                                                 Log.d("RES", dir2);*/
 
-                                                // for (int i = 0; i < jsonArray.length(); i++) {
-                                                JSONObject obj = new JSONObject(data.toString());
+                                                for (int i = 0; i < jsonArray.length(); i++) {
+                                                    JSONObject obj = (JSONObject) jsonArray.get(i);
+                                                    String dirs = obj.getString("like_type");
+
+                                                    Log.d("RES", dirs);
+                                                    res=object.getString("like_type");
+                                                    like_finalvalues=object.getInt("like_count");
+                                                    Log.e("RES",res.toString());
+
+
+                                                    if(res.equals("Liked")){
+                                                        System.out.println(itemmodel.getId());
+                                                        like_finalvalues=object.getInt("like_count");
+                                                        Log.e("RES",String.valueOf(like_finalvalues));
 
 
 
-
-                                                String           res=obj.getString("like_type");
-
-                                                like_finalvalues=Integer.parseInt(likecount);
-
-
-
-                                                if(res.equals("Liked")){
-                                                    //  System.out.println(itemmodel.getId());
-                                                    String likescount=obj.getString("like_count");
-                                                    like_finalvalues=Integer.parseInt(likescount);
-                                                    Log.e("RESS",String.valueOf(like_finalvalues));
+                                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
+                                                    }else if(res.equals("Like")){
+                                                        like_finalvalues=object.getInt("like_count");
+                                                        Log.e("RES","dis"+String.valueOf(like_finalvalues));
 
 
 
-                                                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
-                                                }else if(res.equals("Like")){
-                                                    like_finalvalues=Integer.parseInt(obj.getString("like_count"));
-                                                    Log.e("RES","dis"+String.valueOf(like_finalvalues));
+                                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart); 				userViewHolder.like_imagebutton.setTag("heart");
+                                                    }
+
+                                                    userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
 
 
-
-                                                    userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart); 				userViewHolder.like_imagebutton.setTag("heart");
                                                 }
-
-                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
-
-
-                                                // }
 
                                             }catch (JSONException e){
 
