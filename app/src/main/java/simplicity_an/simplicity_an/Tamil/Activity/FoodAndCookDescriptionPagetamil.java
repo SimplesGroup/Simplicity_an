@@ -68,6 +68,7 @@ import java.util.Map;
 
 import simplicity_an.simplicity_an.AdvertisementPage;
 import simplicity_an.simplicity_an.AppControllers;
+import simplicity_an.simplicity_an.Articledescription;
 import simplicity_an.simplicity_an.DividerItemDecoration;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.MySingleton;
@@ -493,19 +494,19 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(commentbox_editext.getWindowToken(), 0);
 
-                    //Showing the progress dialog
-                    //final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlpost,
-                            new Response.Listener<String>() {
+                    if(myprofileid!=null) {
+
+                        try {
+
+                            StringRequest comment_post_request = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                                 @Override
-                                public void onResponse(String s) {
-                                    //Disimissing the progress dialog
-                                    //  loading.dismiss();
-                                    //Showing toast message of the response
-                                    if (s.equalsIgnoreCase("error")) {
-                                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                                public void onResponse(String response) {
+                                    Log.e("Res", response.toString().trim());
+
+                                    if (response.equalsIgnoreCase("error")) {
+                                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                                     } else {
-                                        //MyDialogFragment.this.dismiss();
+
                                         commentbox_editext.setText("");
                                         AddnewCommnent();
                                         scrollView.post(new Runnable() {
@@ -513,48 +514,44 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
                                                 scrollView.fullScroll(ScrollView.FOCUS_DOWN);
                                             }
                                         });
+
                                     }
-
                                 }
-                            },
-                            new Response.ErrorListener() {
+                            }, new Response.ErrorListener() {
                                 @Override
-                                public void onErrorResponse(VolleyError volleyError) {
-                                    //Dismissing the progress dialog
-                                    //  loading.dismiss();
+                                public void onErrorResponse(VolleyError error) {
 
-                                    //Showing toast
-                                    // Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
                                 }
                             }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            //Converting Bitmap to String
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    description_comment = commentbox_editext.getText().toString().trim();
 
 
-                            //Getting Image Name
-                           description_comment = commentbox_editext.getText().toString().trim();
+                                    Map<String, String> param = new Hashtable<String, String>();
+                                    String keytepe = "article";
+                                    Log.e("qty", keytepe);
+                                    param.put("Key", "Simplicity");
+                                    param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                                    param.put("rtype", "comment");
+                                    param.put("language", "1");
+                                    param.put("id", notifiid);
+                                    param.put("user_id", myprofileid);
+                                    param.put("comment", description_comment);
+                                    param.put("qtype", "food");
+                                    return param;
+                                }
+                            };
+                            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                            requestQueue.add(comment_post_request);
+                        } catch (Exception e) {
 
-                            //Creating parameters
-                            Map<String, String> params = new Hashtable<String, String>();
-
-                            //Adding parameters
-
-                                    params.put(KEY_COMMENT, description_comment);
-                                    params.put(KEY_TYPE, "food");
-                                    params.put(KEY_POSTID, notifiid);
-                                    params.put(KEY_MYUID, myprofileid);
-
-                            return params;
                         }
-                    };
-
-                    //Creating a Request Queue
-                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-
-                    //Adding request to the queue
-                    requestQueue.add(stringRequest);
-                    //queue.add(stringRequest);
+                    }else {
+                        Intent signin=new Intent(FoodAndCookDescriptionPagetamil.this,SigninpageActivity.class);
+                        startActivity(signin);
+                        finish();
+                    }
                 }
 
             });

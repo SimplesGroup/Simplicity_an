@@ -70,6 +70,7 @@ import java.util.Map;
 
 import simplicity_an.simplicity_an.AdvertisementPage;
 import simplicity_an.simplicity_an.AppControllers;
+import simplicity_an.simplicity_an.Articledescription;
 import simplicity_an.simplicity_an.DividerItemDecoration;
 import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.MySingleton;
@@ -475,67 +476,64 @@ public class Columnistdetailtamil extends AppCompatActivity {
             post.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(commentbox_editext.getWindowToken(), 0);
+                    if(myprofileid!=null) {
 
-                    try {
+                        try {
 
-                        StringRequest comment_post_request=new StringRequest(Request.Method.POST, urlpost, new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Log.e("Res",response.toString().trim());
-                                //Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
-                                //Disimissing the progress dialog
-                                //  loading.dismiss();
-                                //Showing toast message of the response
-                                if (response.equalsIgnoreCase("error")) {
-                                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
-                                } else {
-                                    //MyDialogFragment.this.dismiss();
-                                    // Toast.makeText(getApplicationContext(), "Posted", Toast.LENGTH_LONG).show();
-                                    //getData();
-                                    commentbox_editext.setText("");
-                                    AddnewCommnent();
-                                    scrollView.post(new Runnable() {
-                                        public void run() {
-                                            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                                        }
-                                    });
+                            StringRequest comment_post_request = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.e("Res", response.toString().trim());
+
+                                    if (response.equalsIgnoreCase("error")) {
+                                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                                    } else {
+
+                                        commentbox_editext.setText("");
+                                        AddnewCommnent();
+                                        scrollView.post(new Runnable() {
+                                            public void run() {
+                                                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                                            }
+                                        });
+
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
 
                                 }
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                            }
-                        }){
-                            @Override
-                            protected Map<String, String> getParams() throws AuthFailureError {
-                                description_comment = commentbox_editext.getText().toString().trim();
-
-                                //Creating parameters
-                                Map<String, String> param = new Hashtable<String, String>();
-                                String keytepe="columnist";
-                                Log.e("qty",keytepe);
-                                //Adding parameters
-
-                                param.put(KEY_COMMENT, description_comment);
-                                param.put("qtype","columnist");
-                                param.put(KEY_POSTID, notifiid);
-                                param.put(KEY_MYUID, myprofileid);
+                            }) {
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    description_comment = commentbox_editext.getText().toString().trim();
 
 
+                                    Map<String, String> param = new Hashtable<String, String>();
+                                    String keytepe = "article";
+                                    Log.e("qty", keytepe);
+                                    param.put("Key", "Simplicity");
+                                    param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                                    param.put("rtype", "comment");
+                                    param.put("language", "1");
+                                    param.put("id", notifiid);
+                                    param.put("user_id", myprofileid);
+                                    param.put("comment", description_comment);
+                                    param.put("qtype", "columnist");
+                                    return param;
+                                }
+                            };
+                            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                            requestQueue.add(comment_post_request);
+                        } catch (Exception e) {
 
-                                return param;
-                            }
-                        };
-                        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                        requestQueue.add(comment_post_request);
-                    }catch (Exception e){
-
+                        }
+                    }else {
+                        Intent signin=new Intent(Columnistdetailtamil.this,SigninpageActivity.class);
+                        startActivity(signin);
+                        finish();
                     }
-
                 }
 
             });
