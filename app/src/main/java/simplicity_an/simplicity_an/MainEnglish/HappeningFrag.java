@@ -593,7 +593,11 @@ public class HappeningFrag extends Fragment {
                     protected Map<String, String> getParams() throws AuthFailureError {
 
                         Map<String,String>params=new Hashtable<String, String>();
-                        params.put("playerid",playerid);
+                        params.put("Key","Simplicity");
+                        params.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                        params.put("rtype","playerid_new");
+                        params.put("phone","android");
+                        params.put("player_id",playerid);
                         params.put("language","2");
                         return params;
                     }

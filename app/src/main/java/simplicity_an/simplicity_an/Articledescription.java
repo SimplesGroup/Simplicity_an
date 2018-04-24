@@ -441,8 +441,7 @@ if(activity==null){
                 }
             });
 if(myprofileid!=null){
-   // URLTWO_comment=URLCOMMENT+notifiid;
-    //comment_title.setText("Post your Comment Here - ");
+
     post.setText("Post");
     loadmore_title.setText("Load More");
     commentbox.setVisibility(View.VISIBLE);
@@ -452,64 +451,64 @@ if(myprofileid!=null){
         public void onClick(View v) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(commentbox_editext.getWindowToken(), 0);
+            if(myprofileid!=null) {
 
-try {
+                try {
 
-    StringRequest comment_post_request=new StringRequest(Request.Method.POST, urlpost, new Response.Listener<String>() {
-        @Override
-        public void onResponse(String response) {
-            Log.e("Res",response.toString().trim());
-            //Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
-            //Disimissing the progress dialog
-            //  loading.dismiss();
-            //Showing toast message of the response
-            if (response.equalsIgnoreCase("error")) {
-                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
-            } else {
-                //MyDialogFragment.this.dismiss();
-               // Toast.makeText(getApplicationContext(), "Posted", Toast.LENGTH_LONG).show();
-                //getData();
-                commentbox_editext.setText("");
-                AddnewCommnent();
-                scrollView.post(new Runnable() {
-                    public void run() {
-                        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                    }
-                });
+                    StringRequest comment_post_request = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.e("Res", response.toString().trim());
 
+                            if (response.equalsIgnoreCase("error")) {
+                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                            } else {
+
+                                commentbox_editext.setText("");
+                                AddnewCommnent();
+                                scrollView.post(new Runnable() {
+                                    public void run() {
+                                        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                                    }
+                                });
+
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            description_comment = commentbox_editext.getText().toString().trim();
+
+
+                            Map<String, String> param = new Hashtable<String, String>();
+                            String keytepe = "article";
+                            Log.e("qty", keytepe);
+                            param.put("Key", "Simplicity");
+                            param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                            param.put("rtype", "comment");
+                            param.put("language", "1");
+                            param.put("id", notifiid);
+                            param.put("user_id", myprofileid);
+                            param.put("comment", description_comment);
+                            param.put("qtype", "article");
+                            return param;
+                        }
+                    };
+                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                    requestQueue.add(comment_post_request);
+                } catch (Exception e) {
+
+                }
+            }else {
+                Intent signin=new Intent(Articledescription.this,SigninpageActivity.class);
+                startActivity(signin);
+                finish();
             }
-        }
-    }, new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-
-        }
-    }){
-        @Override
-        protected Map<String, String> getParams() throws AuthFailureError {
-          description_comment = commentbox_editext.getText().toString().trim();
-
-            //Creating parameters
-            Map<String, String> param = new Hashtable<String, String>();
-            String keytepe="article";
-            Log.e("qty",keytepe);
-            //Adding parameters
-
-                    param.put(KEY_COMMENT, description_comment);
-                    param.put("qtype","article");
-                    param.put(KEY_POSTID, notifiid);
-                    param.put(KEY_MYUID, myprofileid);
-
-
-
-            return param;
-        }
-    };
-    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-    requestQueue.add(comment_post_request);
-}catch (Exception e){
-
-}
 
         }
 
@@ -551,6 +550,7 @@ try {
     });
 
 }else {
+
     commentbox.setVisibility(View.GONE);
 }
 
@@ -751,11 +751,51 @@ try {
 
                         }
                         if(myprofileid!=null) {
-                            StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
+                            StringRequest likes=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    String res;                                     try {                                                                 Log.e("RES", "START");                                           JSONObject data = new JSONObject(response.toString());                                            String dir = data.getString("result");                                           Log.d("RES", dir);                                                            JSONObject object=new JSONObject(dir);                                           String dir2=object.getString("message");                                            Log.d("RES", dir2);                                                        for (int i = 0; i < object.length(); i++) {                                                   String dirs = object.getString("message");                                                 Log.d("RES", dirs);                                                        res=object.getString("message");                                                                                            if(res.equals("Liked")){                                                       favourite.setImageResource(R.mipmap.likered);                                                  favourite.setTag("heartfullred");                                                 }else if(res.equals("Like")){                                                    favourite.setImageResource(R.mipmap.like);                                                  favourite.setTag("heart");                                                }                                                }                                             }catch (JSONException e){                                                                                  }
+                                    String res;
+                                    Log.e("RES",response.toString());
+                                    try {
+                                        Log.e("RES", "START");
 
+                                        JSONObject object=new JSONObject(response.toString());
+                                        JSONArray array=object.getJSONArray("result");
+                                        String data=array.optString(1);
+                                        JSONArray jsonArray=new JSONArray(data.toString());
+
+
+                                        for (int i = 0; i < jsonArray.length(); i++) {
+                                            JSONObject obj = (JSONObject) jsonArray.get(i);
+                                            String dirs = obj.getString("like_type");
+
+                                            Log.d("RES", dirs);
+                                            res=object.getString("like_type");
+
+                                            Log.e("RES",res.toString());
+
+
+                                            if(res.equals("Liked")){
+
+                                                favourite.setImageResource(R.mipmap.heartfullred);
+                                                favourite.setTag("heartfullred");
+                                            }else if(res.equals("Like")){
+
+
+
+                                                favourite.setImageResource(R.mipmap.heart);
+                                                favourite.setTag("heart");
+                                            }
+
+
+
+
+
+                                        }
+
+                                    }catch (JSONException e){
+
+                                    }
                                 }
                             }, new Response.ErrorListener() {
                                 @Override
@@ -765,22 +805,19 @@ try {
                             }){
                                 protected Map<String,String> getParams()throws AuthFailureError{
                                     Map<String,String> param=new Hashtable<String, String>();
+                                    String type=null;
+                                    try {
+                                        type=obj.getString("qtypemain");
+                                    }catch (JSONException e){
 
-                                    String postid = notifiid;
-                                    //Adding parameters
-                                    param.put(QID, postid);
-                                    param.put(USERID, myprofileid);
-                                    param.put(QTYPE, "article");
-                                   /* if (postid != null) {
+                                    }
 
-
-                                        param.put(QID, ids);
-                                        param.put(USERID, myprofileid);
-                                        param.put(QTYPE, itemmodel.getQtypemain());
-                                    } else {
-
-
-                                    }*/
+                                    param.put("Key","Simplicity");
+                                    param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                                    param.put("rtype","like");
+                                    param.put("id", notifiid);
+                                    param.put("user_id", myprofileid);
+                                    param.put("qtype", type);
                                     return param;
                                 }
                             };

@@ -75,6 +75,7 @@ import simplicity_an.simplicity_an.Tabgovt;
 import simplicity_an.simplicity_an.Tabjobs;
 import simplicity_an.simplicity_an.Tabnews;
 import simplicity_an.simplicity_an.Tabsports;
+import simplicity_an.simplicity_an.Utils.Configurl;
 
 /**
  * Created by kuppusamy on 5/18/2017.
@@ -754,7 +755,7 @@ public class CityFragment extends Fragment {
                 editor.putString(Language, "Tamil");
 
                 editor.commit();
-                StringRequest language=new StringRequest(Request.Method.POST, url_change_lang, new Response.Listener<String>() {
+                StringRequest language=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 Log.e("CHANGE LAMG",response.toString());
@@ -769,7 +770,11 @@ Log.e("CHANGE LAMG",response.toString());
                     protected Map<String, String> getParams() throws AuthFailureError {
 
                         Map<String,String>params=new Hashtable<String, String>();
-                        params.put("playerid",playerid);
+                        params.put("Key","Simplicity");
+                        params.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                        params.put("rtype","playerid_new");
+                        params.put("phone","android");
+                        params.put("player_id",playerid);
                         params.put("language","2");
                         return params;
                     }
