@@ -505,7 +505,11 @@ booknow.setText("பதிவு செய்ய");
                     param.put("language","2");
                     param.put("rtype","event");
                     param.put("id",notifiid);
+                    if(myprofileid!=null){
+                        param.put("user_id",myprofileid);
+                    }else {
 
+                    }
                     return param;
                 }
             };

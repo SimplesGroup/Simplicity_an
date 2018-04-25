@@ -440,7 +440,11 @@ public class JobsDetailPagetamil extends AppCompatActivity {
                     param.put("language", "2");
                     param.put("rtype", "job");
                     param.put("id", notifiid);
+                    if(myprofileid!=null){
+                        param.put("user_id",myprofileid);
+                    }else {
 
+                    }
                     return param;
                 }
             };

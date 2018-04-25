@@ -419,7 +419,11 @@ public class TamilEntertainmentall extends Fragment {
                 param.put("rtype", "alldata");
                 param.put("qtype", "specials");
                 param.put("page", String.valueOf(requestCount));
+                if(myprofileid!=null){
+                    param.put("user_id",myprofileid);
+                }else {
 
+                }
                 return param;
             }
         };
@@ -2191,6 +2195,7 @@ public class TamilEntertainmentall extends Fragment {
         RecyclerView recycler;
         LinearLayoutManager mLayoutManager;
         String postid, myuserid,qtypevalue;
+        String description_comment;
 
         public MyDialogFragment() {
 
@@ -2251,65 +2256,64 @@ public class TamilEntertainmentall extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    //Showing the progress dialog
-                    //final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlpost,
-                            new Response.Listener<String>() {
+                    if(myuserid!=null) {
+
+                        try {
+
+                            StringRequest comment_post_request = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                                 @Override
-                                public void onResponse(String s) {
-                                    //Disimissing the progress dialog
-                                    //  loading.dismiss();
-                                    //Showing toast message of the response
-                                    if (s.equalsIgnoreCase("error")) {
-                                        Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+                                public void onResponse(String response) {
+                                    Log.e("Res", response.toString().trim());
+
+                                    if (response.equalsIgnoreCase("error")) {
+                                        Toast.makeText(getActivity(), response, Toast.LENGTH_LONG).show();
                                     } else {
-                                        MyDialogFragment.this.dismiss();
+
+                                        /*commentbox_editext.setText("");
+                                        AddnewCommnent();
+                                        scrollView.post(new Runnable() {
+                                            public void run() {
+                                                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                                            }
+                                        });*/
 
                                     }
-
                                 }
-                            },
-                            new Response.ErrorListener() {
+                            }, new Response.ErrorListener() {
                                 @Override
-                                public void onErrorResponse(VolleyError volleyError) {
-                                    //Dismissing the progress dialog
-                                    //  loading.dismiss();
+                                public void onErrorResponse(VolleyError error) {
 
-                                    //Showing toast
-                                    // Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
                                 }
                             }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            //Converting Bitmap to String
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    description_comment = commentbox.getText().toString().trim();
 
 
-                            //Getting Image Name
-                            String description = commentbox.getText().toString().trim();
-
-                            //Creating parameters
-                            Map<String, String> params = new Hashtable<String, String>();
-
-                            //Adding parameters
-                            if (postid != null) {
-                                if (description != null) {
-                                    params.put(KEY_COMMENT, description);
-                                    params.put(KEY_TYPE, qtypevalue);
-                                    params.put(KEY_POSTID, postid);
-                                    params.put(KEY_MYUID, myuserid);
+                                    Map<String, String> param = new Hashtable<String, String>();
+                                    String keytepe = "article";
+                                    Log.e("qty", keytepe);
+                                    param.put("Key", "Simplicity");
+                                    param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                                    param.put("rtype", "comment");
+                                    param.put("language", "2");
+                                    param.put("id", postid);
+                                    param.put("user_id", myuserid);
+                                    param.put("comment", description_comment);
+                                    param.put("qtype", qtypevalue);
+                                    return param;
                                 }
+                            };
+                            RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                            requestQueue.add(comment_post_request);
+                        } catch (Exception e) {
 
-                            }
-                            return params;
                         }
-                    };
-
-                    //Creating a Request Queue
-                    RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-
-                    //Adding request to the queue
-                    requestQueue.add(stringRequest);
-                    //queue.add(stringRequest);
+                    }else {
+                        Intent signin=new Intent(getActivity(),SigninpageActivity.class);
+                        startActivity(signin);
+                        getActivity().finish();
+                    }
                 }
 
             });
@@ -2386,80 +2390,66 @@ public class TamilEntertainmentall extends Fragment {
         }
 
         private void getData() {
-            //Adding the method to the queue by calling the method getDataFromServer
-            requestQueue.add(getDataFromTheServer(requestCount));
-            // getDataFromTheServer();
-            //Incrementing the request counter
-            requestCount++;
-        }
+            StringRequest request=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
 
-        private JsonObjectRequest getDataFromTheServer(int requestCount) {
-
-            URLTWO = URLCOMMENT +postid+"&page="+ requestCount+"&qtype="+qtypevalue;
-
-
-            Cache cache = AppControllers.getInstance().getRequestQueue().getCache();
-            Cache.Entry entry = cache.get(URLTWO);
-            if (entry != null) {
-                // fetch the data from cache
-                try {
-                    String data = new String(entry.data, "UTF-8");
+                    Log.e("Res",response.toString());
                     try {
-                        // dissmissDialog();
-                        parseJsonFeed(new JSONObject(data));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        JSONObject object = new JSONObject(response.toString());
+                        JSONArray array = object.getJSONArray("result");
+                        String data = array.optString(1);
+                        JSONArray     jsonArray = new JSONArray(data.toString());
+                        parseJsonFeed(jsonArray);
+                    }catch (JSONException e){
+
                     }
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
                 }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
 
-            } else {
-                // making fresh volley request and getting json
-                jsonReq = new JsonObjectRequest(Request.Method.GET,
-                        URLTWO, new Response.Listener<JSONObject>() {
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        VolleyLog.d(TAG_REQUEST, "Response: " + response.toString());
-                        if (response != null) {
-                            //   dissmissDialog();
-                            parseJsonFeed(response);
-                        }
-                    }
-                }, new Response.ErrorListener() {
+                    Map<String,String>param=new HashMap<>();
+                    param.put("Key", "Simplicity");
+                    param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                    param.put("rtype", "viewcomment");
+                    param.put("language","2");
+                    param.put("qtype",qtypevalue);
+                    param.put("id",postid);
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d(TAG_REQUEST, "Error: " + error.getMessage());
-                    }
-                });
+                    return param;
+                }
+            };
 
-                // Adding request to volley request queue
-                jsonReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-                requestQueue.add(jsonReq);
-            }
-            return jsonReq;
+            requestQueue.add(request);
+
         }
 
-        private void parseJsonFeed(JSONObject response) {
+
+        private void parseJsonFeed(JSONArray response) {
             try {
-                feedArray = response.getJSONArray("result");
+                //  feedArray = response.getJSONArray("result");
 
 
-                for (ii = 0; ii < feedArray.length(); ii++) {
-                    obj = (JSONObject) feedArray.get(ii);
+                for (ii = 0; ii < response.length(); ii++) {
+                    obj = (JSONObject) response.get(ii);
 
-                    ItemModels model = new ItemModels();
+                  ItemModels model = new ItemModels();
                     //FeedItem model=new FeedItem();
-                    String image = obj.isNull("thumb") ? null : obj
-                            .getString("thumb");
+                    String image = obj.isNull("image") ? null : obj
+                            .getString("image");
                     model.setProfilepic(image);
                     model.setComment(obj.getString("comment"));
-                    model.setPadate(obj.getString("pdate"));
+                    model.setPadate(obj.getString("date"));
                     model.setName(obj.getString("name"));
-                    model.setId(obj.getString("id"));
+                    model.setId(obj.getString("user_id"));
 
 
                     commentlist.add(model);
