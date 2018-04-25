@@ -1147,81 +1147,65 @@ public class Healthylivingdescription extends AppCompatActivity {
 
 
     private void getData() {
-        //Adding the method to the queue by calling the method getDataFromServer
-        requestQueue.add(getDataFromTheServer(requestCount));
-        // getDataFromTheServer();
-        //Incrementing the request counter
-        requestCount++;
-    }
+        StringRequest request=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-    private JsonObjectRequest getDataFromTheServer(int requestCount) {
-
-        URLTWO_comment = URLCOMMENT +notifiid+"&page="+ requestCount;
-
-
-        Cache cache = AppControllers.getInstance().getRequestQueue().getCache();
-        Cache.Entry entry = cache.get(URLTWO_comment);
-        if (entry != null) {
-            // fetch the data from cache
-            try {
-                String data = new String(entry.data, "UTF-8");
+                Log.e("Res",response.toString());
                 try {
-                    pdialog.dismiss();
-                    // dissmissDialog();
-                    parseJsonFeedTwo(new JSONObject(data));
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    JSONObject object = new JSONObject(response.toString());
+                    JSONArray array = object.getJSONArray("result");
+                    String data = array.optString(1);
+                    JSONArray     jsonArray = new JSONArray(data.toString());
+                    parseJsonFeedTwo(jsonArray);
+                }catch (JSONException e){
+
                 }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
             }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-        } else {
-            // making fresh volley request and getting json
-            jsonReq = new JsonObjectRequest(Request.Method.GET,
-                    URLTWO_comment, new Response.Listener<JSONObject>() {
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
 
-                @Override
-                public void onResponse(JSONObject response) {
-                    VolleyLog.d(TAG_REQUEST, "Response: " + response.toString());
-                    if (response != null) {
-                        pdialog.dismiss();
-                        //   dissmissDialog();
-                        parseJsonFeedTwo(response);
-                    }
-                }
-            }, new Response.ErrorListener() {
+                Map<String,String>param=new HashMap<>();
+                param.put("Key", "Simplicity");
+                param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                param.put("rtype", "viewcomment");
+                param.put("language","1");
+                param.put("qtype","health");
+                param.put("id",notifiid);
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d(TAG_REQUEST, "Error: " + error.getMessage());
-                }
-            });
+                return param;
+            }
+        };
 
-            // Adding request to volley request queue
-            jsonReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-            requestQueue.add(jsonReq);
-        }
-        return jsonReq;
+        requestQueue.add(request);
+
     }
-    private void parseJsonFeedTwo(JSONObject response) {
+
+    private void parseJsonFeedTwo(JSONArray response) {
         try {
-            feedArray = response.getJSONArray("result");
+            //feedArray = response.getJSONArray("result");
 
 
-            for (ii = 0; ii < feedArray.length(); ii++) {
-                obj = (JSONObject) feedArray.get(ii);
+            for (ii = 0; ii < response.length(); ii++) {
+                obj = (JSONObject) response.get(ii);
 
                 ItemModels model = new ItemModels();
                 //FeedItem model=new FeedItem();
-                String image = obj.isNull("thumb") ? null : obj
-                        .getString("thumb");
+                String image = obj.isNull("image") ? null : obj
+                        .getString("image");
                 model.setProfilepic(image);
                 model.setComment(obj.getString("comment"));
-                model.setPadate(obj.getString("pdate"));
+                model.setPadate(obj.getString("date"));
                 model.setName(obj.getString("name"));
-                model.setId(obj.getString("id"));
+                model.setId(obj.getString("user_id"));
                 if(feedArray.length()==0){
 
                     recycler_comment.setVisibility(View.GONE);
@@ -1500,65 +1484,57 @@ public class Healthylivingdescription extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    //Showing the progress dialog
-                    //final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlpost,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String s) {
-                                    //Disimissing the progress dialog
-                                    //  loading.dismiss();
-                                    //Showing toast message of the response
-                                    if (s.equalsIgnoreCase("error")) {
-                                        Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
-                                    } else {
-                                        MyDialogFragment.this.dismiss();
+                    try {
 
-                                    }
+                        StringRequest comment_post_request = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.e("Res", response.toString().trim());
+
+                                if (response.equalsIgnoreCase("error")) {
+                                    Toast.makeText(getActivity(), response, Toast.LENGTH_LONG).show();
+                                } else {
+
+                                        /*commentbox_editext.setText("");
+                                        AddnewCommnent();
+                                        scrollView.post(new Runnable() {
+                                            public void run() {
+                                                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                                            }
+                                        });*/
 
                                 }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError volleyError) {
-                                    //Dismissing the progress dialog
-                                    //  loading.dismiss();
-
-                                    //Showing toast
-                                    // Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                                }
-                            }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            //Converting Bitmap to String
-
-
-                            //Getting Image Name
-                            String description = commentbox.getText().toString().trim();
-
-                            //Creating parameters
-                            Map<String, String> params = new Hashtable<String, String>();
-
-                            //Adding parameters
-                            if (postid != null) {
-                                if (description != null) {
-                                    params.put(KEY_COMMENT, description);
-                                    params.put(KEY_TYPE, "health");
-                                    params.put(KEY_POSTID, postid);
-                                    params.put(KEY_MYUID, myuserid);
-                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
 
                             }
-                            return params;
-                        }
-                    };
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                String      description_comment = commentbox.getText().toString().trim();
 
-                    //Creating a Request Queue
-                    RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
 
-                    //Adding request to the queue
-                    requestQueue.add(stringRequest);
-                    //queue.add(stringRequest);
+                                Map<String, String> param = new Hashtable<String, String>();
+                                String keytepe = "article";
+                                Log.e("qty", keytepe);
+                                param.put("Key", "Simplicity");
+                                param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                                param.put("rtype", "comment");
+                                param.put("language", "1");
+                                param.put("id", postid);
+                                param.put("user_id", myuserid);
+                                param.put("comment", description_comment);
+                                param.put("qtype", "health");
+                                return param;
+                            }
+                        };
+                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                        requestQueue.add(comment_post_request);
+                    } catch (Exception e) {
+
+                    }
                 }
 
             });
@@ -1635,80 +1611,66 @@ public class Healthylivingdescription extends AppCompatActivity {
         }
 
         private void getData() {
-            //Adding the method to the queue by calling the method getDataFromServer
-            requestQueue.add(getDataFromTheServer(requestCount));
-            // getDataFromTheServer();
-            //Incrementing the request counter
-            requestCount++;
-        }
+            StringRequest request=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
 
-        private JsonObjectRequest getDataFromTheServer(int requestCount) {
-
-            URLTWO = URLCOMMENT +postid+"&page="+ requestCount;
-
-
-            Cache cache = AppControllers.getInstance().getRequestQueue().getCache();
-            Cache.Entry entry = cache.get(URLTWO);
-            if (entry != null) {
-                // fetch the data from cache
-                try {
-                    String data = new String(entry.data, "UTF-8");
+                    Log.e("Res",response.toString());
                     try {
-                        // dissmissDialog();
-                        parseJsonFeed(new JSONObject(data));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        JSONObject object = new JSONObject(response.toString());
+                        JSONArray array = object.getJSONArray("result");
+                        String data = array.optString(1);
+                        JSONArray     jsonArray = new JSONArray(data.toString());
+                        parseJsonFeed(jsonArray);
+                    }catch (JSONException e){
+
                     }
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
                 }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
 
-            } else {
-                // making fresh volley request and getting json
-                jsonReq = new JsonObjectRequest(Request.Method.GET,
-                        URLTWO, new Response.Listener<JSONObject>() {
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        VolleyLog.d(TAG_REQUEST, "Response: " + response.toString());
-                        if (response != null) {
-                            //   dissmissDialog();
-                            parseJsonFeed(response);
-                        }
-                    }
-                }, new Response.ErrorListener() {
+                    Map<String,String>param=new HashMap<>();
+                    param.put("Key", "Simplicity");
+                    param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                    param.put("rtype", "viewcomment");
+                    param.put("language","1");
+                    param.put("qtype","health");
+                    param.put("id",postid);
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d(TAG_REQUEST, "Error: " + error.getMessage());
-                    }
-                });
+                    return param;
+                }
+            };
 
-                // Adding request to volley request queue
-                jsonReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-                requestQueue.add(jsonReq);
-            }
-            return jsonReq;
+            requestQueue.add(request);
+
         }
 
-        private void parseJsonFeed(JSONObject response) {
+
+        private void parseJsonFeed(JSONArray response) {
             try {
-                feedArray = response.getJSONArray("result");
+                //  feedArray = response.getJSONArray("result");
 
 
-                for (ii = 0; ii < feedArray.length(); ii++) {
-                    obj = (JSONObject) feedArray.get(ii);
+                for (ii = 0; ii < response.length(); ii++) {
+                    obj = (JSONObject) response.get(ii);
 
                     ItemModels model = new ItemModels();
                     //FeedItem model=new FeedItem();
-                    String image = obj.isNull("thumb") ? null : obj
-                            .getString("thumb");
+                    String image = obj.isNull("image") ? null : obj
+                            .getString("image");
                     model.setProfilepic(image);
                     model.setComment(obj.getString("comment"));
-                    model.setPadate(obj.getString("pdate"));
+                    model.setPadate(obj.getString("date"));
                     model.setName(obj.getString("name"));
-                    model.setId(obj.getString("id"));
+                    model.setId(obj.getString("user_id"));
 
 
                     commentlist.add(model);
