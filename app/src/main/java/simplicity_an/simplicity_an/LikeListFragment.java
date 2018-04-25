@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -30,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -37,7 +39,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import simplicity_an.simplicity_an.Utils.Configurl;
 
 /**
  * Created by kuppusamy on 5/24/2017.
@@ -69,7 +75,7 @@ import java.util.List;
 com.android.volley.RequestQueue requestQueue;
         ImageLoader mImageLoader;
         ImageButton closedialog;
-
+    JSONArray jsonArray;
         String likes_to_load,likes_qtype;
         public LikeListFragment() {
 
@@ -124,13 +130,65 @@ com.android.volley.RequestQueue requestQueue;
             pdialog.show();
             pdialog.setContentView(R.layout.custom_progressdialog);
             pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
+           StringRequest jsonreq = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
 
 
-                public void onResponse(JSONObject response) {
+                public void onResponse(String response) {
+
+                        Log.e("Response","likes"+response.toString());
+                       try {
+                           dissmissDialog();
+                            JSONObject object=new JSONObject(response.toString());
+                            JSONArray array=object.getJSONArray("result");
+                            String data=array.optString(1);
+                             jsonArray=new JSONArray(data.toString());
+                            if (jsonArray.length() < 10) {
+                                for (ii = 0; ii < jsonArray.length(); ii++) {
+                                    obj = (JSONObject) jsonArray.get(ii);
+
+                                    ItemModel model = new ItemModel();
+
+                                    String image = obj.isNull("image") ? null : obj
+                                            .getString("image");
+                                    model.setImage(image);
+
+                                    model.setName(obj.getString("name"));
+
+                                    model.setId(obj.getString("user_id"));
+
+                                    modelListlikes.add(model);
+
+                                }
+
+                                // notify data changes to list adapater
+                                rcAdapter.notifyDataSetChanged();
+                            }else {
+                                for (ii = 0; ii <= 10; ii++) {
+                                    obj = (JSONObject) jsonArray.get(ii);
 
 
-                    if (response != null) {
+                                    ItemModel model = new ItemModel();
+
+                                    String image = obj.isNull("image") ? null : obj
+                                            .getString("image");
+                                    model.setImage(image);
+                                    model.setName(obj.getString("name"));
+
+
+                                    model.setId(obj.getString("user_id"));
+
+
+                                    modelListlikes.add(model);
+                                }
+
+                                // notify data changes to list adapater
+                                rcAdapter.notifyDataSetChanged();
+                            }
+                        }catch (JSONException e){
+
+                        }
+
+                    /*if (response != null) {
                         dissmissDialog();
                         try {
                             feedArray = response.getJSONArray("result");
@@ -179,14 +237,29 @@ com.android.volley.RequestQueue requestQueue;
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                    }
+                    }*/
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
 
                 }
-            });
+            }){
+               @Override
+               protected Map<String, String> getParams() throws AuthFailureError {
+                   Map<String,String>params=new HashMap<>();
+
+                   params.put("Key", "Simplicity");
+                   params.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                   params.put("rtype", "viewlike");
+                   params.put("language","1");
+                   params.put("qtype",likes_qtype);
+                   params.put("id",likes_to_load);
+
+
+                   return params;
+               }
+           };
             jsonreq.setRetryPolicy(new DefaultRetryPolicy(4000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             jsonreq.setTag(TAG_REQUEST);
 
@@ -217,7 +290,7 @@ com.android.volley.RequestQueue requestQueue;
                             try {
 
                                 for (i = index; i < end; i++) {
-                                    objtwo = (JSONObject) feedArray.get(i);
+                                    objtwo = (JSONObject) jsonArray.get(i);
                                     ItemModel modelone = new ItemModel();
 
 
@@ -226,7 +299,7 @@ com.android.volley.RequestQueue requestQueue;
                                     modelone.setImage(image);
                                     modelone.setName(objtwo.getString("name"));
 
-                                    modelone.setId(objtwo.getString("id"));
+                                    modelone.setId(objtwo.getString("user_id"));
 
 
                                     modelListlikes.add(modelone);

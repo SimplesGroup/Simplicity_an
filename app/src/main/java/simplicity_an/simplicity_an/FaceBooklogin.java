@@ -30,6 +30,7 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,6 +40,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
+import simplicity_an.simplicity_an.Utils.Configurl;
 
 /**
  * Created by kuppusamy on 4/7/2016.
@@ -70,7 +72,7 @@ ProgressDialog pdialog;
     private String KEY_EMAIL= "email";
     private String KEY_GENDER = "gender";
     RequestQueue requestQueue;
-    private String KEY_PROFILEIMAGE = "image";
+    private String KEY_PROFILEIMAGE = "picture_link";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -257,7 +259,7 @@ ProgressDialog pdialog;
                         requestQueue.add(facesigin);*/
 
 
-                        StringRequest upload=new StringRequest(Request.Method.POST, UPLOAD_URL, new Response.Listener<String>() {
+                        StringRequest upload=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
                                 if(response.toString().trim().equalsIgnoreCase("no")) {
@@ -272,17 +274,19 @@ ProgressDialog pdialog;
                                         try {
                                             JSONObject data = new JSONObject(response);
                                             String dir = data.getString("result");
-                                            JSONObject object=new JSONObject(dir);
-                                            //String dir2=object.getString("message");
+                                            JSONArray object=new JSONArray(dir);
+                                            String dir2=object.optString(1);
+                                            JSONArray jsonArray=new JSONArray(dir2.toString());
                                             String name=null;
                                             String userid=null;
                                             String userimage=null;
                                             String usermailid=null;
-                                            for (int i=0;i<object.length();i++){
-                                                name=object.getString("name");
-                                                userid=object.getString("user_id");
-                                                userimage=object.getString("image");
-                                                usermailid=object.getString("email");
+                                            for (int i=0;i<jsonArray.length();i++){
+                                                JSONObject obj=jsonArray.getJSONObject(i);
+                                                name=obj.getString("name");
+                                                userid=obj.getString("user_id");
+                                                userimage=obj.getString("picture_link");
+                                                usermailid=obj.getString("email");
                                             }
                                             SharedPreferences.Editor editor = sharedpreferences.edit();
                                             editor.putString(MYUSERID,userid);
@@ -318,7 +322,9 @@ ProgressDialog pdialog;
                         }){
                             protected Map<String ,String> getParams()throws AuthFailureError{
                                 Map<String,String> params=new Hashtable<String, String>();
-
+                                params.put("Key", "Simplicity");
+                                params.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                                params.put("rtype", "user_login");
                                 params.put(KEY_EMAIL,emaildata);
                                 params.put(KEY_NAME,text);
                                 params.put(KEY_PROFILEIMAGE,"https://graph.facebook.com/" + profileimage + "/picture");

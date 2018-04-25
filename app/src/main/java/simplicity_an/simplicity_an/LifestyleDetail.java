@@ -472,23 +472,19 @@ public class LifestyleDetail extends AppCompatActivity {
                     String url="http://simpli-city.in/request.php?rtype=comments2&key=simples";
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(commentbox_editext.getWindowToken(), 0);
-                    //Showing the progress dialog
-                    //final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlpost,
-                            new Response.Listener<String>() {
+                    if(myprofileid!=null) {
+
+                        try {
+
+                            StringRequest comment_post_request = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                                 @Override
-                                public void onResponse(String s) {
-                                    Log.e("Res",s.toString().trim());
+                                public void onResponse(String response) {
+                                    Log.e("Res", response.toString().trim());
 
-                                    //Disimissing the progress dialog
-                                    //  loading.dismiss();
-                                    //Showing toast message of the response
-                                    if (s.equalsIgnoreCase("error")) {
-                                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                                    if (response.equalsIgnoreCase("error")) {
+                                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                                     } else {
-                                        //MyDialogFragment.this.dismiss();
 
-                                        //getData();
                                         commentbox_editext.setText("");
                                         AddnewCommnent();
                                         scrollView.post(new Runnable() {
@@ -496,56 +492,44 @@ public class LifestyleDetail extends AppCompatActivity {
                                                 scrollView.fullScroll(ScrollView.FOCUS_DOWN);
                                             }
                                         });
+
                                     }
-
                                 }
-                            },
-                            new Response.ErrorListener() {
+                            }, new Response.ErrorListener() {
                                 @Override
-                                public void onErrorResponse(VolleyError volleyError) {
-                                    //Dismissing the progress dialog
-                                    //  loading.dismiss();
+                                public void onErrorResponse(VolleyError error) {
 
-                                    //Showing toast
-                                    // Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
                                 }
                             }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            //Converting Bitmap to String
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    description_comment = commentbox_editext.getText().toString().trim();
 
 
-                            //Getting Image Name
-                            description_comment = commentbox_editext.getText().toString().trim();
-
-                            //Creating parameters
-                            Map<String, String> params = new Hashtable<String, String>();
-                            params.put("qtype", "news");
-                            params.put("comment", description_comment);
-                            params.put("id", notifiid);
-                            params.put("user_id", myprofileid);
-                            //  params.put("user_id", myuserid);
-                         /*   //Adding parameters
-                            if (postid != null) {
-                                if (description != null) {
-                                  //  params.put("comment", description);
-                                    params.put("qtype", "news");
-                                  //  params.put("qid", postid);
-                                  //  params.put("user_id", myuserid);
+                                    Map<String, String> param = new Hashtable<String, String>();
+                                    String keytepe = "article";
+                                    Log.e("qty", keytepe);
+                                    param.put("Key", "Simplicity");
+                                    param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                                    param.put("rtype", "comment");
+                                    param.put("language", "1");
+                                    param.put("id", notifiid);
+                                    param.put("user_id", myprofileid);
+                                    param.put("comment", description_comment);
+                                    param.put("qtype", "lifestyle");
+                                    return param;
                                 }
+                            };
+                            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                            requestQueue.add(comment_post_request);
+                        } catch (Exception e) {
 
-                            }*/
-                            return params;
                         }
-                    };
-
-                    //Creating a Request Queue
-                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                    stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-                    //Adding request to the queue
-                    requestQueue.add(stringRequest);
-                    //queue.add(stringRequest);
+                    }else {
+                        Intent signin=new Intent(getApplicationContext(),SigninpageActivity.class);
+                        startActivity(signin);
+                        finish();
+                    }
                 }
 
             });

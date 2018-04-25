@@ -27,6 +27,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,6 +35,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
+import simplicity_an.simplicity_an.Utils.Configurl;
 
 public class GoogleSignintwo extends AppCompatActivity implements  GoogleApiClient.OnConnectionFailedListener {
 
@@ -61,7 +63,7 @@ public class GoogleSignintwo extends AppCompatActivity implements  GoogleApiClie
     private String KEY_EMAIL= "email";
     private String KEY_GENDER = "gender";
     public static final String Language = "lamguage";
-    private String KEY_PROFILEIMAGE = "image";
+    private String KEY_PROFILEIMAGE = "picture_link";
     String contentid;
 String UPLOAD_CHECK_USER="http://simpli-city.in/request2.php?rtype=checkuser&key=simples";
 String activity,gcmids;
@@ -263,7 +265,7 @@ Log.e("Email",gcmids);
             //Adding request to the queue
             requestQueue.add(signintwo);
 */
-            StringRequest upload=new StringRequest(Request.Method.POST, UPLOAD_URL, new Response.Listener<String>() {
+            StringRequest upload=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String res) {
                     if(res.toString().trim().equalsIgnoreCase("no")){
@@ -278,18 +280,20 @@ Log.e("Email",gcmids);
                             try {
                                 JSONObject data = new JSONObject(res);
                                 String dir = data.getString("result");
-                                JSONObject object=new JSONObject(dir);
-                                //String dir2=object.getString("message");
+                                JSONArray object=new JSONArray(dir);
+                               String dir2=object.optString(1);
+                                JSONArray jsonArray=new JSONArray(dir2.toString());
                                 String name=null;
                                 String userid=null;
                                 String userimage=null;
                                 String usermailid=null;
-                                for (int i=0;i<object.length();i++){
-                                    name=object.getString("name");
-                                    userid=object.getString("user_id");
-                                    userimage=object.getString("image");
-                                    usermailid=object.getString("email");
-                                }
+                                for (int i=0;i<jsonArray.length();i++){
+                                    JSONObject obj=jsonArray.getJSONObject(i);
+                                    name=obj.getString("name");
+                                    userid=obj.getString("user_id");
+                                    userimage=obj.getString("picture_link");
+                                    usermailid=obj.getString("email");
+                              }
                                 SharedPreferences.Editor editor = sharedpreferences.edit();
                                 editor.putString(MYUSERID,userid);
                                 editor.putString(USERNAME,name);
@@ -338,7 +342,9 @@ Log.e("Email",gcmids);
             }){
                 protected Map<String ,String> getParams()throws AuthFailureError{
                     Map<String,String> params=new Hashtable<String, String>();
-
+                    params.put("Key", "Simplicity");
+                    params.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                    params.put("rtype", "user_login");
                     params.put(KEY_EMAIL,acct.getEmail());
                     params.put(KEY_NAME,acct.getDisplayName());
                     params.put(KEY_PROFILEIMAGE,acct.getPhotoUrl().toString());
