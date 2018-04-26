@@ -1173,17 +1173,17 @@ onBackPressed();
                 model.setPadate(obj.getString("date"));
                 model.setName(obj.getString("name"));
                 model.setId(obj.getString("user_id"));
-                if(feedArray.length()==0){
+                if(response.length()==0){
 
                     recycler_comment.setVisibility(View.GONE);
                 }else {
                     recycler_comment.setVisibility(View.VISIBLE);
 
                 }
-                if(feedArray.length()==0){
+                if(response.length()==0){
                     loadmore_title.setVisibility(View.GONE);
                 }else {
-                    if(feedArray.length()>4){
+                    if(response.length()>4){
                         loadmore_title.setText("Load More");
                     }else {
                         loadmore_title.setVisibility(View.GONE);
@@ -1526,7 +1526,7 @@ onBackPressed();
                             Log.e("haint", "Load More 2");
 
 
-                            getData();
+                          //  getData();
 
 
                             rcAdapter.setLoaded();
@@ -1641,6 +1641,8 @@ onBackPressed();
                     model.setProfilepic(image);
                     model.setComment(obj.getString("comment"));
                     model.setPadate(obj.getString("date"));
+
+
                     model.setName(obj.getString("name"));
                     model.setId(obj.getString("user_id"));
 

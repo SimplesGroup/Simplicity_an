@@ -1494,7 +1494,7 @@ ScrollView scrollView;
                             Log.e("haint", "Load More 2");
 
 
-                            getData();
+                            //getData();
 
 
                             rcAdapter.setLoaded();
