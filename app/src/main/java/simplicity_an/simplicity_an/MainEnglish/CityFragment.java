@@ -53,6 +53,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
@@ -472,45 +473,57 @@ public class CityFragment extends Fragment {
         specialday_image=(NetworkImageView)view.findViewById(R.id.special_day_images);
         if (mImageLoader == null)
             mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getActivity()).getImageLoader();
-        JsonObjectRequest special=new JsonObjectRequest(Request.Method.GET, specialdayurl, new Response.Listener<JSONObject>() {
+        StringRequest special=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(String response) {
                 try {
-                    JSONArray feedarray=response.getJSONArray("result");
-                    for (int k=0;k<feedarray.length();k++) {
-                        if (feedarray.length() > 0) {
+Log.e("RES",response.toString());
+
+                        JSONObject object=new JSONObject(response.toString());
+                        JSONArray array=object.getJSONArray("result");
+
+                    for (int k=0;k<array.length();k++) {
+                        if (array.length() > 0) {
 
 
-                            JSONObject obj = (JSONObject) feedarray.get(k);
-                          ItemModel model = new ItemModel();
-                            model.setImage_special(obj.getString("image"));
-                            model.setSpecialdaytitle(obj.getString("title"));
-                            // model.setHeight(obj.getInt("height"));
-                            model.setWidth(obj.getInt("width"));
-                            if (obj.getString("title") != null) {
-                                title_coimbatore.setText(obj.getString("title"));
-
-                            } else {
+                            JSONObject obj = (JSONObject) array.get(k);
+                            ItemModel model = new ItemModel();
+                            model.setImage_special(obj.getString("doodle_image"));
+                            model.setSpecialdaytitle(obj.getString("doodle_title"));
+                            if (obj.getString("doodle").equals("no")) {
                                 title_coimbatore.setText("Vanakkam Kovai");
-                                layout = (LinearLayout)getActivity().findViewById(R.id.title);
-                                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)layout.getLayoutParams();
+                                layout = (LinearLayout) getActivity().findViewById(R.id.title);
+                                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) layout.getLayoutParams();
                                 params.setMargins(0, 160, 0, 0);
                                 layout.setLayoutParams(params);
-                            }
-                            if (obj.getString("image") != null) {
-                                final float scale = getActivity().getResources().getDisplayMetrics().density;
-                                int pixels = (int) (obj.getInt("height") * scale + 0.5f);
-                                int width = (int) (obj.getInt("width") * scale + 0.5f);
-                                Log.e("Dp", String.valueOf(pixels) + "," + String.valueOf(width));
+                            } else {
+                                // model.setHeight(obj.getInt("height"));
+                                model.setWidth(obj.getInt("doodle_width"));
+                                if (obj.getString("doodle_title") != null) {
+                                    title_coimbatore.setText(obj.getString("doodle_title"));
+
+                                } else {
+                                    title_coimbatore.setText("Vanakkam Kovai");
+                                    layout = (LinearLayout) getActivity().findViewById(R.id.title);
+                                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) layout.getLayoutParams();
+                                    params.setMargins(0, 160, 0, 0);
+                                    layout.setLayoutParams(params);
+                                }
+                                if (obj.getString("doodle_image") != null) {
+                                    final float scale = getActivity().getResources().getDisplayMetrics().density;
+                                    int pixels = (int) (obj.getInt("doodle_height") * scale + 0.5f);
+                                    int width = (int) (obj.getInt("doodle_width") * scale + 0.5f);
+                                    Log.e("Dp", String.valueOf(pixels) + "," + String.valueOf(width));
                      /*  specialday_image.getLayoutParams().height=obj.getInt("height");
                         specialday_image.getLayoutParams().width=obj.getInt("width");*/
-                                specialday_image.getLayoutParams().height = pixels;
-                                specialday_image.getLayoutParams().width = width;
-                                specialday_image.setVisibility(View.VISIBLE);
-                                specialday_image.setImageUrl(obj.getString("image"), mImageLoader);
-                            } else {
-                                specialday_image.setVisibility(View.GONE);
+                                    specialday_image.getLayoutParams().height = pixels;
+                                    specialday_image.getLayoutParams().width = width;
+                                    specialday_image.setVisibility(View.VISIBLE);
+                                    specialday_image.setImageUrl(obj.getString("doodle_image"), mImageLoader);
+                                } else {
+                                    specialday_image.setVisibility(View.GONE);
 
+                                }
                             }
                         }
                     }
@@ -523,7 +536,20 @@ public class CityFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
             }
-        });
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>param=new HashMap<>();
+                param.put("Key","Simplicity");
+                param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                param.put("rtype","playerid_new");
+                param.put("player_id",playerid);
+                param.put("language","1");
+                param.put("phone","android");
+
+                return param;
+            }
+        };
         special.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(special);
         /*if(myprofileid!=null) {

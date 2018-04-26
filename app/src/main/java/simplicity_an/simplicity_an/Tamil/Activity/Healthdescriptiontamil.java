@@ -442,7 +442,7 @@ public class Healthdescriptiontamil extends AppCompatActivity {
                     param.put("Key","Simplicity");
                     param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
                     param.put("language","2");
-                    param.put("rtype","healthliving");
+                    param.put("rtype","health");
                     param.put("id",notifiid);
                     if(myprofileid!=null){
                         param.put("user_id",myprofileid);
