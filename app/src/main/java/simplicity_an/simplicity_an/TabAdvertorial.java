@@ -947,6 +947,8 @@ SwipeRefreshLayout swipeRefresh;
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
 
+                String simplycity_title_fontPath_bold = "fonts/PlayfairDisplayBold.ttf";;
+                Typeface seguiregular1 = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath_bold);
 
                 final ItemModel itemmodel = modelList.get(position);
                 /*userViewHolder.comment_button.setText("Comment");
@@ -1007,7 +1009,7 @@ SwipeRefreshLayout swipeRefresh;
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
-                userViewHolder.title_item.setTypeface(seguiregular);
+                userViewHolder.title_item.setTypeface(seguiregular1);
                 userViewHolder.item_type_name.setText(itemmodel.getQtype());
                 userViewHolder.item_type_name.setTypeface(seguiregular_bold);
                 userViewHolder.date.setText(itemmodel.getPdate());

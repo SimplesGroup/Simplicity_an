@@ -974,6 +974,8 @@ private  int currentvisiblecount;
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
 
+                String simplycity_title_fontPath_bold = "fonts/PlayfairDisplayBold.ttf";;
+                Typeface seguiregular1 = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath_bold);
 
                 final ItemModel itemmodel = modelList.get(position);
                 userViewHolder.comment_button.setText("Comment");
@@ -1053,7 +1055,12 @@ private  int currentvisiblecount;
                 mediaPlayer=new MediaPlayer();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
-                userViewHolder.title_item.setTypeface(seguiregular);
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    userViewHolder.title_item.setTypeface(seguiregular1);
+                }
+                else{
+                    userViewHolder.title_item.setTypeface(seguiregular);
+                }
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }
                 userViewHolder.item_type_name.setTypeface(seguiregular_bold);
                // userViewHolder.date.setText(itemmodel.getPdate());

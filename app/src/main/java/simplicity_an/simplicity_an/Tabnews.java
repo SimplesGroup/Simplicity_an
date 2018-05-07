@@ -66,6 +66,8 @@ import java.util.Map;
 import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
 import simplicity_an.simplicity_an.Utils.Configurl;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 /**
  * Created by kuppusamy on 9/26/2016.
  */
@@ -981,13 +983,16 @@ SwipeRefreshLayout swipeRefresh;
 
                 final Userviewholdertaball userViewHolder = (Userviewholdertaball) holder;
 
-                String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
+                String simplycity_title_fontPath =  "fonts/playfairDisplayRegular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
 
                 String simplycity_title_reqular = "fonts/Lora-Regular.ttf";;
                 final Typeface seguiregular_bold = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reqular);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
+                String simplycity_title_fontPath_bold = "fonts/PlayfairDisplayBold.ttf";;
+                Typeface seguiregular1 = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath_bold);
+
 
                 String simplycity_title = "fonts/Lora-Regular.ttf";
                 final Typeface pala = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
@@ -1051,7 +1056,12 @@ SwipeRefreshLayout swipeRefresh;
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
-                userViewHolder.title_item.setTypeface(seguiregular);
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    userViewHolder.title_item.setTypeface(seguiregular1);
+                }
+                else{
+                    userViewHolder.title_item.setTypeface(seguiregular);
+                }
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular_bold);
                 //userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(seguiregular_bold);
@@ -1573,6 +1583,8 @@ SwipeRefreshLayout swipeRefresh;
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
 
+                String simplycity_title_fontPath_bold = "fonts/PlayfairDisplayBold.ttf";;
+                Typeface seguiregular1 = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath_bold);
 
                 final ItemModel itemmodel = modelList.get(position);
                 userViewHolder.comment_button.setText("Comment");
@@ -1637,8 +1649,16 @@ SwipeRefreshLayout swipeRefresh;
                 userViewHolder.editername.setText(itemmodel.getEditername());
 
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
-                userViewHolder.title_item.setTypeface(seguiregular);
-                if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular);
+
+
+
+                userViewHolder.title_item.setTypeface(seguiregular1);
+                if(itemmodel.getEditername().equals("")){
+                    userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));
+                }else {
+                    userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));
+                }
+                userViewHolder.item_type_name.setTypeface(seguiregular);
                // userViewHolder.date.setText(itemmodel.getPdate());
                // userViewHolder.likescount.setTypeface(seguiregular);
                 userViewHolder.date.setTypeface(seguiregular);
@@ -1765,8 +1785,6 @@ SwipeRefreshLayout swipeRefresh;
                         userViewHolder.feed_typethree_twos.setVisibility(View.GONE);
                         userViewHolder.feed_typethree_threes.setVisibility(View.GONE);
                         userViewHolder.feedImageView.setVisibility(View.GONE);
-
-
                     }
                 }
                 int albumcountsdata=itemmodel.getAlbumcount();

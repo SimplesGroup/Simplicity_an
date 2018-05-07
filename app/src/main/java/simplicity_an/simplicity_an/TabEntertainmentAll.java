@@ -1024,6 +1024,8 @@ String youtubelink;
                 final Typeface seguiregular_bold = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reqular);
                 if (mImageLoader == null)
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
+                String simplycity_title_fontPath_bold = "fonts/PlayfairDisplayBold.ttf";;
+                Typeface seguiregular1 = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath_bold);
 
 
                 final ItemModel itemmodel = modelList.get(position);
@@ -1116,7 +1118,12 @@ String youtubelink;
                 userViewHolder.editername.setTypeface(seguiregular);
                 userViewHolder.editername.setText(itemmodel.getEditername());
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
-                userViewHolder.title_item.setTypeface(seguiregular);
+                if(colorcodes.equals("#FFFFFFFF")) {
+                    userViewHolder.title_item.setTypeface(seguiregular1);
+                }
+                else{
+                    userViewHolder.title_item.setTypeface(seguiregular);
+                }
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular_bold);
                // userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(tf_play);
