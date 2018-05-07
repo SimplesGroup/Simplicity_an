@@ -391,7 +391,11 @@ public class Tabcolumnist extends Fragment {
                 param.put("rtype","alldata");
                 param.put("qtype","columnist");
                 param.put("page",String.valueOf(requestCount));
+                if(myprofileid!=null){
+                    param.put("user_id",myprofileid);
+                }else {
 
+                }
                 return param;
             }
         };

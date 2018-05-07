@@ -451,43 +451,43 @@ public class PhotoStoriesDetail extends AppCompatActivity {
 //        pdialog.show();
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));*/
-            JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, URLTWO, new Response.Listener<JSONObject>() {
+           StringRequest jsonreq = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
 
 
-                public void onResponse(JSONObject response) {
+                public void onResponse(String response) {
 
 
                     if (response != null) {
                         Log.e("RES", response.toString());
                         dissmissDialog();
-                        try {
-
-
-                            JSONArray array = response.getJSONArray("general");
-                            for (int k = 0; k < array.length(); k++) {
-                                JSONObject object = (JSONObject) array.get(k);
+                       try {
+                           JSONObject object1=new JSONObject(response.toString());
+                           JSONArray array=object1.getJSONArray("result");
+                           String data=array.optString(1);
+                           JSONArray jsonArray=new JSONArray(data.toString());
+                           JSONObject object=null;
+                           // JSONArray array = response.getJSONArray("general");
+                            for (int k = 0; k < jsonArray.length(); k++) {
+                                 object = (JSONObject) jsonArray.get(k);
                                 photostory_title.setText(Html.fromHtml(object.getString("title")));
                                 photostory_title.setTypeface(tf_tit);
-                                photostory_date.setText(Html.fromHtml(object.getString("source")) +"\n"+Html.fromHtml(object.getString("pdate")));
-                            }
+                                photostory_date.setText(Html.fromHtml(object.getString("photo_credit")) +"\n"+Html.fromHtml(object.getString("date")));
 
 
-                            feedArray = response.getJSONArray("palbum");
+
+                           feedArray = object.getJSONArray("album");
                             if (feedArray.length() < 10) {
                                 for (ii = 0; ii < feedArray.length(); ii++) {
-                                    obj = (JSONObject) feedArray.get(ii);
+                                  //  obj = (JSONObject) feedArray.get(ii);
 
                                     ItemModel model = new ItemModel();
 
-                                    String image = obj.isNull("image") ? null : obj
-                                            .getString("image");
-                                    model.setImage(image);
 
 
-                                    //  model.setName(obj.getString("name"));
+                                  String images=feedArray.optString(ii);
+                                  Log.e("IMG",images.toString());
 
-                                    // model.setId(obj.getString("id"));
-
+                                    model.setImage(images);
                                     modelListlikes.add(model);
 
                                 }
@@ -501,14 +501,15 @@ public class PhotoStoriesDetail extends AppCompatActivity {
 
                                     ItemModel model = new ItemModel();
 
-                                    String image = obj.isNull("image") ? null : obj
-                                            .getString("image");
-                                    model.setImage(image);
 
+                                    String images=feedArray.optString(ii);
+                                    Log.e("IMG",images.toString());
+
+                                    model.setImage(images);
 
                                     modelListlikes.add(model);
                                 }
-
+  }
                                 // notify data changes to list adapater
                                 rcAdapter.notifyDataSetChanged();
                             }
@@ -522,7 +523,23 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
 
                 }
-            });
+            }){
+               @Override
+               protected Map<String, String> getParams() throws AuthFailureError {
+                   Map<String,String>param=new HashMap<>();
+                   param.put("Key","Simplicity");
+                   param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                   param.put("language","1");
+                   param.put("rtype","photostories");
+                   param.put("id",likes_to_load);
+                   if(myprofileid!=null){
+                       param.put("user_id",myprofileid);
+                   }else {
+
+                   }
+                   return param;
+               }
+           };
             jsonreq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 5, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
             requestQueue.add(jsonreq);
@@ -532,17 +549,12 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                 @Override
                 public void onLoadMore() {
                     Log.e("haint", "Load More");
-                    // modelList.add(null);
-                    // adapt.notifyItemInserted(modelList.size() - 1);
 
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             Log.e("haint", "Load More 2");
 
-                            //Remove loading item
-                            // modelList.remove(modelList.size() - 1);
-                            // rcAdapter.notifyItemRemoved(modelList.size());
 
                             //Load data
                             int index = modelListlikes.size();
@@ -553,18 +565,11 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                                 for (i = index; i < end; i++) {
                                     objtwo = (JSONObject) feedArray.get(i);
                                     ItemModel modelone = new ItemModel();
-                                    String image = objtwo.isNull("image") ? null : objtwo
-                                            .getString("image");
-                                    modelone.setImage(image);
-                                   /* JSONArray albumimages=objtwo.getJSONArray("palbum");
-                                    for(int j=0;j<albumimages.length();j++){
-                                        JSONObject album=(JSONObject)albumimages.get(j);
-                                        String image = album.isNull("image") ? null : album
-                                                .getString("image");
-                                        modelone.setImage(image);
 
-                                    }*/
+                                    String images=feedArray.optString(ii);
+                                    Log.e("IMG",images.toString());
 
+                                    modelone.setImage(images);
 
                                     modelListlikes.add(modelone);
                                 }
@@ -893,7 +898,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
         public UserViewHoldercomment(View itemView) {
             super(itemView);
 
-            // im = (ImageView) itemView.findViewById(R.id.imageViewlitle);
+
 
             imageview = (NetworkImageView) itemView.findViewById(R.id.thumbnailfoodcategory);
 
@@ -960,32 +965,32 @@ public class PhotoStoriesDetail extends AppCompatActivity {
 
     private void parseJsonFeedTwo(JSONArray response) {
         try {
-            //feedArray = response.getJSONArray("result");
+
 
 
             for (ii = 0; ii < response.length(); ii++) {
                 obj = (JSONObject) response.get(ii);
 
                 ItemModels model = new ItemModels();
-                //FeedItem model=new FeedItem();
+
                 String image = obj.isNull("image") ? null : obj
                         .getString("image");
                 model.setProfilepic(image);
                 model.setComment(obj.getString("comment"));
-                model.setPadate(obj.getString("date"));
+                //model.setPadate(obj.getString("date"));
                 model.setName(obj.getString("name"));
                 model.setId(obj.getString("user_id"));
-                if(feedArray.length()==0){
+                if(response.length()==0){
 
                     recycler_comment.setVisibility(View.GONE);
                 }else {
                     recycler_comment.setVisibility(View.VISIBLE);
 
                 }
-                if(feedArray.length()==0){
+                if(response.length()==0){
                     loadmore_title.setVisibility(View.GONE);
                 }else {
-                    if(feedArray.length()>4){
+                    if(response.length()>4){
                         loadmore_title.setText("Load More");
                     }else {
                         loadmore_title.setVisibility(View.GONE);
@@ -999,7 +1004,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
             // notify data changes to list adapater
             rcAdapter.notifyDataSetChanged();
 
-            // notify data changes to list adapater
+
 
 
         } catch (JSONException e) {

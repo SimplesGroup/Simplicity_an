@@ -379,7 +379,11 @@ OnFragmentInteractionListener mListener;
                 param.put("rtype","alldata");
                 param.put("qtype","govt");
                 param.put("page",String.valueOf(requestCount));
+                if(myprofileid!=null){
+                    param.put("user_id",myprofileid);
+                }else {
 
+                }
                 return param;
             }
         };

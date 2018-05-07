@@ -499,7 +499,11 @@ public class EventsDescription extends AppCompatActivity {
                     param.put("language","1");
                     param.put("rtype","event");
                     param.put("id",notifiid);
+                    if(myprofileid!=null){
+                        param.put("user_id",myprofileid);
+                    }else {
 
+                    }
                     return param;
                 }
             };

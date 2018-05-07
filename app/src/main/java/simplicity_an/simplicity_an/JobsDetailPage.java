@@ -447,7 +447,11 @@ public class JobsDetailPage extends AppCompatActivity {
                 param.put("language","1");
                 param.put("rtype","job");
                 param.put("id",notifiid);
+                if(myprofileid!=null){
+                    param.put("user_id",myprofileid);
+                }else {
 
+                }
                 return param;
             }
         };
