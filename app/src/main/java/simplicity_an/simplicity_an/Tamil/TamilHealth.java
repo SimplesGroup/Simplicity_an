@@ -69,6 +69,7 @@ import simplicity_an.simplicity_an.Columnsdetailpage;
 import simplicity_an.simplicity_an.DividerItemDecoration;
 import simplicity_an.simplicity_an.LifestyleDetail;
 import simplicity_an.simplicity_an.LikeListFragment;
+import simplicity_an.simplicity_an.MusicPlayer.Playback;
 import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
 import simplicity_an.simplicity_an.MySingleton;
 import simplicity_an.simplicity_an.OnLoadMoreListener;
@@ -2165,14 +2166,17 @@ OnFragmentInteractionListener mListener;
                 public void onClick(View v) {
 
                     if(myuserid!=null) {
-
+                        pdialog = new ProgressDialog(getActivity());
+                        pdialog.show();
+                        pdialog.setContentView(R.layout.custom_progressdialog);
+                        pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         try {
 
                             StringRequest comment_post_request = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
                                     Log.e("Res", response.toString().trim());
-
+                                        pdialog.dismiss();
                                     if (response.equalsIgnoreCase("error")) {
                                         Toast.makeText(getActivity(), response, Toast.LENGTH_LONG).show();
                                     } else {

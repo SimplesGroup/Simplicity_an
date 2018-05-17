@@ -2154,7 +2154,10 @@ public class Tabcolumnisttamil extends Fragment {
             post_review.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    pdialog = new ProgressDialog(getActivity());
+                    pdialog.show();
+                    pdialog.setContentView(R.layout.custom_progressdialog);
+                    pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     //Showing the progress dialog
                     //final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, urlpost,
@@ -2164,6 +2167,7 @@ public class Tabcolumnisttamil extends Fragment {
                                     //Disimissing the progress dialog
                                     //  loading.dismiss();
                                     //Showing toast message of the response
+                                    pdialog.dismiss();
                                     if (s.equalsIgnoreCase("error")) {
                                         Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
                                     } else {

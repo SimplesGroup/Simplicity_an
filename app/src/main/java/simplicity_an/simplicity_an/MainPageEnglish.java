@@ -537,7 +537,7 @@ LinearLayout footer;
              /* Intent in = new Intent(getApplicationContext(), ExploreMain.class);
                     startActivity(in);*/
 
-                MainFrag fragment = new MainFrag();
+                SearchWebPage fragment = new SearchWebPage();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, fragment);
                 transaction.commit();

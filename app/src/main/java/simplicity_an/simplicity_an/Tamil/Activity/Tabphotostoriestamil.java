@@ -2098,7 +2098,10 @@ userViewHolder.shortdescription.setTypeface(seguiregular);
             post_review.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    pdialog = new ProgressDialog(getActivity());
+                    pdialog.show();
+                    pdialog.setContentView(R.layout.custom_progressdialog);
+                    pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     if(myuserid!=null) {
 
                         try {
@@ -2107,7 +2110,7 @@ userViewHolder.shortdescription.setTypeface(seguiregular);
                                 @Override
                                 public void onResponse(String response) {
                                     Log.e("Res", response.toString().trim());
-
+                                    pdialog.dismiss();
                                     if (response.equalsIgnoreCase("error")) {
                                         Toast.makeText(getActivity(), response, Toast.LENGTH_LONG).show();
                                     } else {

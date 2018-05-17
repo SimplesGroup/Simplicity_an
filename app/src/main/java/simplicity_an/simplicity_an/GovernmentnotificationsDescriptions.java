@@ -325,6 +325,7 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
             image_description.setTextColor(Color.BLACK);
             short_description.setTextColor(Color.BLACK);
             commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            commentbox_editext.setTextColor(getResources().getColor(android.R.color.black));
             comment_title.setBackgroundResource(R.drawable.editextboxwhite);
 
         }
@@ -445,7 +446,10 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
                     String url = "http://simpli-city.in/request.php?rtype=comments2&key=simples";
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(commentbox_editext.getWindowToken(), 0);
-
+                    pdialog = new ProgressDialog(getApplicationContext());
+                    pdialog.show();
+                    pdialog.setContentView(R.layout.custom_progressdialog);
+                    pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     if(myprofileid!=null) {
 
                         try {
@@ -454,7 +458,7 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     Log.e("Res", response.toString().trim());
-
+                                    pdialog.dismiss();
                                     if (response.equalsIgnoreCase("error")) {
                                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                                     } else {
@@ -1339,10 +1343,22 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
 
                 ItemModels itemmodel = commentlist.get(position);
 
+                if(colorcodes.equals("#FFFFFFFF")){
+                    userViewHolder.name.setText(itemmodel.getName());
+                    userViewHolder.name.setTextColor(getResources().getColor(android.R.color.black));
 
-                userViewHolder.name.setText(itemmodel.getName());
+                    userViewHolder.commentsdecription.setText(itemmodel.getComment());
+                    userViewHolder.commentsdecription.setTextColor(getResources().getColor(android.R.color.black));
+
+                }else {
+
+                    userViewHolder.name.setText(itemmodel.getName());
+
+                    userViewHolder.commentsdecription.setText(itemmodel.getComment());
+                }
+
                 userViewHolder.name.setTypeface(seguiregular);
-                userViewHolder.commentsdecription.setText(itemmodel.getComment());
+
                 userViewHolder.imageview.setDefaultImageResId(R.drawable.iconlogo);
                 userViewHolder.imageview.setErrorImageResId(R.drawable.iconlogo);
 
@@ -1406,6 +1422,9 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
         RecyclerView recycler;
         LinearLayoutManager mLayoutManager;
         String postid, myuserid;
+        SharedPreferences sharedPreferences;
+        public static final String mypreference = "mypref";
+        String colorcodes;
 
         public MyDialogFragment() {
 
@@ -1430,6 +1449,12 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View root = inflater.inflate(R.layout.commentgovtfragmnet, container, false);
+
+            sharedPreferences = getActivity(). getSharedPreferences(mypreference,
+                    Context.MODE_PRIVATE);
+
+            colorcodes=sharedPreferences.getString(backgroundcolor,"");
+
             titles = (TextView) root.findViewById(R.id.comments_title);
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
@@ -1786,11 +1811,23 @@ public class GovernmentnotificationsDescriptions extends AppCompatActivity {
 
 
                     ItemModels itemmodel = commentlist.get(position);
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        userViewHolder.name.setText(itemmodel.getName());
+                        userViewHolder.name.setTextColor(getResources().getColor(android.R.color.black));
+
+                        userViewHolder.commentsdecription.setText(itemmodel.getComment());
+                        userViewHolder.commentsdecription.setTextColor(getResources().getColor(android.R.color.black));
+
+                    }else {
+
+                        userViewHolder.name.setText(itemmodel.getName());
+
+                        userViewHolder.commentsdecription.setText(itemmodel.getComment());
+                    }
 
 
-                    userViewHolder.name.setText(itemmodel.getName());
                     userViewHolder.name.setTypeface(seguiregular);
-                    userViewHolder.commentsdecription.setText(itemmodel.getComment());
+
                     userViewHolder.imageview.setDefaultImageResId(R.drawable.iconlogo);
                     userViewHolder.imageview.setErrorImageResId(R.drawable.iconlogo);
 

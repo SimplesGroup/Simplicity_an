@@ -416,6 +416,10 @@ public class DoitDescription extends AppCompatActivity {
                 public void onClick(View v) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(commentbox_editext.getWindowToken(), 0);
+                    pdialog = new ProgressDialog(getApplicationContext());
+                    pdialog.show();
+                    pdialog.setContentView(R.layout.custom_progressdialog);
+                    pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     //Showing the progress dialog
                     //final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
                     if(myprofileid!=null) {
@@ -426,7 +430,7 @@ public class DoitDescription extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     Log.e("Res", response.toString().trim());
-
+                                    pdialog.dismiss();
                                     if (response.equalsIgnoreCase("error")) {
                                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                                     } else {

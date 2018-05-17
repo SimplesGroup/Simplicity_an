@@ -437,7 +437,7 @@ booknow.setText("பதிவு செய்ய");
             location_details.setTextColor(Color.WHITE);
             website_details.setTextColor(Color.WHITE);
             venueandcontact.setTextColor(Color.WHITE);
-            venueandcontact.setBackgroundColor(R.color.eventcolor);
+           // venueandcontact.setBackgroundColor(R.color.eventcolor);
             textview_organizedby.setTextColor(Color.WHITE);
         }
 

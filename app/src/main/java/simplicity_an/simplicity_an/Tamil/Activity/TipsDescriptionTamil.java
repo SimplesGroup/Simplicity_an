@@ -373,12 +373,17 @@ public class TipsDescriptionTamil extends AppCompatActivity {
                 public void onClick(View v) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(commentbox_editext.getWindowToken(), 0);
+                    pdialog = new ProgressDialog(getApplicationContext());
+                    pdialog.show();
+                    pdialog.setContentView(R.layout.custom_progressdialog);
+                    pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     //Showing the progress dialog
                     //final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, urlpost,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String s) {
+                                    pdialog.dismiss();
                                     //Disimissing the progress dialog
                                     //  loading.dismiss();
                                     //Showing toast message of the response

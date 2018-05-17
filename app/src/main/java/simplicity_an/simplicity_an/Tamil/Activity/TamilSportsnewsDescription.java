@@ -370,6 +370,7 @@ String searchnonitiid,searchactivity_sports;
             date.setTextColor(Color.BLACK);
             textview_date.setTextColor(Color.BLACK);
             commentbox_editext.setBackgroundResource(R.drawable.editextboxwhite);
+            commentbox_editext.setTextColor(getResources().getColor(android.R.color.black));
             comment_title.setBackgroundResource(R.drawable.editextboxwhite);
         }
         else{
@@ -487,6 +488,10 @@ String searchnonitiid,searchactivity_sports;
                 public void onClick(View v) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(commentbox_editext.getWindowToken(), 0);
+                    pdialog = new ProgressDialog(getApplicationContext());
+                    pdialog.show();
+                    pdialog.setContentView(R.layout.custom_progressdialog);
+                    pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     if(myprofileid!=null) {
 
                         try {
@@ -495,7 +500,7 @@ String searchnonitiid,searchactivity_sports;
                                 @Override
                                 public void onResponse(String response) {
                                     Log.e("Res", response.toString().trim());
-
+                                    pdialog.dismiss();
                                     if (response.equalsIgnoreCase("error")) {
                                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                                     } else {
@@ -1346,10 +1351,22 @@ String searchnonitiid,searchactivity_sports;
 
                 ItemModels itemmodel = commentlist.get(position);
 
+                if(colorcodes.equals("#FFFFFFFF")){
+                    userViewHolder.name.setText(itemmodel.getName());
+                    userViewHolder.name.setTextColor(getResources().getColor(android.R.color.black));
 
-                userViewHolder.name.setText(itemmodel.getName());
+                    userViewHolder.commentsdecription.setText(itemmodel.getComment());
+                    userViewHolder.commentsdecription.setTextColor(getResources().getColor(android.R.color.black));
+
+                }else {
+
+                    userViewHolder.name.setText(itemmodel.getName());
+
+                    userViewHolder.commentsdecription.setText(itemmodel.getComment());
+                }
+
                 userViewHolder.name.setTypeface(seguiregular);
-                userViewHolder.commentsdecription.setText(itemmodel.getComment());
+
                 userViewHolder.imageview.setDefaultImageResId(R.drawable.iconlogo);
                 userViewHolder.imageview.setErrorImageResId(R.drawable.iconlogo);
 
@@ -1414,6 +1431,9 @@ String searchnonitiid,searchactivity_sports;
         LinearLayoutManager mLayoutManager;
         String postid, myuserid,qtypevalue;
         String description_comment;
+        SharedPreferences sharedPreferences;
+        public static final String mypreference = "mypref";
+        String colorcodes;
 
         public MyDialogFragment() {
 
@@ -1438,6 +1458,10 @@ String searchnonitiid,searchactivity_sports;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View root = inflater.inflate(R.layout.commentsportsfragment, container, false);
+            sharedPreferences = getActivity(). getSharedPreferences(mypreference,
+                    Context.MODE_PRIVATE);
+
+            colorcodes=sharedPreferences.getString(backgroundcolor,"");
             titles = (TextView) root.findViewById(R.id.comments_title);
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
@@ -1799,11 +1823,23 @@ String searchnonitiid,searchactivity_sports;
 
 
                     ItemModels itemmodel = commentlist.get(position);
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        userViewHolder.name.setText(itemmodel.getName());
+                        userViewHolder.name.setTextColor(getResources().getColor(android.R.color.black));
+
+                        userViewHolder.commentsdecription.setText(itemmodel.getComment());
+                        userViewHolder.commentsdecription.setTextColor(getResources().getColor(android.R.color.black));
+
+                    }else {
+
+                        userViewHolder.name.setText(itemmodel.getName());
+
+                        userViewHolder.commentsdecription.setText(itemmodel.getComment());
+                    }
 
 
-                    userViewHolder.name.setText(itemmodel.getName());
                     userViewHolder.name.setTypeface(seguiregular);
-                    userViewHolder.commentsdecription.setText(itemmodel.getComment());
+
                     userViewHolder.imageview.setDefaultImageResId(R.drawable.iconlogo);
                     userViewHolder.imageview.setErrorImageResId(R.drawable.iconlogo);
 
