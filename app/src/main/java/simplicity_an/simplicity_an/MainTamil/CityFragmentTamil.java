@@ -103,7 +103,7 @@ public class CityFragmentTamil extends Fragment {
     public static final String Activity = "activity";
     public static final String CONTENTID = "contentid";
     public static final String backgroundcolor = "color";
-    ImageButton city,beyond,search,explore,notifications,themechange_button,btnspecials,btnevents,btnsearch,btnmore;
+    ImageButton city,beyond,search,explore,notifications,btnspecials,btnevents,btnsearch,btnmore;
     String activity,contentid,colorcodes;
     FloatingActionButton fabsearch,fabinnerplus;
     CoordinatorLayout mCoordinator;
@@ -121,7 +121,7 @@ public class CityFragmentTamil extends Fragment {
     ImageLoader mImageLoader;
     LinearLayout layout;
     LinearLayout footerbar;
-    private ImageButton play_music,fastforward,backforward,close_player;
+    private ImageButton play_music,fastforward,backforward,close_player,themechange_button,font_button;
     TextView music_title_name;
     String url_change_lang="http://simpli-city.in/request2.php?rtype=updatelanguage&key=simples";
     String playerid;
@@ -688,6 +688,15 @@ public class CityFragmentTamil extends Fragment {
         weather.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(weather);
 
+        if(colorcodes.equals("#FFFFFFFF")){
+            themechange_button.setImageResource(R.drawable.themenormal);
+
+
+        }else {
+            themechange_button.setImageResource(R.drawable.themewhite);
+
+
+        }
 
        /* beyond=(ImageButton)view.findViewById(R.id.btn_versiontwobeyond);
         search=(ImageButton)view.findViewById(R.id.btn_versiontwosearch);
@@ -863,8 +872,55 @@ public class CityFragmentTamil extends Fragment {
         themechange_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(colorcodes.equals("#FFFFFFFF")){
+                    Fragment fragment = new CityFragmentTamil();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frame_layout, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+
+                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                    GradientDrawable gd = new GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM,
+                            colors);
+                    gd.setCornerRadius(0f);
+
+                    mainlayout.setBackgroundDrawable(gd);
+
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(backgroundcolor, "#383838");
+                    editor.commit();
+
+
+                }else if(colorcodes.equals("#383838")) {
+
+
+
+                    Fragment fragment = new CityFragmentTamil();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frame_layout, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                    GradientDrawable gd = new GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM,
+                            colors);
+                    gd.setCornerRadius(0f);
+
+                    mainlayout.setBackgroundDrawable(gd);
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(backgroundcolor, "#FFFFFFFF");
+                    editor.commit();
+
+
+                }
+
                 // showAlertDialog();
-                final Dialog dialog = new Dialog(getActivity());
+             /*   final Dialog dialog = new Dialog(getActivity());
                 dialog.setContentView(R.layout.theme);
                 dialog.setTitle("Title...");
                 ImageButton colorone = (ImageButton) dialog.findViewById(R.id.color);
@@ -1381,7 +1437,7 @@ public class CityFragmentTamil extends Fragment {
                         dialog.dismiss();
                     }
                 });
-                dialog.show();
+                dialog.show();*/
             }
         });
         mCoordinator = (CoordinatorLayout) view.findViewById(R.id.root_coordinator);

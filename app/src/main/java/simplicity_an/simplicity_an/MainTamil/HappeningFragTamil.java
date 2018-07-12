@@ -486,6 +486,8 @@ public class HappeningFragTamil extends Fragment {
         });
         special.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(special);
+
+
        /* if(myprofileid!=null) {
 
             JsonArrayRequest jsonReq = new JsonArrayRequest(url_notification_count_valueget, new Response.Listener<JSONArray>() {
@@ -736,7 +738,15 @@ public class HappeningFragTamil extends Fragment {
         weather.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(weather);
 
+        if(colorcodes.equals("#FFFFFFFF")){
+            themechange_button.setImageResource(R.drawable.themenormal);
 
+
+        }else {
+            themechange_button.setImageResource(R.drawable.themewhite);
+
+
+        }
         language_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -838,8 +848,54 @@ public class HappeningFragTamil extends Fragment {
         themechange_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(colorcodes.equals("#FFFFFFFF")){
+                    Fragment fragment = new HappeningFragTamil();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frame_layout, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+
+                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                    GradientDrawable gd = new GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM,
+                            colors);
+                    gd.setCornerRadius(0f);
+
+                    mainlayout.setBackgroundDrawable(gd);
+
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(backgroundcolor, "#383838");
+                    editor.commit();
+
+
+                }else if(colorcodes.equals("#383838")) {
+
+
+
+                    Fragment fragment = new HappeningFragTamil();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frame_layout, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                    GradientDrawable gd = new GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM,
+                            colors);
+                    gd.setCornerRadius(0f);
+
+                    mainlayout.setBackgroundDrawable(gd);
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(backgroundcolor, "#FFFFFFFF");
+                    editor.commit();
+
+
+                }
                 // showAlertDialog();
-                final Dialog dialog = new Dialog(getActivity());
+            /*    final Dialog dialog = new Dialog(getActivity());
                 dialog.setContentView(R.layout.theme);
                 dialog.setTitle("Title...");
                 ImageButton colorone = (ImageButton) dialog.findViewById(R.id.color);
@@ -1382,7 +1438,7 @@ public class HappeningFragTamil extends Fragment {
                         dialog.dismiss();
                     }
                 });
-                dialog.show();
+                dialog.show();*/
             }
         });
         mCoordinator = (CoordinatorLayout) view.findViewById(R.id.root_coordinator);
