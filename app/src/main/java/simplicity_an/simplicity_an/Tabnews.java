@@ -1207,7 +1207,7 @@ SwipeRefreshLayout swipeRefresh;
                                     Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);
                                     intent.putExtra("ID", itemmodel.getId());
                                     intent.putExtra("TITLE",itemmodel.getTitle());
-                                    intent.putExtra("URL",itemmodel.getPlayurl());
+                                    intent.putExtra("URL",itemmodel.getYoutubelink());
                                     startActivity(intent);
                                 }else {
                                     urlaudio = itemmodel.getId();

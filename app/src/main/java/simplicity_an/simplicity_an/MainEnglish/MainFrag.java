@@ -91,7 +91,10 @@ public class MainFrag extends Fragment {
     public static final String backgroundcolor = "color";
     public static final String Language = "lamguage";
     public static final String CONTENTID = "contentid";
-    ImageButton btnsearch,city,btnspecials,btnevents,btnmore;
+
+
+    Button btnspecials,btnevents,btnmore,city;
+    ImageView btnsearch;
     public static MainFrag newInstance() {
         MainFrag fragment = new MainFrag();
         return fragment;
@@ -124,11 +127,11 @@ public class MainFrag extends Fragment {
         barkentina = Typeface.createFromAsset(getActivity().getAssets(), fontPathbarkendina);
         String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
-        city=(ImageButton)getActivity().findViewById(R.id.btn_versiontwocity);
-        btnspecials=(ImageButton)getActivity().findViewById(R.id.btn_versiontwoexplore);
-        btnevents = (ImageButton)getActivity().findViewById(R.id.btn_versiontwobeyond);
-        btnsearch = (ImageButton)getActivity().findViewById(R.id.btn_versiontwosearch);
-        btnmore = (ImageButton)getActivity().findViewById(R.id.btn_versiontwonotifications);        toolbartitle=(TextView)view.findViewById(R.id.simplicitynewtitle);
+        city=(Button) getActivity().findViewById(R.id.btn_news);
+        btnspecials=(Button)getActivity().findViewById(R.id.btn_specials);
+        btnevents = (Button)getActivity().findViewById(R.id.btn_events);
+        btnsearch = (ImageView) getActivity().findViewById(R.id.btn_citys);
+        btnmore = (Button)getActivity().findViewById(R.id.btn_shop);        toolbartitle=(TextView)view.findViewById(R.id.simplicitynewtitle);
         toolbartitle.setTypeface(barkentina);
       search=(android.support.v7.widget.SearchView)view.findViewById(R.id.searchview_main);
         search.setActivated(true);
@@ -142,8 +145,12 @@ public class MainFrag extends Fragment {
         setupSearchView();
 
         if(colorcodes.equals("#FFFFFFFF")){
-            btnsearch.setBackgroundResource(R.color.theme13);
-            btnsearch.setImageResource(R.mipmap.searchone);
+            btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+            btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.parseColor("#CCCCCC"));
+            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+           /* btnsearch.setBackgroundResource(R.color.theme13);
+            btnsearch.setImageResource(R.mipmap.searchone);*/
            /* city.setBackgroundResource(R.color.white);
             btnevents.setBackgroundResource(R.color.mytransparent);
             btnmore.setBackgroundResource(R.color.mytransparent);
@@ -154,7 +161,11 @@ public class MainFrag extends Fragment {
             btnspecials.setImageResource(R.mipmap.specials);*/
         }
         else   if(colorcodes.equals("#383838")) {
-            btnsearch.setBackgroundResource(R.color.theme1button);
+            btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+            btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.parseColor("#CCCCCC"));
+            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+           /* btnsearch.setBackgroundResource(R.color.theme1button);
             btnsearch.setImageResource(R.mipmap.search);
             city.setBackgroundResource(R.color.mytransparent);
             btnevents.setBackgroundResource(R.color.mytransparent);
@@ -163,10 +174,14 @@ public class MainFrag extends Fragment {
             city.setImageResource(R.mipmap.news);
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
-            btnspecials.setImageResource(R.mipmap.specials);
+            btnspecials.setImageResource(R.mipmap.specials);*/
         }
         else if(colorcodes.equals("#59247c")) {
-            btnsearch.setBackgroundResource(R.color.theme2);
+            btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+            btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.parseColor("#CCCCCC"));
+            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+           /* btnsearch.setBackgroundResource(R.color.theme2);
             btnsearch.setImageResource(R.mipmap.search);
             city.setBackgroundResource(R.color.mytransparent);
             btnevents.setBackgroundResource(R.color.mytransparent);
@@ -175,10 +190,14 @@ public class MainFrag extends Fragment {
             city.setImageResource(R.mipmap.news);
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
-            btnspecials.setImageResource(R.mipmap.specials);
+            btnspecials.setImageResource(R.mipmap.specials);*/
         }
         else if(colorcodes.equals("#1d487a")) {
-            btnsearch.setBackgroundResource(R.color.theme3);
+            btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+            btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.parseColor("#CCCCCC"));
+            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+           /* btnsearch.setBackgroundResource(R.color.theme3);
             btnsearch.setImageResource(R.mipmap.search);
             city.setBackgroundResource(R.color.mytransparent);
             btnevents.setBackgroundResource(R.color.mytransparent);
@@ -187,10 +206,14 @@ public class MainFrag extends Fragment {
             city.setImageResource(R.mipmap.news);
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
-            btnspecials.setImageResource(R.mipmap.specials);
+            btnspecials.setImageResource(R.mipmap.specials);*/
         }
         else if(colorcodes.equals("#7A4100")) {
-            btnsearch.setBackgroundResource(R.color.theme4);
+            btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+            btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.parseColor("#CCCCCC"));
+            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+           /* btnsearch.setBackgroundResource(R.color.theme4);
             btnsearch.setImageResource(R.mipmap.search);
             city.setBackgroundResource(R.color.mytransparent);
             btnevents.setBackgroundResource(R.color.mytransparent);
@@ -199,10 +222,14 @@ public class MainFrag extends Fragment {
             city.setImageResource(R.mipmap.news);
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
-            btnspecials.setImageResource(R.mipmap.specials);
+            btnspecials.setImageResource(R.mipmap.specials);*/
         }
         else if(colorcodes.equals("#6E0138")) {
-            btnsearch.setBackgroundResource(R.color.theme5);
+            btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+            btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.parseColor("#CCCCCC"));
+            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+            /*btnsearch.setBackgroundResource(R.color.theme5);
             btnsearch.setImageResource(R.mipmap.search);
             city.setBackgroundResource(R.color.mytransparent);
             btnevents.setBackgroundResource(R.color.mytransparent);
@@ -211,10 +238,14 @@ public class MainFrag extends Fragment {
             city.setImageResource(R.mipmap.news);
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
-            btnspecials.setImageResource(R.mipmap.specials);
+            btnspecials.setImageResource(R.mipmap.specials);*/
         }
         else if(colorcodes.equals("#00BFD4")) {
-            btnsearch.setBackgroundResource(R.color.theme6);
+            btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+            btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.parseColor("#CCCCCC"));
+            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+            /*btnsearch.setBackgroundResource(R.color.theme6);
             btnsearch.setImageResource(R.mipmap.search);
             city.setBackgroundResource(R.color.mytransparent);
             btnevents.setBackgroundResource(R.color.mytransparent);
@@ -223,10 +254,14 @@ public class MainFrag extends Fragment {
             city.setImageResource(R.mipmap.news);
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
-            btnspecials.setImageResource(R.mipmap.specials);
+            btnspecials.setImageResource(R.mipmap.specials);*/
         }
         else if(colorcodes.equals("#185546")) {
-            btnsearch.setBackgroundResource(R.color.theme7);
+            btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+            btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.parseColor("#CCCCCC"));
+            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+           /* btnsearch.setBackgroundResource(R.color.theme7);
             btnsearch.setImageResource(R.mipmap.search);
             city.setBackgroundResource(R.color.mytransparent);
             btnevents.setBackgroundResource(R.color.mytransparent);
@@ -235,10 +270,14 @@ public class MainFrag extends Fragment {
             city.setImageResource(R.mipmap.news);
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
-            btnspecials.setImageResource(R.mipmap.specials);
+            btnspecials.setImageResource(R.mipmap.specials);*/
         }
         else if(colorcodes.equals("#D0A06F")) {
-            btnsearch.setBackgroundResource(R.color.theme8);
+            btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+            btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.parseColor("#CCCCCC"));
+            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+            /*btnsearch.setBackgroundResource(R.color.theme8);
             btnsearch.setImageResource(R.mipmap.search);
             city.setBackgroundResource(R.color.mytransparent);
             btnevents.setBackgroundResource(R.color.mytransparent);
@@ -247,10 +286,14 @@ public class MainFrag extends Fragment {
             city.setImageResource(R.mipmap.news);
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
-            btnspecials.setImageResource(R.mipmap.specials);
+            btnspecials.setImageResource(R.mipmap.specials);*/
         }
         else if(colorcodes.equals("#82C6E6")) {
-            btnsearch.setBackgroundResource(R.color.theme9);
+            btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+            btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.parseColor("#CCCCCC"));
+            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+            /*btnsearch.setBackgroundResource(R.color.theme9);
             btnsearch.setImageResource(R.mipmap.search);
             city.setBackgroundResource(R.color.mytransparent);
             btnevents.setBackgroundResource(R.color.mytransparent);
@@ -259,10 +302,14 @@ public class MainFrag extends Fragment {
             city.setImageResource(R.mipmap.news);
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
-            btnspecials.setImageResource(R.mipmap.specials);
+            btnspecials.setImageResource(R.mipmap.specials);*/
         }
         else if(colorcodes.equals("#339900")) {
-            btnsearch.setBackgroundResource(R.color.theme10);
+            btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+            btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.parseColor("#CCCCCC"));
+            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+           /* btnsearch.setBackgroundResource(R.color.theme10);
             btnsearch.setImageResource(R.mipmap.search);
             city.setBackgroundResource(R.color.mytransparent);
             btnevents.setBackgroundResource(R.color.mytransparent);
@@ -271,10 +318,14 @@ public class MainFrag extends Fragment {
             city.setImageResource(R.mipmap.news);
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
-            btnspecials.setImageResource(R.mipmap.specials);
+            btnspecials.setImageResource(R.mipmap.specials);*/
         }
         else if(colorcodes.equals("#CC9C00")) {
-            btnsearch.setBackgroundResource(R.color.theme11);
+            btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+            btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.parseColor("#CCCCCC"));
+            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+           /* btnsearch.setBackgroundResource(R.color.theme11);
             btnsearch.setImageResource(R.mipmap.search);
             city.setBackgroundResource(R.color.mytransparent);
             btnevents.setBackgroundResource(R.color.mytransparent);
@@ -283,10 +334,14 @@ public class MainFrag extends Fragment {
             city.setImageResource(R.mipmap.news);
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
-            btnspecials.setImageResource(R.mipmap.specials);
+            btnspecials.setImageResource(R.mipmap.specials);*/
         }
         else if(colorcodes.equals("#00B09B")) {
-            btnsearch.setBackgroundResource(R.color.theme12);
+            btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+            btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.parseColor("#CCCCCC"));
+            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+           /* btnsearch.setBackgroundResource(R.color.theme12);
             btnsearch.setImageResource(R.mipmap.search);
             city.setBackgroundResource(R.color.mytransparent);
             btnevents.setBackgroundResource(R.color.mytransparent);
@@ -295,7 +350,7 @@ public class MainFrag extends Fragment {
             city.setImageResource(R.mipmap.news);
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
-            btnspecials.setImageResource(R.mipmap.specials);
+            btnspecials.setImageResource(R.mipmap.specials);*/
         }
         
 

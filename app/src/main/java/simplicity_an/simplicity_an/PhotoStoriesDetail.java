@@ -479,7 +479,6 @@ public class PhotoStoriesDetail extends AppCompatActivity {
 
 
                            feedArray = object.getJSONArray("album");
-                            if (feedArray.length() < 10) {
                                 for (ii = 0; ii < feedArray.length(); ii++) {
                                   //  obj = (JSONObject) feedArray.get(ii);
 
@@ -493,10 +492,10 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                                     model.setImage(images);
                                     modelListlikes.add(model);
 
-                                }
+
 
                                 // notify data changes to list adapater
-                                rcAdapter.notifyDataSetChanged();
+                               /* rcAdapter.notifyDataSetChanged();
                             } else {
                                 for (ii = 0; ii <= 10; ii++) {
                                     obj = (JSONObject) feedArray.get(ii);
@@ -511,7 +510,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                                     model.setImage(images);
 
                                     modelListlikes.add(model);
-                                }
+                                }*/
   }
                                 // notify data changes to list adapater
                                 rcAdapter.notifyDataSetChanged();
@@ -559,7 +558,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                             Log.e("haint", "Load More 2");
 
 
-                            //Load data
+                           /* //Load data
                             int index = modelListlikes.size();
                             int end = index + 9;
 
@@ -582,7 +581,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
 
                             }
 
-                            rcAdapter.setLoaded();
+                            rcAdapter.setLoaded();*/
                         }
                     }, 2000);
 

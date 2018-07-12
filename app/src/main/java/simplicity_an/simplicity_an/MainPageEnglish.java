@@ -19,13 +19,16 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -52,7 +55,9 @@ import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
  */
 
 public class MainPageEnglish extends AppCompatActivity implements Tab_All.OnFragmentInteractionListener,TabRadio.OnFragmentInteractionListener,TabMusic.OnFragmentInteractionListener, TabEntertainmentAll.OnFragmentInteractionListener,TabEntertainmentMusic.OnFragmentInteractionListener,TabentertainmentRadio.OnFragmentInteractionListener,Tabnews.OnFragmentInteractionListener{
-    ImageButton city,happening,search,audio_video,settings,explore;
+    ImageView search;
+    Button happening,audio_video,settings,explore;
+    Button city;
     String UPLOAD_CHECK_USER="http://simpli-city.in/request2.php?rtype=checkplayer&key=simples";
     LinearLayout footerbar;
     private ImageButton play_music,fastforward,backforward,close_player;
@@ -116,41 +121,50 @@ LinearLayout footer;
         CheckPlayerid();
 
 
-        city=(ImageButton)findViewById(R.id.btn_versiontwocity);
-        happening=(ImageButton)findViewById(R.id.btn_versiontwobeyond);
-        search=(ImageButton)findViewById(R.id.btn_versiontwosearch);
-        audio_video=(ImageButton)findViewById(R.id.btn_versiontwoexplore);
-        settings=(ImageButton)findViewById(R.id.btn_versiontwonotifications);
+        city=(Button) findViewById(R.id.btn_news);
+        happening=(Button)findViewById(R.id.btn_events);
+        search=(ImageView) findViewById(R.id.btn_citys);
+        audio_video=(Button)findViewById(R.id.btn_specials);
+        settings=(Button)findViewById(R.id.btn_shop);
         topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
         footer=(LinearLayout) findViewById(R.id.footer);
 
         if(colorcodes.equals("#FFFFFFFF")){
 
-            city.setBackgroundResource(R.color.white);
-            happening.setBackgroundResource(R.color.white);
-            search.setBackgroundResource(R.color.white);
-            audio_video.setBackgroundResource(R.color.white);
-            settings.setBackgroundResource(R.color.white);
-            city.setImageResource(R.mipmap.newsone);
+          /*  city.setBackgroundColor(getResources().getColor(R.color.white));
+            happening.setBackgroundColor(getResources().getColor(R.color.white));
+           // search.setBackgroundResource(R.color.white);
+            audio_video.setBackgroundColor(getResources().getColor(R.color.white));
+            settings.setBackgroundColor(getResources().getColor(R.color.white));*/
+            city.setTextColor(Color.BLACK);
+            happening.setTextColor(Color.parseColor("#CCCCCC"));
+            audio_video.setTextColor(Color.parseColor("#CCCCCC"));
+            settings.setTextColor(Color.parseColor("#CCCCCC"));
+
+         /* city.setImageResource(R.mipmap.newsone);
             happening.setImageResource(R.mipmap.eventone);
             search.setImageResource(R.mipmap.searchone);
             audio_video.setImageResource(R.mipmap.specialone);
-            settings.setImageResource(R.mipmap.moreone);
+            settings.setImageResource(R.mipmap.moreone);*/
         }
         else{
 
-            happening.setBackgroundResource(R.color.mytransparent);
-            search.setBackgroundResource(R.color.mytransparent);
-            audio_video.setBackgroundResource(R.color.mytransparent);
-            settings.setBackgroundResource(R.color.mytransparent);
-            city.setImageResource(R.mipmap.news);
+           /* happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));*/
+            city.setTextColor(Color.WHITE);
+            happening.setTextColor(Color.parseColor("#666666"));
+            audio_video.setTextColor(Color.parseColor("#666666"));
+            settings.setTextColor(Color.parseColor("#666666"));
+            /*city.setImageResource(R.mipmap.news);
             happening.setImageResource(R.mipmap.events);
             search.setImageResource(R.mipmap.search);
             audio_video.setImageResource(R.mipmap.specials);
-            settings.setImageResource(R.mipmap.more);
+            settings.setImageResource(R.mipmap.more);*/
         }
 
-        city.setOnClickListener(new View.OnClickListener() {
+       city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -165,152 +179,218 @@ LinearLayout footer;
                     if(colorcodes.equalsIgnoreCase("004")){
                         Log.e("Msg","hihihi");
                     }else {
+                        city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
+                        happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        city.setTextColor(Color.WHITE);
+                        happening.setTextColor(Color.parseColor("#666666"));
+                        audio_video.setTextColor(Color.parseColor("#666666"));
+                        settings.setTextColor(Color.parseColor("#666666"));
+                    }
+                    /*else {
+                        city.setTextColor(Color.WHITE);
+                        happening.setTextColor(Color.parseColor("#666666"));
+                        audio_video.setTextColor(Color.parseColor("#666666"));
+                        settings.setTextColor(Color.parseColor("#666666"));
                         if(colorcodes.equalsIgnoreCase("#383838")){
-                            city.setBackgroundResource(R.color.theme1button);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            *//*city.setBackgroundColor(getResources().getColor(R.color.theme1button));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));*//*
+                            city.setTextColor(Color.WHITE);
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
                         }else if(colorcodes.equalsIgnoreCase("#59247c")){
-                            city.setBackgroundResource(R.color.theme2);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                           *//* city.setBackgroundColor(getResources().getColor(R.color.theme2));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));*//*
+                            city.setTextColor(Color.WHITE);
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
                         }else if(colorcodes.equalsIgnoreCase("#1d487a")){
-                            city.setBackgroundResource(R.color.theme3);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                           *//* city.setBackgroundColor(getResources().getColor(R.color.theme3));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));*//*
+                            city.setTextColor(Color.WHITE);
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
                         }else if(colorcodes.equalsIgnoreCase("#7A4100")){
-                            city.setBackgroundResource(R.color.theme4);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                           *//* city.setBackgroundColor(getResources().getColor(R.color.theme4));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));*//*
+                            city.setTextColor(Color.WHITE);
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
                         }else if(colorcodes.equalsIgnoreCase("#6E0138")){
-                            city.setBackgroundResource(R.color.theme5);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                           *//* city.setBackgroundColor(getResources().getColor(R.color.theme5));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));*//*
+                            city.setTextColor(Color.WHITE);
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
                         }else if(colorcodes.equalsIgnoreCase("#00BFD4")){
-                            city.setBackgroundResource(R.color.theme6);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                           *//* city.setBackgroundColor(getResources().getColor(R.color.theme6));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));*//*
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            city.setTextColor(Color.WHITE);
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#185546")){
-                            city.setBackgroundResource(R.color.theme7);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            *//*city.setBackgroundColor(getResources().getColor(R.color.theme7));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));*//*
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            city.setTextColor(Color.WHITE);
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#D0A06F")){
-                            city.setBackgroundResource(R.color.theme8);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                           *//* city.setBackgroundColor(getResources().getColor(R.color.theme8));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));*//*
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            city.setTextColor(Color.WHITE);
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#82C6E6")){
-                            city.setBackgroundResource(R.color.theme9);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            city.setBackgroundColor(getResources().getColor(R.color.theme9));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            city.setTextColor(Color.WHITE);
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#339900")){
-                            city.setBackgroundResource(R.color.theme10);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            city.setBackgroundColor(getResources().getColor(R.color.theme10));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            city.setTextColor(Color.WHITE);
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#CC9C00")){
-                            city.setBackgroundResource(R.color.theme11);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            city.setBackgroundColor(getResources().getColor(R.color.theme11));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            city.setTextColor(Color.WHITE);
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#00B09B")){
-                            city.setBackgroundResource(R.color.theme12);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            city.setBackgroundColor(getResources().getColor(R.color.theme12));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            city.setTextColor(Color.WHITE);
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }
                         else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
-                            city.setBackgroundResource(R.color.theme13);
-                            happening.setBackgroundResource(R.color.white);
-                            search.setBackgroundResource(R.color.white);
-                            audio_video.setBackgroundResource(R.color.white);
-                            settings.setBackgroundResource(R.color.white);
+                            city.setBackgroundColor(getResources().getColor(R.color.theme13));
+                            happening.setBackgroundColor(getResources().getColor(R.color.white));
+                            search.setBackgroundColor(getResources().getColor(R.color.white));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.white));
+                            settings.setBackgroundColor(getResources().getColor(R.color.white));
                             //city.setImageResource(R.mipmap.newsone);
-                            happening.setImageResource(R.mipmap.eventone);
+                            *//*happening.setImageResource(R.mipmap.eventone);
                             search.setImageResource(R.mipmap.searchone);
                             audio_video.setImageResource(R.mipmap.specialone);
-                            settings.setImageResource(R.mipmap.moreone);
+                            settings.setImageResource(R.mipmap.moreone);*//*
+                            city.setTextColor(Color.BLACK);
+                            happening.setTextColor(Color.parseColor("#CCCCCC"));
+                            audio_video.setTextColor(Color.parseColor("#CCCCCC"));
+                            settings.setTextColor(Color.parseColor("#CCCCCC"));
                         }
-                    }
+                    }*/
                 }
             }
         });
@@ -353,155 +433,221 @@ LinearLayout footer;
 
                 }else {
                     if(colorcodes.equalsIgnoreCase("004")){
-                        Log.e("Msg","hihihi");
+
                     }else {
+                        happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
+                        city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        Log.e("Msg","hievent");
+                        happening.setTextColor(Color.WHITE);
+                        city.setTextColor(Color.parseColor("#666666"));
+                        audio_video.setTextColor(Color.parseColor("#666666"));
+                        settings.setTextColor(Color.parseColor("#666666"));
+                    }
+
+                    /*else {
                         if(colorcodes.equalsIgnoreCase("#383838")){
-                           happening.setBackgroundResource(R.color.theme1button);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                           happening.setBackgroundColor(getResources().getColor(R.color.theme1button));;
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            happening.setTextColor(Color.WHITE);
+                           city.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#59247c")){
-                            happening.setBackgroundResource(R.color.theme2);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            happening.setBackgroundColor(getResources().getColor(R.color.theme2));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                           happening.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#1d487a")){
-                            happening.setBackgroundResource(R.color.theme3);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            happening.setBackgroundColor(getResources().getColor(R.color.theme3));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            happening.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#7A4100")){
-                            happening.setBackgroundResource(R.color.theme4);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            happening.setBackgroundColor(getResources().getColor(R.color.theme4));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            happening.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#6E0138")){
-                            happening.setBackgroundResource(R.color.theme5);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            happening.setBackgroundColor(getResources().getColor(R.color.theme5));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            happening.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#00BFD4")){
-                            happening.setBackgroundResource(R.color.theme6);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            happening.setBackgroundColor(getResources().getColor(R.color.theme6));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            happening.setTextColor(Color.WHITE);
+                          city.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#185546")){
-                            happening.setBackgroundResource(R.color.theme7);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            happening.setBackgroundColor(getResources().getColor(R.color.theme7));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            happening.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#D0A06F")){
-                            happening.setBackgroundResource(R.color.theme8);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            happening.setBackgroundColor(getResources().getColor(R.color.theme8));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                           happening.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#82C6E6")){
-                            happening.setBackgroundResource(R.color.theme9);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            happening.setBackgroundColor(getResources().getColor(R.color.theme9));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                           happening.setTextColor(Color.WHITE);
+                           city.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#339900")){
-                            happening.setBackgroundResource(R.color.theme10);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            happening.setBackgroundColor(getResources().getColor(R.color.theme10));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            happening.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#CC9C00")){
-                            happening.setBackgroundResource(R.color.theme11);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            happening.setBackgroundColor(getResources().getColor(R.color.theme11));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            happening.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
+
                         }else if(colorcodes.equalsIgnoreCase("#00B09B")){
-                            happening.setBackgroundResource(R.color.theme12);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            happening.setBackgroundColor(getResources().getColor(R.color.theme12));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+
+                           happening.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }
                         else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
-                            happening.setBackgroundResource(R.color.theme13);
-                            city.setBackgroundResource(R.color.white);
+                            happening.setBackgroundColor(getResources().getColor(R.color.theme13));
+                            city.setBackgroundColor(getResources().getColor(R.color.white));
                             //happening.setBackgroundResource(R.color.white);
-                            search.setBackgroundResource(R.color.white);
-                            audio_video.setBackgroundResource(R.color.white);
-                            settings.setBackgroundResource(R.color.white);
-                            city.setImageResource(R.mipmap.newsone);
+                            search.setBackgroundColor(getResources().getColor(R.color.white));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.white));
+                            settings.setBackgroundColor(getResources().getColor(R.color.white));
+                           *//* city.setImageResource(R.mipmap.newsone);
                             //happening.setImageResource(R.mipmap.eventone);
                             search.setImageResource(R.mipmap.searchone);
                             audio_video.setImageResource(R.mipmap.specialone);
-                            settings.setImageResource(R.mipmap.moreone);
+                            settings.setImageResource(R.mipmap.moreone);*//*
+                            city.setTextColor(Color.parseColor("#CCCCCC"));
+                            happening.setTextColor(Color.BLACK);
+                            audio_video.setTextColor(Color.parseColor("#CCCCCC"));
+                            settings.setTextColor(Color.parseColor("#CCCCCC"));
                         }
-                    }
+                    }*/
                 }
             }
         });
@@ -546,154 +692,225 @@ LinearLayout footer;
                     } else {
                         if (colorcodes.equalsIgnoreCase("004")) {
                             Log.e("Msg", "hihihi");
-                        } else {
+                        }else {
+                            happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                            city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                            audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                            settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
+                        }
+                        /*else {
                             if (colorcodes.equalsIgnoreCase("#383838")) {
                                 search.setBackgroundResource(R.color.theme1button);
                                 happening.setBackgroundResource(R.color.mytransparent);
                                 city.setBackgroundResource(R.color.mytransparent);
                                 audio_video.setBackgroundResource(R.color.mytransparent);
                                 settings.setBackgroundResource(R.color.mytransparent);
-                                city.setImageResource(R.mipmap.news);
+                                *//*city.setImageResource(R.mipmap.news);
                                 happening.setImageResource(R.mipmap.events);
                                 search.setImageResource(R.mipmap.search);
                                 audio_video.setImageResource(R.mipmap.specials);
-                                settings.setImageResource(R.mipmap.more);
+                                settings.setImageResource(R.mipmap.more);*//*
+                                city.setTextColor(Color.parseColor("#666666"));
+                                happening.setTextColor(Color.parseColor("#666666"));
+                                audio_video.setTextColor(Color.parseColor("#666666"));
+                                settings.setTextColor(Color.parseColor("#666666"));
+
                             } else if (colorcodes.equalsIgnoreCase("#59247c")) {
                                 search.setBackgroundResource(R.color.theme2);
                                 happening.setBackgroundResource(R.color.mytransparent);
                                 city.setBackgroundResource(R.color.mytransparent);
                                 audio_video.setBackgroundResource(R.color.mytransparent);
                                 settings.setBackgroundResource(R.color.mytransparent);
-                                city.setImageResource(R.mipmap.news);
+                                *//*city.setImageResource(R.mipmap.news);
                                 happening.setImageResource(R.mipmap.events);
                                 search.setImageResource(R.mipmap.search);
                                 audio_video.setImageResource(R.mipmap.specials);
-                                settings.setImageResource(R.mipmap.more);
+                                settings.setImageResource(R.mipmap.more);*//*
+
+                                city.setTextColor(Color.parseColor("#666666"));
+                                happening.setTextColor(Color.parseColor("#666666"));
+                                audio_video.setTextColor(Color.parseColor("#666666"));
+                                settings.setTextColor(Color.parseColor("#666666"));
                             } else if (colorcodes.equalsIgnoreCase("#1d487a")) {
                                 search.setBackgroundResource(R.color.theme3);
                                 happening.setBackgroundResource(R.color.mytransparent);
                                 city.setBackgroundResource(R.color.mytransparent);
                                 audio_video.setBackgroundResource(R.color.mytransparent);
                                 settings.setBackgroundResource(R.color.mytransparent);
-                                city.setImageResource(R.mipmap.news);
+                               *//* city.setImageResource(R.mipmap.news);
                                 happening.setImageResource(R.mipmap.events);
                                 search.setImageResource(R.mipmap.search);
                                 audio_video.setImageResource(R.mipmap.specials);
-                                settings.setImageResource(R.mipmap.more);
+                                settings.setImageResource(R.mipmap.more);*//*
+
+                                city.setTextColor(Color.parseColor("#666666"));
+                                happening.setTextColor(Color.parseColor("#666666"));
+                                audio_video.setTextColor(Color.parseColor("#666666"));
+                                settings.setTextColor(Color.parseColor("#666666"));
                             } else if (colorcodes.equalsIgnoreCase("#7A4100")) {
                                 search.setBackgroundResource(R.color.theme4);
                                 happening.setBackgroundResource(R.color.mytransparent);
                                 city.setBackgroundResource(R.color.mytransparent);
                                 audio_video.setBackgroundResource(R.color.mytransparent);
                                 settings.setBackgroundResource(R.color.mytransparent);
-                                city.setImageResource(R.mipmap.news);
+                                *//*city.setImageResource(R.mipmap.news);
                                 happening.setImageResource(R.mipmap.events);
                                 search.setImageResource(R.mipmap.search);
                                 audio_video.setImageResource(R.mipmap.specials);
-                                settings.setImageResource(R.mipmap.more);
+                                settings.setImageResource(R.mipmap.more);*//*
+                                city.setTextColor(Color.parseColor("#666666"));
+                                happening.setTextColor(Color.parseColor("#666666"));
+                                audio_video.setTextColor(Color.parseColor("#666666"));
+                                settings.setTextColor(Color.parseColor("#666666"));
                             } else if (colorcodes.equalsIgnoreCase("#6E0138")) {
                                 search.setBackgroundResource(R.color.theme5);
                                 happening.setBackgroundResource(R.color.mytransparent);
                                 city.setBackgroundResource(R.color.mytransparent);
                                 audio_video.setBackgroundResource(R.color.mytransparent);
                                 settings.setBackgroundResource(R.color.mytransparent);
-                                city.setImageResource(R.mipmap.news);
+                               *//* city.setImageResource(R.mipmap.news);
                                 happening.setImageResource(R.mipmap.events);
                                 search.setImageResource(R.mipmap.search);
                                 audio_video.setImageResource(R.mipmap.specials);
-                                settings.setImageResource(R.mipmap.more);
+                                settings.setImageResource(R.mipmap.more);*//*
+
+                                city.setTextColor(Color.parseColor("#666666"));
+                                happening.setTextColor(Color.parseColor("#666666"));
+                                audio_video.setTextColor(Color.parseColor("#666666"));
+                                settings.setTextColor(Color.parseColor("#666666"));
                             } else if (colorcodes.equalsIgnoreCase("#00BFD4")) {
                                 search.setBackgroundResource(R.color.theme6);
                                 happening.setBackgroundResource(R.color.mytransparent);
                                 city.setBackgroundResource(R.color.mytransparent);
                                 audio_video.setBackgroundResource(R.color.mytransparent);
                                 settings.setBackgroundResource(R.color.mytransparent);
-                                city.setImageResource(R.mipmap.news);
+                               *//* city.setImageResource(R.mipmap.news);
                                 happening.setImageResource(R.mipmap.events);
                                 search.setImageResource(R.mipmap.search);
                                 audio_video.setImageResource(R.mipmap.specials);
-                                settings.setImageResource(R.mipmap.more);
+                                settings.setImageResource(R.mipmap.more);*//*
+
+                                city.setTextColor(Color.parseColor("#666666"));
+                                happening.setTextColor(Color.parseColor("#666666"));
+                                audio_video.setTextColor(Color.parseColor("#666666"));
+                                settings.setTextColor(Color.parseColor("#666666"));
                             } else if (colorcodes.equalsIgnoreCase("#185546")) {
                                 search.setBackgroundResource(R.color.theme7);
                                 happening.setBackgroundResource(R.color.mytransparent);
                                 city.setBackgroundResource(R.color.mytransparent);
                                 audio_video.setBackgroundResource(R.color.mytransparent);
                                 settings.setBackgroundResource(R.color.mytransparent);
-                                city.setImageResource(R.mipmap.news);
+                               *//* city.setImageResource(R.mipmap.news);
                                 happening.setImageResource(R.mipmap.events);
                                 search.setImageResource(R.mipmap.search);
                                 audio_video.setImageResource(R.mipmap.specials);
-                                settings.setImageResource(R.mipmap.more);
+                                settings.setImageResource(R.mipmap.more);*//*
+
+                                city.setTextColor(Color.parseColor("#666666"));
+                                happening.setTextColor(Color.parseColor("#666666"));
+                                audio_video.setTextColor(Color.parseColor("#666666"));
+                                settings.setTextColor(Color.parseColor("#666666"));
                             } else if (colorcodes.equalsIgnoreCase("#D0A06F")) {
                                 search.setBackgroundResource(R.color.theme8);
                                 happening.setBackgroundResource(R.color.mytransparent);
                                 city.setBackgroundResource(R.color.mytransparent);
                                 audio_video.setBackgroundResource(R.color.mytransparent);
                                 settings.setBackgroundResource(R.color.mytransparent);
-                                city.setImageResource(R.mipmap.news);
+                                *//*city.setImageResource(R.mipmap.news);
                                 happening.setImageResource(R.mipmap.events);
                                 search.setImageResource(R.mipmap.search);
                                 audio_video.setImageResource(R.mipmap.specials);
-                                settings.setImageResource(R.mipmap.more);
+                                settings.setImageResource(R.mipmap.more);*//*
+
+                                city.setTextColor(Color.parseColor("#666666"));
+                                happening.setTextColor(Color.parseColor("#666666"));
+                                audio_video.setTextColor(Color.parseColor("#666666"));
+                                settings.setTextColor(Color.parseColor("#666666"));
                             } else if (colorcodes.equalsIgnoreCase("#82C6E6")) {
                                 search.setBackgroundResource(R.color.theme9);
                                 happening.setBackgroundResource(R.color.mytransparent);
                                 city.setBackgroundResource(R.color.mytransparent);
                                 audio_video.setBackgroundResource(R.color.mytransparent);
                                 settings.setBackgroundResource(R.color.mytransparent);
-                                city.setImageResource(R.mipmap.news);
+                               *//* city.setImageResource(R.mipmap.news);
                                 happening.setImageResource(R.mipmap.events);
                                 search.setImageResource(R.mipmap.search);
                                 audio_video.setImageResource(R.mipmap.specials);
-                                settings.setImageResource(R.mipmap.more);
+                                settings.setImageResource(R.mipmap.more);*//*
+
+                                city.setTextColor(Color.parseColor("#666666"));
+                                happening.setTextColor(Color.parseColor("#666666"));
+                                audio_video.setTextColor(Color.parseColor("#666666"));
+                                settings.setTextColor(Color.parseColor("#666666"));
                             } else if (colorcodes.equalsIgnoreCase("#339900")) {
                                 search.setBackgroundResource(R.color.theme10);
                                 happening.setBackgroundResource(R.color.mytransparent);
                                 city.setBackgroundResource(R.color.mytransparent);
                                 audio_video.setBackgroundResource(R.color.mytransparent);
                                 settings.setBackgroundResource(R.color.mytransparent);
-                                city.setImageResource(R.mipmap.news);
+                                *//*city.setImageResource(R.mipmap.news);
                                 happening.setImageResource(R.mipmap.events);
                                 search.setImageResource(R.mipmap.search);
                                 audio_video.setImageResource(R.mipmap.specials);
-                                settings.setImageResource(R.mipmap.more);
+                                settings.setImageResource(R.mipmap.more);*//*
+
+                                city.setTextColor(Color.parseColor("#666666"));
+                                happening.setTextColor(Color.parseColor("#666666"));
+                                audio_video.setTextColor(Color.parseColor("#666666"));
+                                settings.setTextColor(Color.parseColor("#666666"));
                             } else if (colorcodes.equalsIgnoreCase("#CC9C00")) {
                                 search.setBackgroundResource(R.color.theme11);
                                 happening.setBackgroundResource(R.color.mytransparent);
                                 city.setBackgroundResource(R.color.mytransparent);
                                 audio_video.setBackgroundResource(R.color.mytransparent);
                                 settings.setBackgroundResource(R.color.mytransparent);
-                                city.setImageResource(R.mipmap.news);
+                                *//*city.setImageResource(R.mipmap.news);
                                 happening.setImageResource(R.mipmap.events);
                                 search.setImageResource(R.mipmap.search);
                                 audio_video.setImageResource(R.mipmap.specials);
-                                settings.setImageResource(R.mipmap.more);
+                                settings.setImageResource(R.mipmap.more);*//*
+                                city.setTextColor(Color.parseColor("#666666"));
+                                happening.setTextColor(Color.parseColor("#666666"));
+                                audio_video.setTextColor(Color.parseColor("#666666"));
+                                settings.setTextColor(Color.parseColor("#666666"));
                             } else if (colorcodes.equalsIgnoreCase("#00B09B")) {
                                 search.setBackgroundResource(R.color.theme12);
                                 happening.setBackgroundResource(R.color.mytransparent);
                                 city.setBackgroundResource(R.color.mytransparent);
                                 audio_video.setBackgroundResource(R.color.mytransparent);
                                 settings.setBackgroundResource(R.color.mytransparent);
-                                city.setImageResource(R.mipmap.news);
+                                *//*city.setImageResource(R.mipmap.news);
                                 happening.setImageResource(R.mipmap.events);
                                 search.setImageResource(R.mipmap.search);
                                 audio_video.setImageResource(R.mipmap.specials);
-                                settings.setImageResource(R.mipmap.more);
+                                settings.setImageResource(R.mipmap.more);*//*
+                                city.setTextColor(Color.parseColor("#666666"));
+                                happening.setTextColor(Color.parseColor("#666666"));
+                                audio_video.setTextColor(Color.parseColor("#666666"));
+                                settings.setTextColor(Color.parseColor("#666666"));
                             }
                             else if (colorcodes.equalsIgnoreCase("#FFFFFFFF")) {
-                                search.setBackgroundResource(R.color.theme13);
+                                //search.setBackgroundResource(R.color.theme13);
                                 city.setBackgroundResource(R.color.white);
                                 happening.setBackgroundResource(R.color.white);
                                 //search.setBackgroundResource(R.color.white);
                                 audio_video.setBackgroundResource(R.color.white);
                                 settings.setBackgroundResource(R.color.white);
-                                city.setImageResource(R.mipmap.newsone);
+                                *//*city.setImageResource(R.mipmap.newsone);
                                 happening.setImageResource(R.mipmap.eventone);
                                 //search.setImageResource(R.mipmap.searchone);
                                 audio_video.setImageResource(R.mipmap.specialone);
-                                settings.setImageResource(R.mipmap.moreone);
+                                settings.setImageResource(R.mipmap.moreone);*//*
+                                city.setTextColor(Color.parseColor("#CCCCCC"));
+                                audio_video.setTextColor(Color.parseColor("#CCCCCC"));
+                                happening.setTextColor(Color.parseColor("#CCCCCC"));
+                                settings.setTextColor(Color.parseColor("#CCCCCC"));
                             }
-                        }
+                        }*/
                     }
                 /*}else {
                     Intent in = new Intent(getApplicationContext(), SigninpageActivity.class);
@@ -740,153 +957,209 @@ LinearLayout footer;
                     if(colorcodes.equalsIgnoreCase("004")){
                         Log.e("Msg","hihihi");
                     }else {
+                        audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
+                        happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        audio_video.setTextColor(Color.WHITE);
+                        city.setTextColor(Color.parseColor("#666666"));
+                        happening.setTextColor(Color.parseColor("#666666"));
+                        settings.setTextColor(Color.parseColor("#666666"));
+                    }
+                    /*else {
                         if(colorcodes.equalsIgnoreCase("#383838")){
-                            audio_video.setBackgroundResource(R.color.theme1button);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.theme1button));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                          *//*  city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            audio_video.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#59247c")){
-                            audio_video.setBackgroundResource(R.color.theme2);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.theme2));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            audio_video.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#1d487a")){
-                            audio_video.setBackgroundResource(R.color.theme3);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.theme3));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            audio_video.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#7A4100")){
-                            audio_video.setBackgroundResource(R.color.theme4);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.theme4));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            audio_video.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#6E0138")){
-                            audio_video.setBackgroundResource(R.color.theme5);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.theme5));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            audio_video.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#00BFD4")){
-                            audio_video.setBackgroundResource(R.color.theme6);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.theme6));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            audio_video.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#185546")){
-                            audio_video.setBackgroundResource(R.color.theme7);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.theme7));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            audio_video.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#D0A06F")){
-                            audio_video.setBackgroundResource(R.color.theme8);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.theme8));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            audio_video.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#82C6E6")){
-                            audio_video.setBackgroundResource(R.color.theme9);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.theme9));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            audio_video.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#339900")){
-                            audio_video.setBackgroundResource(R.color.theme10);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.theme10));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            audio_video.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#CC9C00")){
-                            audio_video.setBackgroundResource(R.color.theme11);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.theme11));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            audio_video.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#00B09B")){
-                            audio_video.setBackgroundResource(R.color.theme12);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            settings.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.theme12));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            audio_video.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            settings.setTextColor(Color.parseColor("#666666"));
                         }
                         else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
-                            audio_video.setBackgroundResource(R.color.theme13);
-                            city.setBackgroundResource(R.color.white);
-                            happening.setBackgroundResource(R.color.white);
-                            search.setBackgroundResource(R.color.white);
-                            //audio_video.setBackgroundResource(R.color.white);
-                            settings.setBackgroundResource(R.color.white);
-                            city.setImageResource(R.mipmap.newsone);
-                            happening.setImageResource(R.mipmap.eventone);
-                            search.setImageResource(R.mipmap.searchone);
-                            //audio_video.setImageResource(R.mipmap.specialone);
-                            settings.setImageResource(R.mipmap.moreone);
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.theme13));
+                            happening.setBackgroundColor(getResources().getColor(R.color.white));
+                           search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.white));
+                            settings.setBackgroundColor(getResources().getColor(R.color.white));
+                            city.setTextColor(Color.parseColor("#CCCCCC"));
+                            audio_video.setTextColor(Color.BLACK);
+                            happening.setTextColor(Color.parseColor("#CCCCCC"));
+                            settings.setTextColor(Color.parseColor("#CCCCCC"));
                         }
-                    }
+                    }*/
                 }
             }
         });
@@ -930,152 +1203,209 @@ LinearLayout footer;
                     if(colorcodes.equalsIgnoreCase("004")){
                         Log.e("Msg","hihihi");
                     }else {
+                        settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
+                        happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        settings.setTextColor(Color.WHITE);
+                        city.setTextColor(Color.parseColor("#666666"));
+                        happening.setTextColor(Color.parseColor("#666666"));
+                        audio_video.setTextColor(Color.parseColor("#666666"));
+                    }
+                    /*else {
                         if(colorcodes.equalsIgnoreCase("#383838")){
-                            settings.setBackgroundResource(R.color.theme1button);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            settings.setBackgroundColor(getResources().getColor(R.color.theme1button));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                          *//*  city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            settings.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#59247c")){
-                            settings.setBackgroundResource(R.color.theme2);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            settings.setBackgroundColor(getResources().getColor(R.color.theme2));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            settings.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#1d487a")){
-                            settings.setBackgroundResource(R.color.theme3);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            settings.setBackgroundColor(getResources().getColor(R.color.theme3));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            settings.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#7A4100")){
-                            settings.setBackgroundResource(R.color.theme4);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            settings.setBackgroundColor(getResources().getColor(R.color.theme4));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            settings.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#6E0138")){
-                            settings.setBackgroundResource(R.color.theme5);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            settings.setBackgroundColor(getResources().getColor(R.color.theme5));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            settings.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#00BFD4")){
-                            settings.setBackgroundResource(R.color.theme6);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            settings.setBackgroundColor(getResources().getColor(R.color.theme6));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            settings.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#185546")){
-                            settings.setBackgroundResource(R.color.theme7);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            settings.setBackgroundColor(getResources().getColor(R.color.theme7));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            settings.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#D0A06F")){
-                            settings.setBackgroundResource(R.color.theme8);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            settings.setBackgroundColor(getResources().getColor(R.color.theme8));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            settings.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#82C6E6")){
-                            settings.setBackgroundResource(R.color.theme9);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            settings.setBackgroundColor(getResources().getColor(R.color.theme9));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            settings.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#339900")){
-                            settings.setBackgroundResource(R.color.theme10);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            settings.setBackgroundColor(getResources().getColor(R.color.theme10));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            settings.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#CC9C00")){
-                            settings.setBackgroundResource(R.color.theme11);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            settings.setBackgroundColor(getResources().getColor(R.color.theme11));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                           *//* city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            settings.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
                         }else if(colorcodes.equalsIgnoreCase("#00B09B")){
-                            settings.setBackgroundResource(R.color.theme12);
-                            happening.setBackgroundResource(R.color.mytransparent);
-                            search.setBackgroundResource(R.color.mytransparent);
-                            audio_video.setBackgroundResource(R.color.mytransparent);
-                            city.setBackgroundResource(R.color.mytransparent);
-                            city.setImageResource(R.mipmap.news);
+                            settings.setBackgroundColor(getResources().getColor(R.color.theme12));
+                            happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            city.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            *//*city.setImageResource(R.mipmap.news);
                             happening.setImageResource(R.mipmap.events);
                             search.setImageResource(R.mipmap.search);
                             audio_video.setImageResource(R.mipmap.specials);
-                            settings.setImageResource(R.mipmap.more);
+                            settings.setImageResource(R.mipmap.more);*//*
+                            settings.setTextColor(Color.WHITE);
+                            city.setTextColor(Color.parseColor("#666666"));
+                            happening.setTextColor(Color.parseColor("#666666"));
+                            audio_video.setTextColor(Color.parseColor("#666666"));
                         }
                         else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
-                            settings.setBackgroundResource(R.color.theme13);
-                            city.setBackgroundResource(R.color.white);
-                            happening.setBackgroundResource(R.color.white);
-                            search.setBackgroundResource(R.color.white);
-                            audio_video.setBackgroundResource(R.color.white);
-                            //settings.setBackgroundResource(R.color.white);
-                            city.setImageResource(R.mipmap.newsone);
-                            happening.setImageResource(R.mipmap.eventone);
-                            search.setImageResource(R.mipmap.searchone);
-                            audio_video.setImageResource(R.mipmap.specialone);
+                            settings.setBackgroundColor(getResources().getColor(R.color.theme13));
+                            happening.setBackgroundColor(getResources().getColor(R.color.white));
+                            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
+                            audio_video.setBackgroundColor(getResources().getColor(R.color.white));
+                            city.setBackgroundColor(getResources().getColor(R.color.white));
+                            city.setTextColor(Color.parseColor("#CCCCCC"));
+                            settings.setTextColor(Color.BLACK);
+                            audio_video.setTextColor(Color.parseColor("#CCCCCC"));
+                            happening.setTextColor(Color.parseColor("#CCCCCC"));
                         }
-                    }
+                    }*/
                 }
             }
         });
@@ -1092,7 +1422,16 @@ LinearLayout footer;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, CityFragment.newInstance());
         transaction.commit();
-        if(colorcodes.length()==0){
+            city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
+
+            happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            city.setTextColor(Color.WHITE);
+            happening.setTextColor(Color.parseColor("#666666"));
+            audio_video.setTextColor(Color.parseColor("#666666"));
+            settings.setTextColor(Color.parseColor("#666666"));
+        /*if(colorcodes.length()==0){
 
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
@@ -1127,7 +1466,7 @@ LinearLayout footer;
                     city.setBackgroundResource(R.color.theme13);
                 }
             }
-        }
+        }*/
         }
     }
     private boolean isFirstTime()
@@ -1230,7 +1569,16 @@ Log.e("RES",response);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frame_layout, fragment);
             fragmentTransaction.commit();
-            if(colorcodes.length()==0){
+            city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
+
+            happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            city.setTextColor(Color.WHITE);
+            happening.setTextColor(Color.parseColor("#666666"));
+            audio_video.setTextColor(Color.parseColor("#666666"));
+            settings.setTextColor(Color.parseColor("#666666"));
+           /* if(colorcodes.length()==0){
 
             }else {
                 if(colorcodes.equalsIgnoreCase("004")){
@@ -1265,7 +1613,7 @@ Log.e("RES",response);
                         settings.setBackgroundResource(R.color.theme13);
                     }
                 }
-            }
+            }*/
         }else if(id.equals("2")){
             happening.setBackgroundResource(R.color.mytransparent);
             search.setBackgroundResource(R.color.mytransparent);
@@ -1276,7 +1624,15 @@ Log.e("RES",response);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_layout, selectedFragment);
             transaction.commit();
-            if(colorcodes.length()==0){
+            audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
+            happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            audio_video.setTextColor(Color.WHITE);
+            city.setTextColor(Color.parseColor("#666666"));
+            happening.setTextColor(Color.parseColor("#666666"));
+            settings.setTextColor(Color.parseColor("#666666"));
+            /*if(colorcodes.length()==0){
 
             }else {
                 if (colorcodes.equalsIgnoreCase("004")) {
@@ -1311,7 +1667,7 @@ Log.e("RES",response);
                         settings.setBackgroundResource(R.color.theme13);
                     }
                 }
-            }
+            }*/
         }else if(id.equals("3")){
             city.setBackgroundResource(R.color.mytransparent);
             search.setBackgroundResource(R.color.mytransparent);
@@ -1322,7 +1678,17 @@ Log.e("RES",response);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_layout, selectedFragment);
             transaction.commit();
-            if(colorcodes.length()==0){
+
+            happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
+            city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            Log.e("Msg","hievent");
+            happening.setTextColor(Color.WHITE);
+            city.setTextColor(Color.parseColor("#666666"));
+            audio_video.setTextColor(Color.parseColor("#666666"));
+            settings.setTextColor(Color.parseColor("#666666"));
+            /*if(colorcodes.length()==0){
 
             }else {
                 if(colorcodes.equalsIgnoreCase("004")){
@@ -1357,7 +1723,7 @@ Log.e("RES",response);
                         settings.setBackgroundResource(R.color.theme13);
                     }
                 }
-            }
+            }*/
         }else if(id.equals("4")){
             happening.setBackgroundResource(R.color.mytransparent);
             city.setBackgroundResource(R.color.mytransparent);
@@ -1368,7 +1734,16 @@ Log.e("RES",response);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_layout, selectedFragment);
             transaction.commit();
-            if(colorcodes.length()==0){
+            happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            Log.e("Msg","hievent");
+            happening.setTextColor(Color.parseColor("#666666"));
+            city.setTextColor(Color.parseColor("#666666"));
+            audio_video.setTextColor(Color.parseColor("#666666"));
+            settings.setTextColor(Color.parseColor("#666666"));
+            /*if(colorcodes.length()==0){
 
             }else {
                 if(colorcodes.equalsIgnoreCase("004")){
@@ -1403,7 +1778,7 @@ Log.e("RES",response);
                         settings.setBackgroundResource(R.color.theme13);
                     }
                 }
-            }
+            }*/
         }
         else if(id.equals("5")){
             happening.setBackgroundResource(R.color.mytransparent);
@@ -1415,7 +1790,15 @@ Log.e("RES",response);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_layout, selectedFragment);
             transaction.commit();
-            if(colorcodes.length()==0){
+            settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
+            happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            settings.setTextColor(Color.WHITE);
+            city.setTextColor(Color.parseColor("#666666"));
+            happening.setTextColor(Color.parseColor("#666666"));
+            audio_video.setTextColor(Color.parseColor("#666666"));
+            /*if(colorcodes.length()==0){
 
             }else {
                 if(colorcodes.equalsIgnoreCase("004")){
@@ -1450,7 +1833,7 @@ Log.e("RES",response);
                         settings.setBackgroundResource(R.color.theme13);
                     }
                 }
-            }
+            }*/
         }
         else {
 
@@ -1810,7 +2193,6 @@ private void themeselection(){
             }else {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(Language, "English");
-
                 editor.commit();
                 if(playerid!=null){
                     StringRequest language=new StringRequest(Request.Method.POST, url_change_lang, new Response.Listener<String>() {

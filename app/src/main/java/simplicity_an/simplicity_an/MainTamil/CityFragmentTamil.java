@@ -64,6 +64,7 @@ import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SimplicitySearchview;
 import simplicity_an.simplicity_an.Tamil.TabColumnstamil;
+import simplicity_an.simplicity_an.Tamil.Tab_new_newstamil;
 import simplicity_an.simplicity_an.Tamil.TamilFarming;
 import simplicity_an.simplicity_an.Tamil.TamilFoods;
 import simplicity_an.simplicity_an.Tamil.TamilHealth;
@@ -1552,7 +1553,7 @@ public class CityFragmentTamil extends Fragment {
 
     private void setupViewPager(ViewPager mPager) {
         HealthViewPagerAdapter adapter = new HealthViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new Tamilnews(), "நகரம் ");
+        adapter.addFragment(new Tab_new_newstamil(), "நகரம் ");
         adapter.addFragment(new TamilTaball(), "அனைத்தும்");
         adapter.addFragment(new TabColumnstamil(), "சிறப்பு கட்டுரைகள் ");
         //adapter.addFragment(new TamilArticle(), "கட்டுரை");

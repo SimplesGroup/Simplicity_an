@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -86,7 +87,7 @@ public class HappeningFrag extends Fragment {
     int value;
     public static final String Activity = "activity";
     public static final String CONTENTID = "contentid";
-    ImageButton city,beyond,search,explore,notifications,themechange_button,specials,btnsearch,more;
+    ImageButton beyond,search,explore,notifications,themechange_button,specials,more;
     String activity,contentid,colorcodes;
     FloatingActionButton fabsearch,fabinnerplus,fabplus,fabup;
     CoordinatorLayout mCoordinator;
@@ -109,6 +110,10 @@ public class HappeningFrag extends Fragment {
     public static final String GcmId = "gcmid";
     String notificationto_visible_currenttab,id;
     String sMonthNamefull,dayOfTheWeek;
+    Button btnspecials,btnevents,btnmore,city;
+    ImageView btnsearch;
+    String tab_id;
+
     public static HappeningFrag newInstance() {
         HappeningFrag fragment = new HappeningFrag();
         return fragment;
@@ -130,11 +135,11 @@ public class HappeningFrag extends Fragment {
         contentid=sharedpreferences.getString(CONTENTID,"");
         activity=sharedpreferences.getString(Activity,"");
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
-        beyond=(ImageButton)getActivity().findViewById(R.id.btn_versiontwobeyond);
-        city=(ImageButton)getActivity().findViewById(R.id.btn_versiontwocity);
-        specials=(ImageButton)getActivity().findViewById(R.id.btn_versiontwoexplore);
-        btnsearch = (ImageButton)getActivity().findViewById(R.id.btn_versiontwosearch);
-        more = (ImageButton)getActivity().findViewById(R.id.btn_versiontwonotifications);
+        city=(Button) getActivity().findViewById(R.id.btn_news);
+        btnspecials=(Button)getActivity().findViewById(R.id.btn_specials);
+        btnevents = (Button)getActivity().findViewById(R.id.btn_events);
+        btnsearch = (ImageView) getActivity().findViewById(R.id.btn_citys);
+        btnmore = (Button)getActivity().findViewById(R.id.btn_shop);
         if (sharedpreferences.contains(MYUSERID)) {
 
             myprofileid=sharedpreferences.getString(MYUSERID,"");
@@ -145,6 +150,7 @@ public class HappeningFrag extends Fragment {
 
         Intent get=getActivity().getIntent();
         notificationto_visible_currenttab=get.getStringExtra("DETAIL");
+        tab_id=get.getStringExtra("TAB");
        // id=get.getStringExtra("ID");
 
 
@@ -192,7 +198,7 @@ public class HappeningFrag extends Fragment {
             gd.setCornerRadius(0f);
 
             mainlayout.setBackgroundDrawable(gd);
-           beyond.setBackgroundResource(R.color.theme1button);
+          // beyond.setBackgroundResource(R.color.theme1button);
             fabplus.setBackgroundResource(R.color.theme1button);
             fabinnerplus.setBackgroundResource(R.color.theme1button);
             fabsearch.setBackgroundResource(R.color.theme1button);
@@ -209,7 +215,7 @@ public class HappeningFrag extends Fragment {
                 gd.setCornerRadius(0f);
 
                 mainlayout.setBackgroundDrawable(gd);
-            beyond.setBackgroundResource(R.color.theme1button);
+           // beyond.setBackgroundResource(R.color.theme1button);
                 fabplus.setBackgroundResource(R.color.theme1button);
                 fabinnerplus.setBackgroundResource(R.color.theme1button);
                 fabsearch.setBackgroundResource(R.color.theme1button);
@@ -240,8 +246,8 @@ public class HappeningFrag extends Fragment {
                         g.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(g);
-                        beyond.setBackgroundResource(R.color.theme13);
-                        beyond.setImageResource(R.mipmap.eventone);
+                      //  beyond.setBackgroundResource(R.color.theme13);
+                      //  beyond.setImageResource(R.mipmap.eventone);
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#FFFFFFFF");
                         editor.commit();
@@ -255,7 +261,7 @@ public class HappeningFrag extends Fragment {
                     gd.setCornerRadius(0f);
 
                     mainlayout.setBackgroundDrawable(gd);
-                  beyond.setBackgroundResource(R.color.theme1button);
+                 // beyond.setBackgroundResource(R.color.theme1button);
                     fabplus.setBackgroundResource(R.color.theme1button);
                     fabinnerplus.setBackgroundResource(R.color.theme1button);
                     fabsearch.setBackgroundResource(R.color.theme1button);
@@ -388,22 +394,34 @@ public class HappeningFrag extends Fragment {
         else{
             weather_update.setTextColor(Color.WHITE);
         }
-        if(colorcodes.equals("#FFFFFFFF")){
-            beyond.setBackgroundResource(R.color.theme13);
-            beyond.setImageResource(R.mipmap.eventone);
-           /* city.setBackgroundResource(R.color.white);
+        /*if(colorcodes.equals("#FFFFFFFF")){
+
+
+            btnevents.setTextColor(Color.WHITE);
+            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.parseColor("#CCCCCC"));
+            btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+
+          *//*  beyond.setBackgroundResource(R.color.theme13);
+            beyond.setImageResource(R.mipmap.eventone);*//*
+           *//* city.setBackgroundResource(R.color.white);
             btnevents.setBackgroundResource(R.color.mytransparent);
             btnmore.setBackgroundResource(R.color.mytransparent);
             btnspecials.setBackgroundResource(R.color.mytransparent);
             city.setImageResource(R.mipmap.news);
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
-            btnspecials.setImageResource(R.mipmap.specials);*/
+            btnspecials.setImageResource(R.mipmap.specials);*//*
         }
         else{
 
             if(colorcodes.equals("#383838")) {
-                beyond.setBackgroundResource(R.color.theme1button);
+
+                btnevents.setTextColor(Color.WHITE);
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+               *//* beyond.setBackgroundResource(R.color.theme1button);
                 beyond.setImageResource(R.mipmap.events);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 city.setBackgroundResource(R.color.mytransparent);
@@ -412,10 +430,15 @@ public class HappeningFrag extends Fragment {
                 btnsearch.setImageResource(R.mipmap.search);
                 city.setImageResource(R.mipmap.news);
                 more.setImageResource(R.mipmap.more);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#59247c")) {
-                beyond.setBackgroundResource(R.color.theme2);
+
+                btnevents.setTextColor(Color.WHITE);
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+               *//* beyond.setBackgroundResource(R.color.theme2);
                 beyond.setImageResource(R.mipmap.events);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 city.setBackgroundResource(R.color.mytransparent);
@@ -424,10 +447,15 @@ public class HappeningFrag extends Fragment {
                 btnsearch.setImageResource(R.mipmap.search);
                 city.setImageResource(R.mipmap.news);
                 more.setImageResource(R.mipmap.more);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#1d487a")) {
-                beyond.setBackgroundResource(R.color.theme3);
+
+                btnevents.setTextColor(Color.WHITE);
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+                *//*beyond.setBackgroundResource(R.color.theme3);
                 beyond.setImageResource(R.mipmap.events);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 city.setBackgroundResource(R.color.mytransparent);
@@ -436,10 +464,15 @@ public class HappeningFrag extends Fragment {
                 btnsearch.setImageResource(R.mipmap.search);
                 city.setImageResource(R.mipmap.news);
                 more.setImageResource(R.mipmap.more);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#7A4100")) {
-                beyond.setBackgroundResource(R.color.theme4);
+
+                btnevents.setTextColor(Color.WHITE);
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+               *//* beyond.setBackgroundResource(R.color.theme4);
                 beyond.setImageResource(R.mipmap.events);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 city.setBackgroundResource(R.color.mytransparent);
@@ -448,10 +481,15 @@ public class HappeningFrag extends Fragment {
                 btnsearch.setImageResource(R.mipmap.search);
                 city.setImageResource(R.mipmap.news);
                 more.setImageResource(R.mipmap.more);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#6E0138")) {
-                beyond.setBackgroundResource(R.color.theme5);
+
+                btnevents.setTextColor(Color.WHITE);
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+                *//*beyond.setBackgroundResource(R.color.theme5);
                 beyond.setImageResource(R.mipmap.events);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 city.setBackgroundResource(R.color.mytransparent);
@@ -460,10 +498,15 @@ public class HappeningFrag extends Fragment {
                 btnsearch.setImageResource(R.mipmap.search);
                 city.setImageResource(R.mipmap.news);
                 more.setImageResource(R.mipmap.more);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#00BFD4")) {
-                beyond.setBackgroundResource(R.color.theme6);
+                btnevents.setTextColor(Color.WHITE);
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+
+               *//* beyond.setBackgroundResource(R.color.theme6);
                 beyond.setImageResource(R.mipmap.events);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 city.setBackgroundResource(R.color.mytransparent);
@@ -472,10 +515,15 @@ public class HappeningFrag extends Fragment {
                 btnsearch.setImageResource(R.mipmap.search);
                 city.setImageResource(R.mipmap.news);
                 more.setImageResource(R.mipmap.more);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#185546")) {
-                beyond.setBackgroundResource(R.color.theme7);
+
+                btnevents.setTextColor(Color.WHITE);
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+               *//* beyond.setBackgroundResource(R.color.theme7);
                 beyond.setImageResource(R.mipmap.events);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 city.setBackgroundResource(R.color.mytransparent);
@@ -484,10 +532,15 @@ public class HappeningFrag extends Fragment {
                 btnsearch.setImageResource(R.mipmap.search);
                 city.setImageResource(R.mipmap.news);
                 more.setImageResource(R.mipmap.more);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#D0A06F")) {
-                beyond.setBackgroundResource(R.color.theme8);
+
+                btnevents.setTextColor(Color.WHITE);
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+                *//*beyond.setBackgroundResource(R.color.theme8);
                 beyond.setImageResource(R.mipmap.events);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 city.setBackgroundResource(R.color.mytransparent);
@@ -496,10 +549,14 @@ public class HappeningFrag extends Fragment {
                 btnsearch.setImageResource(R.mipmap.search);
                 city.setImageResource(R.mipmap.news);
                 more.setImageResource(R.mipmap.more);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#82C6E6")) {
-                beyond.setBackgroundResource(R.color.theme9);
+                btnevents.setTextColor(Color.WHITE);
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+               *//* beyond.setBackgroundResource(R.color.theme9);
                 beyond.setImageResource(R.mipmap.events);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 city.setBackgroundResource(R.color.mytransparent);
@@ -508,10 +565,14 @@ public class HappeningFrag extends Fragment {
                 btnsearch.setImageResource(R.mipmap.search);
                 city.setImageResource(R.mipmap.news);
                 more.setImageResource(R.mipmap.more);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#339900")) {
-                beyond.setBackgroundResource(R.color.theme10);
+                btnevents.setTextColor(Color.WHITE);
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+                *//*beyond.setBackgroundResource(R.color.theme10);
                 beyond.setImageResource(R.mipmap.events);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 city.setBackgroundResource(R.color.mytransparent);
@@ -520,10 +581,14 @@ public class HappeningFrag extends Fragment {
                 btnsearch.setImageResource(R.mipmap.search);
                 city.setImageResource(R.mipmap.news);
                 more.setImageResource(R.mipmap.more);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#CC9C00")) {
-                beyond.setBackgroundResource(R.color.theme11);
+                btnevents.setTextColor(Color.WHITE);
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+                *//*beyond.setBackgroundResource(R.color.theme11);
                 beyond.setImageResource(R.mipmap.events);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 city.setBackgroundResource(R.color.mytransparent);
@@ -532,10 +597,14 @@ public class HappeningFrag extends Fragment {
                 btnsearch.setImageResource(R.mipmap.search);
                 city.setImageResource(R.mipmap.news);
                 more.setImageResource(R.mipmap.more);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#00B09B")) {
-                beyond.setBackgroundResource(R.color.theme12);
+                btnevents.setTextColor(Color.WHITE);
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+               *//* beyond.setBackgroundResource(R.color.theme12);
                 beyond.setImageResource(R.mipmap.events);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 city.setBackgroundResource(R.color.mytransparent);
@@ -544,9 +613,9 @@ public class HappeningFrag extends Fragment {
                 btnsearch.setImageResource(R.mipmap.search);
                 city.setImageResource(R.mipmap.news);
                 more.setImageResource(R.mipmap.more);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
-        }
+        }*/
         StringRequest weather=new StringRequest(Request.Method.GET, WEATHER_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -634,68 +703,68 @@ public class HappeningFrag extends Fragment {
         notifications=(ImageButton)view.findViewById(R.id.btn_versiontwonotifications);*/
 
         if(colorcodes.equalsIgnoreCase("#383838")){
-          beyond.setBackgroundResource(R.color.theme1button);
+         // beyond.setBackgroundResource(R.color.theme1button);
             fabplus.setBackgroundResource(R.color.theme1button);
             fabinnerplus.setBackgroundResource(R.color.theme1button);
             fabsearch.setBackgroundResource(R.color.theme1button);
         }else if(colorcodes.equalsIgnoreCase("#59247c")){
-          beyond.setBackgroundResource(R.color.theme2);
+       //   beyond.setBackgroundResource(R.color.theme2);
             fabplus.setBackgroundResource(R.color.theme2);
             fabinnerplus.setBackgroundResource(R.color.theme2);
             fabsearch.setBackgroundResource(R.color.theme2);
         }else if(colorcodes.equalsIgnoreCase("#1d487a")){
-           beyond.setBackgroundResource(R.color.theme3);
+        //   beyond.setBackgroundResource(R.color.theme3);
             fabplus.setBackgroundResource(R.color.theme3);
             fabinnerplus.setBackgroundResource(R.color.theme3);
             fabsearch.setBackgroundResource(R.color.theme3);
         }else if(colorcodes.equalsIgnoreCase("#7A4100")){
-          beyond.setBackgroundResource(R.color.theme4);
+        //  beyond.setBackgroundResource(R.color.theme4);
             fabplus.setBackgroundResource(R.color.theme4);
             fabinnerplus.setBackgroundResource(R.color.theme4);
             fabsearch.setBackgroundResource(R.color.theme4);
         }else if(colorcodes.equalsIgnoreCase("#6E0138")){
-           beyond.setBackgroundResource(R.color.theme5);
+        //   beyond.setBackgroundResource(R.color.theme5);
             fabplus.setBackgroundResource(R.color.theme5);
             fabinnerplus.setBackgroundResource(R.color.theme5);
             fabsearch.setBackgroundResource(R.color.theme5);
         }else if(colorcodes.equalsIgnoreCase("#00BFD4")){
-           beyond.setBackgroundResource(R.color.theme6);
+         //  beyond.setBackgroundResource(R.color.theme6);
             fabplus.setBackgroundResource(R.color.theme6);
             fabinnerplus.setBackgroundResource(R.color.theme6);
             fabsearch.setBackgroundResource(R.color.theme6);
         }else if(colorcodes.equalsIgnoreCase("#185546")){
-          beyond.setBackgroundResource(R.color.theme7);
+       //   beyond.setBackgroundResource(R.color.theme7);
             fabplus.setBackgroundResource(R.color.theme7);
             fabinnerplus.setBackgroundResource(R.color.theme7);
             fabsearch.setBackgroundResource(R.color.theme7);
         }else if(colorcodes.equalsIgnoreCase("#D0A06F")){
-           beyond.setBackgroundResource(R.color.theme8);
+       //    beyond.setBackgroundResource(R.color.theme8);
             fabplus.setBackgroundResource(R.color.theme8);
             fabinnerplus.setBackgroundResource(R.color.theme8);
             fabsearch.setBackgroundResource(R.color.theme8);
         }else if(colorcodes.equalsIgnoreCase("#82C6E6")){
-          beyond.setBackgroundResource(R.color.theme9);
+        //  beyond.setBackgroundResource(R.color.theme9);
             fabplus.setBackgroundResource(R.color.theme9);
             fabinnerplus.setBackgroundResource(R.color.theme9);
             fabsearch.setBackgroundResource(R.color.theme9);
         }else if(colorcodes.equalsIgnoreCase("#339900")){
-          beyond.setBackgroundResource(R.color.theme10);
+        //  beyond.setBackgroundResource(R.color.theme10);
             fabplus.setBackgroundResource(R.color.theme10);
             fabinnerplus.setBackgroundResource(R.color.theme10);
             fabsearch.setBackgroundResource(R.color.theme10);
         }else if(colorcodes.equalsIgnoreCase("#CC9C00")){
-          beyond.setBackgroundResource(R.color.theme11);
+         // beyond.setBackgroundResource(R.color.theme11);
             fabplus.setBackgroundResource(R.color.theme11);
             fabinnerplus.setBackgroundResource(R.color.theme11);
             fabsearch.setBackgroundResource(R.color.theme11);
         }else if(colorcodes.equalsIgnoreCase("#00B09B")){
-          beyond.setBackgroundResource(R.color.theme12);
+       //   beyond.setBackgroundResource(R.color.theme12);
             fabplus.setBackgroundResource(R.color.theme12);
             fabinnerplus.setBackgroundResource(R.color.theme12);
             fabsearch.setBackgroundResource(R.color.theme12);
         }
         else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
-            beyond.setBackgroundResource(R.color.theme13);
+         //   beyond.setBackgroundResource(R.color.theme13);
             fabplus.setBackgroundResource(R.color.theme13);
             fabinnerplus.setBackgroundResource(R.color.theme13);
             fabsearch.setBackgroundResource(R.color.theme13);
@@ -792,16 +861,21 @@ public class HappeningFrag extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                       beyond.setBackgroundResource(R.color.theme1button);
+                       /*beyond.setBackgroundResource(R.color.theme1button);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
                         city.setImageResource(R.mipmap.news);
                         specials.setBackgroundResource(R.color.mytransparent);
-                        specials.setImageResource(R.mipmap.specials);
+                        specials.setImageResource(R.mipmap.specials);*/
                         btnsearch.setBackgroundResource(R.color.mytransparent);
-                        btnsearch.setImageResource(R.mipmap.search);
-                        more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);
+                        btnsearch.setImageResource(R.mipmap.cityfooterlogo);
+                        /*more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*/
+
+                       /* btnevents.setTextColor(Color.WHITE);
+                        btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                        city.setTextColor(Color.parseColor("#CCCCCC"));
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
@@ -831,16 +905,20 @@ public class HappeningFrag extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                      beyond.setBackgroundResource(R.color.theme2);
+                      /*beyond.setBackgroundResource(R.color.theme2);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
                         city.setImageResource(R.mipmap.news);
                         specials.setBackgroundResource(R.color.mytransparent);
-                        specials.setImageResource(R.mipmap.specials);
+                        specials.setImageResource(R.mipmap.specials);*/
                         btnsearch.setBackgroundResource(R.color.mytransparent);
-                        btnsearch.setImageResource(R.mipmap.search);
-                        more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);
+                        btnsearch.setImageResource(R.mipmap.cityfooterlogo);
+                       /* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*/
+                        /*btnevents.setTextColor(Color.WHITE);
+                        btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                        city.setTextColor(Color.parseColor("#CCCCCC"));
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
@@ -873,16 +951,21 @@ public class HappeningFrag extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                       beyond.setBackgroundResource(R.color.theme3);
+                       /*beyond.setBackgroundResource(R.color.theme3);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
                         city.setImageResource(R.mipmap.news);
                         specials.setBackgroundResource(R.color.mytransparent);
-                        specials.setImageResource(R.mipmap.specials);
+                        specials.setImageResource(R.mipmap.specials);*/
                         btnsearch.setBackgroundResource(R.color.mytransparent);
-                        btnsearch.setImageResource(R.mipmap.search);
-                        more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);
+                        btnsearch.setImageResource(R.mipmap.cityfooterlogo);
+                       /* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*/
+
+                        /*btnevents.setTextColor(Color.WHITE);
+                        btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                        city.setTextColor(Color.parseColor("#CCCCCC"));
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme3));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme3));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme3));
@@ -910,16 +993,20 @@ public class HappeningFrag extends Fragment {
                                 GradientDrawable.Orientation.TOP_BOTTOM,
                                 colors);
                         gd.setCornerRadius(0f);
-                      beyond.setBackgroundResource(R.color.theme4);
+                      /*beyond.setBackgroundResource(R.color.theme4);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
                         city.setImageResource(R.mipmap.news);
                         specials.setBackgroundResource(R.color.mytransparent);
-                        specials.setImageResource(R.mipmap.specials);
+                        specials.setImageResource(R.mipmap.specials);*/
                         btnsearch.setBackgroundResource(R.color.mytransparent);
-                        btnsearch.setImageResource(R.mipmap.search);
-                        more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);
+                        btnsearch.setImageResource(R.mipmap.cityfooterlogo);
+                        /*more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*/
+                       /* btnevents.setTextColor(Color.WHITE);
+                        btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                        city.setTextColor(Color.parseColor("#CCCCCC"));
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme4));
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme4));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme4));
@@ -950,16 +1037,20 @@ public class HappeningFrag extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                    beyond.setBackgroundResource(R.color.theme5);
+                   /* beyond.setBackgroundResource(R.color.theme5);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
                         city.setImageResource(R.mipmap.news);
                         specials.setBackgroundResource(R.color.mytransparent);
-                        specials.setImageResource(R.mipmap.specials);
+                        specials.setImageResource(R.mipmap.specials);*/
                         btnsearch.setBackgroundResource(R.color.mytransparent);
-                        btnsearch.setImageResource(R.mipmap.search);
-                        more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);
+                        btnsearch.setImageResource(R.mipmap.cityfooterlogo);
+                        /*more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*/
+                       /* btnevents.setTextColor(Color.WHITE);
+                        btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                        city.setTextColor(Color.parseColor("#CCCCCC"));
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
@@ -989,16 +1080,20 @@ public class HappeningFrag extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                    beyond.setBackgroundResource(R.color.theme6);
+                    /*beyond.setBackgroundResource(R.color.theme6);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
                         city.setImageResource(R.mipmap.news);
                         specials.setBackgroundResource(R.color.mytransparent);
-                        specials.setImageResource(R.mipmap.specials);
+                        specials.setImageResource(R.mipmap.specials);*/
                         btnsearch.setBackgroundResource(R.color.mytransparent);
-                        btnsearch.setImageResource(R.mipmap.search);
-                        more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);
+                        btnsearch.setImageResource(R.mipmap.cityfooterlogo);
+                      /*  more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*/
+                        /*btnevents.setTextColor(Color.WHITE);
+                        btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                        city.setTextColor(Color.parseColor("#CCCCCC"));
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
@@ -1028,16 +1123,20 @@ public class HappeningFrag extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                    beyond.setBackgroundResource(R.color.theme7);
+                   /* beyond.setBackgroundResource(R.color.theme7);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
                         city.setImageResource(R.mipmap.news);
                         specials.setBackgroundResource(R.color.mytransparent);
-                        specials.setImageResource(R.mipmap.specials);
+                        specials.setImageResource(R.mipmap.specials);*/
                         btnsearch.setBackgroundResource(R.color.mytransparent);
-                        btnsearch.setImageResource(R.mipmap.search);
-                        more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);
+                        btnsearch.setImageResource(R.mipmap.cityfooterlogo);
+                       /* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*/
+                       /* btnevents.setTextColor(Color.WHITE);
+                        btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                        city.setTextColor(Color.parseColor("#CCCCCC"));
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
@@ -1067,16 +1166,20 @@ public class HappeningFrag extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                    beyond.setBackgroundResource(R.color.theme8);
+                    /*beyond.setBackgroundResource(R.color.theme8);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
                         city.setImageResource(R.mipmap.news);
                         specials.setBackgroundResource(R.color.mytransparent);
-                        specials.setImageResource(R.mipmap.specials);
+                        specials.setImageResource(R.mipmap.specials);*/
                         btnsearch.setBackgroundResource(R.color.mytransparent);
-                        btnsearch.setImageResource(R.mipmap.search);
-                        more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);
+                        btnsearch.setImageResource(R.mipmap.cityfooterlogo);
+                       /* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*/
+                       /* btnevents.setTextColor(Color.WHITE);
+                        btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                        city.setTextColor(Color.parseColor("#CCCCCC"));
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
@@ -1106,16 +1209,20 @@ public class HappeningFrag extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                     beyond.setBackgroundResource(R.color.theme9);
+                    /* beyond.setBackgroundResource(R.color.theme9);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
                         city.setImageResource(R.mipmap.news);
                         specials.setBackgroundResource(R.color.mytransparent);
-                        specials.setImageResource(R.mipmap.specials);
+                        specials.setImageResource(R.mipmap.specials);*/
                         btnsearch.setBackgroundResource(R.color.mytransparent);
-                        btnsearch.setImageResource(R.mipmap.search);
-                        more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);
+                        btnsearch.setImageResource(R.mipmap.cityfooterlogo);
+                        /*more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*/
+                       /* btnevents.setTextColor(Color.WHITE);
+                        btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                        city.setTextColor(Color.parseColor("#CCCCCC"));
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
@@ -1145,16 +1252,20 @@ public class HappeningFrag extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                     beyond.setBackgroundResource(R.color.theme10);
+                    /* beyond.setBackgroundResource(R.color.theme10);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
                         city.setImageResource(R.mipmap.news);
                         specials.setBackgroundResource(R.color.mytransparent);
-                        specials.setImageResource(R.mipmap.specials);
+                        specials.setImageResource(R.mipmap.specials);*/
                         btnsearch.setBackgroundResource(R.color.mytransparent);
-                        btnsearch.setImageResource(R.mipmap.search);
-                        more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);
+                        btnsearch.setImageResource(R.mipmap.cityfooterlogo);
+                       /* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*/
+                       /* btnevents.setTextColor(Color.WHITE);
+                        btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                        city.setTextColor(Color.parseColor("#CCCCCC"));
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
@@ -1184,16 +1295,21 @@ public class HappeningFrag extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                      beyond.setBackgroundResource(R.color.theme11);
+                      /*beyond.setBackgroundResource(R.color.theme11);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
                         city.setImageResource(R.mipmap.news);
                         specials.setBackgroundResource(R.color.mytransparent);
-                        specials.setImageResource(R.mipmap.specials);
+                        specials.setImageResource(R.mipmap.specials);*/
                         btnsearch.setBackgroundResource(R.color.mytransparent);
-                        btnsearch.setImageResource(R.mipmap.search);
-                        more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);
+                        btnsearch.setImageResource(R.mipmap.cityfooterlogo);
+                       /* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*/
+
+                        /*btnevents.setTextColor(Color.WHITE);
+                        btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                        city.setTextColor(Color.parseColor("#CCCCCC"));
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
@@ -1222,16 +1338,20 @@ public class HappeningFrag extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                    beyond.setBackgroundResource(R.color.theme12);
+                    /*beyond.setBackgroundResource(R.color.theme12);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
                         city.setImageResource(R.mipmap.news);
                         specials.setBackgroundResource(R.color.mytransparent);
-                        specials.setImageResource(R.mipmap.specials);
+                        specials.setImageResource(R.mipmap.specials);*/
                         btnsearch.setBackgroundResource(R.color.mytransparent);
-                        btnsearch.setImageResource(R.mipmap.search);
-                        more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);
+                        btnsearch.setImageResource(R.mipmap.cityfooterlogo);
+                        /*more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*/
+                        /*btnevents.setTextColor(Color.WHITE);
+                        btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                        city.setTextColor(Color.parseColor("#CCCCCC"));
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
@@ -1260,16 +1380,20 @@ public class HappeningFrag extends Fragment {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                        beyond.setBackgroundResource(R.color.theme13);
+                        /*beyond.setBackgroundResource(R.color.theme13);
                         beyond.setImageResource(R.mipmap.eventone);
                         city.setImageResource(R.mipmap.newsone);
                         city.setBackgroundResource(R.color.theme14);
                         specials.setBackgroundResource(R.color.theme14);
-                        specials.setImageResource(R.mipmap.specialone);
-                        btnsearch.setBackgroundResource(R.color.theme14);
-                        btnsearch.setImageResource(R.mipmap.searchone);
-                        more.setBackgroundResource(R.color.theme14);
-                        more.setImageResource(R.mipmap.moreone);
+                        specials.setImageResource(R.mipmap.specialone);*/
+                        btnsearch.setBackgroundResource(R.color.mytransparent);
+                        btnsearch.setImageResource(R.mipmap.cityfooterlogo);
+                       /* more.setBackgroundResource(R.color.theme14);
+                        more.setImageResource(R.mipmap.moreone);*/
+                        /*btnevents.setTextColor(Color.WHITE);
+                        btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                        city.setTextColor(Color.parseColor("#CCCCCC"));
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
@@ -1300,6 +1424,9 @@ public class HappeningFrag extends Fragment {
 
         }else {
             mPager.setCurrentItem(2);
+        }
+        if(tab_id!=null){
+            mPager.setCurrentItem(Integer.parseInt(tab_id));
         }
         setupViewPager(mPager);
 

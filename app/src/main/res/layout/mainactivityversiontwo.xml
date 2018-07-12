@@ -108,7 +108,15 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:background="@drawable/buttonselector"
-                            android:src="@drawable/themenew" />
+                            android:src="@drawable/themenormal" />
+                        <ImageButton
+                            android:layout_marginLeft="5dp"
+                            android:id="@+id/fontbutton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/buttonselector"
+                            android:src="@drawable/blackplayfair" />
                     </LinearLayout>
                     <LinearLayout
                         android:visibility="gone"
@@ -178,6 +186,7 @@
                                 android:background="@drawable/buttonselector"
                                 android:layout_height="wrap_content" />
 
+
                             <ImageButton
                                 android:id="@+id/searchbutton"
                                 android:layout_width="wrap_content"
@@ -199,6 +208,7 @@
                 <android.support.design.widget.TabLayout
                     android:id="@+id/tab_layout"
                     android:layout_marginTop="6dp"
+
                     app:tabPaddingEnd="8dp"
                     app:paddingStart="6dp"
                     android:layout_width="match_parent"

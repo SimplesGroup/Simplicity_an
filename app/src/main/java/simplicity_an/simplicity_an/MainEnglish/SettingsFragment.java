@@ -20,7 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -64,10 +66,12 @@ public class SettingsFragment extends Fragment {
     public static final String USERIMAGE= "myprofileimage";
     public static final String USERMAILID= "myprofileemail";
     NotificationManagerCompat mNotificationManagerCompat;
-    ImageButton city,specials,events,btsearch,more;
+    ImageButton specials,events,more;
     String activity,contentid,colorcodes;
     public static final String backgroundcolor = "color";
     public static final String Language = "lamguage";
+    Button btnspecials,btnevents,btnmore,city;
+    ImageView btnsearch;
     public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
         return fragment;
@@ -93,11 +97,11 @@ public class SettingsFragment extends Fragment {
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
         Log.e("ColorCodes",colorcodes+"hihi");
-        city=(ImageButton)getActivity().findViewById(R.id.btn_versiontwocity);
-        specials=(ImageButton)getActivity().findViewById(R.id.btn_versiontwoexplore);
-        events = (ImageButton)getActivity().findViewById(R.id.btn_versiontwobeyond);
-        btsearch = (ImageButton)getActivity().findViewById(R.id.btn_versiontwosearch);
-        more = (ImageButton)getActivity().findViewById(R.id.btn_versiontwonotifications);
+        city=(Button) getActivity().findViewById(R.id.btn_news);
+        btnspecials=(Button)getActivity().findViewById(R.id.btn_specials);
+        btnevents = (Button)getActivity().findViewById(R.id.btn_events);
+        btnsearch = (ImageView) getActivity().findViewById(R.id.btn_citys);
+        btnmore = (Button)getActivity().findViewById(R.id.btn_shop);
 
         mNotificationManagerCompat = NotificationManagerCompat.from(getActivity());
 
@@ -187,22 +191,32 @@ public class SettingsFragment extends Fragment {
         notification_title=(TextView)view.findViewById(R.id.notification_title);
 
 
-        if(colorcodes.equals("#FFFFFFFF")){
-            more.setBackgroundResource(R.color.theme13);
-            more.setImageResource(R.mipmap.moreone);
-           /* city.setBackgroundResource(R.color.white);
+        /*if(colorcodes.equals("#FFFFFFFF")){
+
+            btnmore.setTextColor(Color.WHITE);
+            btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.parseColor("#CCCCCC"));
+            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+           *//* more.setBackgroundResource(R.color.theme13);
+            more.setImageResource(R.mipmap.moreone);*//*
+           *//* city.setBackgroundResource(R.color.white);
             btnevents.setBackgroundResource(R.color.mytransparent);
             btnmore.setBackgroundResource(R.color.mytransparent);
             btnspecials.setBackgroundResource(R.color.mytransparent);
             city.setImageResource(R.mipmap.news);
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
-            btnspecials.setImageResource(R.mipmap.specials);*/
+            btnspecials.setImageResource(R.mipmap.specials);*//*
         }
         else{
 
             if(colorcodes.equals("#383838")) {
-                more.setBackgroundResource(R.color.theme1button);
+
+                btnmore.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+               *//* more.setBackgroundResource(R.color.theme1button);
                 more.setImageResource(R.mipmap.more);
                 city.setBackgroundResource(R.color.mytransparent);
                 events.setBackgroundResource(R.color.mytransparent);
@@ -211,10 +225,14 @@ public class SettingsFragment extends Fragment {
                 city.setImageResource(R.mipmap.news);
                 events.setImageResource(R.mipmap.events);
                 btsearch.setImageResource(R.mipmap.search);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#59247c")) {
-                more.setBackgroundResource(R.color.theme2);
+                btnmore.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+               *//* more.setBackgroundResource(R.color.theme2);
                 more.setImageResource(R.mipmap.more);
                 city.setBackgroundResource(R.color.mytransparent);
                 events.setBackgroundResource(R.color.mytransparent);
@@ -223,10 +241,14 @@ public class SettingsFragment extends Fragment {
                 city.setImageResource(R.mipmap.news);
                 events.setImageResource(R.mipmap.events);
                 btsearch.setImageResource(R.mipmap.search);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#1d487a")) {
-                more.setBackgroundResource(R.color.theme3);
+                btnmore.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                *//*more.setBackgroundResource(R.color.theme3);
                 more.setImageResource(R.mipmap.more);
                 city.setBackgroundResource(R.color.mytransparent);
                 events.setBackgroundResource(R.color.mytransparent);
@@ -235,10 +257,14 @@ public class SettingsFragment extends Fragment {
                 city.setImageResource(R.mipmap.news);
                 events.setImageResource(R.mipmap.events);
                 btsearch.setImageResource(R.mipmap.search);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#7A4100")) {
-                more.setBackgroundResource(R.color.theme4);
+                btnmore.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+               *//* more.setBackgroundResource(R.color.theme4);
                 more.setImageResource(R.mipmap.more);
                 city.setBackgroundResource(R.color.mytransparent);
                 events.setBackgroundResource(R.color.mytransparent);
@@ -247,10 +273,14 @@ public class SettingsFragment extends Fragment {
                 city.setImageResource(R.mipmap.news);
                 events.setImageResource(R.mipmap.events);
                 btsearch.setImageResource(R.mipmap.search);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#6E0138")) {
-                more.setBackgroundResource(R.color.theme5);
+                btnmore.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+               *//* more.setBackgroundResource(R.color.theme5);
                 more.setImageResource(R.mipmap.more);
                 city.setBackgroundResource(R.color.mytransparent);
                 events.setBackgroundResource(R.color.mytransparent);
@@ -259,10 +289,14 @@ public class SettingsFragment extends Fragment {
                 city.setImageResource(R.mipmap.news);
                 events.setImageResource(R.mipmap.events);
                 btsearch.setImageResource(R.mipmap.search);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#00BFD4")) {
-                more.setBackgroundResource(R.color.theme6);
+                btnmore.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+               *//* more.setBackgroundResource(R.color.theme6);
                 more.setImageResource(R.mipmap.more);
                 city.setBackgroundResource(R.color.mytransparent);
                 events.setBackgroundResource(R.color.mytransparent);
@@ -271,10 +305,14 @@ public class SettingsFragment extends Fragment {
                 city.setImageResource(R.mipmap.news);
                 events.setImageResource(R.mipmap.events);
                 btsearch.setImageResource(R.mipmap.search);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#185546")) {
-                more.setBackgroundResource(R.color.theme7);
+                btnmore.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+               *//* more.setBackgroundResource(R.color.theme7);
                 more.setImageResource(R.mipmap.more);
                 city.setBackgroundResource(R.color.mytransparent);
                 events.setBackgroundResource(R.color.mytransparent);
@@ -283,10 +321,14 @@ public class SettingsFragment extends Fragment {
                 city.setImageResource(R.mipmap.news);
                 events.setImageResource(R.mipmap.events);
                 btsearch.setImageResource(R.mipmap.search);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#D0A06F")) {
-                more.setBackgroundResource(R.color.theme8);
+                btnmore.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+              *//*  more.setBackgroundResource(R.color.theme8);
                 more.setImageResource(R.mipmap.more);
                 city.setBackgroundResource(R.color.mytransparent);
                 events.setBackgroundResource(R.color.mytransparent);
@@ -295,10 +337,14 @@ public class SettingsFragment extends Fragment {
                 city.setImageResource(R.mipmap.news);
                 events.setImageResource(R.mipmap.events);
                 btsearch.setImageResource(R.mipmap.search);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#82C6E6")) {
-                more.setBackgroundResource(R.color.theme9);
+                btnmore.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+               *//* more.setBackgroundResource(R.color.theme9);
                 more.setImageResource(R.mipmap.more);
                 city.setBackgroundResource(R.color.mytransparent);
                 events.setBackgroundResource(R.color.mytransparent);
@@ -307,10 +353,14 @@ public class SettingsFragment extends Fragment {
                 city.setImageResource(R.mipmap.news);
                 events.setImageResource(R.mipmap.events);
                 btsearch.setImageResource(R.mipmap.search);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#339900")) {
-                more.setBackgroundResource(R.color.theme10);
+                btnmore.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+                *//*more.setBackgroundResource(R.color.theme10);
                 more.setImageResource(R.mipmap.more);
                 city.setBackgroundResource(R.color.mytransparent);
                 events.setBackgroundResource(R.color.mytransparent);
@@ -319,10 +369,14 @@ public class SettingsFragment extends Fragment {
                 city.setImageResource(R.mipmap.news);
                 events.setImageResource(R.mipmap.events);
                 btsearch.setImageResource(R.mipmap.search);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#CC9C00")) {
-                more.setBackgroundResource(R.color.theme11);
+                btnmore.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+               *//* more.setBackgroundResource(R.color.theme11);
                 more.setImageResource(R.mipmap.more);
                 city.setBackgroundResource(R.color.mytransparent);
                 events.setBackgroundResource(R.color.mytransparent);
@@ -331,10 +385,14 @@ public class SettingsFragment extends Fragment {
                 city.setImageResource(R.mipmap.news);
                 events.setImageResource(R.mipmap.events);
                 btsearch.setImageResource(R.mipmap.search);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
             else if(colorcodes.equals("#00B09B")) {
-                more.setBackgroundResource(R.color.theme12);
+                btnmore.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+                city.setTextColor(Color.parseColor("#CCCCCC"));
+                btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+              *//*  more.setBackgroundResource(R.color.theme12);
                 more.setImageResource(R.mipmap.more);
                 city.setBackgroundResource(R.color.mytransparent);
                 events.setBackgroundResource(R.color.mytransparent);
@@ -343,12 +401,12 @@ public class SettingsFragment extends Fragment {
                 city.setImageResource(R.mipmap.news);
                 events.setImageResource(R.mipmap.events);
                 btsearch.setImageResource(R.mipmap.search);
-                specials.setImageResource(R.mipmap.specials);
+                specials.setImageResource(R.mipmap.specials);*//*
             }
 
 
         }
-
+*/
         profileimage.setImageUrl(userimage,mImageLoader);
         settings_title_text.setTypeface(tf);
         lgin_out.setTypeface(tf);

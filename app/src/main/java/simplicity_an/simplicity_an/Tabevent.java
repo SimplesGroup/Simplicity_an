@@ -65,6 +65,7 @@ import java.util.Map;
 
 import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 /**
  * Created by kuppusamy on 9/26/2016.
@@ -105,6 +106,7 @@ OnFragmentInteractionListener mListener;
     FloatingActionButton fabsearch,fabinnerplus;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     SwipeRefreshLayout swipeRefresh;
+    String fontname;
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !isFragmentLoaded ) {
@@ -134,6 +136,7 @@ OnFragmentInteractionListener mListener;
             myprofileid = myprofileid.replaceAll("\\D+","");
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         requestQueue = Volley.newRequestQueue(getActivity());
 
             getData();
@@ -1152,6 +1155,19 @@ OnFragmentInteractionListener mListener;
                     userViewHolder.item_image.setVisibility(View.GONE);
                 }
 
+                if(fontname.equals("sanfrancisco")){
+                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
+                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
+
+                    userViewHolder.title_item.setTypeface(sansbold);
+                    userViewHolder.likescount.setTypeface(sansregular);
+                    userViewHolder.commentscount.setTypeface(sansregular);
+                    userViewHolder.editername.setTypeface(sansregular);
+                    userViewHolder.shortdescription.setTypeface(sansregular);
+                    userViewHolder.title_item.setTextSize(22);
+                    userViewHolder.shortdescription.setTextSize(13);
+                }
+
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 
                     @Override
@@ -1763,7 +1779,18 @@ OnFragmentInteractionListener mListener;
                     userViewHolder.moreimagescount_textview.setVisibility(View.GONE);
                 }
 
+                if(fontname.equals("sanfrancisco")){
+                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
+                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
 
+                    userViewHolder.title_item.setTypeface(sansbold);
+                    userViewHolder.likescount.setTypeface(sansregular);
+                    userViewHolder.commentscount.setTypeface(sansregular);
+                    userViewHolder.editername.setTypeface(sansregular);
+                    userViewHolder.shortdescription.setTypeface(sansregular);
+                    userViewHolder.title_item.setTextSize(22);
+                    userViewHolder.shortdescription.setTextSize(13);
+                }
 
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 

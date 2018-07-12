@@ -65,13 +65,14 @@ import java.util.Map;
 
 import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 /**
  * Created by kuppusamy on 9/28/2016.
  */
 public class TabEntertainmentTheatre extends Fragment {
     RecyclerView recyclerview_tab_all;
-    String URL="\thttp://simpli-city.in/request2.php?rtype=ent_alldatatest&key=simples&qtype=theatre";
+    String URL="http://simpli-city.in/request2.php?rtype=ent_alldatatest&key=simples&qtype=theatre";
     String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples"; 				String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
     String URLALL;
     RequestQueue requestQueue;
@@ -104,6 +105,7 @@ private OnFragmentInteractionListener mListener;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
 
     SwipeRefreshLayout swipeRefresh;
+    String fontname;
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !isFragmentLoaded ) {
@@ -133,6 +135,7 @@ private OnFragmentInteractionListener mListener;
             myprofileid = myprofileid.replaceAll("\\D+","");
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         requestQueue = Volley.newRequestQueue(getActivity());
 
             getData();
@@ -499,6 +502,7 @@ private OnFragmentInteractionListener mListener;
 
                 model.setPlayurl(obj.getString("radio_file"));
                 model.setYoutubelink(obj.getString("youtube_link"));
+                Log.e("DATA",obj.getString("youtube_link"));
                 int typevalue = obj.isNull("album_count") ? null : obj
                         .getInt("album_count");
                 model.setAlbumcount(typevalue);
@@ -587,13 +591,14 @@ private OnFragmentInteractionListener mListener;
         String shortdescription,editername;
 String youtubelink;
 
+        public String getYoutubelink() {
+            return youtubelink;
+        }
+
         public void setYoutubelink(String youtubelink) {
             this.youtubelink = youtubelink;
         }
 
-        public String getYoutubelink() {
-            return youtubelink;
-        }
 
         public String getEditername() {
             return editername;
@@ -1128,6 +1133,20 @@ String youtubelink;
                     userViewHolder.item_image.setVisibility(View.GONE);
                 }
 
+                if(fontname.equals("sanfrancisco")){
+                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
+                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
+
+                    userViewHolder.title_item.setTypeface(sansbold);
+                    userViewHolder.likescount.setTypeface(sansregular);
+                    userViewHolder.commentscount.setTypeface(sansregular);
+                    userViewHolder.editername.setTypeface(sansregular);
+                    userViewHolder.shortdescription.setTypeface(sansregular);
+                    userViewHolder.title_item.setTextSize(22);
+                    userViewHolder.shortdescription.setTextSize(13);
+                }
+
+
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 
                     @Override
@@ -1232,8 +1251,8 @@ String youtubelink;
                                     intent.putExtra("ID", ids);
                                     intent.putExtra("TITLE",itemmodel.getTitle());
                                     intent.putExtra("URL",itemmodel.getYoutubelink());
-                                    startActivity(intent);
 
+                                    startActivity(intent);
                                 } else if(type.equals("lifestyle")){
                                     Intent intent = new Intent(getActivity(), LifestyleDetail.class);
                                     intent.putExtra("ID", ids);
@@ -1273,11 +1292,7 @@ String youtubelink;
                                 Log.e("CLick","MainRaio");
 
                                 if(itemmodel.getQtype().equals("Independent Movies")||itemmodel.getQtypemain().equals("theatre")){
-                                    Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);
-                                    intent.putExtra("ID", itemmodel.getId());
-                                    intent.putExtra("TITLE",itemmodel.getTitle());
-                                    intent.putExtra("URL",itemmodel.getPlayurl());
-                                    startActivity(intent);
+                                    Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);                                    intent.putExtra("ID", itemmodel.getId());                                    intent.putExtra("TITLE",itemmodel.getTitle());                                    intent.putExtra("URL",itemmodel.getYoutubelink());                                    startActivity(intent);
                                 }else {
                                     urlaudio = itemmodel.getId();
                                     onButtonPressed(itemmodel.getPlayurl(), itemmodel.getTitle(),itemmodel.getImage());
@@ -1733,6 +1748,18 @@ String youtubelink;
                 }
 
 
+                if(fontname.equals("sanfrancisco")){
+                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
+                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
+
+                    userViewHolder.title_item.setTypeface(sansbold);
+                    userViewHolder.likescount.setTypeface(sansregular);
+                    userViewHolder.commentscount.setTypeface(sansregular);
+                    userViewHolder.editername.setTypeface(sansregular);
+                    userViewHolder.shortdescription.setTypeface(sansregular);
+                    userViewHolder.title_item.setTextSize(22);
+                    userViewHolder.shortdescription.setTextSize(13);
+                }
 
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 

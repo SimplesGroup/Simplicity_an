@@ -1100,11 +1100,7 @@ OnFragmentInteractionListener mListener;
                                 Log.e("CLick","MainRaio");
 
                                 if(itemmodel.getQtype().equals("Independent Movies")||itemmodel.getQtypemain().equals("theatre")){
-                                    Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);
-                                    intent.putExtra("ID", itemmodel.getId());
-                                    intent.putExtra("TITLE",itemmodel.getTitle());
-                                    intent.putExtra("URL",itemmodel.getPlayurl());
-                                    startActivity(intent);
+                                    Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);                                    intent.putExtra("ID", itemmodel.getId());                                    intent.putExtra("TITLE",itemmodel.getTitle());                                                                       startActivity(intent);
                                 }else {
                                     urlaudio = itemmodel.getId();
                                     onButtonPressed(itemmodel.getPlayurl(), itemmodel.getTitle(),itemmodel.getImage());

@@ -78,8 +78,8 @@ RelativeLayout mainlayout;
         mainlayout=(RelativeLayout)findViewById(R.id.youtubelayout);
         Intent get=getIntent();
         title=get.getStringExtra("TITLE");
-        urlvideo=get.getStringExtra("URL").toString();
-        Log.e("URL","hii"+urlvideo);
+        urlvideo=get.getStringExtra("URL");
+        Log.e("URL","hii"+title+urlvideo);
         id=get.getStringExtra("ID");
         if(colorcodes.length()==0){
             int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
@@ -154,7 +154,7 @@ RelativeLayout mainlayout;
         int screenWidth = this.getResources().getDisplayMetrics().widthPixels;
         String frameVideo = "<html><body>Video From YouTube<br><iframe width=420 height=315 src=https://www.youtube.com/embed/"+urlvideo+"frameborder=0 allowfullscreen></iframe></body></html>";
 
-
+        Log.e("VIDEO",video);
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
       //  myWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);

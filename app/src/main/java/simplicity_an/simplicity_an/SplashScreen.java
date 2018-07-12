@@ -46,6 +46,7 @@ public class SplashScreen extends Activity {
     private PrefManager prefManager;
     public static final String GcmId = "gcmid";
     public static final String MYUSERID= "myprofileid";
+    public static final String FONT= "font";
     private static int SPLASH_TIME_OUT = 3000;
     public static final String backgroundcolor = "color";
     public static final String Language = "lamguage";
@@ -89,6 +90,7 @@ public class SplashScreen extends Activity {
                 Log.e("ColorCodes",userId);
                 SharedPreferences.Editor gcmidseditor=sharedpreferences.edit();
                 gcmidseditor.putString(GcmId,userId);
+                gcmidseditor.putString(FONT,"playfair");
                 gcmidseditor.commit();
                 playerid=userId;
                 if (registrationId != null)

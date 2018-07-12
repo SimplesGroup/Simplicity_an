@@ -67,6 +67,7 @@ import java.util.Map;
 
 import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 /**
  * Created by kuppusamy on 9/22/2016.
@@ -108,7 +109,7 @@ String Tokenid;
     TextView musictitle;
 SwipeRefreshLayout swipeRefresh;
     private OnFragmentInteractionListener mListener;
-
+String fontname;
     public Tab_All() {
         // Required empty public constructor
         // setUserVisibleHint(false);
@@ -145,7 +146,7 @@ SwipeRefreshLayout swipeRefresh;
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
         Tokenid=sharedpreferences.getString(GcmId,"");
-
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         Log.e("coloR",colorcodes);
         requestQueue = Volley.newRequestQueue(getActivity());
 
@@ -328,7 +329,6 @@ try{
 
 }
 
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -452,6 +452,7 @@ try{
 
              model.setPlayurl(obj.getString("radio_file"));
              model.setYoutubelink(obj.getString("youtube_link"));
+             Log.e("URL",obj.getString("youtube_link"));
               int typevalue = obj.isNull("album_count") ? null : obj
                         .getInt("album_count");
                 model.setAlbumcount(typevalue);
@@ -469,6 +470,7 @@ try{
         albums.add(models);
 
         String images=object.getString("image");
+
         album.add(images);
     }
 }catch (JSONException e){
@@ -951,10 +953,7 @@ private  int currentvisiblecount;
                     ViewGroup vImages = (ViewGroup) mInflater.inflate ( R.layout.feed_item_versionfour_photostory, parent, false );
                     UserViewHolderphotostories vhImages = new UserViewHolderphotostories ( vImages );
                     return vhImages;
-              /*case VIEW_TYPE_RADIO:
-                    ViewGroup vImageradio = ( ViewGroup ) mInflater.inflate ( R.layout.feed_item_taball_radio, parent, false );
-                    Userviewholdertaball vhImageradio = new Userviewholdertaball ( vImageradio );
-                    return vhImageradio;*/
+
                 case VIEW_TYPE_LOADING:
                     ViewGroup vImageloading = (ViewGroup) mInflater.inflate ( R.layout.layout_loading_item, parent, false );
                     Userviewholdertaball vhImageloading = new Userviewholdertaball ( vImageloading );
@@ -1081,6 +1080,22 @@ private  int currentvisiblecount;
                 }else {
                     userViewHolder.item_image.setVisibility(View.GONE);
                 }
+Log.e("URL","hh"+itemmodel.getYoutubelink());
+
+                if(fontname.equals("sanfrancisco")){
+                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(), Fonts.sanfranciscobold);
+                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
+
+                    userViewHolder.title_item.setTypeface(sansbold);
+                    userViewHolder.likescount.setTypeface(sansregular);
+                    userViewHolder.commentscount.setTypeface(sansregular);
+                    userViewHolder.editername.setTypeface(sansregular);
+                    userViewHolder.shortdescription.setTypeface(sansregular);
+                    userViewHolder.title_item.setTextSize(22);
+                    userViewHolder.shortdescription.setTextSize(13);
+                }
+
+
 
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 
@@ -1184,8 +1199,8 @@ private  int currentvisiblecount;
                                     intent.putExtra("ID", ids);
                                     intent.putExtra("TITLE",itemmodel.getTitle());
                                     intent.putExtra("URL",itemmodel.getYoutubelink());
-                                    startActivity(intent);
 
+                                    startActivity(intent);
                                 } else if(type.equals("lifestyle")){
                                     Intent intent = new Intent(getActivity(), LifestyleDetail.class);
                                     intent.putExtra("ID", ids);
@@ -1225,11 +1240,7 @@ private  int currentvisiblecount;
                                 Log.e("CLick","MainRaio");
 
                                 if(itemmodel.getQtype().equals("Independent Movies")||itemmodel.getQtypemain().equals("theatre")){
-                                    Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);
-                                    intent.putExtra("ID", itemmodel.getId());
-                                    intent.putExtra("TITLE",itemmodel.getTitle());
-                                    intent.putExtra("URL",itemmodel.getPlayurl());
-                                    startActivity(intent);
+                                    Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);                                    intent.putExtra("ID", itemmodel.getId());                                    intent.putExtra("TITLE",itemmodel.getTitle());                                    intent.putExtra("URL",itemmodel.getYoutubelink());                                    startActivity(intent);
                                 }else {
                                      urlaudio = itemmodel.getId();
                                     onButtonPressed(itemmodel.getPlayurl(), itemmodel.getTitle(),itemmodel.getImage());
@@ -1767,7 +1778,18 @@ private  int currentvisiblecount;
                 }
 
 
+                if(fontname.equals("sanfrancisco")){
+                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(), Fonts.sanfranciscobold);
+                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
 
+                    userViewHolder.title_item.setTypeface(sansbold);
+                    userViewHolder.likescount.setTypeface(sansregular);
+                    userViewHolder.commentscount.setTypeface(sansregular);
+                    userViewHolder.editername.setTypeface(sansregular);
+                    userViewHolder.shortdescription.setTypeface(sansregular);
+                    userViewHolder.title_item.setTextSize(22);
+                    userViewHolder.shortdescription.setTextSize(13);
+                }
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 
                     @Override

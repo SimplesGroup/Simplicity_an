@@ -1255,11 +1255,7 @@ if(itemmodel.getQtypemain().equalsIgnoreCase("job")){
                             case R.id.taball_play_pause_main:
                                 Log.e("CLick","MainRaio");
                                 if(itemmodel.getQtype().equals("Independent Movies")||itemmodel.getQtypemain().equals("theatre")){
-                                    Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);
-                                    intent.putExtra("ID", itemmodel.getId());
-                                    intent.putExtra("TITLE",itemmodel.getTitle());
-                                    intent.putExtra("URL",itemmodel.getPlayurl());
-                                    startActivity(intent);
+                                    Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);                                    intent.putExtra("ID", itemmodel.getId());                                    intent.putExtra("TITLE",itemmodel.getTitle());                                    intent.putExtra("URL",itemmodel.getYoutubelink());                                    startActivity(intent);
                                 }else {
                                     String url = itemmodel.getPlayurl();
                                     onButtonPressed(itemmodel.getPlayurl(), itemmodel.getTitle(),itemmodel.getImage());

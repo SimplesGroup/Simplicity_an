@@ -65,6 +65,7 @@ import java.util.Map;
 
 import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 /**
  * Created by kuppusamy on 9/26/2016.
@@ -102,7 +103,7 @@ FloatingActionButton fabjobs,fabplus;
 OnFragmentInteractionListener mListener;
     FloatingActionButton fabsearch,fabinnerplus;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
-
+    String fontname;
     SwipeRefreshLayout swipeRefresh;
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -134,6 +135,7 @@ OnFragmentInteractionListener mListener;
             myprofileid = myprofileid.replaceAll("\\D+","");
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         requestQueue = Volley.newRequestQueue(getActivity());
 
             getData();
@@ -1112,6 +1114,18 @@ OnFragmentInteractionListener mListener;
                 }else {
                     userViewHolder.item_image.setVisibility(View.GONE);
                 }
+                if(fontname.equals("sanfrancisco")){
+                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
+                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
+
+                    userViewHolder.title_item.setTypeface(sansbold);
+                    userViewHolder.likescount.setTypeface(sansregular);
+                    userViewHolder.commentscount.setTypeface(sansregular);
+                    userViewHolder.editername.setTypeface(sansregular);
+                    userViewHolder.shortdescription.setTypeface(sansregular);
+                    userViewHolder.title_item.setTextSize(22);
+                    userViewHolder.shortdescription.setTextSize(13);
+                }
 
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 
@@ -1256,11 +1270,7 @@ OnFragmentInteractionListener mListener;
                                 Log.e("CLick","MainRaio");
 
                                 if(itemmodel.getQtype().equals("Independent Movies")||itemmodel.getQtypemain().equals("theatre")){
-                                    Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);
-                                    intent.putExtra("ID", itemmodel.getId());
-                                    intent.putExtra("TITLE",itemmodel.getTitle());
-                                    intent.putExtra("URL",itemmodel.getPlayurl());
-                                    startActivity(intent);
+                                    Intent intent = new Intent(getActivity(), YoutubeVideoPlayer.class);                                    intent.putExtra("ID", itemmodel.getId());                                    intent.putExtra("TITLE",itemmodel.getTitle());                                    intent.putExtra("URL",itemmodel.getYoutubelink());                                    startActivity(intent);
                                 }else {
                                     urlaudio = itemmodel.getId();
                                     onButtonPressed(itemmodel.getPlayurl(), itemmodel.getTitle(),itemmodel.getImage());
@@ -1713,7 +1723,18 @@ OnFragmentInteractionListener mListener;
                     userViewHolder.moreimagescount_textview.setVisibility(View.GONE);
                 }
 
+                if(fontname.equals("sanfrancisco")){
+                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
+                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
 
+                    userViewHolder.title_item.setTypeface(sansbold);
+                    userViewHolder.likescount.setTypeface(sansregular);
+                    userViewHolder.commentscount.setTypeface(sansregular);
+                    userViewHolder.editername.setTypeface(sansregular);
+                    userViewHolder.shortdescription.setTypeface(sansregular);
+                    userViewHolder.title_item.setTextSize(22);
+                    userViewHolder.shortdescription.setTextSize(13);
+                }
 
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 

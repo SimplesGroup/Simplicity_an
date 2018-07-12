@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:id="@+id/click"
+    android:layout_marginRight="10dp"
+    android:background="@color/whitegradient"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/image"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:layout_width="230dp"
+
+        android:layout_height="150dp" />
+    <TextView
+        android:id="@+id/title"
+        android:textAlignment="center"
+        android:maxLines="2"
+        android:textColor="@android:color/white"
+        android:layout_width="230dp"
+
+        android:layout_height="wrap_content" />
+</LinearLayout>
