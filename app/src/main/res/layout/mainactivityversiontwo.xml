@@ -102,21 +102,23 @@
                             android:textSize="12dp" />
 
                         <ImageButton
-
+                            android:layout_marginBottom="5dp"
                             android:id="@+id/themebutton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:background="@drawable/buttonselector"
                             android:src="@drawable/themenormal" />
-                        <ImageButton
-                            android:layout_marginLeft="5dp"
+                        <ImageView
+
                             android:id="@+id/fontbutton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:scaleType="centerCrop"
+                            android:adjustViewBounds="true"
                             android:layout_gravity="center_horizontal"
                             android:background="@drawable/buttonselector"
-                            android:src="@drawable/blackplayfair" />
+                            android:src="@mipmap/playfairblack" />
                     </LinearLayout>
                     <LinearLayout
                         android:visibility="gone"

@@ -1091,7 +1091,7 @@ Log.e("URL","hh"+itemmodel.getYoutubelink());
                     userViewHolder.commentscount.setTypeface(sansregular);
                     userViewHolder.editername.setTypeface(sansregular);
                     userViewHolder.shortdescription.setTypeface(sansregular);
-                    userViewHolder.title_item.setTextSize(22);
+                    userViewHolder.title_item.setTextSize(17);
                     userViewHolder.shortdescription.setTextSize(13);
                 }
 
@@ -1787,7 +1787,7 @@ Log.e("URL","hh"+itemmodel.getYoutubelink());
                     userViewHolder.commentscount.setTypeface(sansregular);
                     userViewHolder.editername.setTypeface(sansregular);
                     userViewHolder.shortdescription.setTypeface(sansregular);
-                    userViewHolder.title_item.setTextSize(22);
+                   userViewHolder.title_item.setTextSize(17);
                     userViewHolder.shortdescription.setTextSize(13);
                 }
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {

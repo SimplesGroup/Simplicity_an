@@ -60,6 +60,7 @@ import simplicity_an.simplicity_an.Tabarticle;
 import simplicity_an.simplicity_an.Tabcolumnist;
 import simplicity_an.simplicity_an.TabentertainmentRadio;
 import simplicity_an.simplicity_an.Tabphotostories;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 /**
  * Created by kuppusamy on 5/18/2017.
@@ -111,6 +112,9 @@ public class EntertainmentFragment extends Fragment  {
     Button btnspecials,btnevents,btnmore,city;
     ImageView btnsearch;
 String tab_id;
+    ImageView font_button;
+String fontname;
+
     public static EntertainmentFragment newInstance() {
         EntertainmentFragment fragment = new EntertainmentFragment();
         return fragment;
@@ -136,6 +140,8 @@ String tab_id;
         contentid=sharedpreferences.getString(CONTENTID,"");
         activity=sharedpreferences.getString(Activity,"");
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
+
         if (sharedpreferences.contains(MYUSERID)) {
 
             myprofileid=sharedpreferences.getString(MYUSERID,"");
@@ -169,6 +175,11 @@ String tab_id;
             editor.apply();
 
         }
+
+        font_button=(ImageView) view.findViewById(R.id.fontbutton);
+
+
+
         mainlayout=(RelativeLayout)view.findViewById(R.id.version_main_layout);
         fabplus=(FloatingActionButton)view.findViewById(R.id.fabButtonplus) ;
         fabsearch=(FloatingActionButton)view.findViewById(R.id.fabsearch) ;
@@ -595,6 +606,28 @@ String tab_id;
         requestQueue.add(weather);
 
 
+        if(colorcodes.equals("#FFFFFFFF")){
+            themechange_button.setImageResource(R.drawable.themenormal);
+            if(fontname.equals("playfair")){
+                font_button.setImageResource(R.mipmap.playfairblack);
+            }else {
+                font_button.setImageResource(R.mipmap.sanblack);
+            }
+
+        }else {
+            themechange_button.setImageResource(R.drawable.themewhite);
+            if(fontname.equals("playfair")){
+                font_button.setImageResource(R.mipmap.playfairwhite);
+            }else {
+                font_button.setImageResource(R.mipmap.sanwhite);
+            }
+
+        }
+
+
+
+
+
         language_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -806,10 +839,127 @@ String tab_id;
 
             }
         });*/
+
+
+        font_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fontname=sharedpreferences.getString(Fonts.FONT,"");
+                if(fontname.equals("playfair")){
+                    Fonts fonts=new Fonts();
+
+                    Typeface tf=fonts.font("sanfrancisco",getActivity());
+                    Typeface tf1=fonts.font1(getActivity());
+
+                    SharedPreferences.Editor editor=sharedpreferences.edit();
+                    editor.putString(Fonts.FONT,"sanfrancisco");
+                    editor.commit();
+                    title_coimbatore.setTypeface(tf);
+                    title_coimbatore.setTextSize(30);
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        font_button.setImageResource(R.mipmap.sanwhite);
+                    }else {
+                        font_button.setImageResource(R.mipmap.sanblack);
+                    }
+                    Fragment selectedFragment = null;
+                    selectedFragment = CityFragment.newInstance();
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_layout, selectedFragment);
+                    transaction.commit();
+                   /* Intent in=new Intent(getActivity(), MainPageEnglish.class);
+                    in.putExtra("ID","1");
+                    startActivity(in);*/
+                }else  {
+                    Fonts fonts=new Fonts();
+
+                    Typeface tf=fonts.font("playfair",getActivity());
+                    // Typeface tf1=fonts.font1(getActivity());
+
+                    SharedPreferences.Editor editor=sharedpreferences.edit();
+                    editor.putString(Fonts.FONT,"playfair");
+                    editor.commit();
+                    title_coimbatore.setTypeface(tf);
+                    title_coimbatore.setTextSize(40);
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        font_button.setImageResource(R.mipmap.playfairwhite);
+                    }else {
+                        font_button.setImageResource(R.mipmap.playfairblack);
+                    }
+
+                    Fragment selectedFragment = null;
+                    selectedFragment = CityFragment.newInstance();
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_layout, selectedFragment);
+                    transaction.commit();
+                }
+            }
+        });
+
+
+
+
+
+
+
+
         themechange_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // showAlertDialog();
+
+                if(colorcodes.equals("#FFFFFFFF")){
+                    Fragment fragment = new EntertainmentFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frame_layout, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+
+                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+                    GradientDrawable gd = new GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM,
+                            colors);
+                    gd.setCornerRadius(0f);
+
+                    mainlayout.setBackgroundDrawable(gd);
+
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(backgroundcolor, "#383838");
+                    editor.commit();
+
+
+                }else if(colorcodes.equals("#383838")) {
+
+
+
+                    Fragment fragment = new EntertainmentFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frame_layout, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                    GradientDrawable gd = new GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM,
+                            colors);
+                    gd.setCornerRadius(0f);
+
+                    mainlayout.setBackgroundDrawable(gd);
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(backgroundcolor, "#FFFFFFFF");
+                    editor.commit();
+
+
+                }
+
+
+
+
+
+
+
+
+                /*// showAlertDialog();
                 final Dialog dialog = new Dialog(getActivity());
                 dialog.setContentView(R.layout.theme);
                 dialog.setTitle("Title...");
@@ -846,20 +996,20 @@ String tab_id;
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                     /* explore.setBackgroundResource(R.color.theme1button);
+                     *//* explore.setBackgroundResource(R.color.theme1button);
                         explore.setImageResource(R.mipmap.specials);
                         beyond.setBackgroundResource(R.color.mytransparent);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
-                        city.setImageResource(R.mipmap.news);*/
+                        city.setImageResource(R.mipmap.news);*//*
                         btnsearch.setBackgroundResource(R.color.mytransparent);
                         btnsearch.setImageResource(R.mipmap.cityfooterlogo);
-                       /* more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);*/
-                       /* btnspecials.setTextColor(Color.WHITE);
+                       *//* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*//*
+                       *//* btnspecials.setTextColor(Color.WHITE);
                         btnevents.setTextColor(Color.parseColor("#CCCCCC"));
                         city.setTextColor(Color.parseColor("#CCCCCC"));
-                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*//*
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
@@ -889,20 +1039,20 @@ String tab_id;
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                     /* explore.setBackgroundResource(R.color.theme2);
+                     *//* explore.setBackgroundResource(R.color.theme2);
                         explore.setImageResource(R.mipmap.specials);
                         beyond.setBackgroundResource(R.color.mytransparent);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
-                        city.setImageResource(R.mipmap.news);*/
+                        city.setImageResource(R.mipmap.news);*//*
                         btnsearch.setBackgroundResource(R.color.mytransparent);
                         btnsearch.setImageResource(R.mipmap.cityfooterlogo);
-                       /* more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);*/
-                       /* btnspecials.setTextColor(Color.WHITE);
+                       *//* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*//*
+                       *//* btnspecials.setTextColor(Color.WHITE);
                         btnevents.setTextColor(Color.parseColor("#CCCCCC"));
                         city.setTextColor(Color.parseColor("#CCCCCC"));
-                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*//*
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme2));
@@ -935,20 +1085,20 @@ String tab_id;
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                      /*explore.setBackgroundResource(R.color.theme3);
+                      *//*explore.setBackgroundResource(R.color.theme3);
                         explore.setImageResource(R.mipmap.specials);
                         beyond.setBackgroundResource(R.color.mytransparent);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
-                        city.setImageResource(R.mipmap.news);*/
+                        city.setImageResource(R.mipmap.news);*//*
                         btnsearch.setBackgroundResource(R.color.mytransparent);
                         btnsearch.setImageResource(R.mipmap.cityfooterlogo);
-                       /* more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);*/
-                       /* btnspecials.setTextColor(Color.WHITE);
+                       *//* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*//*
+                       *//* btnspecials.setTextColor(Color.WHITE);
                         btnevents.setTextColor(Color.parseColor("#CCCCCC"));
                         city.setTextColor(Color.parseColor("#CCCCCC"));
-                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*//*
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme3));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme3));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme3));
@@ -976,20 +1126,20 @@ String tab_id;
                                 GradientDrawable.Orientation.TOP_BOTTOM,
                                 colors);
                         gd.setCornerRadius(0f);
-                       /*explore.setBackgroundResource(R.color.theme4);
+                       *//*explore.setBackgroundResource(R.color.theme4);
                         explore.setImageResource(R.mipmap.specials);
                         beyond.setBackgroundResource(R.color.mytransparent);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
-                        city.setImageResource(R.mipmap.news);*/
+                        city.setImageResource(R.mipmap.news);*//*
                         btnsearch.setBackgroundResource(R.color.mytransparent);
                         btnsearch.setImageResource(R.mipmap.cityfooterlogo);
-                       /* more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);*/
-                        /*btnspecials.setTextColor(Color.WHITE);
+                       *//* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*//*
+                        *//*btnspecials.setTextColor(Color.WHITE);
                         btnevents.setTextColor(Color.parseColor("#CCCCCC"));
                         city.setTextColor(Color.parseColor("#CCCCCC"));
-                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*//*
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme4));
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme4));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme4));
@@ -1020,20 +1170,20 @@ String tab_id;
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                       /*explore.setBackgroundResource(R.color.theme5);
+                       *//*explore.setBackgroundResource(R.color.theme5);
                         explore.setImageResource(R.mipmap.specials);
                         beyond.setBackgroundResource(R.color.mytransparent);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
-                        city.setImageResource(R.mipmap.news);*/
+                        city.setImageResource(R.mipmap.news);*//*
                         btnsearch.setBackgroundResource(R.color.mytransparent);
                         btnsearch.setImageResource(R.mipmap.cityfooterlogo);
-                       /* more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);*/
-                       /* btnspecials.setTextColor(Color.WHITE);
+                       *//* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*//*
+                       *//* btnspecials.setTextColor(Color.WHITE);
                         btnevents.setTextColor(Color.parseColor("#CCCCCC"));
                         city.setTextColor(Color.parseColor("#CCCCCC"));
-                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*//*
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme5));
@@ -1063,20 +1213,20 @@ String tab_id;
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                     /* explore.setBackgroundResource(R.color.theme6);
+                     *//* explore.setBackgroundResource(R.color.theme6);
                         explore.setImageResource(R.mipmap.specials);
                         beyond.setBackgroundResource(R.color.mytransparent);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
-                        city.setImageResource(R.mipmap.news);*/
+                        city.setImageResource(R.mipmap.news);*//*
                         btnsearch.setBackgroundResource(R.color.mytransparent);
                         btnsearch.setImageResource(R.mipmap.cityfooterlogo);
-                       /* more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);*/
-                       /* btnspecials.setTextColor(Color.WHITE);
+                       *//* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*//*
+                       *//* btnspecials.setTextColor(Color.WHITE);
                         btnevents.setTextColor(Color.parseColor("#CCCCCC"));
                         city.setTextColor(Color.parseColor("#CCCCCC"));
-                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*//*
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme6));
@@ -1105,20 +1255,20 @@ String tab_id;
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                     /* explore.setBackgroundResource(R.color.theme7);
+                     *//* explore.setBackgroundResource(R.color.theme7);
                         explore.setImageResource(R.mipmap.specials);
                         beyond.setBackgroundResource(R.color.mytransparent);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
-                        city.setImageResource(R.mipmap.news);*/
+                        city.setImageResource(R.mipmap.news);*//*
                         btnsearch.setBackgroundResource(R.color.mytransparent);
                         btnsearch.setImageResource(R.mipmap.cityfooterlogo);
-                       /* more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);*/
-                       /* btnspecials.setTextColor(Color.WHITE);
+                       *//* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*//*
+                       *//* btnspecials.setTextColor(Color.WHITE);
                         btnevents.setTextColor(Color.parseColor("#CCCCCC"));
                         city.setTextColor(Color.parseColor("#CCCCCC"));
-                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*//*
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme7));
@@ -1148,20 +1298,20 @@ String tab_id;
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                      /*explore.setBackgroundResource(R.color.theme8);
+                      *//*explore.setBackgroundResource(R.color.theme8);
                         explore.setImageResource(R.mipmap.specials);
                         beyond.setBackgroundResource(R.color.mytransparent);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
-                        city.setImageResource(R.mipmap.news);*/
+                        city.setImageResource(R.mipmap.news);*//*
                         btnsearch.setBackgroundResource(R.color.mytransparent);
                         btnsearch.setImageResource(R.mipmap.cityfooterlogo);
-                       /* more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);*/
-                       /* btnspecials.setTextColor(Color.WHITE);
+                       *//* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*//*
+                       *//* btnspecials.setTextColor(Color.WHITE);
                         btnevents.setTextColor(Color.parseColor("#CCCCCC"));
                         city.setTextColor(Color.parseColor("#CCCCCC"));
-                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*//*
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme8));
@@ -1191,20 +1341,20 @@ String tab_id;
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                       /*explore.setBackgroundResource(R.color.theme9);
+                       *//*explore.setBackgroundResource(R.color.theme9);
                         explore.setImageResource(R.mipmap.specials);
                         beyond.setBackgroundResource(R.color.mytransparent);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
-                        city.setImageResource(R.mipmap.news);*/
+                        city.setImageResource(R.mipmap.news);*//*
                         btnsearch.setBackgroundResource(R.color.mytransparent);
                         btnsearch.setImageResource(R.mipmap.cityfooterlogo);
-                       /* more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);*/
-                        /*btnspecials.setTextColor(Color.WHITE);
+                       *//* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*//*
+                        *//*btnspecials.setTextColor(Color.WHITE);
                         btnevents.setTextColor(Color.parseColor("#CCCCCC"));
                         city.setTextColor(Color.parseColor("#CCCCCC"));
-                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*//*
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme9));
@@ -1234,20 +1384,20 @@ String tab_id;
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                     /*explore.setBackgroundResource(R.color.theme10);
+                     *//*explore.setBackgroundResource(R.color.theme10);
                         explore.setImageResource(R.mipmap.specials);
                         beyond.setBackgroundResource(R.color.mytransparent);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
-                        city.setImageResource(R.mipmap.news);*/
+                        city.setImageResource(R.mipmap.news);*//*
                         btnsearch.setBackgroundResource(R.color.mytransparent);
                         btnsearch.setImageResource(R.mipmap.cityfooterlogo);
-                        /*more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);*/
-                        /*btnspecials.setTextColor(Color.WHITE);
+                        *//*more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*//*
+                        *//*btnspecials.setTextColor(Color.WHITE);
                         btnevents.setTextColor(Color.parseColor("#CCCCCC"));
                         city.setTextColor(Color.parseColor("#CCCCCC"));
-                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*//*
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme10));
@@ -1277,20 +1427,20 @@ String tab_id;
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                      /*explore.setBackgroundResource(R.color.theme11);
+                      *//*explore.setBackgroundResource(R.color.theme11);
                         explore.setImageResource(R.mipmap.specials);
                         beyond.setBackgroundResource(R.color.mytransparent);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
-                        city.setImageResource(R.mipmap.news);*/
+                        city.setImageResource(R.mipmap.news);*//*
                         btnsearch.setBackgroundResource(R.color.mytransparent);
                         btnsearch.setImageResource(R.mipmap.cityfooterlogo);
-                       /* more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);*/
-                        /*btnspecials.setTextColor(Color.WHITE);
+                       *//* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*//*
+                        *//*btnspecials.setTextColor(Color.WHITE);
                         btnevents.setTextColor(Color.parseColor("#CCCCCC"));
                         city.setTextColor(Color.parseColor("#CCCCCC"));
-                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*//*
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme11));
@@ -1319,20 +1469,20 @@ String tab_id;
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                      /*explore.setBackgroundResource(R.color.theme12);
+                      *//*explore.setBackgroundResource(R.color.theme12);
                         explore.setImageResource(R.mipmap.specials);
                         beyond.setBackgroundResource(R.color.mytransparent);
                         beyond.setImageResource(R.mipmap.events);
                         city.setBackgroundResource(R.color.mytransparent);
-                        city.setImageResource(R.mipmap.news);*/
+                        city.setImageResource(R.mipmap.news);*//*
                         btnsearch.setBackgroundResource(R.color.mytransparent);
                         btnsearch.setImageResource(R.mipmap.cityfooterlogo);
-                       /* more.setBackgroundResource(R.color.mytransparent);
-                        more.setImageResource(R.mipmap.more);*/
-                       /* btnspecials.setTextColor(Color.WHITE);
+                       *//* more.setBackgroundResource(R.color.mytransparent);
+                        more.setImageResource(R.mipmap.more);*//*
+                       *//* btnspecials.setTextColor(Color.WHITE);
                         btnevents.setTextColor(Color.parseColor("#CCCCCC"));
                         city.setTextColor(Color.parseColor("#CCCCCC"));
-                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*//*
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme12));
@@ -1361,19 +1511,19 @@ String tab_id;
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
-                        /*explore.setBackgroundResource(R.color.theme13);
+                        *//*explore.setBackgroundResource(R.color.theme13);
                         explore.setImageResource(R.mipmap.specialone);
                         beyond.setImageResource(R.mipmap.eventone);
                         city.setImageResource(R.mipmap.newsone);
-                        city.setBackgroundResource(R.color.theme14);*/
+                        city.setBackgroundResource(R.color.theme14);*//*
                         btnsearch.setBackgroundResource(R.color.mytransparent);
                         btnsearch.setImageResource(R.mipmap.cityfooterlogo);
-                       /* more.setBackgroundResource(R.color.theme14);
-                        more.setImageResource(R.mipmap.moreone);*/
-                        /*btnspecials.setTextColor(Color.WHITE);
+                       *//* more.setBackgroundResource(R.color.theme14);
+                        more.setImageResource(R.mipmap.moreone);*//*
+                        *//*btnspecials.setTextColor(Color.WHITE);
                         btnevents.setTextColor(Color.parseColor("#CCCCCC"));
                         city.setTextColor(Color.parseColor("#CCCCCC"));
-                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*/
+                        btnmore.setTextColor(Color.parseColor("#CCCCCC"));*//*
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
                         fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme13));
@@ -1391,7 +1541,7 @@ String tab_id;
                         dialog.dismiss();
                     }
                 });
-                dialog.show();
+                dialog.show();*/
             }
         });
         mCoordinator = (CoordinatorLayout)view. findViewById(R.id.root_coordinator);
@@ -1463,6 +1613,10 @@ String tab_id;
                 View tabViewChild = vgTab.getChildAt(i);
                 if (tabViewChild instanceof TextView) {
                     ((TextView) tabViewChild).setTypeface(tf);
+                    if(fontname.equals("sanfrancisco")){
+                        Typeface tf1 = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Oxygen-Bold.ttf");
+                        ((TextView) tabViewChild).setTypeface(tf1);
+                    }
                     if(colorcodes.equals("#FFFFFFFF")){
                         ((TextView) tabViewChild).setTextColor(Color.BLACK);
                     }

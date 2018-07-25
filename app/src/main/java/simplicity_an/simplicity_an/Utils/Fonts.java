@@ -9,7 +9,7 @@ public class Fonts {
     public static final String FONT= "font";
     Typeface tf,tf1;
 public static String playfairfont="fonts/playfairDisplayRegular.ttf";
-    public static String sanfranciscobold="fonts/SFUIDisplaySemibold.otf";
+    public static String sanfranciscobold="fonts/Oxygen-Bold.ttf";
     public static String sanfranciscoregular="fonts/SystemSanFranciscoDisplayRegular.ttf";
 
     public Typeface font(String s, Context context){

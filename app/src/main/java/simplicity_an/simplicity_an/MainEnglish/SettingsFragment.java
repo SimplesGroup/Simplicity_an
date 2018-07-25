@@ -42,6 +42,7 @@ import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SavedArticle;
 import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.TermsandCondition;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 /**
  * Created by kuppusamy on 5/19/2017.
@@ -72,6 +73,8 @@ public class SettingsFragment extends Fragment {
     public static final String Language = "lamguage";
     Button btnspecials,btnevents,btnmore,city;
     ImageView btnsearch;
+    String fontname;
+    Typeface tf;
     public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
         return fragment;
@@ -85,8 +88,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.frag_settings,container,false);
-        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
-        final Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
+
         sharedpreferences = getActivity().getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
         if (sharedpreferences.contains(MYUSERID)) {
@@ -96,12 +98,20 @@ public class SettingsFragment extends Fragment {
             myprofileid = myprofileid.replaceAll("\\D+", "");
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         Log.e("ColorCodes",colorcodes+"hihi");
         city=(Button) getActivity().findViewById(R.id.btn_news);
         btnspecials=(Button)getActivity().findViewById(R.id.btn_specials);
         btnevents = (Button)getActivity().findViewById(R.id.btn_events);
         btnsearch = (ImageView) getActivity().findViewById(R.id.btn_citys);
         btnmore = (Button)getActivity().findViewById(R.id.btn_shop);
+        if(fontname.equals("playfair")){
+            String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";
+            tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
+        }else {
+            String simplycity_title_fontPath = "fonts/SystemSanFranciscoDisplayRegular.ttf";
+            tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
+        }
 
         mNotificationManagerCompat = NotificationManagerCompat.from(getActivity());
 

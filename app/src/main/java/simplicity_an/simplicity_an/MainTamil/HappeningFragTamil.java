@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -113,6 +114,9 @@ public class HappeningFragTamil extends Fragment {
     String playerid;
     public static final String GcmId = "gcmid";
     String dayOfTheWeek,sMonthNamefull;
+    ImageView font_button;
+
+
     public static HappeningFragTamil newInstance() {
         HappeningFragTamil fragment = new HappeningFragTamil();
         return fragment;
@@ -169,6 +173,11 @@ public class HappeningFragTamil extends Fragment {
             editor.apply();
 
         }
+
+        font_button=(ImageView) view.findViewById(R.id.fontbutton);
+        font_button.setVisibility(View.GONE);
+
+
         fabplus=(FloatingActionButton)view.findViewById(R.id.fabButtonplus) ;
         fabsearch=(FloatingActionButton)view.findViewById(R.id.fabsearch) ;
         fabinnerplus=(FloatingActionButton)view.findViewById(R.id.fabinnerplus) ;

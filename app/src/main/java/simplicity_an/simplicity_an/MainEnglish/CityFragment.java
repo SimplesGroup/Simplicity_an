@@ -112,7 +112,8 @@ public class CityFragment extends Fragment {
     public static final String backgroundcolor = "color";
     public static final String Language = "lamguage";
     public static final String CONTENTID = "contentid";
-    ImageButton beyond,search,explore,notifications,themechange_button,font_button;
+    ImageButton beyond,search,explore,notifications,themechange_button;
+    ImageView font_button;
     String activity,contentid,colorcodes;
 Button btnspecials,btnevents,btnmore;
 ImageView btnsearch;
@@ -158,8 +159,8 @@ Button city;
         btnsearch = (ImageView) getActivity().findViewById(R.id.btn_citys);
         btnmore = (Button)getActivity().findViewById(R.id.btn_shop);
 
+ font_button=(ImageView) view.findViewById(R.id.fontbutton);
 
-        font_button=(ImageButton)view.findViewById(R.id.fontbutton);
         sharedpreferences = getActivity(). getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
         OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
@@ -220,7 +221,7 @@ tab_id=get.getStringExtra("TAB");
 
         mainlayout=(RelativeLayout)view.findViewById(R.id.version_main_layout);
         if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+            int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
@@ -237,7 +238,7 @@ tab_id=get.getStringExtra("TAB");
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -282,7 +283,7 @@ tab_id=get.getStringExtra("TAB");
                     }
 
                 }else {
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -744,17 +745,17 @@ Log.e("RES",response.toString());
         if(colorcodes.equals("#FFFFFFFF")){
             themechange_button.setImageResource(R.drawable.themenormal);
             if(fontname.equals("playfair")){
-                font_button.setImageResource(R.drawable.blackplayfair);
+                font_button.setImageResource(R.mipmap.playfairblack);
             }else {
-                font_button.setImageResource(R.drawable.blacksan);
+                font_button.setImageResource(R.mipmap.sanblack);
             }
 
         }else {
             themechange_button.setImageResource(R.drawable.themewhite);
             if(fontname.equals("playfair")){
-                font_button.setImageResource(R.drawable.whiteplayfair);
+                font_button.setImageResource(R.mipmap.playfairwhite);
             }else {
-                font_button.setImageResource(R.drawable.whitesan);
+                font_button.setImageResource(R.mipmap.sanwhite);
             }
 
         }
@@ -973,9 +974,9 @@ Log.e("CHANGE LAMG",response.toString());
                     title_coimbatore.setTypeface(tf);
                     title_coimbatore.setTextSize(30);
                     if(colorcodes.equals("#FFFFFFFF")){
-                        font_button.setImageResource(R.drawable.whitesan);
+                        font_button.setImageResource(R.mipmap.sanwhite);
                     }else {
-                        font_button.setImageResource(R.drawable.blacksan);
+                        font_button.setImageResource(R.mipmap.sanblack);
                     }
                     Fragment selectedFragment = null;
                     selectedFragment = CityFragment.newInstance();
@@ -997,9 +998,9 @@ Log.e("CHANGE LAMG",response.toString());
                     title_coimbatore.setTypeface(tf);
                     title_coimbatore.setTextSize(40);
                     if(colorcodes.equals("#FFFFFFFF")){
-                        font_button.setImageResource(R.drawable.whiteplayfair);
+                        font_button.setImageResource(R.mipmap.playfairwhite);
                     }else {
-                        font_button.setImageResource(R.drawable.blackplayfair);
+                        font_button.setImageResource(R.mipmap.playfairblack);
                     }
 
                     Fragment selectedFragment = null;
@@ -1025,7 +1026,7 @@ Log.e("CHANGE LAMG",response.toString());
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
 
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -1686,7 +1687,10 @@ Log.e("CHANGE LAMG",response.toString());
                 if (tabViewChild instanceof TextView) {
                     ((TextView) tabViewChild).setTypeface(tf);
                     ((TextView) tabViewChild).setTextSize(8);
-
+                    if(fontname.equals("sanfrancisco")){
+                        Typeface tf1 = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Oxygen-Bold.ttf");
+                        ((TextView) tabViewChild).setTypeface(tf1);
+                    }
                     if(colorcodes.equals("#FFFFFFFF")){
                         ((TextView) tabViewChild).setTextColor(Color.BLACK);
                     }

@@ -454,6 +454,7 @@ String fontname;
     String date = obj.isNull("date") ? null : obj
             .getString("date");
     model.setPdate(date);
+
     String title = obj.isNull("title") ? null : obj
             .getString("title");
     model.setTitle(title);
@@ -497,8 +498,8 @@ String fontname;
     String shortdesc = obj.isNull("short_description") ? null : obj
             .getString("short_description");
     model.setShortdescription(shortdesc);
-    // model.setEditername(obj.getString("reporter_name"));
-    // model.setShortdescription(obj.getString("short_description"));
+   // model.setEditername(obj.getString("reporter_name"));
+   //model.setShortdescription(obj.getString("short_description"));
     // model.setDislikecount(obj.getInt("dislikes_count"));
 
     //   model.setCounttype(obj.getInt("like_type"));
@@ -1625,11 +1626,12 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 }*/
                 userViewHolder.shortdescription.setTypeface(pala);
 
-                if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){
-                    userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));
+                if(itemmodel.getPdate()==null){
+
+                    userViewHolder.shortdescription.setText( itemmodel.getShortdescription());
                 }else {
                     if(itemmodel.getShortdescription().equals("")){
-                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));
+                        userViewHolder.shortdescription.setText(itemmodel.getPdate());
                     }else {
                         userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));
                     }
@@ -1646,10 +1648,19 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 userViewHolder.shortdescription.setTypeface(pala);
                 mediaPlayer=new MediaPlayer();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                if(itemmodel.getTitle()!=null){
+                    userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
+                }else {
 
-                userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
+                }
+
                 userViewHolder.title_item.setTypeface(seguiregular);
-                if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular_bold);
+                if(itemmodel.getEditername()==null){
+                    userViewHolder.item_type_name.setText(itemmodel.getQtype());
+                }else {
+                    userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));
+                }
+                userViewHolder.item_type_name.setTypeface(seguiregular_bold);
                 //userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(seguiregular_bold);
                 userViewHolder.commentscount.setTypeface(seguiregular_bold);
@@ -1677,7 +1688,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     userViewHolder.commentscount.setTypeface(sansregular);
                     userViewHolder.editername.setTypeface(sansregular);
                     userViewHolder.shortdescription.setTypeface(sansregular);
-                    userViewHolder.title_item.setTextSize(22);
+                    userViewHolder.title_item.setTextSize(17);
                     userViewHolder.shortdescription.setTextSize(13);
                 }
 
@@ -2584,19 +2595,7 @@ if(itemmodel.getAlbum()==null){
                     userViewHolder.moreimagescount_textview.setVisibility(View.GONE);
                 }
 
-                if(fontname.equals("sanfrancisco")){
-                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
-                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
-
-                    userViewHolder.title_item.setTypeface(sansbold);
-                    userViewHolder.likescount.setTypeface(sansregular);
-                    userViewHolder.commentscount.setTypeface(sansregular);
-                    userViewHolder.editername.setTypeface(sansregular);
-                    userViewHolder.shortdescription.setTypeface(sansregular);
-                    userViewHolder.title_item.setTextSize(22);
-                    userViewHolder.shortdescription.setTextSize(13);
-                }
-
+               if(fontname.equals("sanfrancisco")){                     Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);                     Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);                     userViewHolder.title_item.setTypeface(sansbold);                     userViewHolder.likescount.setTypeface(sansregular);                     userViewHolder.commentscount.setTypeface(sansregular);                     userViewHolder.editername.setTypeface(sansregular);                     userViewHolder.shortdescription.setTypeface(sansregular);                     userViewHolder.title_item.setTextSize(17);                             userViewHolder.shortdescription.setTextSize(13);                 }
 
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 
