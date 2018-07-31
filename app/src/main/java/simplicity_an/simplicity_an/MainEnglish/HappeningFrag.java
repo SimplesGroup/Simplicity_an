@@ -116,6 +116,7 @@ public class HappeningFrag extends Fragment {
     String tab_id;
     ImageView font_button;
   String  fontname;
+  Typeface tf_play,tf;
     public static HappeningFrag newInstance() {
         HappeningFrag fragment = new HappeningFrag();
         return fragment;
@@ -183,6 +184,28 @@ public class HappeningFrag extends Fragment {
 
         font_button=(ImageView) view.findViewById(R.id.fontbutton);
 
+        if(fontname.equals("sanfrancisco")){
+            String playfair ="fonts/Oxygen-Bold.ttf";
+            tf_play = Typeface.createFromAsset(getActivity().getAssets(), playfair);
+            String simplycity_title_bold = "fonts/SystemSanFranciscoDisplayRegular.ttf";
+            tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_bold);
+            city.setTypeface(tf);
+            btnevents.setTypeface(tf);
+            btnspecials.setTypeface(tf);
+            btnmore.setTypeface(tf);
+        }else {
+            String playfair = "fonts/playfairDisplayRegular.ttf";
+            tf_play = Typeface.createFromAsset(getActivity().getAssets(), playfair);
+            String simplycity_title_bold = "fonts/Lora-Regular.ttf";
+            tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_bold);
+            city.setTypeface(tf_play);
+            btnevents.setTypeface(tf_play);
+            btnspecials.setTypeface(tf_play);
+            btnmore.setTypeface(tf_play);
+        }
+
+
+
         mainlayout=(RelativeLayout)view.findViewById(R.id.version_main_layout);
         fabplus=(FloatingActionButton)view.findViewById(R.id.fabButtonplus) ;
         fabsearch=(FloatingActionButton)view.findViewById(R.id.fabsearch) ;
@@ -197,15 +220,72 @@ public class HappeningFrag extends Fragment {
                 startActivity(searchpage);
             }
         });
-        if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+
+
+        if(colorcodes!=null) {
+            if (colorcodes.equals("#FFFFFFFF")) {
+                int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+                mainlayout.setBackgroundDrawable(gd);
+
+
+            } else {
+                int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+                mainlayout.setBackgroundDrawable(gd);
+                // city.setBackgroundColor(getResources().getColor(R.color.theme1button));
+                fabplus.setBackgroundResource(R.color.theme1button);
+                fabinnerplus.setBackgroundResource(R.color.theme1button);
+                fabsearch.setBackgroundResource(R.color.theme1button);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#383838");
+
+                editor.commit();
+
+            }
+        }else{
+            int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
             gd.setCornerRadius(0f);
 
             mainlayout.setBackgroundDrawable(gd);
-          // beyond.setBackgroundResource(R.color.theme1button);
+
+            fabplus.setBackgroundResource(R.color.theme1button);
+            fabinnerplus.setBackgroundResource(R.color.theme1button);
+            fabsearch.setBackgroundResource(R.color.theme1button);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(backgroundcolor, "#383838");
+
+            editor.commit();
+
+
+        }
+
+
+
+
+        /*if(colorcodes.length()==0){
+            int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+            GradientDrawable gd = new GradientDrawable(
+                    GradientDrawable.Orientation.TOP_BOTTOM,
+                    colors);
+            gd.setCornerRadius(0f);
+
+            mainlayout.setBackgroundDrawable(gd);
+
             fabplus.setBackgroundResource(R.color.theme1button);
             fabinnerplus.setBackgroundResource(R.color.theme1button);
             fabsearch.setBackgroundResource(R.color.theme1button);
@@ -215,14 +295,14 @@ public class HappeningFrag extends Fragment {
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
                 gd.setCornerRadius(0f);
 
                 mainlayout.setBackgroundDrawable(gd);
-           // beyond.setBackgroundResource(R.color.theme1button);
+
                 fabplus.setBackgroundResource(R.color.theme1button);
                 fabinnerplus.setBackgroundResource(R.color.theme1button);
                 fabsearch.setBackgroundResource(R.color.theme1button);
@@ -233,7 +313,7 @@ public class HappeningFrag extends Fragment {
 
                 if(colorcodes!=null){
                     if(!colorcodes.equals("#FFFFFFFF")) {
-                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -253,14 +333,13 @@ public class HappeningFrag extends Fragment {
                         g.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(g);
-                      //  beyond.setBackgroundResource(R.color.theme13);
-                      //  beyond.setImageResource(R.mipmap.eventone);
+
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(backgroundcolor, "#FFFFFFFF");
                         editor.commit();
                     }
                 }else {
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -268,7 +347,7 @@ public class HappeningFrag extends Fragment {
                     gd.setCornerRadius(0f);
 
                     mainlayout.setBackgroundDrawable(gd);
-                 // beyond.setBackgroundResource(R.color.theme1button);
+
                     fabplus.setBackgroundResource(R.color.theme1button);
                     fabinnerplus.setBackgroundResource(R.color.theme1button);
                     fabsearch.setBackgroundResource(R.color.theme1button);
@@ -278,7 +357,7 @@ public class HappeningFrag extends Fragment {
                     editor.commit();
                 }
             }
-        }
+        }*/
         if(myprofileid!=null) {
 
             JsonArrayRequest jsonReq = new JsonArrayRequest(url_notification_count_valueget, new Response.Listener<JSONArray>() {
@@ -644,7 +723,15 @@ public class HappeningFrag extends Fragment {
 
         weather.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(weather);
+        if(fontname.equals("playfair")){
+            title_coimbatore.setTypeface(tf_pala);
+        }else {
+            Typeface sanf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
+            title_coimbatore.setTypeface(sanf);
+            title_coimbatore.setTextSize(30);
+            date_text.setTypeface(sanf);
 
+        }
         if(colorcodes.equals("#FFFFFFFF")){
             themechange_button.setImageResource(R.drawable.themenormal);
             if(fontname.equals("playfair")){

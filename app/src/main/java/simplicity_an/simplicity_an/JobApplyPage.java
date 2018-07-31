@@ -18,6 +18,8 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import simplicity_an.simplicity_an.Utils.Fonts;
+
 /**
  * Created by kuppusamy on 1/29/2016.
  */
@@ -32,7 +34,8 @@ public class JobApplyPage extends Activity {
     SharedPreferences sharedpreferences;
     public static final String mypreference = "mypref";
     public static final String MYUSERID= "myprofileid";
-
+    String fontname;
+    Typeface tf_play;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -48,10 +51,11 @@ public class JobApplyPage extends Activity {
         }
 
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
 
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
         if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+            int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
@@ -65,7 +69,7 @@ public class JobApplyPage extends Activity {
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -88,7 +92,7 @@ public class JobApplyPage extends Activity {
 
                     mainlayout.setBackgroundDrawable(gd);
                 }else {
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -104,8 +108,14 @@ public class JobApplyPage extends Activity {
                 }
             }
         }
-        String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
+        if(fontname.equals("sanfrancisco")){
+            String playfair ="fonts/Oxygen-Bold.ttf";
+            tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
+        }else {
+            String playfair = "fonts/playfairDisplayRegular.ttf";
+            tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
+        }
+
         menu=(ImageButton)findViewById(R.id.btn_3);
         back=(ImageButton)findViewById(R.id.btn_1);
         back.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +136,7 @@ public class JobApplyPage extends Activity {
             }
         });
         tiitlelabel=(TextView)findViewById(R.id.titlelabel_apply);
-        tiitlelabel.setTypeface(tf);
+        tiitlelabel.setTypeface(tf_play);
       //  applynow=(Button)findViewById(R.id.apply);
         Intent in=getIntent();
        String titl=in.getStringExtra("TITLE");

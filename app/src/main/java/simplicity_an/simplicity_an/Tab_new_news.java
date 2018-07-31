@@ -34,6 +34,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -65,11 +66,13 @@ import java.util.Map;
 import simplicity_an.simplicity_an.HorizontalAdapters.HorizontalPhotostoryadapter;
 import simplicity_an.simplicity_an.HorizontalAdapters.Horizontaladapter;
 import simplicity_an.simplicity_an.HorizontalAdapters.VerticalAdapters;
+import simplicity_an.simplicity_an.MainEnglish.EntertainmentFragment;
 import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
+import simplicity_an.simplicity_an.Utils.ChangeFont;
 import simplicity_an.simplicity_an.Utils.Configurl;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
-public class Tab_new_news extends Fragment {
+public class Tab_new_news extends Fragment implements ChangeFont  {
     RecyclerView recyclerview_tab_all_news;
     String URL="http://simpli-city.in/request2.php?rtype=alldatatest&key=simples&qtype=news";
     String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples"; 				String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
@@ -89,8 +92,8 @@ public class Tab_new_news extends Fragment {
     FloatingActionButton fabnews,fabplus;
     String myprofileid;
     LinearLayoutManager lLayout;
-   Recyclerviewtaballadapter recyclerview_tab_all_adapter;
-    List<ItemModel> modelList=new ArrayList<ItemModel>();
+  private  static Recyclerviewtaballadapter recyclerview_tab_all_adapter;
+   public static List<ItemModel> modelLists=new ArrayList<ItemModel>();
     private boolean isFragmentLoaded=false;
     public static final String backgroundcolor = "color";
     String colorcodes;
@@ -104,6 +107,7 @@ public class Tab_new_news extends Fragment {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     SwipeRefreshLayout swipeRefresh;
 String fontname;
+    ImageView font_button;
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !isFragmentLoaded ) {
@@ -112,10 +116,7 @@ String fontname;
             Log.e("TAB:","ALL");
         }
     }
-    public Tab_new_news() {
-        // Required empty public constructor
-        // setUserVisibleHint(false);
-    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -278,10 +279,11 @@ String fontname;
             @Override
             public void onRefresh() {
                 swipeRefresh.setRefreshing(true);
-                modelList.clear();
+                modelLists.clear();
                 recyclerview_tab_all_adapter.notifyDataSetChanged();
                 requestCount=1;
-                getData();
+               getData();
+
                 ( new Handler()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -292,7 +294,7 @@ String fontname;
             }
         });
         //getData();
-        recyclerview_tab_all_adapter = new Recyclerviewtaballadapter(modelList,recyclerview_tab_all_news);
+        recyclerview_tab_all_adapter = new Recyclerviewtaballadapter(modelLists,recyclerview_tab_all_news);
         recyclerview_tab_all_news.setAdapter(recyclerview_tab_all_adapter);
         recyclerview_tab_all_adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -314,8 +316,17 @@ String fontname;
         });
         return view;
     }
+
+
+
+    @Override
+    public void change() {
+        recyclerview_tab_all_adapter.Font(modelLists);
+    }
+
     public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(String playurl, String title,String image);     }
+        public void onFragmentInteraction(String playurl, String title,String image);
+    }
     public void animateFAB(){
 
         if(isFabOpen){
@@ -346,6 +357,7 @@ String fontname;
         requestQueue.add(getDataFromTheServer(requestCount));
         requestCount++;
     }
+
     StringRequest getDataFromTheServer(final int requestCount){
         if(myprofileid!=null){
             URLALL=URL+"&page="+requestCount+"&user_id="+myprofileid;
@@ -477,6 +489,9 @@ String fontname;
                     int count = obj.isNull("like_type") ? null : obj
                             .getInt("like_type");
                     model.setCounttype(count);
+                    String reportername = obj.isNull("reporter_name") ? null : obj
+                            .getString("reporter_name");
+                    model.setEditername(reportername);
                 }
     //  model.setCommentscount(obj.getInt("commentscount"));
     //  model.setFavcount(obj.getInt("fav"));
@@ -492,9 +507,9 @@ String fontname;
             .getString("url");
     model.setAds(ads);
     // model.setAds(obj.getString("url"));
-    String reportername = obj.isNull("reporter_name") ? null : obj
+    /*String reportername = obj.isNull("reporter_name") ? null : obj
             .getString("reporter_name");
-    model.setEditername(reportername);
+    model.setEditername(reportername);*/
     String shortdesc = obj.isNull("short_description") ? null : obj
             .getString("short_description");
     model.setShortdescription(shortdesc);
@@ -510,6 +525,7 @@ String fontname;
     String youtubelink = obj.isNull("youtube_link") ? null : obj
             .getString("youtube_link");
     model.setYoutubelink(youtubelink);
+
 
     List<ItemModel> albums = new ArrayList<>();
     ArrayList<String> album = new ArrayList<String>();
@@ -912,7 +928,7 @@ String fontname;
                 model.setEventlist(events);
                 model.setVideoList(videos);
                 model.setPhotoStoryList(photo);
-                modelList.add(model);
+                modelLists.add(model);
             }
 
 
@@ -925,7 +941,11 @@ String fontname;
             e.printStackTrace();
         }
     }
+    public  void Change(List<ItemModel>list){
+        System.out.println("worked");
 
+     // recyclerview_tab_all_adapter.Font(list);
+    }
     /*public void onStop() {
          super.onStop();
          if (requestQueue != null) {
@@ -1207,9 +1227,10 @@ String fontname;
         dissmissDialog();
     }
 
+
     static class Userviewholdertaball extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView likescount,dislikescount,commentscount,title_item,item_type_name,date;
-        TextView shortdescription,editername;
+  public       TextView shortdescription,editername;
         public Button share_button,comment_button,likes_button,save_button;
         ImageButton share_imagebutton,like_imagebutton,comment_imagebutton,arrow_imagebutton;
         public NetworkImageView item_image;
@@ -1455,7 +1476,8 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar1);
         }
     }
- public    class Recyclerviewtaballadapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+
+ public    class Recyclerviewtaballadapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         LayoutInflater inflater;
 
         ImageLoader mImageLoader;
@@ -1475,6 +1497,8 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
         Context context;
         private  int currentvisiblecount;
         String urlaudio;
+      Userviewholdertaball userViewHolder;
+   private    List<ItemModel>modelList=new ArrayList<>();
         @Override
         public int getItemCount() {
             return modelList.size();
@@ -1542,7 +1566,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                    UserViewHolderphotostories vhImages = new UserViewHolderphotostories( vImages );
                     return vhImages;
                 case VIEW_TYPE_PHOTOSTORY_NEW:
-                    ViewGroup vImagesnew = (ViewGroup) mInflater.inflate ( R.layout.horizontal_recyclerview, parent, false );
+                    ViewGroup vImagesnew = (ViewGroup) mInflater.inflate ( R.layout.horizontal_recylerview_other, parent, false );
                     Horizontalphotostory vhImagesnew = new Horizontalphotostory( vImagesnew );
                     return vhImagesnew;
               case VIEW_TYPE_VIDEO:
@@ -1560,10 +1584,13 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
         @SuppressLint("ResourceAsColor")
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            sharedpreferences = getActivity(). getSharedPreferences(mypreference,
+                    Context.MODE_PRIVATE);
+
             if (holder instanceof Userviewholdertaball) {
 
-                final Userviewholdertaball userViewHolder = (Userviewholdertaball) holder;
-
+                 userViewHolder = (Userviewholdertaball) holder;
+                fontname=sharedpreferences.getString(Fonts.FONT,"");
                 String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
 
@@ -1658,14 +1685,23 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 if(itemmodel.getEditername()==null){
                     userViewHolder.item_type_name.setText(itemmodel.getQtype());
                 }else {
-                    userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));
+                    if(itemmodel.getEditername().equals("")){
+                        userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;"));
+
+                    }else {
+                        userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));
+
+                    }
+                    //userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));
                 }
                 userViewHolder.item_type_name.setTypeface(seguiregular_bold);
                 //userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(seguiregular_bold);
                 userViewHolder.commentscount.setTypeface(seguiregular_bold);
                 userViewHolder.date.setTypeface(seguiregular);
-                if(itemmodel.getLikescount()==0){                         userViewHolder.likescount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Like"));                     }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Comment"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                     }                                        if(itemmodel.getCommentscount()==0){                      userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));                 }else {                     userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                 }
+                if(itemmodel.getLikescount()==0){
+                    userViewHolder.likescount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Like"));
+                }else {                         userViewHolder.likescount.setText(Html.fromHtml(itemmodel.getLikescount()+"&nbsp;"+"Like"));                      }                     if(itemmodel.getCommentscount()==0){                          userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;" +"" +"Comment"));                     }else {                         userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                     }                                        if(itemmodel.getCommentscount()==0){                      userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));                 }else {                     userViewHolder.commentscount.setText(Html.fromHtml(itemmodel.getCommentscount()+"&nbsp;"  +"Comments"));                 }
                 if(itemmodel.getCommentscount()==0){
 
                     userViewHolder.commentscount.setText(Html.fromHtml("0"+"&nbsp;"  +"Comment"));
@@ -1677,9 +1713,10 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 }else {
                     userViewHolder.item_image.setVisibility(View.GONE);
                 }
-
+                Log.e("Font",fontname);
 
                 if(fontname.equals("sanfrancisco")){
+                    Log.e("Font",fontname);
                     Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
                     Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
 
@@ -1689,7 +1726,11 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     userViewHolder.editername.setTypeface(sansregular);
                     userViewHolder.shortdescription.setTypeface(sansregular);
                     userViewHolder.title_item.setTextSize(17);
-                    userViewHolder.shortdescription.setTextSize(13);
+                    userViewHolder.shortdescription.setTextSize(15);
+                    userViewHolder.item_type_name.setTypeface(sansregular);
+                    userViewHolder.editername.setTypeface(sansregular);
+                    userViewHolder.shortdescription.setLineSpacing(-0.3f,1f);
+                    userViewHolder.title_item.setLineSpacing(0,1f);
                 }
 
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
@@ -2161,7 +2202,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
 
                 });
             }else if(holder instanceof Horizontalviewholder){
-
+                fontname=sharedpreferences.getString(Fonts.FONT,"");
                 Horizontalviewholder horizontalviewholder=(Horizontalviewholder)holder;
                 String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
@@ -2175,7 +2216,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
 
                 horizontalviewholder.text_title.setTextColor(Color.WHITE);
                 horizontalviewholder.text_title.setText(title);
-                horizontalviewholder.seeall_text.setText("See all");
+                horizontalviewholder.seeall_text.setText("See more");
                 horizontalviewholder.seeall_text.setTypeface(seguiregular);
                 horizontalviewholder.text_title.setTypeface(seguiregular);
                 horizontalviewholder.seeall_text.setTextColor(Color.WHITE);
@@ -2197,13 +2238,17 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
                     Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
 
-                    horizontalviewholder.text_title.setTypeface(sansregular);
+                    horizontalviewholder.text_title.setTypeface(sansbold);
+                    horizontalviewholder.text_title.setTextSize(17);
                     horizontalviewholder.seeall_text.setTypeface(sansregular);
-
-
+                }
+                if(colorcodes.equals("#FFFFFFFF")){
+                    horizontalviewholder.text_title.setTextColor(Color.BLACK);
+                    horizontalviewholder.seeall_text.setTextColor(Color.BLACK);
                 }
 
             }else if(holder instanceof Horizontalphotostory){
+                fontname=sharedpreferences.getString(Fonts.FONT,"");
                 Horizontalphotostory horizontalphotostory=(Horizontalphotostory)holder;
                 String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
@@ -2217,12 +2262,18 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 }
 
                 horizontalphotostory.text_title.setText(title);
-                horizontalphotostory.seeall_text.setText("See all");
+                horizontalphotostory.seeall_text.setText("See more");
                 horizontalphotostory.seeall_text.setTypeface(seguiregular);
                 horizontalphotostory.text_title.setTypeface(seguiregular);
                 horizontalphotostory.seeall_text.setTextColor(Color.WHITE);
                 HorizontalPhotostoryadapter horizontalPhotostoryadapter=new HorizontalPhotostoryadapter(photolist,horizontalphotostory.horizontal_recylerview,getActivity());
                 horizontalphotostory.horizontal_recylerview.setAdapter(horizontalPhotostoryadapter);
+
+                if(colorcodes.equals("#FFFFFFFF")){
+                    horizontalphotostory.text_title.setTextColor(Color.BLACK);
+                    horizontalphotostory.seeall_text.setTextColor(Color.BLACK);
+                }
+
 
                 horizontalphotostory.seeall_text.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -2237,14 +2288,19 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
                     Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
 
-                    horizontalphotostory.text_title.setTypeface(sansregular);
+                    horizontalphotostory.text_title.setTypeface(sansbold);
+                    horizontalphotostory.text_title.setTextSize(17);
                     horizontalphotostory.seeall_text.setTypeface(sansregular);
 
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        horizontalphotostory.text_title.setTextColor(Color.BLACK);
 
+                        horizontalphotostory.seeall_text.setTextColor(Color.BLACK);
+                    }
                 }
 
             }else if (holder instanceof Horizontalevent){
-
+                fontname=sharedpreferences.getString(Fonts.FONT,"");
                 Horizontalevent horizontalsmalldesign=(Horizontalevent) holder;
                 String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
@@ -2257,11 +2313,17 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 }
 
                 horizontalsmalldesign.text_title.setText(title);
-               horizontalsmalldesign.seeall_text.setText("See all");
+               horizontalsmalldesign.seeall_text.setText("See more");
                horizontalsmalldesign.seeall_text.setTypeface(seguiregular);
                horizontalsmalldesign.text_title.setTypeface(seguiregular);
                 VerticalAdapters adapters=new VerticalAdapters(list,horizontalsmalldesign.horizontal_recylerview,getActivity());
                 horizontalsmalldesign.horizontal_recylerview.setAdapter(adapters);
+
+
+                if(colorcodes.equals("#FFFFFFFF")){
+                    horizontalsmalldesign.text_title.setTextColor(Color.BLACK);
+                    horizontalsmalldesign.seeall_text.setTextColor(Color.BLACK);
+                }
 
                 horizontalsmalldesign.seeall_text.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -2277,14 +2339,19 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
                     Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
 
-                    horizontalsmalldesign.text_title.setTypeface(sansregular);
+                    horizontalsmalldesign.text_title.setTypeface(sansbold);
+                    horizontalsmalldesign.text_title.setTextSize(17);
                     horizontalsmalldesign.seeall_text.setTypeface(sansregular);
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        horizontalsmalldesign.text_title.setTextColor(Color.BLACK);
 
+                        horizontalsmalldesign.seeall_text.setTextColor(Color.BLACK);
+                    }
 
                 }
 
             }else if (holder instanceof Horizontalbeyond){
-
+                fontname=sharedpreferences.getString(Fonts.FONT,"");
                 Horizontalbeyond horizontalbeyond=(Horizontalbeyond) holder;
                 String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
@@ -2297,7 +2364,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 }
 
                 horizontalbeyond.text_title.setText(title);
-                horizontalbeyond.seeall_text.setText("See all");
+                horizontalbeyond.seeall_text.setText("See more");
                 horizontalbeyond.seeall_text.setTypeface(seguiregular);
                 horizontalbeyond.text_title.setTypeface(seguiregular);
                 VerticalAdapters adapters=new VerticalAdapters(list,horizontalbeyond.horizontal_recylerview,getActivity());
@@ -2313,11 +2380,18 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     }
                 });
 
+                if(colorcodes.equals("#FFFFFFFF")){
+                    horizontalbeyond.text_title.setTextColor(Color.BLACK);
+
+                    horizontalbeyond.seeall_text.setTextColor(Color.BLACK);
+                }
+
                 if(fontname.equals("sanfrancisco")){
                     Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
                     Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
 
-                    horizontalbeyond.text_title.setTypeface(sansregular);
+                    horizontalbeyond.text_title.setTypeface(sansbold);
+                    horizontalbeyond.text_title.setTextSize(17);
                     horizontalbeyond.seeall_text.setTypeface(sansregular);
 
 
@@ -2325,7 +2399,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
 
 
             }else if (holder instanceof Horizontalspecial){
-
+                fontname=sharedpreferences.getString(Fonts.FONT,"");
                 Horizontalspecial horizontalspecial=(Horizontalspecial) holder;
                 String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
@@ -2339,11 +2413,17 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
 
 
                 horizontalspecial.text_title.setText(title);
-                horizontalspecial.seeall_text.setText("See all");
+                horizontalspecial.seeall_text.setText("See more");
                 horizontalspecial.seeall_text.setTypeface(seguiregular);
                 horizontalspecial.text_title.setTypeface(seguiregular);
                 VerticalAdapters adapters=new VerticalAdapters(list,horizontalspecial.horizontal_recylerview,getActivity());
                 horizontalspecial.horizontal_recylerview.setAdapter(adapters);
+
+                if(colorcodes.equals("#FFFFFFFF")){
+                    horizontalspecial.text_title.setTextColor(Color.BLACK);
+
+                    horizontalspecial.seeall_text.setTextColor(Color.BLACK);
+                }
 
                 horizontalspecial.seeall_text.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -2359,8 +2439,10 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
                     Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
 
-                    horizontalspecial.text_title.setTypeface(sansregular);
+                    horizontalspecial.text_title.setTypeface(sansbold);
+                    horizontalspecial.text_title.setTextSize(17);
                     horizontalspecial.seeall_text.setTypeface(sansregular);
+
 
 
                 }
@@ -2371,7 +2453,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
 
 
             else if(holder instanceof UserViewHolderphotostories){
-
+                fontname=sharedpreferences.getString(Fonts.FONT,"");
                 final UserViewHolderphotostories userViewHolder = (UserViewHolderphotostories) holder;
 
                 String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
@@ -2595,8 +2677,21 @@ if(itemmodel.getAlbum()==null){
                     userViewHolder.moreimagescount_textview.setVisibility(View.GONE);
                 }
 
-               if(fontname.equals("sanfrancisco")){                     Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);                     Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);                     userViewHolder.title_item.setTypeface(sansbold);                     userViewHolder.likescount.setTypeface(sansregular);                     userViewHolder.commentscount.setTypeface(sansregular);                     userViewHolder.editername.setTypeface(sansregular);                     userViewHolder.shortdescription.setTypeface(sansregular);                     userViewHolder.title_item.setTextSize(17);                             userViewHolder.shortdescription.setTextSize(13);                 }
-
+               if(fontname.equals("sanfrancisco")){
+                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
+                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
+                    userViewHolder.title_item.setTypeface(sansbold);
+                    userViewHolder.likescount.setTypeface(sansregular);
+                    userViewHolder.commentscount.setTypeface(sansregular);
+                    userViewHolder.editername.setTypeface(sansregular);
+                    userViewHolder.shortdescription.setTypeface(sansregular);
+                    userViewHolder.title_item.setTextSize(17);
+                    userViewHolder.shortdescription.setTextSize(15);
+                    userViewHolder.item_type_name.setTypeface(sansregular);
+                    userViewHolder.editername.setTypeface(sansregular);
+                    userViewHolder.shortdescription.setLineSpacing(-0.3f,1f);
+                    userViewHolder.title_item.setLineSpacing(0,1f);
+                }
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 
                     @Override
@@ -2925,12 +3020,18 @@ if(itemmodel.getAlbum()==null){
 
         public void onButtonPressed(String playurl, String title,String image) {             if (mListener != null) {                 mListener.onFragmentInteraction(playurl,title,image);              }         }
 
+        public void Font(List<ItemModel> list){
+            Log.e("SIZE","adap  "+list.toString());
+           this.modelList.addAll(list);
 
+           notifyDataSetChanged();
+
+        }
         public int getItemViewType(int position) {
 
 
             ItemModel item = modelList.get(position);
-           // return modelList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+
             if(item.getQtypemain()!=null){
                 if(item.getQtypemain().equals("photostories")){
                     return VIEW_TYPE_PHOTOSTORY;
@@ -2957,14 +3058,7 @@ if(itemmodel.getAlbum()==null){
 
                 //return VIEW_TYPE_ITEM;
             }
-           /* if(item.getQtypemain().equalsIgnoreCase("photostories")){
-                return VIEW_TYPE_PHOTOSTORY;
-            }*//*else if(item.getQtypemain().equalsIgnoreCase("radio")){
-           return VIEW_TYPE_RADIO;
-        }*//*  else{
-                return modelList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
-            }
-*/
+
         }
         public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
             this.onLoadMoreListener = onLoadMoreListener;
@@ -2974,7 +3068,8 @@ if(itemmodel.getAlbum()==null){
         }
 
 
-    }
+
+ }
     public static class MyDialogFragment extends DialogFragment {
         private String KEY_COMMENT = "comment";
         private String KEY_TYPE = "qtype";

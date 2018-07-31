@@ -73,6 +73,7 @@ import java.util.List;
 import java.util.Map;
 
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 /**
  * Created by kuppusamy on 2/12/2016.
@@ -147,7 +148,8 @@ public class EventsDescription extends AppCompatActivity {
     String colorcodes;
     TextView venuecontactinfo,textview_organizedby;
     LinearLayout commentboxlayout;
-
+    String fontname;
+    Typeface tf_bold,tf;
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +163,8 @@ public class EventsDescription extends AppCompatActivity {
         searchactivity_event = sharedpreferences.getString(MYACTIVITYSEARCH, "");
         contentid = sharedpreferences.getString(CONTENTID, "");
         activity = sharedpreferences.getString(Activity, "");
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
+
         if (sharedpreferences.contains(MYUSERID)) {
 
             myprofileid = sharedpreferences.getString(MYUSERID, "");
@@ -193,7 +197,7 @@ public class EventsDescription extends AppCompatActivity {
             back.setImageResource(R.mipmap.back);
         }
         if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+            int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
@@ -207,7 +211,7 @@ public class EventsDescription extends AppCompatActivity {
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -234,7 +238,7 @@ public class EventsDescription extends AppCompatActivity {
                         editor.putString(backgroundcolor, "#FFFFFFFF");
                         editor.commit();
                     } else {
-                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                        int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -249,7 +253,7 @@ public class EventsDescription extends AppCompatActivity {
                         editor.commit();
                     }
                 }else {
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -350,11 +354,21 @@ public class EventsDescription extends AppCompatActivity {
         remindme=(ImageButton)findViewById(R.id.btn_remider);
         favourite = (ImageButton) findViewById(R.id.btn_like);
         String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
+        //Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
-        String simplycity_title_bold = "fonts/PlayfairDisplayBold.ttf";
-        Typeface tf_bold = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
-
+        if(fontname.equals("sanfrancisco")){
+            String playfair ="fonts/Oxygen-Bold.ttf";
+            tf_bold = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
+            String simplycity_title_bold = "fonts/SystemSanFranciscoDisplayRegular.ttf";
+            tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
+            title.setTextSize(20);
+            title.setLineSpacing(0,1f);
+        }else {
+            String playfair = "fonts/playfairDisplayRegular.ttf";
+            tf_bold = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
+            String simplycity_title_bold = "fonts/Lora-Regular.ttf";
+            tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
+        }
 
 
         venue_text.setTypeface(tf);
@@ -721,7 +735,102 @@ JSONArray array=obj.getJSONArray("amt");
                 String rep = String.valueOf(descrition);
                 rep =  rep.replaceAll("color:#fff","color:#000");
 
-                String fonts = "<html>\n" + "\t<head>\n" + "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" + "\t\t<style>\n" + "\t\t@font-face {\n" + "  font-family: 'segeoui-light';\n" + " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "  font-style: normal;\n" + "}\n" + "\n" + "@font-face {\n" + "  font-family: 'segeoui-regular';\n" + "src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "  font-style: normal;\n" + "}\n" + "\n" + "@font-face {\n" + "  font-family: 'segeoui-sbold';\n" + " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "  font-style: normal;\n" + "}\n" + "\n" + "@font-face {\n" + "    font-family: 'RobotoSlab-Bold';\n" + "   src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "    font-style: normal;\n" + "}\n" + "@font-face {\n" + "    font-family: 'RobotoSlab-Light';\n" + "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "    font-style: normal;\n" + "}\n" + "@font-face {\n" + "    font-family: 'RobotoSlab-Regular';\n" + "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "    font-style: normal;\n" + "}\n" + "@font-face {\n" + "    font-family: 'RobotoSlab-Thin';\n" + "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" + "    font-style: normal;\n" + "}\n" + "\t\t</style>\n" + "\t</head>";
+                String fonts="";
+                if(fontname.equals("sanfrancisco")){
+                    fonts = "<html>\n" +
+                            "\t<head>\n" +
+                            "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" +
+                            "\t\t<style>\n" +
+                            "\t\t@font-face {\n" +
+                            "  font-family: 'segeoui-light';\n" +
+                            " src: url('file:///android_asset/fonts/SystemSanFranciscoDisplayRegular');\n" +
+                            "  font-style: normal;\n" +
+                            "}\n" +
+                            "\n" +
+                            "@font-face {\n" +
+                            "  font-family: 'segeoui-regular';\n" +
+                            " src: url('file:///android_asset/fonts/SystemSanFranciscoDisplayRegular');\n" +
+                            "  font-style: normal;\n" +
+                            "}\n" +
+                            "\n" +
+                            "@font-face {\n" +
+                            "  font-family: 'segeoui-sbold';\n" +
+                            " src: url('file:///android_asset/fonts/SystemSanFranciscoDisplayRegular');\n" +
+                            "  font-style: normal;\n" +
+                            "}\n" +
+                            "\n" +
+                            "@font-face {\n" +
+                            "    font-family: 'RobotoSlab-Bold';\n" +
+                            "   src: url('file:///android_asset/fonts/SystemSanFranciscoDisplayRegular');\n" +
+                            "    font-style: normal;\n" +
+                            "}\n" +
+                            "@font-face {\n" +
+                            "    font-family: 'RobotoSlab-Light';\n" +
+                            "    src: url('file:///android_asset/fonts/SystemSanFranciscoDisplayRegular');\n" +
+                            "    font-style: normal;\n" +
+                            "}\n" +
+                            "@font-face {\n" +
+                            "    font-family: 'RobotoSlab-Regular';\n" +
+                            "    src: url('file:///android_asset/fonts/SystemSanFranciscoDisplayRegular');\n" +
+                            "    font-style: normal;\n" +
+                            "}\n" +
+                            "@font-face {\n" +
+                            "    font-family: 'RobotoSlab-Thin';\n" +
+                            "    src: url('file:///android_asset/fonts/SystemSanFranciscoDisplayRegular');\n" +
+                            "    font-style: normal;\n" +
+                            "}\n" +
+                            "\t\t</style>\n" +
+                            "\t</head>";
+                }else {
+                    fonts = "<html>\n" +
+                            "\t<head>\n" +
+                            "\t\t<meta  \thttp-equiv=\"content-type\" content=\"text/html;\" charset=\"UTF-8\">\n" +
+                            "\t\t<style>\n" +
+                            "\t\t@font-face {\n" +
+                            "  font-family: 'segeoui-light';\n" +
+                            " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
+                            "  font-style: normal;\n" +
+                            "}\n" +
+                            "\n" +
+                            "@font-face {\n" +
+                            "  font-family: 'segeoui-regular';\n" +
+                            " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
+                            "  font-style: normal;\n" +
+                            "}\n" +
+                            "\n" +
+                            "@font-face {\n" +
+                            "  font-family: 'segeoui-sbold';\n" +
+                            " src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
+                            "  font-style: normal;\n" +
+                            "}\n" +
+                            "\n" +
+                            "@font-face {\n" +
+                            "    font-family: 'RobotoSlab-Bold';\n" +
+                            "   src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
+                            "    font-style: normal;\n" +
+                            "}\n" +
+                            "@font-face {\n" +
+                            "    font-family: 'RobotoSlab-Light';\n" +
+                            "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
+                            "    font-style: normal;\n" +
+                            "}\n" +
+                            "@font-face {\n" +
+                            "    font-family: 'RobotoSlab-Regular';\n" +
+                            "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
+                            "    font-style: normal;\n" +
+                            "}\n" +
+                            "@font-face {\n" +
+                            "    font-family: 'RobotoSlab-Thin';\n" +
+                            "    src: url('file:///android_asset/fonts/Lora-Regular.ttf');\n" +
+                            "    font-style: normal;\n" +
+                            "}\n" +
+                            "\t\t</style>\n" +
+                            "\t</head>";
+                }
+
+
+
+
                 if(colorcodes.equals("#FFFFFFFF")) {
                     description.loadDataWithBaseURL("", fonts + rep + "</head>", "text/html", "utf-8", "");
                 }else{

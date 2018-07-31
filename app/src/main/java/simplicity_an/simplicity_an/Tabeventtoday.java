@@ -64,6 +64,7 @@ import java.util.List;
 import java.util.Map;
 
 import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
+import simplicity_an.simplicity_an.Utils.ChangeFont;
 import simplicity_an.simplicity_an.Utils.Configurl;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
@@ -71,7 +72,7 @@ import simplicity_an.simplicity_an.Utils.Fonts;
  * Created by kuppusamy on 5/12/2017.
  */
 
-public class Tabeventtoday extends Fragment {
+public class Tabeventtoday extends Fragment implements ChangeFont {
     RecyclerView recyclerview_tab_all;
     String URL="http://simpli-city.in/request2.php?rtype=alldatatest&key=simples&qtype=today_event";
     String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples"; 				String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
@@ -91,8 +92,8 @@ public class Tabeventtoday extends Fragment {
 
     String myprofileid;
     LinearLayoutManager lLayout;
-    Recyclerviewtaballadapter recyclerview_tab_all_adapter;
-    List<ItemModel> modelList=new ArrayList<ItemModel>();
+  private static   Recyclerviewtaballadapter recyclerview_tab_all_adapter;
+  private static   List<ItemModel> modelListstoday=new ArrayList<ItemModel>();
     private boolean isFragmentLoaded=false;
     FloatingActionButton fabevent,fabplus;
     public static final String Activity = "activity";
@@ -276,7 +277,7 @@ OnFragmentInteractionListener mListener;
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                 swipeRefresh.setRefreshing(true);                 modelList.clear();                 recyclerview_tab_all_adapter.notifyDataSetChanged();                  requestCount=0;                 getData();                               ( new Handler()).postDelayed(new Runnable() {                     @Override                     public void run() {                         swipeRefresh.setRefreshing(false);                     }                 }, 3000);
+                 swipeRefresh.setRefreshing(true);                 modelListstoday.clear();                 recyclerview_tab_all_adapter.notifyDataSetChanged();                  requestCount=0;                 getData();                               ( new Handler()).postDelayed(new Runnable() {                     @Override                     public void run() {                         swipeRefresh.setRefreshing(false);                     }                 }, 3000);
 
             }
         });
@@ -287,7 +288,7 @@ OnFragmentInteractionListener mListener;
 
 
         // getData();
-        recyclerview_tab_all_adapter = new Recyclerviewtaballadapter(modelList,recyclerview_tab_all);
+        recyclerview_tab_all_adapter = new Recyclerviewtaballadapter(modelListstoday,recyclerview_tab_all);
         recyclerview_tab_all.setAdapter(recyclerview_tab_all_adapter);
         recyclerview_tab_all_adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -459,7 +460,13 @@ OnFragmentInteractionListener mListener;
         }
         return jsonReq;*/
     }
-     public interface OnFragmentInteractionListener {         public void onFragmentInteraction(String playurl, String title,String image);     }
+
+    @Override
+    public void change() {
+        recyclerview_tab_all_adapter.Font(modelListstoday);
+    }
+
+    public interface OnFragmentInteractionListener {         public void onFragmentInteraction(String playurl, String title,String image);     }
 
 
     private void parseJsonFeed(JSONArray response){
@@ -525,7 +532,7 @@ OnFragmentInteractionListener mListener;
                 }
                 model.setAlbumlist(albums);
                 model.setAlbum(album);
-                modelList.add(model);
+                modelListstoday.add(model);
 
             }
 
@@ -950,6 +957,7 @@ OnFragmentInteractionListener mListener;
         Context context;
         private  int currentvisiblecount;
         String urlaudio;
+        private    List<ItemModel>modelList=new ArrayList<>();
         @Override
         public int getItemCount() {
             return modelList.size();
@@ -1019,6 +1027,9 @@ OnFragmentInteractionListener mListener;
         @SuppressLint("ResourceAsColor")
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            sharedpreferences = getActivity(). getSharedPreferences(mypreference,
+                    Context.MODE_PRIVATE);
+            fontname=sharedpreferences.getString(Fonts.FONT,"");
             if (holder instanceof Userviewholdertaball) {
 
                 final Userviewholdertaball userViewHolder = (Userviewholdertaball) holder;
@@ -1737,8 +1748,7 @@ OnFragmentInteractionListener mListener;
                 }
 
 
-               if(fontname.equals("sanfrancisco")){                     Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);                     Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);                     userViewHolder.title_item.setTypeface(sansbold);                     userViewHolder.likescount.setTypeface(sansregular);                     userViewHolder.commentscount.setTypeface(sansregular);                     userViewHolder.editername.setTypeface(sansregular);                     userViewHolder.shortdescription.setTypeface(sansregular);                     userViewHolder.title_item.setTextSize(17);                             userViewHolder.shortdescription.setTextSize(13);                 }
-                userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
+               if(fontname.equals("sanfrancisco")){                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);                    userViewHolder.title_item.setTypeface(sansbold);                    userViewHolder.likescount.setTypeface(sansregular);                    userViewHolder.commentscount.setTypeface(sansregular);                    userViewHolder.editername.setTypeface(sansregular);                    userViewHolder.shortdescription.setTypeface(sansregular);                    userViewHolder.title_item.setTextSize(17);                    userViewHolder.shortdescription.setTextSize(15);                    userViewHolder.item_type_name.setTypeface(sansregular);                    userViewHolder.editername.setTypeface(sansregular);                    userViewHolder.shortdescription.setLineSpacing(-0.3f,1f);                    userViewHolder.title_item.setLineSpacing(0,1f);                }                userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 
                     @Override
                     public void OnItemClick(View view, int position) {
@@ -2031,6 +2041,13 @@ OnFragmentInteractionListener mListener;
 
         public void onButtonPressed(String playurl, String title,String image) {             if (mListener != null) {                 mListener.onFragmentInteraction(playurl,title,image);              }         }
 
+        public void Font(List<ItemModel> list){
+            Log.e("SIZE","adap  "+list.toString());
+            this.modelList.addAll(list);
+
+            notifyDataSetChanged();
+
+        }
 
         public int getItemViewType(int position) {
 

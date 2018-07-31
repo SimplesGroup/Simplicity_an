@@ -66,13 +66,14 @@ import java.util.List;
 import java.util.Map;
 
 import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
+import simplicity_an.simplicity_an.Utils.ChangeFont;
 import simplicity_an.simplicity_an.Utils.Configurl;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
 /**
  * Created by kuppusamy on 9/22/2016.
  */
-public class Tab_All extends Fragment {
+public class Tab_All extends Fragment implements ChangeFont{
     RecyclerView recyclerview_tab_all;
     String URL="http://simpli-city.in/request2.php?rtype=alldatatest&key=simples";
     String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples";
@@ -95,8 +96,8 @@ public class Tab_All extends Fragment {
 
     String myprofileid,colorcodes;
     LinearLayoutManager lLayout;
-    Recyclerviewtaballadapter recyclerview_tab_all_adapter;
-    List<ItemModel> modelList=new ArrayList<ItemModel>();
+private static     Recyclerviewtaballadapter recyclerview_tab_all_adapter;
+ private static    List<ItemModel> modelLists=new ArrayList<ItemModel>();
     private boolean isFragmentLoaded=false;
 
     public static final String Activity = "activity";
@@ -244,7 +245,7 @@ String fontname;
 
 
        // getData();
-        recyclerview_tab_all_adapter = new Recyclerviewtaballadapter(modelList,recyclerview_tab_all);
+        recyclerview_tab_all_adapter = new Recyclerviewtaballadapter(modelLists,recyclerview_tab_all);
         recyclerview_tab_all.setAdapter(recyclerview_tab_all_adapter);
         recyclerview_tab_all_adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -270,7 +271,7 @@ String fontname;
             @Override
             public void onRefresh() {
  swipeRefresh.setRefreshing(true);
-                modelList.clear();
+                modelLists.clear();
 
                 recyclerview_tab_all_adapter.notifyDataSetChanged();
                 requestCount=1;
@@ -289,6 +290,10 @@ String fontname;
         return view;
     }
 
+    @Override
+    public void change() {
+        recyclerview_tab_all_adapter.Font(modelLists);
+    }
 
 
     public interface OnFragmentInteractionListener {
@@ -478,7 +483,7 @@ try{
 }
                 model.setAlbumlist(albums);
                 model.setAlbum(album);
-                modelList.add(model);
+                modelLists.add(model);
 
             }
 
@@ -898,6 +903,7 @@ try{
         Context context;
 private  int currentvisiblecount;
         String urlaudio;
+        private    List<ItemModel>modelList=new ArrayList<>();
 
         @Override
         public int getItemCount() {
@@ -965,6 +971,9 @@ private  int currentvisiblecount;
         @SuppressLint("ResourceAsColor")
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            sharedpreferences = getActivity(). getSharedPreferences(mypreference,
+                    Context.MODE_PRIVATE);
+            fontname=sharedpreferences.getString(Fonts.FONT,"");
             if (holder instanceof Userviewholdertaball) {
 
                 final Userviewholdertaball userViewHolder = (Userviewholdertaball) holder;
@@ -1083,16 +1092,19 @@ private  int currentvisiblecount;
 Log.e("URL","hh"+itemmodel.getYoutubelink());
 
                 if(fontname.equals("sanfrancisco")){
-                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(), Fonts.sanfranciscobold);
+                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
                     Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
-
                     userViewHolder.title_item.setTypeface(sansbold);
                     userViewHolder.likescount.setTypeface(sansregular);
                     userViewHolder.commentscount.setTypeface(sansregular);
                     userViewHolder.editername.setTypeface(sansregular);
                     userViewHolder.shortdescription.setTypeface(sansregular);
                     userViewHolder.title_item.setTextSize(17);
-                    userViewHolder.shortdescription.setTextSize(13);
+                    userViewHolder.shortdescription.setTextSize(15);
+                    userViewHolder.item_type_name.setTypeface(sansregular);
+                    userViewHolder.editername.setTypeface(sansregular);
+                    userViewHolder.shortdescription.setLineSpacing(-0.3f,1f);
+                    userViewHolder.title_item.setLineSpacing(0,1f);
                 }
 
 
@@ -1779,16 +1791,7 @@ Log.e("URL","hh"+itemmodel.getYoutubelink());
 
 
                 if(fontname.equals("sanfrancisco")){
-                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(), Fonts.sanfranciscobold);
-                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
-
-                    userViewHolder.title_item.setTypeface(sansbold);
-                    userViewHolder.likescount.setTypeface(sansregular);
-                    userViewHolder.commentscount.setTypeface(sansregular);
-                    userViewHolder.editername.setTypeface(sansregular);
-                    userViewHolder.shortdescription.setTypeface(sansregular);
-                   userViewHolder.title_item.setTextSize(17);
-                    userViewHolder.shortdescription.setTextSize(13);
+                   Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);                    userViewHolder.title_item.setTypeface(sansbold);                    userViewHolder.likescount.setTypeface(sansregular);                    userViewHolder.commentscount.setTypeface(sansregular);                    userViewHolder.editername.setTypeface(sansregular);                    userViewHolder.shortdescription.setTypeface(sansregular);                    userViewHolder.title_item.setTextSize(17);                    userViewHolder.shortdescription.setTextSize(15);                    userViewHolder.item_type_name.setTypeface(sansregular);                    userViewHolder.editername.setTypeface(sansregular);                    userViewHolder.shortdescription.setLineSpacing(-0.3f,1f);                    userViewHolder.title_item.setLineSpacing(0,1f);
                 }
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 
@@ -2145,7 +2148,13 @@ Log.e("URL","hh"+itemmodel.getYoutubelink());
 
             }
         }
+        public void Font(List<ItemModel> list){
+            Log.e("SIZE","adap  "+list.toString());
+            this.modelList.addAll(list);
 
+            notifyDataSetChanged();
+
+        }
 
         public int getItemViewType(int position) {
 

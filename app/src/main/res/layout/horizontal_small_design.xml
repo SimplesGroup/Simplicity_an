@@ -1,11 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
+    android:paddingBottom="14dp"
     android:id="@+id/listlayout_taball">
     <LinearLayout
         android:id="@+id/small_design"
-        android:background="@color/whitegradient"
+
         android:orientation="horizontal"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
@@ -13,22 +13,22 @@
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/image_small_design"
             android:background="@android:color/transparent"
-            android:layout_width="65dp"
+            android:layout_width="54dp"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
-            android:layout_height="65dp" >
+            android:layout_height="54dp" >
         </com.android.volley.toolbox.NetworkImageView>
         <TextView
 
             android:layout_marginRight="10dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="4dp"
             android:id="@+id/item_title_small_design"
             android:textColor="@color/white"
             android:layout_width="match_parent"
             android:maxLines="2"
             android:layout_marginLeft="10dp"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="17sp"
 
             />
     </LinearLayout>

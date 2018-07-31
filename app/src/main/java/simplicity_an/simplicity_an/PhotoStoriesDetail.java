@@ -65,6 +65,7 @@ import java.util.List;
 import java.util.Map;
 
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 /**
  * Created by KuppuSamy on 8/10/2017.
@@ -147,6 +148,8 @@ public class PhotoStoriesDetail extends AppCompatActivity {
     public static final String backgroundcolor = "color";
     RelativeLayout mainlayout;
     LinearLayout commentlayout;
+    String fontname;
+    Typeface tf_play;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,7 +160,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
         sharedpreferences =  getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
         searchactivity_article=sharedpreferences.getString(MYACTIVITYSEARCH,"");
-
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         if (sharedpreferences.contains(MYUSERID)) {
 
             myprofileid=sharedpreferences.getString(MYUSERID,"");
@@ -184,8 +187,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         String simplycity_title_fontPathone = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPathone);
-        String simplycity_tit = "fonts/robotoSlabBold.ttf";
-        final Typeface tf_tit = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_tit);
+
 
         share = (ImageButton) findViewById(R.id.btn_share);
         back = (ImageButton) findViewById(R.id.btn_back);
@@ -231,7 +233,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
             back.setImageResource(R.mipmap.back);
         }
         if (colorcodes.length() == 0) {
-            int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+            int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
@@ -245,7 +247,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
         } else {
             if (colorcodes.equalsIgnoreCase("004")) {
                 Log.e("Msg", "hihihi" + colorcodes);
-                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -272,7 +274,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                         editor.putString(backgroundcolor, "#FFFFFFFF");
                         editor.commit();
                     } else {
-                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                        int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -287,7 +289,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                         editor.commit();
                     }
                 } else {
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -411,9 +413,20 @@ public class PhotoStoriesDetail extends AppCompatActivity {
             photostory_title = (TextView) findViewById(R.id.title);
             photostory_date = (TextView) findViewById(R.id.date);
 
-        photostory_date.setTypeface(tf);
-        photostory_title.setTypeface(tf_regular);
 
+        if(fontname.equals("sanfrancisco")){
+            String playfair ="fonts/Oxygen-Bold.ttf";
+            tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
+
+            photostory_title.setTextSize(20);
+            photostory_title.setLineSpacing(0,1f);
+        }else {
+            String playfair = "fonts/playfairDisplayRegular.ttf";
+            tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
+
+        }
+        photostory_date.setTypeface(tf);
+        photostory_title.setTypeface(tf_play);
         if(colorcodes.equals( "#FFFFFFFF")){
             photostory_date.setTextColor(Color.BLACK);
             photostory_title.setTextColor(Color.BLACK);
@@ -473,7 +486,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                             for (int k = 0; k < jsonArray.length(); k++) {
                                  object = (JSONObject) jsonArray.get(k);
                                 photostory_title.setText(Html.fromHtml(object.getString("title")));
-                                photostory_title.setTypeface(tf_tit);
+                                photostory_title.setTypeface(tf_play);
                                 photostory_date.setText(Html.fromHtml(object.getString("photo_credit")) +"\n"+Html.fromHtml(object.getString("date")));
 
 

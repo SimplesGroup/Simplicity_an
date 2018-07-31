@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -69,6 +70,9 @@ import simplicity_an.simplicity_an.SimplicitySearchview;
 import simplicity_an.simplicity_an.TabAdvertorial;
 import simplicity_an.simplicity_an.TabColumns;
 import simplicity_an.simplicity_an.TabEducation;
+import simplicity_an.simplicity_an.TabEntertainmentAll;
+import simplicity_an.simplicity_an.TabEntertainmentMusic;
+import simplicity_an.simplicity_an.TabEntertainmentTheatre;
 import simplicity_an.simplicity_an.TabFarming;
 import simplicity_an.simplicity_an.TabFood;
 import simplicity_an.simplicity_an.TabHealth;
@@ -76,10 +80,17 @@ import simplicity_an.simplicity_an.TabScience;
 import simplicity_an.simplicity_an.TabTravel;
 import simplicity_an.simplicity_an.Tab_All;
 import simplicity_an.simplicity_an.Tab_new_news;
+import simplicity_an.simplicity_an.Tabarticle;
+import simplicity_an.simplicity_an.Tabcolumnist;
+import simplicity_an.simplicity_an.Tabevent;
+import simplicity_an.simplicity_an.Tabeventtoday;
+import simplicity_an.simplicity_an.Tabeventtomorrow;
 import simplicity_an.simplicity_an.Tabgovt;
 import simplicity_an.simplicity_an.Tabjobs;
 import simplicity_an.simplicity_an.Tabnews;
+import simplicity_an.simplicity_an.Tabphotostories;
 import simplicity_an.simplicity_an.Tabsports;
+import simplicity_an.simplicity_an.Utils.ChangeFont;
 import simplicity_an.simplicity_an.Utils.Configurl;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
@@ -141,6 +152,7 @@ Button city;
     String sMonthNamefull;
     String tab_id;
     String fontname;
+    Typeface tf_play,tf;
     public static CityFragment newInstance() {
         CityFragment fragment = new CityFragment();
         return fragment;
@@ -219,8 +231,91 @@ tab_id=get.getStringExtra("TAB");
         });
 
 
+
+
+        if(fontname.equals("sanfrancisco")){
+            String playfair ="fonts/Oxygen-Bold.ttf";
+            tf_play = Typeface.createFromAsset(getActivity().getAssets(), playfair);
+            String simplycity_title_bold = "fonts/SystemSanFranciscoDisplayRegular.ttf";
+            tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_bold);
+            city.setTypeface(tf);
+            btnevents.setTypeface(tf);
+            btnspecials.setTypeface(tf);
+            btnmore.setTypeface(tf);
+        }else {
+            String playfair = "fonts/playfairDisplayRegular.ttf";
+            tf_play = Typeface.createFromAsset(getActivity().getAssets(), playfair);
+            String simplycity_title_bold = "fonts/Lora-Regular.ttf";
+            tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_bold);
+            city.setTypeface(tf_play);
+            btnevents.setTypeface(tf_play);
+            btnspecials.setTypeface(tf_play);
+            btnmore.setTypeface(tf_play);
+        }
+
+
+
+
         mainlayout=(RelativeLayout)view.findViewById(R.id.version_main_layout);
-        if(colorcodes.length()==0){
+
+
+
+
+
+       if(colorcodes!=null) {
+            if (colorcodes.equals("#FFFFFFFF")) {
+                int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+                mainlayout.setBackgroundDrawable(gd);
+
+
+            } else {
+                int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+                mainlayout.setBackgroundDrawable(gd);
+                // city.setBackgroundColor(getResources().getColor(R.color.theme1button));
+                fabplus.setBackgroundResource(R.color.theme1button);
+                fabinnerplus.setBackgroundResource(R.color.theme1button);
+                fabsearch.setBackgroundResource(R.color.theme1button);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#383838");
+
+                editor.commit();
+
+            }
+        }else{
+           int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+
+            GradientDrawable gd = new GradientDrawable(
+                    GradientDrawable.Orientation.TOP_BOTTOM,
+                    colors);
+            gd.setCornerRadius(0f);
+
+            mainlayout.setBackgroundDrawable(gd);
+
+            fabplus.setBackgroundResource(R.color.theme1button);
+            fabinnerplus.setBackgroundResource(R.color.theme1button);
+            fabsearch.setBackgroundResource(R.color.theme1button);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(backgroundcolor, "#383838");
+
+            editor.commit();
+
+
+        }
+
+
+       /* if(colorcodes.length()==0){
             int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
@@ -268,17 +363,22 @@ tab_id=get.getStringExtra("TAB");
 
                     }
                     else{
-                        int[] color = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                        int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
 
-                        GradientDrawable g = new GradientDrawable(
+                        GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
-                                color);
-                        g.setCornerRadius(0f);
+                                colors);
+                        gd.setCornerRadius(0f);
 
-                        mainlayout.setBackgroundDrawable(g);
-                      // city.setBackgroundColor(getResources().getColor(R.color.theme13));
-                        city.setTextColor(Color.WHITE);
+                        mainlayout.setBackgroundDrawable(gd);
+                        // city.setBackgroundColor(getResources().getColor(R.color.theme1button));
+                        fabplus.setBackgroundResource(R.color.theme1button);
+                        fabinnerplus.setBackgroundResource(R.color.theme1button);
+                        fabsearch.setBackgroundResource(R.color.theme1button);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#383838");
 
+                        editor.commit();
 
                     }
 
@@ -301,7 +401,7 @@ tab_id=get.getStringExtra("TAB");
                     editor.commit();
                 }
             }
-        }
+        }*/
         String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
         String simplycity_title_reugular= "fonts/robotoSlabBold.ttf";
@@ -309,13 +409,7 @@ tab_id=get.getStringExtra("TAB");
         String simplycity_title= "fonts/playfairDisplayRegular.ttf";
         Typeface tf_pala = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
         title_coimbatore=(TextView)view.findViewById(R.id.title_versiontwo) ;
-if(fontname.equals("playfair")){
-    title_coimbatore.setTypeface(tf_pala);
-}else {
-    Typeface sanf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
-    title_coimbatore.setTypeface(sanf);
-    title_coimbatore.setTextSize(30);
-}
+
         //title_coimbatore.setTypeface(tf_pala);
 
         title_coimbatore.setText("Vanakkam Kovai");
@@ -719,7 +813,15 @@ Log.e("RES",response.toString());
         else{
             weather_update.setTextColor(Color.WHITE);
         }
+        if(fontname.equals("playfair")){
+            title_coimbatore.setTypeface(tf_pala);
+        }else {
+            Typeface sanf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
+            title_coimbatore.setTypeface(sanf);
+            title_coimbatore.setTextSize(30);
+            date_text.setTypeface(sanf);
 
+        }
         StringRequest weather=new StringRequest(Request.Method.GET, WEATHER_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -974,23 +1076,66 @@ Log.e("CHANGE LAMG",response.toString());
                     title_coimbatore.setTypeface(tf);
                     title_coimbatore.setTextSize(30);
                     if(colorcodes.equals("#FFFFFFFF")){
-                        font_button.setImageResource(R.mipmap.sanwhite);
-                    }else {
                         font_button.setImageResource(R.mipmap.sanblack);
+                    }else {
+                        font_button.setImageResource(R.mipmap.sanwhite);
+
                     }
-                    Fragment selectedFragment = null;
-                    selectedFragment = CityFragment.newInstance();
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_layout, selectedFragment);
-                    transaction.commit();
-                   /* Intent in=new Intent(getActivity(), MainPageEnglish.class);
-                    in.putExtra("ID","1");
-                    startActivity(in);*/
+
+ChangeFont new_news=new Tab_new_news();
+            new_news.change();
+            new_news=new Tab_All();
+            new_news.change();
+                  /*  ChangeFont   column=new TabColumns();
+                    column.change();
+                    ChangeFont education=new TabEducation();
+                    education.change();*/
+                    /*new_news=new TabEntertainmentAll();
+                    new_news.change();
+                    new_news=new TabEntertainmentMusic();
+                    new_news.change();
+                    new_news=new TabEntertainmentTheatre();
+                    new_news.change();
+                    new_news=new TabEntertainmentTheatre();
+                    new_news.change();
+                    new_news=new Tabevent();
+                    new_news.change();
+                    new_news=new Tabeventtoday();
+                    new_news.change();
+                    new_news=new Tabeventtomorrow();
+                    new_news.change();*/
+                   /* new_news=new TabFarming();
+                    new_news.change();
+                    new_news=new TabFood();
+                    new_news.change();
+                    new_news=new Tabgovt();
+                    new_news.change();
+                    new_news=new TabHealth();
+                    new_news.change();
+                    new_news=new Tabjobs();
+                    new_news.change();
+                    new_news=new Tabphotostories();
+                    new_news.change();
+                    new_news=new TabScience();
+                    new_news.change();
+                    new_news=new Tabsports();
+                    new_news.change();
+                    new_news=new TabTravel();
+                    new_news.change();*/
+                    setupTabIcons();
+                  /*  new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            MainPageEnglish english=new MainPageEnglish();
+                            english.Changefont("sanfrancisco",getActivity());
+                        }
+                    },1000);*/
+
                 }else  {
                     Fonts fonts=new Fonts();
 
                     Typeface tf=fonts.font("playfair",getActivity());
-                    // Typeface tf1=fonts.font1(getActivity());
+
 
                     SharedPreferences.Editor editor=sharedpreferences.edit();
                     editor.putString(FONT,"playfair");
@@ -998,16 +1143,58 @@ Log.e("CHANGE LAMG",response.toString());
                     title_coimbatore.setTypeface(tf);
                     title_coimbatore.setTextSize(40);
                     if(colorcodes.equals("#FFFFFFFF")){
-                        font_button.setImageResource(R.mipmap.playfairwhite);
-                    }else {
                         font_button.setImageResource(R.mipmap.playfairblack);
+                    }else {
+                        font_button.setImageResource(R.mipmap.playfairwhite);
+
                     }
 
-                    Fragment selectedFragment = null;
-                    selectedFragment = CityFragment.newInstance();
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_layout, selectedFragment);
-                    transaction.commit();
+                    ChangeFont chfont=new Tab_new_news();
+                    chfont.change();
+                    chfont=new Tab_All();
+                    chfont.change();
+                   /* chfont=new Tabarticle();
+                    chfont.change();*/
+                    /*new_news=new Tabcolumnist();
+                    new_news.change();
+                    new_news=new TabColumns();
+                    new_news.change();
+                    new_news=new TabEducation();
+                    new_news.change();
+                    new_news=new TabEntertainmentAll();
+                    new_news.change();
+                    new_news=new TabEntertainmentMusic();
+                    new_news.change();
+                    new_news=new TabEntertainmentTheatre();
+                    new_news.change();
+                    new_news=new TabEntertainmentTheatre();
+                    new_news.change();
+                    new_news=new Tabevent();
+                    new_news.change();
+                    new_news=new Tabeventtoday();
+                    new_news.change();
+                    new_news=new Tabeventtomorrow();
+                    new_news.change();
+                    new_news=new TabFarming();
+                    new_news.change();
+                    new_news=new TabFood();
+                    new_news.change();
+                    new_news=new Tabgovt();
+                    new_news.change();
+                    new_news=new TabHealth();
+                    new_news.change();
+                    new_news=new Tabjobs();
+                    new_news.change();
+                    new_news=new Tabphotostories();
+                    new_news.change();
+                    new_news=new TabScience();
+                    new_news.change();
+                    new_news=new Tabsports();
+                    new_news.change();
+                    new_news=new TabTravel();
+                    new_news.change();
+                    setupTabIcons();*/
+
                 }
             }
         });
@@ -1019,7 +1206,9 @@ Log.e("CHANGE LAMG",response.toString());
             public void onClick(View v) {
 
                 if(colorcodes.equals("#FFFFFFFF")){
-                    Fragment fragment = new CityFragment();
+
+
+                 Fragment fragment = new CityFragment();
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.frame_layout, fragment);
@@ -1674,7 +1863,7 @@ Log.e("CHANGE LAMG",response.toString());
 
     private void setupTabIcons() {
 
-
+        fontname=sharedpreferences.getString(FONT,"");
 
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Lora-Regular.ttf");
         ViewGroup vg = (ViewGroup) mTabLayout.getChildAt(0);

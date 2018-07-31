@@ -3,9 +3,11 @@ package simplicity_an.simplicity_an.HorizontalAdapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,8 @@ public class HorizontalPhotostoryadapter extends RecyclerView.Adapter<Horizontal
     public static final String mypreference = "mypref";
     public static final String FONT= "font";
     String fontname;
+    public static final String backgroundcolor = "color";
+    String colorcodes;
     List<Tab_new_news.ItemModel> modelList=new ArrayList<>();
     Context conxt;
     public HorizontalPhotostoryadapter(List<Tab_new_news.ItemModel> students, RecyclerView recyclerView, Context context) {
@@ -50,14 +54,20 @@ public class HorizontalPhotostoryadapter extends RecyclerView.Adapter<Horizontal
         sharedpreferences = conxt. getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
         fontname=sharedpreferences.getString(FONT,"");
-        String simplycity_title_sans = "fonts/SystemSanFranciscoDisplayBold.ttf";
+        colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        String simplycity_title_sans = "fonts/Oxygen-Regular.ttf";
         final Typeface sansfrancisco = Typeface.createFromAsset(conxt.getAssets(), simplycity_title_sans);
 
         final Tab_new_news.ItemModel model=modelList.get(position);
         String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
         final Typeface seguiregular = Typeface.createFromAsset(conxt.getAssets(), simplycity_title_fontPath);
 
-        holder.textView.setText(model.getTitle());
+        if(colorcodes.equals("#FFFFFFFF")){
+            holder.textView.setTextColor(Color.BLACK);
+        }else {
+            holder.textView.setTextColor(Color.WHITE);
+        }
+        holder.textView.setText(Html.fromHtml(model.getTitle()));
         holder.textView.setTypeface(seguiregular);
         int j;
         String image;
@@ -89,6 +99,7 @@ public class HorizontalPhotostoryadapter extends RecyclerView.Adapter<Horizontal
         });
         if(fontname.equals("sanfrancisco")){
             holder.textView.setTypeface(sansfrancisco);
+            holder.textView.setTextSize(15);
         }
     }
 

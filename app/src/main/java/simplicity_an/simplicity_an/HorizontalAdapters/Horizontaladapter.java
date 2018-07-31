@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ public class Horizontaladapter extends RecyclerView.Adapter<Horizontaladapter.Us
     SharedPreferences sharedpreferences;
     public static final String mypreference = "mypref";
     public static final String FONT= "font";
+    public static final String backgroundcolor = "color";
+    String colorcodes;
     String fontname;
     List<Tab_new_news.ItemModel>modelList=new ArrayList<>();
     Context conxt;
@@ -55,7 +58,8 @@ public class Horizontaladapter extends RecyclerView.Adapter<Horizontaladapter.Us
         sharedpreferences = conxt. getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
         fontname=sharedpreferences.getString(FONT,"");
-        String simplycity_title_sans = "fonts/SystemSanFranciscoDisplayBold.ttf";
+        colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        String simplycity_title_sans = "fonts/Oxygen-Regular.ttf";
         final Typeface sansfrancisco = Typeface.createFromAsset(conxt.getAssets(), simplycity_title_sans);
         ImageLoader imageLoader= MySingleton.getInstance(conxt).getImageLoader();
         final Tab_new_news.ItemModel model=modelList.get(position);
@@ -73,7 +77,17 @@ public class Horizontaladapter extends RecyclerView.Adapter<Horizontaladapter.Us
         conxt.startActivity(intent);
     }
 });
-        holder.textView.setText(model.getTitle());
+
+        if(colorcodes.equals("#FFFFFFFF")){
+            holder.textView.setTextColor(Color.BLACK);
+            holder.date.setTextColor(Color.BLACK);
+        }else {
+            holder.textView.setTextColor(Color.WHITE);
+        }
+
+        holder.textView.setText(Html.fromHtml(model.getTitle()));
+        holder.date.setText(Html.fromHtml(model.getPdate()));
+        holder.date.setTypeface(seguiregular);
         holder.textView.setTypeface(seguiregular);
         holder.imageView.setImageUrl(model.getImage(),imageLoader);
 
@@ -99,6 +113,11 @@ public class Horizontaladapter extends RecyclerView.Adapter<Horizontaladapter.Us
         });
         if(fontname.equals("sanfrancisco")){
             holder.textView.setTypeface(sansfrancisco);
+            holder.textView.setTextSize(15);
+            holder.date.setTypeface(sansfrancisco);
+            holder.date.setTextSize(10);
+            holder.date.setTextColor(Color.parseColor("#FF515050"));
+
         }
     }
 
@@ -110,11 +129,12 @@ public class Horizontaladapter extends RecyclerView.Adapter<Horizontaladapter.Us
     public class Userview extends RecyclerView.ViewHolder{
         LinearLayout linearLayout;
 NetworkImageView imageView;
-TextView textView;
+TextView textView,date;
         public Userview(View itemView) {
             super(itemView);
             imageView=(NetworkImageView)itemView.findViewById(R.id.image);
             textView=(TextView)itemView.findViewById(R.id.title);
+            date=(TextView)itemView.findViewById(R.id.date) ;
             linearLayout=(LinearLayout)itemView.findViewById(R.id.click);
         }
     }

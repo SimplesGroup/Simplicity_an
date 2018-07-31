@@ -1237,7 +1237,7 @@ public class Tab_new_newstamil extends Fragment {
     }
     static class Userviewholdertaball extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView likescount,dislikescount,commentscount,title_item,item_type_name,date;
-        TextView shortdescription,editername;
+      public   TextView shortdescription,editername;
         public Button share_button,comment_button,likes_button,save_button;
         ImageButton share_imagebutton,like_imagebutton,comment_imagebutton,arrow_imagebutton;
         public NetworkImageView item_image;
@@ -2924,7 +2924,9 @@ if(itemmodel.getAlbum()==null){
         public void setLoaded() {
             loading = false;
         }
+public void ChangeFont(){
 
+}
 
     }
     public static class MyDialogFragment extends DialogFragment {

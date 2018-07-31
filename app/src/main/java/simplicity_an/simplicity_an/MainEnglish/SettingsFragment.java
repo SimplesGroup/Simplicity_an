@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -75,6 +77,7 @@ public class SettingsFragment extends Fragment {
     ImageView btnsearch;
     String fontname;
     Typeface tf;
+    RelativeLayout mainlayout;
     public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
         return fragment;
@@ -113,6 +116,54 @@ public class SettingsFragment extends Fragment {
             tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
         }
 
+        mainlayout=(RelativeLayout)view.findViewById(R.id.version_main_layout);
+        if(colorcodes!=null) {
+            if (colorcodes.equals("#FFFFFFFF")) {
+                int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+                mainlayout.setBackgroundDrawable(gd);
+
+
+            } else {
+                int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+                mainlayout.setBackgroundDrawable(gd);
+                // city.setBackgroundColor(getResources().getColor(R.color.theme1button));
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#383838");
+
+                editor.commit();
+
+            }
+        }else{
+            int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+
+            GradientDrawable gd = new GradientDrawable(
+                    GradientDrawable.Orientation.TOP_BOTTOM,
+                    colors);
+            gd.setCornerRadius(0f);
+
+            mainlayout.setBackgroundDrawable(gd);
+
+
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(backgroundcolor, "#383838");
+
+            editor.commit();
+
+
+        }
         mNotificationManagerCompat = NotificationManagerCompat.from(getActivity());
 
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){

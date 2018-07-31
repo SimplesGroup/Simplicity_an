@@ -63,13 +63,14 @@ import java.util.List;
 import java.util.Map;
 
 import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
+import simplicity_an.simplicity_an.Utils.ChangeFont;
 import simplicity_an.simplicity_an.Utils.Configurl;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
 /**
  * Created by kuppusamy on 9/26/2016.
  */
-public class Tabarticle extends Fragment   {
+public class Tabarticle extends Fragment  implements ChangeFont {
     RecyclerView recyclerview_tab_all;
     String URL = "http://simpli-city.in/request2.php?rtype=ent_alldatatest&key=simples&qtype=article";
     String URLLIKES = "http://simpli-city.in/request2.php?rtype=articlelikes&key=simples";
@@ -92,8 +93,8 @@ public class Tabarticle extends Fragment   {
     public static final String backgroundcolor = "color";
 
     LinearLayoutManager lLayout;
-    Recyclerviewtaballadapter recyclerview_tab_all_adapter;
-    List<ItemModel> modelList = new ArrayList<ItemModel>();
+  private  static   Recyclerviewtaballadapter recyclerview_tab_all_adapter;
+   private static List<ItemModel> modelLists = new ArrayList<ItemModel>();
     private boolean isFragmentLoaded = false;
 
     public static final String Activity = "activity";
@@ -260,7 +261,7 @@ FloatingActionButton fabnews,fabplus;
             }
         }
        // getData();
-        recyclerview_tab_all_adapter = new Recyclerviewtaballadapter(modelList, recyclerview_tab_all);
+        recyclerview_tab_all_adapter = new Recyclerviewtaballadapter(modelLists, recyclerview_tab_all);
         recyclerview_tab_all.setAdapter(recyclerview_tab_all_adapter);
         recyclerview_tab_all_adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -292,7 +293,7 @@ FloatingActionButton fabnews,fabplus;
             @Override
             public void onRefresh() {
                  swipeRefresh.setRefreshing(true);
-                modelList.clear();
+                modelLists.clear();
                 recyclerview_tab_all_adapter.notifyDataSetChanged();
                 requestCount=0;
                 getData();
@@ -463,6 +464,12 @@ FloatingActionButton fabnews,fabplus;
         }
         return jsonReq;*/
     }
+
+    @Override
+    public void change() {
+        recyclerview_tab_all_adapter.Font(modelLists);
+    }
+
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(String playurl, String title,String image);
     }
@@ -520,7 +527,7 @@ FloatingActionButton fabnews,fabplus;
                 }
                 model.setAlbumlist(albums);
                 model.setAlbum(album);
-                modelList.add(model);
+                modelLists.add(model);
 
             }
 
@@ -935,6 +942,7 @@ FloatingActionButton fabnews,fabplus;
         Context context;
         private  int currentvisiblecount;
         String urlaudio;
+        private     List<ItemModel>modelList=new ArrayList<>();
         @Override
         public int getItemCount() {
             return modelList.size();
@@ -1003,6 +1011,9 @@ FloatingActionButton fabnews,fabplus;
         }
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            sharedpreferences = getActivity(). getSharedPreferences(mypreference,
+                    Context.MODE_PRIVATE);
+            fontname=sharedpreferences.getString(Fonts.FONT,"");
             if (holder instanceof Userviewholdertaball) {
 
                 final Userviewholdertaball userViewHolder = (Userviewholdertaball) holder;
@@ -2118,7 +2129,13 @@ FloatingActionButton fabnews,fabplus;
                 }
             }
         }
+        public void Font(List<ItemModel> list){
+            Log.e("SIZE","adap  "+list.toString());
+            this.modelList.addAll(list);
 
+            notifyDataSetChanged();
+
+        }
         public void onButtonPressed(String playurl, String title,String image) {
             if (mlListener != null) {
                 mlListener.onFragmentInteraction(playurl,title,image);

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,6 +50,7 @@ import simplicity_an.simplicity_an.MainEnglish.HappeningFrag;
 import simplicity_an.simplicity_an.MainEnglish.MainFrag;
 import simplicity_an.simplicity_an.MainEnglish.SettingsFragment;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 /**
  * Created by kuppusamy on 5/18/2017.
@@ -80,7 +82,8 @@ public class MainPageEnglish extends AppCompatActivity implements Tab_All.OnFrag
 LinearLayout footer;
     String language_data,radio_button_values;
     String url_change_lang="http://simpli-city.in/request2.php?rtype=updatelanguage&key=simples";
-    String playerid;
+    String playerid,fontname;
+    Typeface tf_play,tf;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +99,7 @@ LinearLayout footer;
             myprofileid = myprofileid.replaceAll("\\D+","");
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         Intent get=getIntent();
         id=get.getStringExtra("ID");
         radio_title=get.getStringExtra("TITLE");
@@ -128,6 +132,27 @@ LinearLayout footer;
         settings=(Button)findViewById(R.id.btn_shop);
         topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
         footer=(LinearLayout) findViewById(R.id.footer);
+
+        if(fontname.equals("sanfrancisco")){
+            String playfair ="fonts/Oxygen-Bold.ttf";
+            tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
+            String simplycity_title_bold = "fonts/SystemSanFranciscoDisplayRegular.ttf";
+            tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
+          city.setTypeface(tf);
+            happening.setTypeface(tf);
+            audio_video.setTypeface(tf);
+            settings.setTypeface(tf);
+        }else {
+            String playfair = "fonts/playfairDisplayRegular.ttf";
+            tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
+            String simplycity_title_bold = "fonts/Lora-Regular.ttf";
+            tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
+            city.setTypeface(tf_play);
+            happening.setTypeface(tf_play);
+            audio_video.setTypeface(tf_play);
+            settings.setTypeface(tf_play);
+        }
+
 
         if(colorcodes.equals("#FFFFFFFF")){
 
@@ -1478,7 +1503,7 @@ LinearLayout footer;
            SharedPreferences.Editor editor = preferences.edit();
            editor.putBoolean("RanBefore", true);
            editor.commit();
-           themeselection();
+          // themeselection();
 
        }
 
@@ -1506,7 +1531,30 @@ LinearLayout footer;
         return true;
 
     }
+public void Changefont(String s,Context ctx){
 
+
+
+   if(s.equals("sanfrancisco")){
+        String playfair ="fonts/Oxygen-Bold.ttf";
+        tf_play = Typeface.createFromAsset(ctx.getAssets(), playfair);
+        String simplycity_title_bold = "fonts/SystemSanFranciscoDisplayRegular.ttf";
+        tf = Typeface.createFromAsset(ctx.getAssets(), simplycity_title_bold);
+        city.setTypeface(tf);
+        happening.setTypeface(tf);
+        audio_video.setTypeface(tf);
+        settings.setTypeface(tf);
+    }else {
+        String playfair = "fonts/playfairDisplayRegular.ttf";
+        tf_play = Typeface.createFromAsset(ctx.getAssets(), playfair);
+        String simplycity_title_bold = "fonts/Lora-Regular.ttf";
+        tf = Typeface.createFromAsset(ctx.getAssets(), simplycity_title_bold);
+        city.setTypeface(tf_play);
+        happening.setTypeface(tf_play);
+        audio_video.setTypeface(tf_play);
+        settings.setTypeface(tf_play);
+    }
+}
 
     private void  Instructions(){
 /*

@@ -3,6 +3,7 @@ package simplicity_an.simplicity_an.HorizontalAdapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +32,8 @@ public class VerticalAdapters extends RecyclerView.Adapter<VerticalAdapters.User
     public static final String mypreference = "mypref";
     public static final String FONT= "font";
     String fontname;
+    public static final String backgroundcolor = "color";
+    String colorcodes;
     List<Tab_new_news.ItemModel> modelList=new ArrayList<>();
     Context conxt;
     public VerticalAdapters(List<Tab_new_news.ItemModel> students, RecyclerView recyclerView, Context context) {
@@ -52,7 +55,8 @@ public class VerticalAdapters extends RecyclerView.Adapter<VerticalAdapters.User
         sharedpreferences = conxt. getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
         fontname=sharedpreferences.getString(FONT,"");
-        String simplycity_title_sans = "fonts/SystemSanFranciscoDisplayBold.ttf";
+        colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        String simplycity_title_sans = "fonts/Oxygen-Regular.ttf";
         final Typeface sansfrancisco = Typeface.createFromAsset(conxt.getAssets(), simplycity_title_sans);
 
         final Tab_new_news.ItemModel model=modelList.get(position);
@@ -60,6 +64,14 @@ public class VerticalAdapters extends RecyclerView.Adapter<VerticalAdapters.User
         final Typeface seguiregular = Typeface.createFromAsset(conxt.getAssets(), simplycity_title_fontPath);
 
         ImageLoader imageLoader= MySingleton.getInstance(conxt).getImageLoader();
+
+        if(colorcodes.equals("#FFFFFFFF")){
+            holder.title.setTextColor(Color.BLACK);
+        }else {
+            holder.title.setTextColor(Color.WHITE);
+        }
+
+
         holder.title.setText(Html.fromHtml(model.getTitle()));
         holder.title.setTypeface(seguiregular);
         holder.imageView.setImageUrl(model.getImage(),imageLoader);
@@ -120,6 +132,7 @@ public class VerticalAdapters extends RecyclerView.Adapter<VerticalAdapters.User
         });
         if(fontname.equals("sanfrancisco")){
             holder.title.setTypeface(sansfrancisco);
+            holder.title.setTextSize(15);
         }
     }
 
