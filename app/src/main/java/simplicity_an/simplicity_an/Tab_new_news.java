@@ -422,39 +422,24 @@ String fontname;
 
 
 
-        /*JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, URLALL, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.e("JSON ",response.toString());
-                if (response != null) {
-                    dissmissDialog();
 
-                    parseJsonFeed(response);
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 4, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        requestQueue.add(jsonObjectRequest);
-        return jsonObjectRequest;*/
     }
 
 
     private void parseJsonFeed(JSONArray response){
         try {
-            // JSONArray feedArray = response.getJSONArray("");
+
 
             for (int i = 0; i < response.length(); i++) {
                 JSONObject obj = (JSONObject) response.get(i);
                 ItemModel model = new ItemModel();
                 String qtype=obj.isNull("qtypemain")?null:obj.getString("qtypemain");
-                //FeedItem model=new FeedItem();
 
+
+
+                String dat= obj.isNull("date") ? null : obj
+                        .getString("date");
+                model.setPdate(dat);
 
     String image = obj.isNull("image") ? null : obj
             .getString("image");
@@ -463,9 +448,7 @@ String fontname;
             .getString("id");
     model.setId(id);
 
-    String date = obj.isNull("date") ? null : obj
-            .getString("date");
-    model.setPdate(date);
+
 
     String title = obj.isNull("title") ? null : obj
             .getString("title");
@@ -473,18 +456,16 @@ String fontname;
     String qtypes = obj.isNull("qtype") ? null : obj
             .getString("qtype");
     model.setQtype(qtypes);
-    // model.setQtype(obj.getString("qtype"));
+
                 if(qtype!=null) {
                     int likes = obj.isNull("likes_count") ? null : obj
                             .getInt("likes_count");
                     model.setLikescount(likes);
-                    //model.setLikescount(obj.getInt("likes_count"));
+
                     int comment = obj.isNull("commentscount") ? null : obj
                             .getInt("commentscount");
                     model.setCommentscount(comment);
-                    /*int typevalue = obj.isNull("album_count") ? null : obj
-                            .getInt("album_count");
-                    model.setAlbumcount(typevalue);*/
+
                     model.setAlbumcount(obj.getInt("album_count"));
                     int count = obj.isNull("like_type") ? null : obj
                             .getInt("like_type");
@@ -493,35 +474,29 @@ String fontname;
                             .getString("reporter_name");
                     model.setEditername(reportername);
                 }
-    //  model.setCommentscount(obj.getInt("commentscount"));
-    //  model.setFavcount(obj.getInt("fav"));
+
     String share = obj.isNull("sharingurl") ? null : obj
             .getString("sharingurl");
     model.setSharingurl(share);
-    // model.setSharingurl(obj.getString("sharingurl"));
+
     String qtypemain = obj.isNull("qtypemain") ? null : obj
             .getString("qtypemain");
     model.setQtypemain(qtypemain);
-    //  model.setQtypemain(obj.getString("qtypemain"));
+
     String ads = obj.isNull("url") ? null : obj
             .getString("url");
     model.setAds(ads);
-    // model.setAds(obj.getString("url"));
-    /*String reportername = obj.isNull("reporter_name") ? null : obj
-            .getString("reporter_name");
-    model.setEditername(reportername);*/
+
     String shortdesc = obj.isNull("short_description") ? null : obj
             .getString("short_description");
     model.setShortdescription(shortdesc);
-   // model.setEditername(obj.getString("reporter_name"));
-   //model.setShortdescription(obj.getString("short_description"));
-    // model.setDislikecount(obj.getInt("dislikes_count"));
 
-    //   model.setCounttype(obj.getInt("like_type"));
+
+
     String playurl = obj.isNull("radio_file") ? null : obj
             .getString("radio_file");
     model.setPlayurl(playurl);
-    // model.setPlayurl(obj.getString("radio_file"));
+
     String youtubelink = obj.isNull("youtube_link") ? null : obj
             .getString("youtube_link");
     model.setYoutubelink(youtubelink);
@@ -586,33 +561,13 @@ String fontname;
                             String dateeve = object.isNull("date") ? null : object
                                     .getString("date");
                             models.setPdate(dateeve);
-                            // model.setPdate(obj.getString("pdate"));
+
                             models.setTitle(object.getString("title"));
                             models.setSubqueuetitle(subtitle);
                             models.setYoutubelink(object.getString("youtube_link"));
                             models.setPlayurl(object.getString("radio_file"));
                             Log.e("LIST",object.getString("title"));
-                           /* models.setQtype(object.getString("qtype"));
-                            models.setLikescount(object.getInt("likes_count"));
-                            models.setCommentscount(object.getInt("commentscount"));
-                            //  model.setFavcount(obj.getInt("fav"));
-                            models.setSharingurl(object.getString("sharingurl"));
-                           // model.setQtypemain(obj.getString("qtypemain"));
-                            models.setSubqueuetitle(subtitle);
-                            models.setAds(object.getString("url"));
-                            String reporternameeve = object.isNull("reporter_name") ? null : object
-                                    .getString("reporter_name");
-                            models.setEditername(reporternameeve);
-                            String shortdesceve = object.isNull("short_description") ? null : object
-                                    .getString("short_description");
-                            models.setShortdescription(shortdesceve);
-                            // model.setEditername(obj.getString("reporter_name"));
-                            // model.setShortdescription(obj.getString("short_description"));
-                            // model.setDislikecount(obj.getInt("dislikes_count"));
-                            models.setCounttype(object.getInt("like_type"));
 
-                            models.setPlayurl(object.getString("radio_file"));
-                            models.setYoutubelink(object.getString("youtube_link"));*/
                             events.add(models);
 
 
@@ -632,45 +587,14 @@ String fontname;
                             String dateeve = object.isNull("date") ? null : object
                                     .getString("date");
                             models.setPdate(dateeve);
-                            // model.setPdate(obj.getString("pdate"));
+
                             models.setTitle(object.getString("title"));
                             models.setSubqueuetitle(subtitle);
                             models.setYoutubelink(object.getString("youtube_link"));
                             models.setPlayurl(object.getString("radio_file"));
 
 
-                            /*String imagebey = object.isNull("image") ? null : object
-                                    .getString("image");
-                            models.setImage(imagebey);
 
-                            models.setId(object.getString("id"));
-                            String datebey = object.isNull("date") ? null : object
-                                    .getString("date");
-                            models.setPdate(datebey);
-                            // model.setPdate(obj.getString("pdate"));
-                            models.setTitle(object.getString("title"));
-                            models.setQtype(object.getString("qtype"));
-                            models.setLikescount(object.getInt("likes_count"));
-                            models.setCommentscount(object.getInt("commentscount"));
-                            //  model.setFavcount(obj.getInt("fav"));
-                            models.setSharingurl(object.getString("sharingurl"));
-                            //model.setQtypemain(obj.getString("qtypemain"));
-                            models.setSubqueuetitle(subtitle);
-                            models.setAds(object.getString("url"));
-                            String reporternamebey = object.isNull("reporter_name") ? null : object
-                                    .getString("reporter_name");
-                            models.setEditername(reporternamebey);
-                            String shortdescbey = object.isNull("short_description") ? null : object
-                                    .getString("short_description");
-                            models.setShortdescription(shortdescbey);
-                            // model.setEditername(obj.getString("reporter_name"));
-                            // model.setShortdescription(obj.getString("short_description"));
-                            // model.setDislikecount(obj.getInt("dislikes_count"));
-                            models.setCounttype(object.getInt("like_type"));
-
-                            models.setPlayurl(object.getString("radio_file"));
-                            models.setYoutubelink(object.getString("youtube_link"));*/
-                            //modelList.add(models);
                             beyond.add(models);
                         }
                     } else if (subtitle.equals("Feature Videos")) {
@@ -685,42 +609,12 @@ String fontname;
                             String dateeve = object.isNull("date") ? null : object
                                     .getString("date");
                             models.setPdate(dateeve);
-                            // model.setPdate(obj.getString("pdate"));
+
                             models.setTitle(object.getString("title"));
                             models.setSubqueuetitle(subtitle);
                             models.setYoutubelink(object.getString("youtube_link"));
                             models.setPlayurl(object.getString("radio_file"));
-                            /*String imagevid = object.isNull("image") ? null : object
-                                    .getString("image");
-                            models.setImage(imagevid);
 
-                            models.setId(object.getString("id"));
-                            String datevid = object.isNull("date") ? null : object
-                                    .getString("date");
-                            models.setPdate(datevid);
-                            // model.setPdate(obj.getString("pdate"));
-                            models.setTitle(object.getString("title"));
-                            models.setQtype(object.getString("qtype"));
-                            models.setLikescount(object.getInt("likes_count"));
-                            models.setCommentscount(object.getInt("commentscount"));
-                            //  model.setFavcount(obj.getInt("fav"));
-                            models.setSharingurl(object.getString("sharingurl"));
-                           //model.setQtypemain(obj.getString("qtypemain"));
-                            models.setSubqueuetitle(subtitle);
-                            models.setAds(object.getString("url"));
-                            String reporternamevid = object.isNull("reporter_name") ? null : object
-                                    .getString("reporter_name");
-                            models.setEditername(reporternamevid);
-                            String shortdescvid = object.isNull("short_description") ? null : object
-                                    .getString("short_description");
-                            models.setShortdescription(shortdescvid);
-                            // model.setEditername(obj.getString("reporter_name"));
-                            // model.setShortdescription(obj.getString("short_description"));
-                            // model.setDislikecount(obj.getInt("dislikes_count"));
-                            models.setCounttype(object.getInt("like_type"));
-
-                            models.setPlayurl(object.getString("radio_file"));
-                            models.setYoutubelink(object.getString("youtube_link"));*/
                             videos.add(models);
 
 
@@ -742,44 +636,13 @@ String fontname;
                             String dateeve = object.isNull("date") ? null : object
                                     .getString("date");
                             models.setPdate(dateeve);
-                            // model.setPdate(obj.getString("pdate"));
+
                             models.setTitle(object.getString("title"));
                             models.setSubqueuetitle(subtitle);
                             models.setYoutubelink(object.getString("youtube_link"));
                             models.setPlayurl(object.getString("radio_file"));
 
-                           /* String imagespl = object.isNull("image") ? null : object
-                                    .getString("image");
-                            models.setImage(imagespl);
 
-                            models.setId(object.getString("id"));
-                            String datespl = object.isNull("date") ? null : object
-                                    .getString("date");
-                            models.setPdate(datespl);
-                            // model.setPdate(obj.getString("pdate"));
-                            models.setTitle(object.getString("title"));
-                            models.setQtype(object.getString("qtype"));
-                            models.setLikescount(object.getInt("likes_count"));
-                            models.setCommentscount(object.getInt("commentscount"));
-                            //  model.setFavcount(obj.getInt("fav"));
-                            models.setSharingurl(object.getString("sharingurl"));
-                           // model.setQtypemain(obj.getString("qtypemain"));
-                            models.setSubqueuetitle(subtitle);
-                            models.setAds(object.getString("url"));
-                            String reporternamespl = object.isNull("reporter_name") ? null : object
-                                    .getString("reporter_name");
-                            models.setEditername(reporternamespl);
-                            String shortdescspl = object.isNull("short_description") ? null : object
-                                    .getString("short_description");
-                            models.setShortdescription(shortdescspl);
-                            // model.setEditername(obj.getString("reporter_name"));
-                            // model.setShortdescription(obj.getString("short_description"));
-                            // model.setDislikecount(obj.getInt("dislikes_count"));
-                            models.setCounttype(object.getInt("like_type"));
-
-                            models.setPlayurl(object.getString("radio_file"));
-                            models.setYoutubelink(object.getString("youtube_link"));*/
-                            //modelList.add(models);
                             special.add(models);
                         }
                     } else if (subtitle.equals("Photo Stories")) {
@@ -795,47 +658,17 @@ String fontname;
                             String dateeve = object.isNull("date") ? null : object
                                     .getString("date");
                             models.setPdate(dateeve);
-                            // model.setPdate(obj.getString("pdate"));
+
                             models.setTitle(object.getString("title"));
                             models.setSubqueuetitle(subtitle);
                             models.setYoutubelink(object.getString("youtube_link"));
                             models.setPlayurl(object.getString("radio_file"));
 
-                            /*String imagepht = object.isNull("image") ? null : object
-                                    .getString("image");
-                            models.setImage(imagepht);
 
-                            models.setId(object.getString("id"));
-                            String datepht = object.isNull("date") ? null : object
-                                    .getString("date");
-                            models.setPdate(datepht);
-                            // model.setPdate(obj.getString("pdate"));
-                            models.setTitle(object.getString("title"));
-                            models.setQtype(object.getString("qtype"));
-                            models.setLikescount(object.getInt("likes_count"));
-                            models.setCommentscount(object.getInt("commentscount"));
-                            //  model.setFavcount(obj.getInt("fav"));
-                            models.setSharingurl(object.getString("sharingurl"));
-                           // model.setQtypemain(obj.getString("qtypemain"));
-                            models.setSubqueuetitle(subtitle);
-                            models.setAds(object.getString("url"));
-                            String reporternamepht = object.isNull("reporter_name") ? null : object
-                                    .getString("reporter_name");
-                            models.setEditername(reporternamepht);
-                            String shortdescpht = object.isNull("short_description") ? null : object
-                                    .getString("short_description");
-                            models.setShortdescription(shortdescpht);
-                            // model.setEditername(obj.getString("reporter_name"));
-                            // model.setShortdescription(obj.getString("short_description"));
-                            // model.setDislikecount(obj.getInt("dislikes_count"));
-                            models.setCounttype(object.getInt("like_type"));
-
-                            models.setPlayurl(object.getString("radio_file"));
-                            models.setYoutubelink(object.getString("youtube_link"));*/
                             int typevaluenew = object.isNull("album_count") ? null : object
                                     .getInt("album_count");
                             models.setAlbumcount(typevaluenew);
-                            //List<ItemModel> albums = new ArrayList<>();
+
                             ArrayList<String> albumnew = new ArrayList<String>();
                             try {
                                 JSONArray feedArraygallery = object.getJSONArray("album");
@@ -846,7 +679,7 @@ String fontname;
                                     JSONObject objects = (JSONObject) feedArraygallery.get(k);
                                     ItemModel modelss = new ItemModel();
                                     modelss.setAlbumimage(objects.getString("image"));
-                                    //  albums.add(models);
+
 
                                     String images=objects.getString("image");
                                     albumnew.add(images);
@@ -854,7 +687,7 @@ String fontname;
                             }catch (JSONException e){
 
                             }
-                          //  model.setAlbumlist(albums);
+
                             models.setAlbum(albumnew);
                             photo.add(models);
                         }
@@ -867,62 +700,7 @@ String fontname;
                 }
 
 
-               /* String image = obj.isNull("image") ? null : obj
-                        .getString("image");
-                model.setImage(image);
 
-                model.setId(obj.getString("id"));
-                String date = obj.isNull("date") ? null : obj
-                        .getString("date");
-                model.setPdate(date);
-                // model.setPdate(obj.getString("pdate"));
-                model.setTitle(obj.getString("title"));
-                model.setQtype(obj.getString("qtype"));
-                model.setLikescount(obj.getInt("likes_count"));
-                model.setCommentscount(obj.getInt("commentscount"));
-                //  model.setFavcount(obj.getInt("fav"));
-                model.setSharingurl(obj.getString("sharingurl"));
-                model.setQtypemain(obj.getString("qtypemain"));
-                model.setAds(obj.getString("url"));
-                String reportername = obj.isNull("reporter_name") ? null : obj
-                        .getString("reporter_name");
-                model.setEditername(reportername);
-                String shortdesc = obj.isNull("short_description") ? null : obj
-                        .getString("short_description");
-                model.setShortdescription(shortdesc);
-                // model.setEditername(obj.getString("reporter_name"));
-                // model.setShortdescription(obj.getString("short_description"));
-                // model.setDislikecount(obj.getInt("dislikes_count"));
-                model.setCounttype(obj.getInt("like_type"));
-
-                model.setPlayurl(obj.getString("radio_file"));
-                model.setYoutubelink(obj.getString("youtube_link"));
-                int typevalue = obj.isNull("album_count") ? null : obj
-                        .getInt("album_count");
-                model.setAlbumcount(typevalue);
-                List<ItemModel> albums = new ArrayList<>();
-                ArrayList<String> album = new ArrayList<String>();
-                try {
-                    JSONArray feedArraygallery = obj.getJSONArray("album");
-
-
-                    for (int k = 0; k < feedArraygallery.length(); k++) {
-
-                        JSONObject object = (JSONObject) feedArraygallery.get(k);
-                       ItemModel models = new ItemModel();
-                        models.setAlbumimage(object.getString("image"));
-                        albums.add(models);
-
-                        String images=object.getString("image");
-                        album.add(images);
-                    }
-                }catch (JSONException e){
-
-                }
-
-                model.setAlbumlist(albums);
-                model.setAlbum(album);*/
-                //modelList.add(model);
                 model.setBeyondlist(beyond);
                 model.setSpeciallist(special);
                 model.setEventlist(events);
@@ -941,17 +719,8 @@ String fontname;
             e.printStackTrace();
         }
     }
-    public  void Change(List<ItemModel>list){
-        System.out.println("worked");
 
-     // recyclerview_tab_all_adapter.Font(list);
-    }
-    /*public void onStop() {
-         super.onStop();
-         if (requestQueue != null) {
-             requestQueue.cancelAll(TAG_REQUEST);
-         }
-     }*/
+
     public void onAttach(android.app.Activity activity) {
         super.onAttach(activity);
         try {
@@ -1575,7 +1344,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     return vhImageradio;
                 case VIEW_TYPE_LOADING:
                     ViewGroup vImageloading = (ViewGroup) mInflater.inflate ( R.layout.layout_loading_item, parent, false );
-                  Userviewholdertaball vhImageloading = new Userviewholdertaball( vImageloading );
+                  LoadingViewHolder vhImageloading = new LoadingViewHolder( vImageloading );
                     return vhImageloading;
             }
 
@@ -1586,7 +1355,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             sharedpreferences = getActivity(). getSharedPreferences(mypreference,
                     Context.MODE_PRIVATE);
-
+            colorcodes=sharedpreferences.getString(backgroundcolor,"");
             if (holder instanceof Userviewholdertaball) {
 
                  userViewHolder = (Userviewholdertaball) holder;
@@ -1732,7 +1501,27 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     userViewHolder.shortdescription.setLineSpacing(-0.3f,1f);
                     userViewHolder.title_item.setLineSpacing(0,1f);
                 }
-
+                if(fontname.equals("playfair")){
+                    Log.e("Font",fontname);
+                    userViewHolder.title_item.setTypeface(seguiregular);
+                    userViewHolder.likescount.setTypeface(seguiregular_bold);
+                    userViewHolder.commentscount.setTypeface(seguiregular_bold);
+                    userViewHolder.editername.setTypeface(seguiregular_bold);
+                    userViewHolder.shortdescription.setTypeface(seguiregular_bold);
+                    userViewHolder.title_item.setTextSize(24);
+                    userViewHolder.shortdescription.setTextSize(15);
+                    userViewHolder.item_type_name.setTypeface(seguiregular_bold);
+                    userViewHolder.editername.setTypeface(seguiregular_bold);
+                    userViewHolder.shortdescription.setLineSpacing(-0.3f,1f);
+                    userViewHolder.title_item.setLineSpacing(0,1f);
+                }
+                if(colorcodes.equals("#FFFFFFFF")){
+                    if(fontname.equals("playfair")){
+                        String playbold=  "fonts/PlayfairDisplayBold.ttf";
+                        final Typeface pbold= Typeface.createFromAsset(getActivity().getAssets(), playbold);
+                        userViewHolder.title_item.setTypeface(pbold);
+                    }
+                }
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 
                     @Override
@@ -1947,50 +1736,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                                             }catch (JSONException e){
 
                                             }
-                                            /*String res=response.toString();
-                                            res = res.replace(" ", "");
-                                            res = res.trim();
-                                            if(res.equalsIgnoreCase("yes")){
-                                                System.out.println(itemmodel.getId());
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount()+1;
-                                                }
 
-                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
-                                                userViewHolder.like_imagebutton.setTag("heartfullred");
-                                                *//*userViewHolder.likes_button.setText("Liked");
-                                                userViewHolder.likes_button.setTextColor(getActivity().getResources().getColor(R.color.red));
-                                                userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.likered,0,0,0);
-                                                userViewHolder.likes_button.setTypeface(seguiregular);
-                                                userViewHolder.likes_button.setTransformationMethod(null);*//*
-                                            }else if(res.equalsIgnoreCase("no")){
-                                                if(itemmodel.getCounttype()==1){
-                                                    like_finalvalues=itemmodel.getLikescount()-1;
-                                                }else {
-                                                    like_finalvalues=itemmodel.getLikescount();
-                                                }
-                                                System.out.println(itemmodel.getId());
-                                                userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
-                                                userViewHolder.like_imagebutton.setTag("heart");
-                                                *//*userViewHolder.likes_button.setText("Like");
-                                                userViewHolder.likes_button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.like,0,0,0);
-                                                userViewHolder.likes_button.setTypeface(seguiregular);
-                                                userViewHolder.likes_button.setTransformationMethod(null);*//*
-                                            }
-                                            if(like_finalvalues==0||like_finalvalues==-1){
-                                                System.out.println(itemmodel.getId());
-                                                userViewHolder.    likescount.setVisibility(View.GONE);
-                                            }else {
-                                                System.out.println(itemmodel.getId());
-                                                System.out.println(like_finalvalues);
-                                                userViewHolder.    countlayout.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setVisibility(View.VISIBLE);
-                                                userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
-
-                                                like_finalvalues=0;
-                                            }*/
                                         }
                                     }, new Response.ErrorListener() {
                                         @Override
@@ -2242,11 +1988,23 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     horizontalviewholder.text_title.setTextSize(17);
                     horizontalviewholder.seeall_text.setTypeface(sansregular);
                 }
+                if(fontname.equals("playfair")){
+                    horizontalviewholder.text_title.setTypeface(seguiregular);
+                    horizontalviewholder.text_title.setTextSize(22);
+                    horizontalviewholder.seeall_text.setTypeface(seguiregular);
+                }
                 if(colorcodes.equals("#FFFFFFFF")){
                     horizontalviewholder.text_title.setTextColor(Color.BLACK);
                     horizontalviewholder.seeall_text.setTextColor(Color.BLACK);
+                    horizontalviewholder.seeall_text.setBackgroundColor(Color.parseColor("#666666"));
                 }
-
+                if(colorcodes.equals("#FFFFFFFF")){
+                    if(fontname.equals("playfair")){
+                        String playbold=  "fonts/PlayfairDisplayBold.ttf";
+                        final Typeface pbold= Typeface.createFromAsset(getActivity().getAssets(), playbold);
+                        horizontalviewholder.text_title.setTypeface(pbold);
+                    }
+                }
             }else if(holder instanceof Horizontalphotostory){
                 fontname=sharedpreferences.getString(Fonts.FONT,"");
                 Horizontalphotostory horizontalphotostory=(Horizontalphotostory)holder;
@@ -2272,8 +2030,15 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 if(colorcodes.equals("#FFFFFFFF")){
                     horizontalphotostory.text_title.setTextColor(Color.BLACK);
                     horizontalphotostory.seeall_text.setTextColor(Color.BLACK);
+                    horizontalphotostory.seeall_text.setBackgroundColor(Color.parseColor("#666666"));
                 }
-
+                if(colorcodes.equals("#FFFFFFFF")){
+                    if(fontname.equals("playfair")){
+                        String playbold=  "fonts/PlayfairDisplayBold.ttf";
+                        final Typeface pbold= Typeface.createFromAsset(getActivity().getAssets(), playbold);
+                        horizontalphotostory.text_title.setTypeface(pbold);
+                    }
+                }
 
                 horizontalphotostory.seeall_text.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -2292,11 +2057,14 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     horizontalphotostory.text_title.setTextSize(17);
                     horizontalphotostory.seeall_text.setTypeface(sansregular);
 
-                    if(colorcodes.equals("#FFFFFFFF")){
-                        horizontalphotostory.text_title.setTextColor(Color.BLACK);
 
-                        horizontalphotostory.seeall_text.setTextColor(Color.BLACK);
-                    }
+                }
+                if(fontname.equals("playfair")){
+                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
+                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
+                    horizontalphotostory.text_title.setTypeface(seguiregular);
+                    horizontalphotostory.text_title.setTextSize(22);
+                    horizontalphotostory.seeall_text.setTypeface(seguiregular);
                 }
 
             }else if (holder instanceof Horizontalevent){
@@ -2323,8 +2091,15 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 if(colorcodes.equals("#FFFFFFFF")){
                     horizontalsmalldesign.text_title.setTextColor(Color.BLACK);
                     horizontalsmalldesign.seeall_text.setTextColor(Color.BLACK);
+                    horizontalsmalldesign.seeall_text.setBackgroundColor(Color.parseColor("#666666"));
                 }
-
+                if(colorcodes.equals("#FFFFFFFF")){
+                    if(fontname.equals("playfair")){
+                        String playbold=  "fonts/PlayfairDisplayBold.ttf";
+                        final Typeface pbold= Typeface.createFromAsset(getActivity().getAssets(), playbold);
+                        horizontalsmalldesign.text_title.setTypeface(pbold);
+                    }
+                }
                 horizontalsmalldesign.seeall_text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -2342,13 +2117,20 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     horizontalsmalldesign.text_title.setTypeface(sansbold);
                     horizontalsmalldesign.text_title.setTextSize(17);
                     horizontalsmalldesign.seeall_text.setTypeface(sansregular);
-                    if(colorcodes.equals("#FFFFFFFF")){
-                        horizontalsmalldesign.text_title.setTextColor(Color.BLACK);
 
-                        horizontalsmalldesign.seeall_text.setTextColor(Color.BLACK);
-                    }
 
                 }
+                if(fontname.equals("playfair")){
+                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
+                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
+
+                    horizontalsmalldesign.text_title.setTypeface(seguiregular);
+                    horizontalsmalldesign.text_title.setTextSize(22);
+                    horizontalsmalldesign.seeall_text.setTypeface(seguiregular);
+
+
+                }
+
 
             }else if (holder instanceof Horizontalbeyond){
                 fontname=sharedpreferences.getString(Fonts.FONT,"");
@@ -2384,8 +2166,15 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     horizontalbeyond.text_title.setTextColor(Color.BLACK);
 
                     horizontalbeyond.seeall_text.setTextColor(Color.BLACK);
+                    horizontalbeyond.seeall_text.setBackgroundColor(Color.parseColor("#666666"));
                 }
-
+                if(colorcodes.equals("#FFFFFFFF")){
+                    if(fontname.equals("playfair")){
+                        String playbold=  "fonts/PlayfairDisplayBold.ttf";
+                        final Typeface pbold= Typeface.createFromAsset(getActivity().getAssets(), playbold);
+                        horizontalbeyond.text_title.setTypeface(pbold);
+                    }
+                }
                 if(fontname.equals("sanfrancisco")){
                     Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
                     Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
@@ -2393,6 +2182,16 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     horizontalbeyond.text_title.setTypeface(sansbold);
                     horizontalbeyond.text_title.setTextSize(17);
                     horizontalbeyond.seeall_text.setTypeface(sansregular);
+
+
+                }
+                if(fontname.equals("playfair")){
+                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
+                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
+
+                    horizontalbeyond.text_title.setTypeface(seguiregular);
+                    horizontalbeyond.text_title.setTextSize(22);
+                    horizontalbeyond.seeall_text.setTypeface(seguiregular);
 
 
                 }
@@ -2423,8 +2222,15 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     horizontalspecial.text_title.setTextColor(Color.BLACK);
 
                     horizontalspecial.seeall_text.setTextColor(Color.BLACK);
+                    horizontalspecial.seeall_text.setBackgroundColor(Color.parseColor("#666666"));
                 }
-
+                if(colorcodes.equals("#FFFFFFFF")){
+                    if(fontname.equals("playfair")){
+                        String playbold=  "fonts/PlayfairDisplayBold.ttf";
+                        final Typeface pbold= Typeface.createFromAsset(getActivity().getAssets(), playbold);
+                        horizontalspecial.text_title.setTypeface(pbold);
+                    }
+                }
                 horizontalspecial.seeall_text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -2441,6 +2247,17 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
 
                     horizontalspecial.text_title.setTypeface(sansbold);
                     horizontalspecial.text_title.setTextSize(17);
+                    horizontalspecial.seeall_text.setTypeface(sansregular);
+
+
+
+                }
+                if(fontname.equals("playfair")){
+                    Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
+                    Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
+
+                    horizontalspecial.text_title.setTypeface(seguiregular);
+                    horizontalspecial.text_title.setTextSize(22);
                     horizontalspecial.seeall_text.setTypeface(sansregular);
 
 
@@ -2692,6 +2509,30 @@ if(itemmodel.getAlbum()==null){
                     userViewHolder.shortdescription.setLineSpacing(-0.3f,1f);
                     userViewHolder.title_item.setLineSpacing(0,1f);
                 }
+                if(fontname.equals("playfair")){
+                    Log.e("Font",fontname);
+                    Typeface seguiregular_bold=Typeface.createFromAsset(getActivity().getAssets(),"fonts/Lora-Regular.ttf");
+                    Typeface seguiregulars=Typeface.createFromAsset(getActivity().getAssets(),"fonts/playfairDisplayRegular.ttf");
+                    userViewHolder.title_item.setTypeface(seguiregulars);
+                    userViewHolder.likescount.setTypeface(seguiregular_bold);
+                    userViewHolder.commentscount.setTypeface(seguiregular_bold);
+                    userViewHolder.editername.setTypeface(seguiregular_bold);
+                    userViewHolder.shortdescription.setTypeface(seguiregular_bold);
+                    userViewHolder.title_item.setTextSize(24);
+                    userViewHolder.shortdescription.setTextSize(15);
+                    userViewHolder.item_type_name.setTypeface(seguiregular_bold);
+                    userViewHolder.editername.setTypeface(seguiregular_bold);
+                    userViewHolder.shortdescription.setLineSpacing(-0.3f,1f);
+                    userViewHolder.title_item.setLineSpacing(0,1f);
+                }
+                if(colorcodes.equals("#FFFFFFFF")){
+                    if(fontname.equals("playfair")){
+                        String playbold=  "fonts/PlayfairDisplayBold.ttf";
+                        final Typeface pbold= Typeface.createFromAsset(getActivity().getAssets(), playbold);
+                        userViewHolder.title_item.setTypeface(pbold);
+                    }
+                }
+
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 
                     @Override
@@ -3013,7 +2854,8 @@ if(itemmodel.getAlbum()==null){
             else {
                 if (holder instanceof LoadingViewHolder) {
                     LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
-                    loadingViewHolder.progressBar.setIndeterminate(true);
+                    loadingViewHolder.progressBar.setVisibility(View.GONE);
+
                 }
             }
         }
@@ -3033,31 +2875,32 @@ if(itemmodel.getAlbum()==null){
             ItemModel item = modelList.get(position);
 
             if(item.getQtypemain()!=null){
-                if(item.getQtypemain().equals("photostories")){
-                    return VIEW_TYPE_PHOTOSTORY;
-                }else {
-                    return VIEW_TYPE_ITEM;
-                }
 
+                if(item.getQtypemain().equalsIgnoreCase("photostories")){
+                    return VIEW_TYPE_PHOTOSTORY;
+                } else {
+                    return  VIEW_TYPE_ITEM;
+                }
             }else {
-                if (item.getSubqueuetitle().equals("Feature Videos") ) {
+                if (item.getSubqueuetitle().equals("Feature Videos")) {
                     return VIEW_TYPE_VIDEO;
                 } else if (item.getSubqueuetitle().equals("Photo Stories")) {
                     return VIEW_TYPE_PHOTOSTORY_NEW;
-                }else if(item.getSubqueuetitle().equals("Today's Events in Coimbatore")){
+                } else if (item.getSubqueuetitle().equals("Today's Events in Coimbatore")) {
 
                     return VIEW_TYPE_EVENT;
-                }else if(item.getSubqueuetitle().equals("Special Column")){
+                } else if (item.getSubqueuetitle().equals("Special Column")) {
                     return VIEW_TYPE_SPECIAL;
-                }else if(item.getSubqueuetitle().equals("Beyond Coimbatore")){
+                } else
+                      if (item.getSubqueuetitle().equals("Beyond Coimbatore")){
                     return VIEW_TYPE_BEYOND;
-                }
-                else {
-                    return VIEW_TYPE_ITEM;
-                }
-
-                //return VIEW_TYPE_ITEM;
+                }else {
+                    return VIEW_TYPE_LOADING;
+                      }
             }
+
+
+
 
         }
         public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {

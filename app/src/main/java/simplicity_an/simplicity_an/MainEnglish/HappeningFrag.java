@@ -62,6 +62,7 @@ import simplicity_an.simplicity_an.SimplicitySearchview;
 import simplicity_an.simplicity_an.Tabevent;
 import simplicity_an.simplicity_an.Tabeventtoday;
 import simplicity_an.simplicity_an.Tabeventtomorrow;
+import simplicity_an.simplicity_an.Utils.ChangeFont;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
 /**
@@ -117,6 +118,8 @@ public class HappeningFrag extends Fragment {
     ImageView font_button;
   String  fontname;
   Typeface tf_play,tf;
+    TextView line_vertical_textview;
+    RelativeLayout main_english_layout;
     public static HappeningFrag newInstance() {
         HappeningFrag fragment = new HappeningFrag();
         return fragment;
@@ -139,7 +142,7 @@ public class HappeningFrag extends Fragment {
         activity=sharedpreferences.getString(Activity,"");
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
         fontname=sharedpreferences.getString(Fonts.FONT,"");
-
+        main_english_layout=(RelativeLayout)getActivity().findViewById(R.id.mainenglish);
         city=(Button) getActivity().findViewById(R.id.btn_news);
         btnspecials=(Button)getActivity().findViewById(R.id.btn_specials);
         btnevents = (Button)getActivity().findViewById(R.id.btn_events);
@@ -183,8 +186,10 @@ public class HappeningFrag extends Fragment {
         });
 
         font_button=(ImageView) view.findViewById(R.id.fontbutton);
+        line_vertical_textview=(TextView)view.findViewById(R.id.linevertical_versiontwo);
+        line_vertical_textview.setText(Html.fromHtml("&nbsp;"+"|"+"&nbsp;"));
 
-        if(fontname.equals("sanfrancisco")){
+        /*if(fontname.equals("sanfrancisco")){
             String playfair ="fonts/Oxygen-Bold.ttf";
             tf_play = Typeface.createFromAsset(getActivity().getAssets(), playfair);
             String simplycity_title_bold = "fonts/SystemSanFranciscoDisplayRegular.ttf";
@@ -202,7 +207,7 @@ public class HappeningFrag extends Fragment {
             btnevents.setTypeface(tf_play);
             btnspecials.setTypeface(tf_play);
             btnmore.setTypeface(tf_play);
-        }
+        }*/
 
 
 
@@ -277,87 +282,7 @@ public class HappeningFrag extends Fragment {
 
 
 
-        /*if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
-            GradientDrawable gd = new GradientDrawable(
-                    GradientDrawable.Orientation.TOP_BOTTOM,
-                    colors);
-            gd.setCornerRadius(0f);
 
-            mainlayout.setBackgroundDrawable(gd);
-
-            fabplus.setBackgroundResource(R.color.theme1button);
-            fabinnerplus.setBackgroundResource(R.color.theme1button);
-            fabsearch.setBackgroundResource(R.color.theme1button);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
-            editor.commit();
-        }else {
-            if(colorcodes.equalsIgnoreCase("004")){
-                Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
-                GradientDrawable gd = new GradientDrawable(
-                        GradientDrawable.Orientation.TOP_BOTTOM,
-                        colors);
-                gd.setCornerRadius(0f);
-
-                mainlayout.setBackgroundDrawable(gd);
-
-                fabplus.setBackgroundResource(R.color.theme1button);
-                fabinnerplus.setBackgroundResource(R.color.theme1button);
-                fabsearch.setBackgroundResource(R.color.theme1button);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
-                editor.commit();
-            }else {
-
-                if(colorcodes!=null){
-                    if(!colorcodes.equals("#FFFFFFFF")) {
-                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF")};
-
-                        GradientDrawable gd = new GradientDrawable(
-                                GradientDrawable.Orientation.TOP_BOTTOM,
-                                colors);
-                        gd.setCornerRadius(0f);
-
-                        mainlayout.setBackgroundDrawable(gd);
-
-
-                    }
-                    else{
-                        int[] color = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
-
-                        GradientDrawable g = new GradientDrawable(
-                                GradientDrawable.Orientation.TOP_BOTTOM,
-                                color);
-                        g.setCornerRadius(0f);
-
-                        mainlayout.setBackgroundDrawable(g);
-
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(backgroundcolor, "#FFFFFFFF");
-                        editor.commit();
-                    }
-                }else {
-                    int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
-
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
-
-                    mainlayout.setBackgroundDrawable(gd);
-
-                    fabplus.setBackgroundResource(R.color.theme1button);
-                    fabinnerplus.setBackgroundResource(R.color.theme1button);
-                    fabsearch.setBackgroundResource(R.color.theme1button);
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
-
-                    editor.commit();
-                }
-            }
-        }*/
         if(myprofileid!=null) {
 
             JsonArrayRequest jsonReq = new JsonArrayRequest(url_notification_count_valueget, new Response.Listener<JSONArray>() {
@@ -435,7 +360,7 @@ public class HappeningFrag extends Fragment {
         date_text=(TextView)view.findViewById(R.id.date_versiontwo) ;
         language_title=(TextView)view.findViewById(R.id.language_versiontwo) ;
         language_title.setTypeface(tf);
-        language_title.setText(Html.fromHtml("&nbsp;"+"<b>தமிழ்</b>"+"&nbsp;"+"|"+"&nbsp;"));
+        language_title.setText(Html.fromHtml("&nbsp;"+"<a>தமிழ்</a>"+"&nbsp;"+"|"+"&nbsp;"));
         layout = (LinearLayout)view. findViewById(R.id.title);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)layout.getLayoutParams();
         params.setMargins(0, 180, 0, 0);
@@ -448,12 +373,13 @@ public class HappeningFrag extends Fragment {
         if(colorcodes.equals("#FFFFFFFF"))
         {
             title_coimbatore.setTextColor(Color.BLACK);
-
+            line_vertical_textview.setTextColor(Color.BLACK);
 
         }
         else
         {
             title_coimbatore.setTextColor(Color.WHITE);
+            line_vertical_textview.setTextColor(Color.WHITE);
         }
         if(colorcodes.equals("#FFFFFFFF"))
         {
@@ -725,27 +651,34 @@ public class HappeningFrag extends Fragment {
         requestQueue.add(weather);
         if(fontname.equals("playfair")){
             title_coimbatore.setTypeface(tf_pala);
+            language_title.setTypeface(tf_pala);
+            date_text.setTypeface(tf_pala);
+            line_vertical_textview.setTypeface(tf_pala);
         }else {
             Typeface sanf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
             title_coimbatore.setTypeface(sanf);
             title_coimbatore.setTextSize(30);
             date_text.setTypeface(sanf);
+            language_title.setTypeface(sanf);
+            line_vertical_textview.setTypeface(sanf);
 
         }
         if(colorcodes.equals("#FFFFFFFF")){
             themechange_button.setImageResource(R.drawable.themenormal);
             if(fontname.equals("playfair")){
-                font_button.setImageResource(R.mipmap.playfairblack);
-            }else {
                 font_button.setImageResource(R.mipmap.sanblack);
+            }else {
+                font_button.setImageResource(R.mipmap.playfairblack);
+
             }
 
         }else {
             themechange_button.setImageResource(R.drawable.themewhite);
             if(fontname.equals("playfair")){
-                font_button.setImageResource(R.mipmap.playfairwhite);
-            }else {
                 font_button.setImageResource(R.mipmap.sanwhite);
+            }else {
+                font_button.setImageResource(R.mipmap.playfairwhite);
+
             }
 
         }
@@ -949,41 +882,47 @@ public class HappeningFrag extends Fragment {
                     editor.commit();
                     title_coimbatore.setTypeface(tf);
                     title_coimbatore.setTextSize(30);
+
                     if(colorcodes.equals("#FFFFFFFF")){
-                        font_button.setImageResource(R.mipmap.sanwhite);
+                        font_button.setImageResource(R.mipmap.playfairblack);
                     }else {
-                        font_button.setImageResource(R.mipmap.sanblack);
+                        font_button.setImageResource(R.mipmap.playfairwhite);
+
                     }
-                    Fragment selectedFragment = null;
-                    selectedFragment = CityFragment.newInstance();
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_layout, selectedFragment);
-                    transaction.commit();
-                   /* Intent in=new Intent(getActivity(), MainPageEnglish.class);
-                    in.putExtra("ID","1");
-                    startActivity(in);*/
+                    ChangeFont font=new Tabevent();
+                    font.change();
+
+                    font=new Tabeventtoday();
+                    font.change();
+                   /* font=new Tabeventtomorrow();
+                    font.change();*/
+
                 }else  {
                     Fonts fonts=new Fonts();
 
                     Typeface tf=fonts.font("playfair",getActivity());
-                    // Typeface tf1=fonts.font1(getActivity());
+
 
                     SharedPreferences.Editor editor=sharedpreferences.edit();
                     editor.putString(Fonts.FONT,"playfair");
                     editor.commit();
                     title_coimbatore.setTypeface(tf);
                     title_coimbatore.setTextSize(40);
-                    if(colorcodes.equals("#FFFFFFFF")){
-                        font_button.setImageResource(R.mipmap.playfairwhite);
-                    }else {
-                        font_button.setImageResource(R.mipmap.playfairblack);
-                    }
 
-                    Fragment selectedFragment = null;
-                    selectedFragment = CityFragment.newInstance();
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_layout, selectedFragment);
-                    transaction.commit();
+
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        font_button.setImageResource(R.mipmap.sanblack);
+                    }else {
+                        font_button.setImageResource(R.mipmap.sanwhite);
+
+                    }
+                    ChangeFont font=new Tabevent();
+                    font.change();
+                    font=new Tabeventtoday();
+                    font.change();
+                   /* font=new Tabeventtomorrow();
+                    font.change();*/
+
                 }
             }
         });
@@ -1011,7 +950,7 @@ public class HappeningFrag extends Fragment {
                     gd.setCornerRadius(0f);
 
                     mainlayout.setBackgroundDrawable(gd);
-
+                    main_english_layout.setBackgroundColor(Color.parseColor("#FF000000"));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putString(backgroundcolor, "#383838");
                     editor.commit();
@@ -1034,6 +973,7 @@ public class HappeningFrag extends Fragment {
                     gd.setCornerRadius(0f);
 
                     mainlayout.setBackgroundDrawable(gd);
+                    main_english_layout.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putString(backgroundcolor, "#FFFFFFFF");
                     editor.commit();
@@ -1660,6 +1600,7 @@ public class HappeningFrag extends Fragment {
         mTabLayout.setupWithViewPager(mPager);
         if(colorcodes.equals("#FFFFFFFF")){
             mTabLayout.setSelectedTabIndicatorColor(Color.BLACK);
+            mTabLayout.setTabTextColors(Color.parseColor("#666666"),Color.BLACK);
         }
         else{
             mTabLayout.setSelectedTabIndicatorColor(Color.WHITE);
@@ -1687,7 +1628,7 @@ setupTabIcons();
     }
     private void setupTabIcons() {
 
-
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
 
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Lora-Regular.ttf");
         ViewGroup vg = (ViewGroup) mTabLayout.getChildAt(0);
@@ -1703,9 +1644,7 @@ setupTabIcons();
                         Typeface tf1 = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Oxygen-Bold.ttf");
                         ((TextView) tabViewChild).setTypeface(tf1);
                     }
-                    if(colorcodes.equals("#FFFFFFFF")){
-                        ((TextView) tabViewChild).setTextColor(Color.BLACK);
-                    }
+
 
                 }
             }

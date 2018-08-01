@@ -188,33 +188,6 @@ public class Healthylivingdescription extends AppCompatActivity {
             back.setImageResource(R.mipmap.back);
         }
 
-        if(colorcodes.length()==0){
-            int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
-            GradientDrawable gd = new GradientDrawable(
-                    GradientDrawable.Orientation.TOP_BOTTOM,
-                    colors);
-            gd.setCornerRadius(0f);
-
-            mainlayout.setBackgroundDrawable(gd);
-
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
-            editor.commit();
-        }else {
-            if(colorcodes.equalsIgnoreCase("004")){
-                Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
-                GradientDrawable gd = new GradientDrawable(
-                        GradientDrawable.Orientation.TOP_BOTTOM,
-                        colors);
-                gd.setCornerRadius(0f);
-
-                mainlayout.setBackgroundDrawable(gd);
-
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
-                editor.commit();
-            }else {
 
                 if(colorcodes!=null){
                     if(colorcodes.equals("#FFFFFFFF")){
@@ -227,7 +200,7 @@ public class Healthylivingdescription extends AppCompatActivity {
 
                         mainlayout.setBackgroundDrawable(gd);
                     } else {
-                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                        int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -256,8 +229,8 @@ public class Healthylivingdescription extends AppCompatActivity {
 
                     editor.commit();
                 }
-            }
-        }
+
+
         queues = simplicity_an.simplicity_an.MySingleton.getInstance(this.getApplicationContext()).
                 getRequestQueue();
         requestQueue=Volley.newRequestQueue(this);

@@ -58,8 +58,8 @@ import simplicity_an.simplicity_an.Utils.Fonts;
 
 public class MainPageEnglish extends AppCompatActivity implements Tab_All.OnFragmentInteractionListener,TabRadio.OnFragmentInteractionListener,TabMusic.OnFragmentInteractionListener, TabEntertainmentAll.OnFragmentInteractionListener,TabEntertainmentMusic.OnFragmentInteractionListener,TabentertainmentRadio.OnFragmentInteractionListener,Tabnews.OnFragmentInteractionListener{
     ImageView search;
-    Button happening,audio_video,settings,explore;
-    Button city;
+   private static Button happening,audio_video,settings,explore;
+   private static Button city;
     String UPLOAD_CHECK_USER="http://simpli-city.in/request2.php?rtype=checkplayer&key=simples";
     LinearLayout footerbar;
     private ImageButton play_music,fastforward,backforward,close_player;
@@ -84,6 +84,7 @@ LinearLayout footer;
     String url_change_lang="http://simpli-city.in/request2.php?rtype=updatelanguage&key=simples";
     String playerid,fontname;
     Typeface tf_play,tf;
+    RelativeLayout main_english_layout;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +101,7 @@ LinearLayout footer;
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
         fontname=sharedpreferences.getString(Fonts.FONT,"");
+        main_english_layout=(RelativeLayout)findViewById(R.id.mainenglish);
         Intent get=getIntent();
         id=get.getStringExtra("ID");
         radio_title=get.getStringExtra("TITLE");
@@ -133,7 +135,7 @@ LinearLayout footer;
         topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
         footer=(LinearLayout) findViewById(R.id.footer);
 
-        if(fontname.equals("sanfrancisco")){
+        /*if(fontname.equals("sanfrancisco")){
             String playfair ="fonts/Oxygen-Bold.ttf";
             tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
             String simplycity_title_bold = "fonts/SystemSanFranciscoDisplayRegular.ttf";
@@ -151,42 +153,27 @@ LinearLayout footer;
             happening.setTypeface(tf_play);
             audio_video.setTypeface(tf_play);
             settings.setTypeface(tf_play);
-        }
+        }*/
 
 
         if(colorcodes.equals("#FFFFFFFF")){
 
-          /*  city.setBackgroundColor(getResources().getColor(R.color.white));
-            happening.setBackgroundColor(getResources().getColor(R.color.white));
-           // search.setBackgroundResource(R.color.white);
-            audio_video.setBackgroundColor(getResources().getColor(R.color.white));
-            settings.setBackgroundColor(getResources().getColor(R.color.white));*/
-            city.setTextColor(Color.BLACK);
-            happening.setTextColor(Color.parseColor("#CCCCCC"));
-            audio_video.setTextColor(Color.parseColor("#CCCCCC"));
-            settings.setTextColor(Color.parseColor("#CCCCCC"));
 
-         /* city.setImageResource(R.mipmap.newsone);
-            happening.setImageResource(R.mipmap.eventone);
-            search.setImageResource(R.mipmap.searchone);
-            audio_video.setImageResource(R.mipmap.specialone);
-            settings.setImageResource(R.mipmap.moreone);*/
+            happening.setTextColor(Color.parseColor("#666666"));
+            audio_video.setTextColor(Color.parseColor("#666666"));
+            settings.setTextColor(Color.parseColor("#666666"));
+            main_english_layout.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
+            city.setTextColor(Color.BLACK);
+
         }
         else{
 
-           /* happening.setBackgroundColor(getResources().getColor(R.color.mytransparent));
-            search.setBackgroundColor(getResources().getColor(R.color.mytransparent));
-            audio_video.setBackgroundColor(getResources().getColor(R.color.mytransparent));
-            settings.setBackgroundColor(getResources().getColor(R.color.mytransparent));*/
+
+            main_english_layout.setBackgroundColor(Color.parseColor("#FF000000"));
             city.setTextColor(Color.WHITE);
             happening.setTextColor(Color.parseColor("#666666"));
             audio_video.setTextColor(Color.parseColor("#666666"));
             settings.setTextColor(Color.parseColor("#666666"));
-            /*city.setImageResource(R.mipmap.news);
-            happening.setImageResource(R.mipmap.events);
-            search.setImageResource(R.mipmap.search);
-            audio_video.setImageResource(R.mipmap.specials);
-            settings.setImageResource(R.mipmap.more);*/
         }
 
        city.setOnClickListener(new View.OnClickListener() {

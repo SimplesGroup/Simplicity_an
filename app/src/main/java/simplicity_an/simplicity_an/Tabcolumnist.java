@@ -1033,6 +1033,7 @@ String youtubelink;
             sharedpreferences = getActivity(). getSharedPreferences(mypreference,
                     Context.MODE_PRIVATE);
             fontname=sharedpreferences.getString(Fonts.FONT,"");
+            colorcodes=sharedpreferences.getString(backgroundcolor,"");
             if (holder instanceof Userviewholdertaball) {
 
                 final Userviewholdertaball userViewHolder = (Userviewholdertaball) holder;
@@ -1122,6 +1123,30 @@ String youtubelink;
                     userViewHolder.title_item.setTextSize(17);
                     userViewHolder.shortdescription.setTextSize(13);
                 }
+                if(colorcodes.equals("#FFFFFFFF")){
+                    if(fontname.equals("playfair")){
+                        String playbold=  "fonts/PlayfairDisplayBold.ttf";
+                        final Typeface pbold= Typeface.createFromAsset(getActivity().getAssets(), playbold);
+                        userViewHolder.title_item.setTypeface(pbold);
+                    }
+                }
+                if(fontname.equals("playfair")){
+                    Log.e("Font",fontname);
+                    Typeface seguiregular_bolds=Typeface.createFromAsset(getActivity().getAssets(),"fonts/Lora-Regular.ttf");
+                    Typeface seguiregulars=Typeface.createFromAsset(getActivity().getAssets(),"fonts/playfairDisplayRegular.ttf");
+                    userViewHolder.title_item.setTypeface(seguiregulars);
+                    userViewHolder.likescount.setTypeface(seguiregular_bolds);
+                    userViewHolder.commentscount.setTypeface(seguiregular_bolds);
+                    userViewHolder.editername.setTypeface(seguiregular_bolds);
+                    userViewHolder.shortdescription.setTypeface(seguiregular_bolds);
+                    userViewHolder.title_item.setTextSize(24);
+                    userViewHolder.shortdescription.setTextSize(15);
+                    userViewHolder.item_type_name.setTypeface(seguiregular_bolds);
+                    userViewHolder.editername.setTypeface(seguiregular_bolds);
+                    userViewHolder.shortdescription.setLineSpacing(-0.3f,1f);
+                    userViewHolder.title_item.setLineSpacing(0,1f);
+                }
+
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 
                     @Override
@@ -1771,7 +1796,29 @@ String youtubelink;
                     userViewHolder.title_item.setTextSize(17);
                     userViewHolder.shortdescription.setTextSize(13);
                 }
-
+                if(fontname.equals("playfair")){
+                    Log.e("Font",fontname);
+                    Typeface seguiregular_bolds=Typeface.createFromAsset(getActivity().getAssets(),"fonts/Lora-Regular.ttf");
+                    Typeface seguiregulars=Typeface.createFromAsset(getActivity().getAssets(),"fonts/playfairDisplayRegular.ttf");
+                    userViewHolder.title_item.setTypeface(seguiregulars);
+                    userViewHolder.likescount.setTypeface(seguiregular_bolds);
+                    userViewHolder.commentscount.setTypeface(seguiregular_bolds);
+                    userViewHolder.editername.setTypeface(seguiregular_bolds);
+                    userViewHolder.shortdescription.setTypeface(seguiregular_bolds);
+                    userViewHolder.title_item.setTextSize(24);
+                    userViewHolder.shortdescription.setTextSize(15);
+                    userViewHolder.item_type_name.setTypeface(seguiregular_bolds);
+                    userViewHolder.editername.setTypeface(seguiregular_bolds);
+                    userViewHolder.shortdescription.setLineSpacing(-0.3f,1f);
+                    userViewHolder.title_item.setLineSpacing(0,1f);
+                }
+                if(colorcodes.equals("#FFFFFFFF")){
+                    if(fontname.equals("playfair")){
+                        String playbold=  "fonts/PlayfairDisplayBold.ttf";
+                        final Typeface pbold= Typeface.createFromAsset(getActivity().getAssets(), playbold);
+                        userViewHolder.title_item.setTypeface(pbold);
+                    }
+                }
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 
                     @Override

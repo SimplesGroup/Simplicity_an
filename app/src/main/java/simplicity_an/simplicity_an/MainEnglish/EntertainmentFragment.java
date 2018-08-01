@@ -50,6 +50,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SimplicitySearchview;
@@ -60,6 +61,7 @@ import simplicity_an.simplicity_an.Tabarticle;
 import simplicity_an.simplicity_an.Tabcolumnist;
 import simplicity_an.simplicity_an.TabentertainmentRadio;
 import simplicity_an.simplicity_an.Tabphotostories;
+import simplicity_an.simplicity_an.Utils.ChangeFont;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
 /**
@@ -115,7 +117,8 @@ String tab_id;
     ImageView font_button;
 String fontname;
 Typeface tf_play,tf;
-
+    TextView line_vertical_textview;
+    RelativeLayout main_english_layout;
     public static EntertainmentFragment newInstance() {
         EntertainmentFragment fragment = new EntertainmentFragment();
         return fragment;
@@ -142,7 +145,7 @@ Typeface tf_play,tf;
         activity=sharedpreferences.getString(Activity,"");
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
         fontname=sharedpreferences.getString(Fonts.FONT,"");
-
+        main_english_layout=(RelativeLayout)getActivity().findViewById(R.id.mainenglish);
         if (sharedpreferences.contains(MYUSERID)) {
 
             myprofileid=sharedpreferences.getString(MYUSERID,"");
@@ -178,8 +181,10 @@ Typeface tf_play,tf;
         }
 
         font_button=(ImageView) view.findViewById(R.id.fontbutton);
+        line_vertical_textview=(TextView)view.findViewById(R.id.linevertical_versiontwo);
+        line_vertical_textview.setText(Html.fromHtml("&nbsp;"+"|"+"&nbsp;"));
 
-        if(fontname.equals("sanfrancisco")){
+        /*if(fontname.equals("sanfrancisco")){
             String playfair ="fonts/Oxygen-Bold.ttf";
             tf_play = Typeface.createFromAsset(getActivity().getAssets(), playfair);
             String simplycity_title_bold = "fonts/SystemSanFranciscoDisplayRegular.ttf";
@@ -197,7 +202,7 @@ Typeface tf_play,tf;
             btnevents.setTypeface(tf_play);
             btnspecials.setTypeface(tf_play);
             btnmore.setTypeface(tf_play);
-        }
+        }*/
 
 
         mainlayout=(RelativeLayout)view.findViewById(R.id.version_main_layout);
@@ -271,133 +276,8 @@ Typeface tf_play,tf;
 
 
 
-       /* if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
-            GradientDrawable gd = new GradientDrawable(
-                    GradientDrawable.Orientation.TOP_BOTTOM,
-                    colors);
-            gd.setCornerRadius(0f);
-
-            mainlayout.setBackgroundDrawable(gd);
-
-            fabplus.setBackgroundResource(R.color.theme1button);
-            fabinnerplus.setBackgroundResource(R.color.theme1button);
-            fabsearch.setBackgroundResource(R.color.theme1button);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
-            editor.commit();
-        }else {
-            if(colorcodes.equalsIgnoreCase("004")){
-                Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
-                GradientDrawable gd = new GradientDrawable(
-                        GradientDrawable.Orientation.TOP_BOTTOM,
-                        colors);
-                gd.setCornerRadius(0f);
-
-                mainlayout.setBackgroundDrawable(gd);
-
-                fabplus.setBackgroundResource(R.color.theme1button);
-                fabinnerplus.setBackgroundResource(R.color.theme1button);
-                fabsearch.setBackgroundResource(R.color.theme1button);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
-                editor.commit();
-            }else {
-
-                if(colorcodes!=null){
-                    if(!colorcodes.equals("#FFFFFFFF")) {
-                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF")};
-
-                        GradientDrawable gd = new GradientDrawable(
-                                GradientDrawable.Orientation.TOP_BOTTOM,
-                                colors);
-                        gd.setCornerRadius(0f);
-
-                        mainlayout.setBackgroundDrawable(gd);
 
 
-                    }
-                    else{
-                        int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
-
-                        GradientDrawable gd = new GradientDrawable(
-                                GradientDrawable.Orientation.TOP_BOTTOM,
-                                colors);
-                        gd.setCornerRadius(0f);
-
-                        mainlayout.setBackgroundDrawable(gd);
-                        // explore.setBackgroundResource(R.color.theme1button);
-                        fabplus.setBackgroundResource(R.color.theme1button);
-                        fabinnerplus.setBackgroundResource(R.color.theme1button);
-                        fabsearch.setBackgroundResource(R.color.theme1button);
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(backgroundcolor, "#383838");
-
-                        editor.commit();
-                    }
-                }else {
-                    int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
-
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
-
-                    mainlayout.setBackgroundDrawable(gd);
-
-                    fabplus.setBackgroundResource(R.color.theme1button);
-                    fabinnerplus.setBackgroundResource(R.color.theme1button);
-                    fabsearch.setBackgroundResource(R.color.theme1button);
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
-
-                    editor.commit();
-                }
-            }
-        }*/
-       /* if(myprofileid!=null) {
-
-            JsonArrayRequest jsonReq = new JsonArrayRequest(url_notification_count_valueget, new Response.Listener<JSONArray>() {
-
-                @Override
-                public void onResponse(JSONArray response) {
-                    // TODO Auto-generated method stub
-
-
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
-                            JSONObject obj = response.getJSONObject(i);
-                          ItemModel model = new ItemModel();
-                            model.setCount(obj.getString("count"));
-                            notification_counts = obj.getString("count");
-                            Log.e("unrrad:", notification_counts);
-                            value= Integer.parseInt(notification_counts);
-                            if(value==0){
-                                notification_batge_count.setVisibility(View.GONE);
-                            }else {
-                                notification_batge_count.setVisibility(View.VISIBLE);
-                                notification_batge_count.setText(notification_counts);
-                            }
-                        } catch (JSONException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                    }
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // TODO Auto-generated method stub
-                    // VolleyLog.d(TAG, "ERROR" + error.getMessage());
-                }
-            });
-            jsonReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            requestQueue.add(jsonReq);
-        }else {
-
-        }*/
         themechange_button=(ImageButton)view.findViewById(R.id.themebutton);
         weather_update=(TextView)view. findViewById(R.id.weather_degree_versiontwo);
         weathercentre_textview=(TextView)view.findViewById(R.id.weathercenter) ;
@@ -433,7 +313,7 @@ Typeface tf_play,tf;
         date_text=(TextView)view.findViewById(R.id.date_versiontwo) ;
         language_title=(TextView)view.findViewById(R.id.language_versiontwo) ;
         language_title.setTypeface(tf);
-        language_title.setText(Html.fromHtml("&nbsp;"+"<b>தமிழ்</b>"+"&nbsp;"+"|"+"&nbsp;"));
+        language_title.setText(Html.fromHtml("&nbsp;"+"<a>தமிழ்</a>"+"&nbsp;"+"|"+"&nbsp;"));
         layout = (LinearLayout)view. findViewById(R.id.title);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)layout.getLayoutParams();
         params.setMargins(0, 170, 0, 0);
@@ -442,12 +322,13 @@ Typeface tf_play,tf;
         if(colorcodes.equals("#FFFFFFFF"))
         {
             title_coimbatore.setTextColor(Color.BLACK);
-
+            line_vertical_textview.setTextColor(Color.BLACK);
 
         }
         else
         {
             title_coimbatore.setTextColor(Color.WHITE);
+            line_vertical_textview.setTextColor(Color.WHITE);
         }
         /*if(colorcodes.equals("#FFFFFFFF")){
            *//* explore.setBackgroundResource(R.color.theme13);
@@ -686,28 +567,35 @@ Typeface tf_play,tf;
         requestQueue.add(weather);
         if(fontname.equals("playfair")){
             title_coimbatore.setTypeface(tf_pala);
+            language_title.setTypeface(tf_pala);
+            date_text.setTypeface(tf_pala);
+            line_vertical_textview.setTypeface(tf_pala);
         }else {
             Typeface sanf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
             title_coimbatore.setTypeface(sanf);
             title_coimbatore.setTextSize(30);
             date_text.setTypeface(sanf);
+            language_title.setTypeface(sanf);
+            line_vertical_textview.setTypeface(sanf);
 
         }
 
         if(colorcodes.equals("#FFFFFFFF")){
             themechange_button.setImageResource(R.drawable.themenormal);
             if(fontname.equals("playfair")){
-                font_button.setImageResource(R.mipmap.playfairblack);
-            }else {
                 font_button.setImageResource(R.mipmap.sanblack);
+            }else {
+                font_button.setImageResource(R.mipmap.playfairblack);
+
             }
 
         }else {
             themechange_button.setImageResource(R.drawable.themewhite);
             if(fontname.equals("playfair")){
-                font_button.setImageResource(R.mipmap.playfairwhite);
-            }else {
                 font_button.setImageResource(R.mipmap.sanwhite);
+            }else {
+                font_button.setImageResource(R.mipmap.playfairwhite);
+
             }
 
         }
@@ -945,18 +833,20 @@ Typeface tf_play,tf;
                     title_coimbatore.setTypeface(tf);
                     title_coimbatore.setTextSize(30);
                     if(colorcodes.equals("#FFFFFFFF")){
-                        font_button.setImageResource(R.mipmap.sanwhite);
+                        font_button.setImageResource(R.mipmap.playfairblack);
                     }else {
-                        font_button.setImageResource(R.mipmap.sanblack);
+                        font_button.setImageResource(R.mipmap.playfairwhite);
+
                     }
-                    Fragment selectedFragment = null;
-                    selectedFragment = CityFragment.newInstance();
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_layout, selectedFragment);
-                    transaction.commit();
-                   /* Intent in=new Intent(getActivity(), MainPageEnglish.class);
-                    in.putExtra("ID","1");
-                    startActivity(in);*/
+                    ChangeFont font=new TabEntertainmentAll();
+                    font.change();
+                   /* font=new TabentertainmentRadio();
+                    font.change();*/
+                    font=new TabEntertainmentTheatre();
+                    font.change();
+                   /* MainPageEnglish english=new MainPageEnglish();
+                    english.Changefont("sanfrancisco",getActivity());*/
+                    setupTabIcons();
                 }else  {
                     Fonts fonts=new Fonts();
 
@@ -968,17 +858,22 @@ Typeface tf_play,tf;
                     editor.commit();
                     title_coimbatore.setTypeface(tf);
                     title_coimbatore.setTextSize(40);
-                    if(colorcodes.equals("#FFFFFFFF")){
-                        font_button.setImageResource(R.mipmap.playfairwhite);
-                    }else {
-                        font_button.setImageResource(R.mipmap.playfairblack);
-                    }
 
-                    Fragment selectedFragment = null;
-                    selectedFragment = CityFragment.newInstance();
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_layout, selectedFragment);
-                    transaction.commit();
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        font_button.setImageResource(R.mipmap.sanblack);
+                    }else {
+                        font_button.setImageResource(R.mipmap.sanwhite);
+
+                    }
+                    ChangeFont font=new TabEntertainmentAll();
+                    font.change();
+                   /* font=new TabentertainmentRadio();
+                    font.change();*/
+                    font=new TabEntertainmentTheatre();
+                    font.change();
+                   /* MainPageEnglish english=new MainPageEnglish();
+                    english.Changefont("playfair",getActivity());*/
+                    setupTabIcons();
                 }
             }
         });
@@ -1010,7 +905,7 @@ Typeface tf_play,tf;
                     gd.setCornerRadius(0f);
 
                     mainlayout.setBackgroundDrawable(gd);
-
+                    main_english_layout.setBackgroundColor(Color.parseColor("#FF000000"));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putString(backgroundcolor, "#383838");
                     editor.commit();
@@ -1033,6 +928,7 @@ Typeface tf_play,tf;
                     gd.setCornerRadius(0f);
 
                     mainlayout.setBackgroundDrawable(gd);
+                    main_english_layout.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putString(backgroundcolor, "#FFFFFFFF");
                     editor.commit();
@@ -1661,7 +1557,8 @@ Typeface tf_play,tf;
         //Notice how The Tab Layout adn View Pager object are linked
         mTabLayout.setupWithViewPager(mPager);
         if(colorcodes.equals("#FFFFFFFF")){
-            mTabLayout.setSelectedTabIndicatorColor(Color.BLACK);
+            mTabLayout.setSelectedTabIndicatorColor(Color.BLUE);
+            mTabLayout.setTabTextColors(Color.parseColor("#666666"),Color.BLACK);
         }
         else{
             mTabLayout.setSelectedTabIndicatorColor(Color.WHITE);
@@ -1689,7 +1586,7 @@ Typeface tf_play,tf;
     }
     private void setupTabIcons() {
 
-
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
 
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Lora-Regular.ttf");
         ViewGroup vg = (ViewGroup) mTabLayout.getChildAt(0);
@@ -1705,9 +1602,7 @@ Typeface tf_play,tf;
                         Typeface tf1 = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Oxygen-Bold.ttf");
                         ((TextView) tabViewChild).setTypeface(tf1);
                     }
-                    if(colorcodes.equals("#FFFFFFFF")){
-                        ((TextView) tabViewChild).setTextColor(Color.BLACK);
-                    }
+
                 }
             }
         }

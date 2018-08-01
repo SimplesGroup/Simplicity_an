@@ -5,7 +5,7 @@
     android:id="@+id/listlayout_taball">
     <LinearLayout
         android:id="@+id/small_design"
-
+        android:layout_marginLeft="15dp"
         android:orientation="horizontal"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"

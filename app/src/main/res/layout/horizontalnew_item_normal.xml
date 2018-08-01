@@ -41,6 +41,7 @@
                         android:maxHeight="275dp"
                         android:minHeight="275dp"
                         android:scaleType="centerCrop"
+
                         android:adjustViewBounds="true"
                         android:visibility="visible" />
                     <ImageButton

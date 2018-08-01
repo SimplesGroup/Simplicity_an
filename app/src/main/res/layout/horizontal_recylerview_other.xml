@@ -9,7 +9,7 @@
     <TextView
         android:padding="10dp"
         android:background="@color/whitegradient"
-        android:paddingLeft="15dp"
+        android:paddingLeft="10dp"
         android:layout_alignParentLeft="true"
         android:id="@+id/title_horizontal"
         android:textColor="@android:color/white"

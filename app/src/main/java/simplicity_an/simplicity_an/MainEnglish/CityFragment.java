@@ -153,6 +153,8 @@ Button city;
     String tab_id;
     String fontname;
     Typeface tf_play,tf;
+    TextView line_vertical_textview;
+    RelativeLayout main_english_layout;
     public static CityFragment newInstance() {
         CityFragment fragment = new CityFragment();
         return fragment;
@@ -172,7 +174,7 @@ Button city;
         btnmore = (Button)getActivity().findViewById(R.id.btn_shop);
 
  font_button=(ImageView) view.findViewById(R.id.fontbutton);
-
+main_english_layout=(RelativeLayout)getActivity().findViewById(R.id.mainenglish);
         sharedpreferences = getActivity(). getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
         OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
@@ -230,10 +232,10 @@ tab_id=get.getStringExtra("TAB");
             }
         });
 
+line_vertical_textview=(TextView)view.findViewById(R.id.linevertical_versiontwo);
+     line_vertical_textview.setText(Html.fromHtml("&nbsp;"+"|"+"&nbsp;"));
 
-
-
-        if(fontname.equals("sanfrancisco")){
+       /* if(fontname.equals("sanfrancisco")){
             String playfair ="fonts/Oxygen-Bold.ttf";
             tf_play = Typeface.createFromAsset(getActivity().getAssets(), playfair);
             String simplycity_title_bold = "fonts/SystemSanFranciscoDisplayRegular.ttf";
@@ -252,7 +254,7 @@ tab_id=get.getStringExtra("TAB");
             btnspecials.setTypeface(tf_play);
             btnmore.setTypeface(tf_play);
         }
-
+*/
 
 
 
@@ -315,93 +317,7 @@ tab_id=get.getStringExtra("TAB");
         }
 
 
-       /* if(colorcodes.length()==0){
-            int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
-            GradientDrawable gd = new GradientDrawable(
-                    GradientDrawable.Orientation.TOP_BOTTOM,
-                    colors);
-            gd.setCornerRadius(0f);
 
-            mainlayout.setBackgroundDrawable(gd);
-         // city.setBackgroundColor(getResources().getColor(R.color.theme1button));
-            fabplus.setBackgroundResource(R.color.theme1button);
-            fabinnerplus.setBackgroundResource(R.color.theme1button);
-            fabsearch.setBackgroundResource(R.color.theme1button);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
-            editor.commit();
-        }else {
-            if(colorcodes.equalsIgnoreCase("004")){
-                Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
-                GradientDrawable gd = new GradientDrawable(
-                        GradientDrawable.Orientation.TOP_BOTTOM,
-                        colors);
-                gd.setCornerRadius(0f);
-
-                mainlayout.setBackgroundDrawable(gd);
-              // city.setBackgroundColor(getResources().getColor(R.color.theme1button));
-                fabplus.setBackgroundResource(R.color.theme1button);
-                fabinnerplus.setBackgroundResource(R.color.theme1button);
-                fabsearch.setBackgroundResource(R.color.theme1button);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
-                editor.commit();
-            }else {
-
-                if(colorcodes!=null){
-                    if(!colorcodes.equals("#FFFFFFFF")) {
-                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
-
-                        GradientDrawable gd = new GradientDrawable(
-                                GradientDrawable.Orientation.TOP_BOTTOM,
-                                colors);
-                        gd.setCornerRadius(0f);
-
-                        mainlayout.setBackgroundDrawable(gd);
-
-
-                    }
-                    else{
-                        int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
-
-                        GradientDrawable gd = new GradientDrawable(
-                                GradientDrawable.Orientation.TOP_BOTTOM,
-                                colors);
-                        gd.setCornerRadius(0f);
-
-                        mainlayout.setBackgroundDrawable(gd);
-                        // city.setBackgroundColor(getResources().getColor(R.color.theme1button));
-                        fabplus.setBackgroundResource(R.color.theme1button);
-                        fabinnerplus.setBackgroundResource(R.color.theme1button);
-                        fabsearch.setBackgroundResource(R.color.theme1button);
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(backgroundcolor, "#383838");
-
-                        editor.commit();
-
-                    }
-
-                }else {
-                    int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
-
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
-
-                    mainlayout.setBackgroundDrawable(gd);
-                  // city.setBackgroundColor(getResources().getColor(R.color.theme1button));
-                    fabplus.setBackgroundResource(R.color.theme1button);
-                    fabinnerplus.setBackgroundResource(R.color.theme1button);
-                    fabsearch.setBackgroundResource(R.color.theme1button);
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
-
-                    editor.commit();
-                }
-            }
-        }*/
         String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
         String simplycity_title_reugular= "fonts/robotoSlabBold.ttf";
@@ -416,12 +332,13 @@ tab_id=get.getStringExtra("TAB");
         if(colorcodes.equals("#FFFFFFFF"))
         {
             title_coimbatore.setTextColor(Color.BLACK);
-
+            line_vertical_textview.setTextColor(Color.BLACK);
 
         }
         else
         {
             title_coimbatore.setTextColor(Color.WHITE);
+            line_vertical_textview.setTextColor(Color.WHITE);
         }
         if(colorcodes.equals("#FFFFFFFF")){
             /*city.setBackgroundColor(getResources().getColor(R.color.theme13));
@@ -433,10 +350,10 @@ tab_id=get.getStringExtra("TAB");
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
             btnspecials.setImageResource(R.mipmap.specials);*/
-            city.setTextColor(Color.WHITE);
-            btnevents.setTextColor(Color.parseColor("#CCCCCC"));
-            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
-            btnmore.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.BLACK);
+            btnevents.setTextColor(Color.parseColor("#666666"));
+            btnspecials.setTextColor(Color.parseColor("#666666"));
+            btnmore.setTextColor(Color.parseColor("#666666"));
         }
         else{
 
@@ -707,48 +624,7 @@ Log.e("RES",response.toString());
         };
         special.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(special);
-        /*if(myprofileid!=null) {
 
-            JsonArrayRequest jsonReq = new JsonArrayRequest(url_notification_count_valueget, new Response.Listener<JSONArray>() {
-
-                @Override
-                public void onResponse(JSONArray response) {
-                    // TODO Auto-generated method stub
-
-
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
-                            JSONObject obj = response.getJSONObject(i);
-                            ItemModel model = new ItemModel();
-                            model.setCount(obj.getString("count"));
-                            notification_counts = obj.getString("count");
-                            Log.e("unrrad:", notification_counts);
-                            value=Integer.parseInt(notification_counts);
-                            if(value==0){
-                                notification_batge_count.setVisibility(View.GONE);
-                            }else {
-                                notification_batge_count.setVisibility(View.VISIBLE);
-                                notification_batge_count.setText(notification_counts);
-                            }
-                        } catch (JSONException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                    }
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // TODO Auto-generated method stub
-                    // VolleyLog.d(TAG, "ERROR" + error.getMessage());
-                }
-            });
-           jsonReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-           requestQueue.add(jsonReq);
-        }else {
-
-        }*/
         weather_update=(TextView)view. findViewById(R.id.weather_degree_versiontwo);
         weathercentre_textview=(TextView)view.findViewById(R.id.weathercenter) ;
         weathercentre_textview.setText(Html.fromHtml("&nbsp;"+"|"+"&nbsp;"));
@@ -786,7 +662,7 @@ Log.e("RES",response.toString());
         // title_coimbatore.setTypeface(tf);
         date_text.setTypeface(tf);
         weather_update.setTypeface(tf);
-        language_title.setText(Html.fromHtml("&nbsp;"+"<b>தமிழ்</b>"+"&nbsp;"+"|"+"&nbsp;"));
+        language_title.setText(Html.fromHtml("&nbsp;"+"<a>தமிழ்</a>"+"&nbsp;"+"|"+"&nbsp;"));
 
         if(colorcodes.equals("#FFFFFFFF"))
         {
@@ -815,11 +691,16 @@ Log.e("RES",response.toString());
         }
         if(fontname.equals("playfair")){
             title_coimbatore.setTypeface(tf_pala);
+            language_title.setTypeface(tf_pala);
+            date_text.setTypeface(tf_pala);
+            line_vertical_textview.setTypeface(tf_pala);
         }else {
             Typeface sanf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
             title_coimbatore.setTypeface(sanf);
             title_coimbatore.setTextSize(30);
             date_text.setTypeface(sanf);
+            language_title.setTypeface(sanf);
+            line_vertical_textview.setTypeface(sanf);
 
         }
         StringRequest weather=new StringRequest(Request.Method.GET, WEATHER_URL, new Response.Listener<String>() {
@@ -847,17 +728,19 @@ Log.e("RES",response.toString());
         if(colorcodes.equals("#FFFFFFFF")){
             themechange_button.setImageResource(R.drawable.themenormal);
             if(fontname.equals("playfair")){
-                font_button.setImageResource(R.mipmap.playfairblack);
-            }else {
                 font_button.setImageResource(R.mipmap.sanblack);
+            }else {
+                font_button.setImageResource(R.mipmap.playfairblack);
+
             }
 
         }else {
             themechange_button.setImageResource(R.drawable.themewhite);
             if(fontname.equals("playfair")){
-                font_button.setImageResource(R.mipmap.playfairwhite);
-            }else {
                 font_button.setImageResource(R.mipmap.sanwhite);
+            }else {
+                font_button.setImageResource(R.mipmap.playfairwhite);
+
             }
 
         }
@@ -1001,64 +884,7 @@ Log.e("CHANGE LAMG",response.toString());
             }
         });
 
-        /*explore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent entairnment=new Intent(getActivity(),EntertainmentVersiontwo.class);
-                startActivity(entairnment);
-                getActivity().overridePendingTransition(R.anim.slide_right, R.anim.slide_right);
-            }
-        });
-        beyond.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent beyond=new Intent(getActivity(),EventsVersionTwo.class);
-                startActivity(beyond);
-
-               getActivity(). overridePendingTransition(R.anim.slide_right, R.anim.slide_right);
-            }
-        });
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent old_main=new Intent(getActivity(),MainActivity.class);
-                startActivity(old_main);
-              getActivity().  overridePendingTransition(R.anim.slide_right, R.anim.slide_right);
-            }
-        });
-        notifications.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                *//*if(myprofileid!=null) {
-                    if (value == 0) {
-                        Intent notification_page = new Intent(MainActivityVersiontwo.this, NotificationSettingsactivity.class);
-                        startActivity(notification_page);
-                        finish();
-                    } else {
-                        Uloaddataservernotify();
-                        Intent notification_page = new Intent(MainActivityVersiontwo.this, NotificationSettingsactivity.class);
-                        startActivity(notification_page);
-                        finish();
-                    }
-                }else {
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(Activity, "mainversion");
-                    editor.putString(CONTENTID, "0");
-                    editor.commit();
-                    Intent signin=new Intent(MainActivityVersiontwo.this,SigninpageActivity.class);
-                    startActivity(signin);
-                    finish();
-                }*//*
-
-                Intent notification_page = new Intent(getActivity(), MainPageEnglish.class);
-                startActivity(notification_page);
-              getActivity().  overridePendingTransition(R.anim.slide_right, R.anim.slide_right);
-
-            }
-        });*/
 
         font_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1069,23 +895,25 @@ Log.e("CHANGE LAMG",response.toString());
 
                     Typeface tf=fonts.font("sanfrancisco",getActivity());
                     Typeface tf1=fonts.font1(getActivity());
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        font_button.setImageResource(R.mipmap.playfairblack);
+                    }else {
+                        font_button.setImageResource(R.mipmap.playfairwhite);
 
+                    }
                     SharedPreferences.Editor editor=sharedpreferences.edit();
                     editor.putString(FONT,"sanfrancisco");
                     editor.commit();
                     title_coimbatore.setTypeface(tf);
                     title_coimbatore.setTextSize(30);
-                    if(colorcodes.equals("#FFFFFFFF")){
-                        font_button.setImageResource(R.mipmap.sanblack);
-                    }else {
-                        font_button.setImageResource(R.mipmap.sanwhite);
 
-                    }
 
 ChangeFont new_news=new Tab_new_news();
             new_news.change();
             new_news=new Tab_All();
             new_news.change();
+                   /* MainPageEnglish english=new MainPageEnglish();
+                    english.Changefont("sanfrancisco",getActivity());*/
                   /*  ChangeFont   column=new TabColumns();
                     column.change();
                     ChangeFont education=new TabEducation();
@@ -1142,17 +970,20 @@ ChangeFont new_news=new Tab_new_news();
                     editor.commit();
                     title_coimbatore.setTypeface(tf);
                     title_coimbatore.setTextSize(40);
+
                     if(colorcodes.equals("#FFFFFFFF")){
-                        font_button.setImageResource(R.mipmap.playfairblack);
+                        font_button.setImageResource(R.mipmap.sanblack);
                     }else {
-                        font_button.setImageResource(R.mipmap.playfairwhite);
+                        font_button.setImageResource(R.mipmap.sanwhite);
 
                     }
-
                     ChangeFont chfont=new Tab_new_news();
                     chfont.change();
                     chfont=new Tab_All();
                     chfont.change();
+                   /* MainPageEnglish english=new MainPageEnglish();
+                    english.Changefont("playfair",getActivity());*/
+                    setupTabIcons();
                    /* chfont=new Tabarticle();
                     chfont.change();*/
                     /*new_news=new Tabcolumnist();
@@ -1223,7 +1054,7 @@ ChangeFont new_news=new Tab_new_news();
                     gd.setCornerRadius(0f);
 
                     mainlayout.setBackgroundDrawable(gd);
-
+                    main_english_layout.setBackgroundColor(Color.parseColor("#FF000000"));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putString(backgroundcolor, "#383838");
                     editor.commit();
@@ -1246,6 +1077,7 @@ ChangeFont new_news=new Tab_new_news();
                     gd.setCornerRadius(0f);
 
                     mainlayout.setBackgroundDrawable(gd);
+                    main_english_layout.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putString(backgroundcolor, "#FFFFFFFF");
                     editor.commit();
@@ -1833,9 +1665,11 @@ ChangeFont new_news=new Tab_new_news();
         mTabLayout.setupWithViewPager(mPager);
         if(colorcodes.equals("#FFFFFFFF")){
             mTabLayout.setSelectedTabIndicatorColor(Color.BLACK);
+            mTabLayout.setTabTextColors(Color.parseColor("#666666"),Color.BLACK);
         }
         else{
             mTabLayout.setSelectedTabIndicatorColor(Color.WHITE);
+
         }
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -1880,9 +1714,7 @@ ChangeFont new_news=new Tab_new_news();
                         Typeface tf1 = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Oxygen-Bold.ttf");
                         ((TextView) tabViewChild).setTypeface(tf1);
                     }
-                    if(colorcodes.equals("#FFFFFFFF")){
-                        ((TextView) tabViewChild).setTextColor(Color.BLACK);
-                    }
+
                 }
             }
         }
