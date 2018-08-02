@@ -57,7 +57,11 @@
             </intent-filter>
         </activity>
 
-
+        <activity
+            android:label="@string/app_name"
+            android:name=".Walkthrough.Aboutapp"
+            android:screenOrientation="portrait" >
+        </activity>
         <activity
             android:label="@string/app_name"
             android:name=".PaymentGateway.InitialScreenActivity"
