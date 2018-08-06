@@ -3,6 +3,7 @@ package simplicity_an.simplicity_an.Walkthrough;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -83,6 +84,9 @@ coimbatore.setOnClickListener(new View.OnClickListener() {
         btncoimbatore.setBackgroundResource(R.mipmap.tick);
         btnchennai.setBackgroundResource(R.mipmap.tickblack);
         btnhyderabad.setBackgroundResource(R.mipmap.tickblack);
+        chennai.setBackgroundColor(Color.parseColor("#000000"));
+        coimbatore.setBackgroundColor(Color.parseColor("#666666"));
+        hyderabad.setBackgroundColor(Color.parseColor("#000000"));
     }
 
 });
@@ -92,6 +96,9 @@ coimbatore.setOnClickListener(new View.OnClickListener() {
                 btnchennai.setBackgroundResource(R.mipmap.tick);
                 btncoimbatore.setBackgroundResource(R.mipmap.tickblack);
                 btnhyderabad.setBackgroundResource(R.mipmap.tickblack);
+                chennai.setBackgroundColor(Color.parseColor("#666666"));
+                coimbatore.setBackgroundColor(Color.parseColor("#000000"));
+                hyderabad.setBackgroundColor(Color.parseColor("#000000"));
             }
 
         });
@@ -100,7 +107,10 @@ coimbatore.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 btnhyderabad.setBackgroundResource(R.mipmap.tick);
                 btnchennai.setBackgroundResource(R.mipmap.tickblack);
-                btncoimbatore.setBackgroundResource(R.mipmap.tickblack);
+
+                chennai.setBackgroundColor(Color.parseColor("#000000"));
+                coimbatore.setBackgroundColor(Color.parseColor("#000000"));
+                hyderabad.setBackgroundColor(Color.parseColor("#666666"));
             }
 
         });

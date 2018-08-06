@@ -3,6 +3,7 @@ package simplicity_an.simplicity_an.Walkthrough;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -79,6 +80,9 @@ public class LanguageSelection extends AppCompatActivity {
             public void onClick(View v) {
                 btntamil.setBackgroundResource(R.mipmap.tick);
                 btnenglish.setBackgroundResource(R.mipmap.tickblack);
+                tamil.setBackgroundColor(Color.parseColor("#666666"));
+                english.setBackgroundColor(Color.parseColor("#000000"));
+
 
             }
 
@@ -88,7 +92,8 @@ public class LanguageSelection extends AppCompatActivity {
             public void onClick(View v) {
                 btnenglish.setBackgroundResource(R.mipmap.tick);
                 btntamil.setBackgroundResource(R.mipmap.tickblack);
-
+                tamil.setBackgroundColor(Color.parseColor("#000000"));
+                english.setBackgroundColor(Color.parseColor("#666666"));
             }
 
         });
