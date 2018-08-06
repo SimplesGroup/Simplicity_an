@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -65,6 +66,7 @@ import simplicity_an.simplicity_an.Tamil.TabColumnstamil;
 import simplicity_an.simplicity_an.Tamil.TamilEntertainmentall;
 import simplicity_an.simplicity_an.Tamil.Tamilentertainmentmovies;
 import simplicity_an.simplicity_an.Tamil.Tamilentertainmentradio;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 /**
  * Created by kuppusamy on 5/18/2017.
@@ -113,6 +115,10 @@ public class EntertainmentFragmentTamil extends Fragment  {
     LinearLayout layout;
     public static final String GcmId = "gcmid";
     String dayOfTheWeek,sMonthNamefull;
+    String fontname;
+    Typeface tf1;
+     ImageView font_button;
+    public static final String FONT= "font";
     public static EntertainmentFragmentTamil newInstance() {
         EntertainmentFragmentTamil fragment = new EntertainmentFragmentTamil();
         return fragment;
@@ -134,11 +140,13 @@ public class EntertainmentFragmentTamil extends Fragment  {
         contentid=sharedpreferences.getString(CONTENTID,"");
         activity=sharedpreferences.getString(Activity,"");
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         if (sharedpreferences.contains(MYUSERID)) {
 
             myprofileid=sharedpreferences.getString(MYUSERID,"");
             myprofileid = myprofileid.replaceAll("\\D+","");
         }
+        font_button=(ImageView) view.findViewById(R.id.fontbutton);
         explore=(ImageButton)getActivity().findViewById(R.id.btn_versiontwoexplore);
         beyond=(ImageButton)getActivity().findViewById(R.id.btn_versiontwobeyond);
         city=(ImageButton)getActivity().findViewById(R.id.btn_versiontwocity);
@@ -183,7 +191,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
             }
         });
         if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+            int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"), Color.parseColor("##383838")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
@@ -200,7 +208,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"), Color.parseColor("#383838")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -242,7 +250,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
                         explore.setImageResource(R.mipmap.specialstamilone);
                     }
                 }else {
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"), Color.parseColor("#383838")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -353,7 +361,14 @@ public class EntertainmentFragmentTamil extends Fragment  {
         {
             title_coimbatore.setTextColor(Color.WHITE);
         }
-
+        if(fontname.equals("playfair")){
+            tf1 = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
+            title_coimbatore.setTypeface(tf1);
+        }else {
+            tf1=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
+            title_coimbatore.setTypeface(tf1);
+            title_coimbatore.setTextSize(30);
+        }
         if(colorcodes.equals("#FFFFFFFF")){
             explore.setBackgroundResource(R.color.theme13);
             explore.setImageResource(R.mipmap.specialstamilone);
@@ -554,10 +569,19 @@ public class EntertainmentFragmentTamil extends Fragment  {
 
         if(colorcodes.equals("#FFFFFFFF")){
             themechange_button.setImageResource(R.drawable.themenormal);
-
+            if(fontname.equals("playfair")){
+                font_button.setImageResource(R.mipmap.playfairblack);
+            }else {
+                font_button.setImageResource(R.mipmap.sanblack);
+            }
 
         }else {
             themechange_button.setImageResource(R.drawable.themewhite);
+            if(fontname.equals("playfair")){
+                font_button.setImageResource(R.mipmap.playfairwhite);
+            }else {
+                font_button.setImageResource(R.mipmap.sanwhite);
+            }
 
 
         }
@@ -771,6 +795,59 @@ public class EntertainmentFragmentTamil extends Fragment  {
 
             }
         });*/
+        font_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fontname=sharedpreferences.getString(FONT,"");
+                if(fontname.equals("playfair")){
+                    Fonts fonts=new Fonts();
+
+                    Typeface tf=fonts.font("sanfrancisco",getActivity());
+                    Typeface tf1=fonts.font1(getActivity());
+
+                    SharedPreferences.Editor editor=sharedpreferences.edit();
+                    editor.putString(FONT,"sanfrancisco");
+                    editor.commit();
+                    title_coimbatore.setTypeface(tf);
+                    title_coimbatore.setTextSize(30);
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        font_button.setImageResource(R.mipmap.sanwhite);
+                    }else {
+                        font_button.setImageResource(R.mipmap.sanblack);
+                    }
+                    Fragment selectedFragment = null;
+                    selectedFragment = EntertainmentFragmentTamil.newInstance();
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_layout, selectedFragment);
+                    transaction.commit();
+                   /* Intent in=new Intent(getActivity(), MainPageEnglish.class);
+                    in.putExtra("ID","1");
+                    startActivity(in);*/
+                }else  {
+                    Fonts fonts=new Fonts();
+
+                    Typeface tf=fonts.font("playfair",getActivity());
+                    // Typeface tf1=fonts.font1(getActivity());
+
+                    SharedPreferences.Editor editor=sharedpreferences.edit();
+                    editor.putString(FONT,"playfair");
+                    editor.commit();
+                    title_coimbatore.setTypeface(tf);
+                    title_coimbatore.setTextSize(40);
+                    if(colorcodes.equals("#FFFFFFFF")){
+                        font_button.setImageResource(R.mipmap.playfairwhite);
+                    }else {
+                        font_button.setImageResource(R.mipmap.playfairblack);
+                    }
+
+                    Fragment selectedFragment = null;
+                    selectedFragment = EntertainmentFragmentTamil.newInstance();
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_layout, selectedFragment);
+                    transaction.commit();
+                }
+            }
+        });
         themechange_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

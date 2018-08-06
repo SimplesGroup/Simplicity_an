@@ -93,6 +93,7 @@ import simplicity_an.simplicity_an.Tamil.Activity.TamilSportsnewsDescription;
 import simplicity_an.simplicity_an.Tamil.Activity.TipsDescriptionTamil;
 import simplicity_an.simplicity_an.Tamil.Activity.TravelsDescriptiontamil;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 import simplicity_an.simplicity_an.YoutubeVideoPlayer;
 
 /**
@@ -133,7 +134,9 @@ OnFragmentInteractionListener mListener;
     String colorcodes;
 
     private Boolean isFabOpen = false;
-
+    String fontname;
+    Typeface tf;
+    public static final String FONT= "font";
     FloatingActionButton fabsearch,fabinnerplus;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -167,7 +170,7 @@ OnFragmentInteractionListener mListener;
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
         Tokenid=sharedpreferences.getString(GcmId,"");
         requestQueue = Volley.newRequestQueue(getActivity());
-
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         getData();
 
         lLayout = new LinearLayoutManager(getActivity());
@@ -1044,7 +1047,14 @@ OnFragmentInteractionListener mListener;
                 String simplycity_titles = "fonts/robotoSlabRegular.ttf";
                 final Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), simplycity_titles);
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
-                userViewHolder.title_item.setTypeface(playfair);
+                if(fontname.equals("playfair")){
+                    //  tf = Typeface.createFromAsset(getActivity().getAssets(), String.valueOf(seguiregular));
+                    userViewHolder.title_item.setTypeface(seguiregular);
+                }else {
+                    tf=Typeface.createFromAsset(getActivity().getAssets(), Fonts.muktamalar);
+                    userViewHolder.title_item.setTypeface(tf);
+                    userViewHolder.title_item.setTextSize(20);
+                }
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular);
                 userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(tf_play);
@@ -1561,7 +1571,14 @@ OnFragmentInteractionListener mListener;
                 final Typeface tf_play = Typeface.createFromAsset(getActivity().getAssets(), simplycity_titles);
 
                 userViewHolder.title_item.setText(itemmodel.getTitle());
-                userViewHolder.title_item.setTypeface(playfair);
+                if(fontname.equals("playfair")){
+                    //  tf = Typeface.createFromAsset(getActivity().getAssets(), String.valueOf(seguiregular));
+                    userViewHolder.title_item.setTypeface(seguiregular);
+                }else {
+                    tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
+                    userViewHolder.title_item.setTypeface(tf);
+                    userViewHolder.title_item.setTextSize(20);
+                }
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular);
                 userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(tf_play);

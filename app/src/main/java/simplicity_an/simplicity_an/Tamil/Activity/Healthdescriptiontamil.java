@@ -80,6 +80,7 @@ import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Tab_All;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 
 /**
@@ -153,6 +154,8 @@ public class Healthdescriptiontamil extends AppCompatActivity {
     RelativeLayout mainlayout;
     String colorcodes;
     LinearLayout commentboxlayout;
+    String fontname;
+    Typeface tf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,7 +186,7 @@ public class Healthdescriptiontamil extends AppCompatActivity {
         }
 
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
-
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
 
         commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
@@ -357,7 +360,7 @@ public class Healthdescriptiontamil extends AppCompatActivity {
 
 
         String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
+         tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
         String playfair = "fonts/TAU_Elango_Madhavi.TTF";
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
@@ -365,7 +368,17 @@ public class Healthdescriptiontamil extends AppCompatActivity {
         comment_title.setTypeface(tf);
         loadmore_title.setTypeface(tf);
         post.setTypeface(tf);
-        tv.setTypeface(tf_play);
+        if(fontname.equals("playfair")){
+            String playfa ="fonts/TAU_Elango_Madhavi.TTF";
+            tf = Typeface.createFromAsset(getApplicationContext().getAssets(), playfa);
+            tv.setTypeface(tf);
+
+        }else {
+            String play = "fonts/MUKTAMALAR-BOLD.TTF";
+            tf= Typeface.createFromAsset(getApplicationContext().getAssets(), play);
+            tv.setTypeface(tf);
+            tv.setLineSpacing(0,0.8f);
+        }
         hashtags_title.setTypeface(tf);
         short_description.setTypeface(tf);
         title_category.setTypeface(tf);

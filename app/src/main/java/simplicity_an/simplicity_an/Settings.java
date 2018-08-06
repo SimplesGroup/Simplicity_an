@@ -277,7 +277,7 @@ notification_data=(TextView)findViewById(R.id.notificationdata_data);
         privacy.setText("Privacy Policy");
         language.setText("Language");
       //  languagedata.setText("English");
-        location.setText("Location");
+        location.setText("LocationSelection");
         locationdata.setText("Coimbatore");
         savedarticle_title.setText("Saved Article");
         settings_title_text.setText("Settings");

@@ -134,7 +134,7 @@ public class CartallshippingAddress extends AppCompatActivity {
         explore_item_recyclerview=(RecyclerView)findViewById(R.id.expolre_category_recylerview);
         explore_item_recyclerview.setLayoutManager(layoutManagers);
         explore_item_recyclerview.setNestedScrollingEnabled(false);
-        your_location_title_textview.setText("Your Delivery Location");
+        your_location_title_textview.setText("Your Delivery LocationSelection");
         change_address_tetview.setText("ADD NEW");
         back_textview.setOnClickListener(new View.OnClickListener() {
             @Override

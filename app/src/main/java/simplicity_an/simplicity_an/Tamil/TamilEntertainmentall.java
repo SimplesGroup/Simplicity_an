@@ -94,6 +94,7 @@ import simplicity_an.simplicity_an.Tamil.Activity.ReportNewsOrComplaintsTamil;
 import simplicity_an.simplicity_an.TipsDescription;
 import simplicity_an.simplicity_an.TravelsDescription;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 import simplicity_an.simplicity_an.YoutubeVideoPlayer;
 
 /**
@@ -134,6 +135,9 @@ public class TamilEntertainmentall extends Fragment {
     FloatingActionButton fabsearch,fabinnerplus;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     SwipeRefreshLayout swipeRefresh;
+    String fontname;
+    Typeface tf;
+    public static final String FONT= "font";
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !isFragmentLoaded ) {
@@ -165,6 +169,7 @@ public class TamilEntertainmentall extends Fragment {
         Tokenid=sharedpreferences.getString(GcmId,"");
         Log.e("coloR",colorcodes);
         requestQueue = Volley.newRequestQueue(getActivity());
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         lLayout = new LinearLayoutManager(getActivity());
         recyclerview_tab_all = (RecyclerView) view.findViewById(R.id.tab_all_recyclerview);
         recyclerview_tab_all.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
@@ -1081,7 +1086,14 @@ public class TamilEntertainmentall extends Fragment {
                 userViewHolder.editername.setTypeface(seguiregular);
                 userViewHolder.editername.setText(itemmodel.getEditername());
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
-                userViewHolder.title_item.setTypeface(seguiregular);
+                if(fontname.equals("playfair")){
+                    //  tf = Typeface.createFromAsset(getActivity().getAssets(), String.valueOf(seguiregular));
+                    userViewHolder.title_item.setTypeface(seguiregular);
+                }else {
+                    tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
+                    userViewHolder.title_item.setTypeface(tf);
+                    userViewHolder.title_item.setTextSize(20);
+                }
                 if(itemmodel.getEditername().equals("")){
                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));
                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }
@@ -1642,7 +1654,14 @@ public class TamilEntertainmentall extends Fragment {
                 userViewHolder.editername.setTypeface(seguiregular);
                 userViewHolder.editername.setText(itemmodel.getEditername());
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
-                userViewHolder.title_item.setTypeface(seguiregular);
+                if(fontname.equals("playfair")){
+                    //  tf = Typeface.createFromAsset(getActivity().getAssets(), String.valueOf(seguiregular));
+                    userViewHolder.title_item.setTypeface(seguiregular);
+                }else {
+                    tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
+                    userViewHolder.title_item.setTypeface(tf);
+                    userViewHolder.title_item.setTextSize(20);
+                }
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }
                 userViewHolder.item_type_name.setTypeface(tf_play);
                 //userViewHolder.date.setText(itemmodel.getPdate());

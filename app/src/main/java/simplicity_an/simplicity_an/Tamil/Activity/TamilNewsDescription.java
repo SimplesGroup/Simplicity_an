@@ -82,6 +82,7 @@ import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Tamil.Tamilnews;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 
 /**
@@ -158,6 +159,9 @@ public class TamilNewsDescription extends AppCompatActivity {
     RelativeLayout mainlayout;
     String colorcodes;
     LinearLayout commentboxlayout;
+    String fontname;
+    Typeface tf;
+    public static final String FONT= "font";
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,7 +192,9 @@ public class TamilNewsDescription extends AppCompatActivity {
 
         }
         requestQueue=Volley.newRequestQueue(this);
-
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
+        Log.e("fontname","dead");
+        Log.e("fontname",fontname);
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
 
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
@@ -205,7 +211,7 @@ public class TamilNewsDescription extends AppCompatActivity {
         }
 
         if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+            int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"), Color.parseColor("#383838")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
@@ -219,7 +225,7 @@ public class TamilNewsDescription extends AppCompatActivity {
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"), Color.parseColor("#383838")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -243,7 +249,7 @@ public class TamilNewsDescription extends AppCompatActivity {
 
                         mainlayout.setBackgroundDrawable(gd);
                     } else {
-                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                        int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"), Color.parseColor("#383838")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -258,7 +264,7 @@ public class TamilNewsDescription extends AppCompatActivity {
                         editor.commit();
                     }
                 }else {
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"), Color.parseColor("#383838")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -301,7 +307,7 @@ public class TamilNewsDescription extends AppCompatActivity {
         }
 
 
-        Log.e("ID",notifiid);
+        Log.e("ID",notifiid+fontname);
         if(myprofileid!=null){
             URLTWO=URL+notifiid+"&user_id="+myprofileid;
         }else {
@@ -352,12 +358,22 @@ public class TamilNewsDescription extends AppCompatActivity {
         description.getSettings().setDefaultFontSize((int)fontSize);*/
         // description=(TextView)findViewById(R.id.textView_desc);
         String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";;
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
+         tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
         String playfair = "fonts/TAU_Elango_Madhavi.TTF";
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
+        Log.e("test","abcd"+fontname);
+        if(fontname.equals("playfair")){
+            String playfa ="fonts/TAU_Elango_Madhavi.TTF";
+            tf = Typeface.createFromAsset(getApplicationContext().getAssets(), playfa);
+            tv.setTypeface(tf);
 
-        tv.setTypeface(tf_play);
+        }else {
+            String play = "fonts/MUKTAMALAR-BOLD.TTF";
+            tf= Typeface.createFromAsset(getApplicationContext().getAssets(), play);
+            tv.setTypeface(tf);
+            tv.setLineSpacing(0,0.8f);
+        }
         short_description.setTypeface(tf);
         title_category.setTypeface(tf);
         textview_date.setTypeface(tf);
@@ -1639,6 +1655,7 @@ public class TamilNewsDescription extends AppCompatActivity {
                     }, 2000);
                 }
             });
+
 
             return root;
         }

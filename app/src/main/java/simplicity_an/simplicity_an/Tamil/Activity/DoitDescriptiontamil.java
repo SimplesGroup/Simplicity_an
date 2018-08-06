@@ -78,6 +78,7 @@ import simplicity_an.simplicity_an.OnLoadMoreListener;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 
 /**
@@ -146,6 +147,8 @@ ScrollView scrollView;
     public static final String backgroundcolor = "color";
     RelativeLayout mainlayout;
     String colorcodes;
+    String fontname;
+    Typeface tf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,7 +177,7 @@ ScrollView scrollView;
         }
 
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
-
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
         if(colorcodes.length()==0){
             int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
@@ -305,11 +308,21 @@ ScrollView scrollView;
         description.getSettings().setDefaultFontSize((int)fontSize);*/
 
         String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";;
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
+         tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         String playfair = "fonts/TAU_Elango_Madhavi.TTF";
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
 
-        titlename.setTypeface(tf_play);
+        if(fontname.equals("playfair")){
+            String playfa ="fonts/TAU_Elango_Madhavi.TTF";
+            tf = Typeface.createFromAsset(getApplicationContext().getAssets(), playfa);
+            titlename.setTypeface(tf);
+
+        }else {
+            String play = "fonts/MUKTAMALAR-BOLD.TTF";
+            tf= Typeface.createFromAsset(getApplicationContext().getAssets(), play);
+            titlename.setTypeface(tf);
+            titlename.setLineSpacing(0,0.8f);
+        }
         short_description.setTypeface(tf);
         textview_date.setTypeface(tf);
         hashtags_title.setTypeface(tf);

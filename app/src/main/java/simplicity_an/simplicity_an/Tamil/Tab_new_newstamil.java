@@ -74,7 +74,6 @@ import simplicity_an.simplicity_an.Farmingdescription;
 import simplicity_an.simplicity_an.FoodAndCookDescriptionPage;
 import simplicity_an.simplicity_an.GovernmentnotificationsDescriptions;
 import simplicity_an.simplicity_an.Healthylivingdescription;
-import simplicity_an.simplicity_an.HorizontalAdapters.HorizontalPhotostoryadapter;
 import simplicity_an.simplicity_an.HorizontalAdapters.Horizontaladapter;
 import simplicity_an.simplicity_an.HorizontalAdapters.VerticalAdapters;
 import simplicity_an.simplicity_an.JobsDetailPage;
@@ -93,16 +92,30 @@ import simplicity_an.simplicity_an.ScienceandTechnologyDescription;
 import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.SimplicitySearchview;
 import simplicity_an.simplicity_an.SportsnewsDescription;
+import simplicity_an.simplicity_an.Tab_new_news;
 import simplicity_an.simplicity_an.Tabnews;
+import simplicity_an.simplicity_an.Tamil.Activity.DoitDescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.EducationDescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.Farmingdescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.FoodAndCookDescriptionPagetamil;
+import simplicity_an.simplicity_an.Tamil.Activity.Govtdescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.Healthdescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.JobsDetailPagetamil;
+import simplicity_an.simplicity_an.Tamil.Activity.ScienceandTechnologyDescriptiontamil;
+import simplicity_an.simplicity_an.Tamil.Activity.TamilNewsDescription;
+import simplicity_an.simplicity_an.Tamil.Activity.TipsDescriptionTamil;
+import simplicity_an.simplicity_an.Tamil.Activity.TravelsDescriptiontamil;
 import simplicity_an.simplicity_an.Tamil.HorizontalAdapters.HorizontalPhotostoryadaptertamil;
 import simplicity_an.simplicity_an.Tamil.HorizontalAdapters.Horizontaladaptertamil;
 import simplicity_an.simplicity_an.Tamil.HorizontalAdapters.VerticalAdapterstamil;
 import simplicity_an.simplicity_an.TipsDescription;
 import simplicity_an.simplicity_an.TravelsDescription;
+import simplicity_an.simplicity_an.Utils.ChangeFont;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 import simplicity_an.simplicity_an.YoutubeVideoPlayer;
 
-public class Tab_new_newstamil extends Fragment {
+public class Tab_new_newstamil extends Fragment implements ChangeFont {
     RecyclerView recyclerview_tab_all_news;
     String URL="http://simpli-city.in/request2.php?rtype=alldatatest&key=simples&qtype=news";
     String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples"; 				String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
@@ -122,8 +135,8 @@ public class Tab_new_newstamil extends Fragment {
     FloatingActionButton fabnews,fabplus;
     String myprofileid;
     LinearLayoutManager lLayout;
-   Recyclerviewtaballadapter recyclerview_tab_all_adapter;
-    List<ItemModel> modelList=new ArrayList<ItemModel>();
+    private  static Recyclerviewtaballadapter recyclerview_tab_all_adapter;
+    public static List<ItemModel> modelLists=new ArrayList<ItemModel>();
     private boolean isFragmentLoaded=false;
     public static final String backgroundcolor = "color";
     String colorcodes;
@@ -136,6 +149,9 @@ public class Tab_new_newstamil extends Fragment {
     FloatingActionButton fabsearch,fabinnerplus;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     SwipeRefreshLayout swipeRefresh;
+    public String fontname;
+    Typeface tf;
+    public static final String FONT= "font";
 
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -168,7 +184,7 @@ public class Tab_new_newstamil extends Fragment {
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
         requestQueue = Volley.newRequestQueue(getActivity());
-
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         getData();
 
         lLayout = new LinearLayoutManager(getActivity());
@@ -309,7 +325,7 @@ public class Tab_new_newstamil extends Fragment {
             @Override
             public void onRefresh() {
                 swipeRefresh.setRefreshing(true);
-                modelList.clear();
+                modelLists.clear();
                 recyclerview_tab_all_adapter.notifyDataSetChanged();
                 requestCount=1;
                 getData();
@@ -323,7 +339,7 @@ public class Tab_new_newstamil extends Fragment {
             }
         });
         //getData();
-        recyclerview_tab_all_adapter = new Recyclerviewtaballadapter(modelList,recyclerview_tab_all_news);
+        recyclerview_tab_all_adapter = new Recyclerviewtaballadapter(modelLists,recyclerview_tab_all_news);
         recyclerview_tab_all_news.setAdapter(recyclerview_tab_all_adapter);
         recyclerview_tab_all_adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -345,6 +361,13 @@ public class Tab_new_newstamil extends Fragment {
         });
         return view;
     }
+
+    @Override
+    public void change() {
+        recyclerview_tab_all_adapter.Font(modelLists);
+    }
+
+
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(String playurl, String title, String image);     }
     public void animateFAB(){
@@ -496,50 +519,44 @@ public class Tab_new_newstamil extends Fragment {
                     int likes = obj.isNull("likes_count") ? null : obj
                             .getInt("likes_count");
                     model.setLikescount(likes);
-                    //model.setLikescount(obj.getInt("likes_count"));
+
                     int comment = obj.isNull("commentscount") ? null : obj
                             .getInt("commentscount");
                     model.setCommentscount(comment);
-                    /*int typevalue = obj.isNull("album_count") ? null : obj
-                            .getInt("album_count");
-                    model.setAlbumcount(typevalue);*/
+
                     model.setAlbumcount(obj.getInt("album_count"));
                     int count = obj.isNull("like_type") ? null : obj
                             .getInt("like_type");
                     model.setCounttype(count);
+                    String reportername = obj.isNull("reporter_name") ? null : obj
+                            .getString("reporter_name");
+                    model.setEditername(reportername);
                 }
-    //  model.setCommentscount(obj.getInt("commentscount"));
-    //  model.setFavcount(obj.getInt("fav"));
-    String share = obj.isNull("sharingurl") ? null : obj
-            .getString("sharingurl");
-    model.setSharingurl(share);
-    // model.setSharingurl(obj.getString("sharingurl"));
-    String qtypemain = obj.isNull("qtypemain") ? null : obj
-            .getString("qtypemain");
-    model.setQtypemain(qtypemain);
-    //  model.setQtypemain(obj.getString("qtypemain"));
-    String ads = obj.isNull("url") ? null : obj
-            .getString("url");
-    model.setAds(ads);
-    // model.setAds(obj.getString("url"));
-    String reportername = obj.isNull("reporter_name") ? null : obj
-            .getString("reporter_name");
-    model.setEditername(reportername);
-    String shortdesc = obj.isNull("short_description") ? null : obj
-            .getString("short_description");
-    model.setShortdescription(shortdesc);
-    // model.setEditername(obj.getString("reporter_name"));
-    // model.setShortdescription(obj.getString("short_description"));
-    // model.setDislikecount(obj.getInt("dislikes_count"));
+                String share = obj.isNull("sharingurl") ? null : obj
+                        .getString("sharingurl");
+                model.setSharingurl(share);
 
-    //   model.setCounttype(obj.getInt("like_type"));
-    String playurl = obj.isNull("radio_file") ? null : obj
-            .getString("radio_file");
-    model.setPlayurl(playurl);
-    // model.setPlayurl(obj.getString("radio_file"));
-    String youtubelink = obj.isNull("youtube_link") ? null : obj
-            .getString("youtube_link");
-    model.setYoutubelink(youtubelink);
+                String qtypemain = obj.isNull("qtypemain") ? null : obj
+                        .getString("qtypemain");
+                model.setQtypemain(qtypemain);
+
+                String ads = obj.isNull("url") ? null : obj
+                        .getString("url");
+                model.setAds(ads);
+
+                String shortdesc = obj.isNull("short_description") ? null : obj
+                        .getString("short_description");
+                model.setShortdescription(shortdesc);
+
+
+
+                String playurl = obj.isNull("radio_file") ? null : obj
+                        .getString("radio_file");
+                model.setPlayurl(playurl);
+
+                String youtubelink = obj.isNull("youtube_link") ? null : obj
+                        .getString("youtube_link");
+                model.setYoutubelink(youtubelink);
 
     List<ItemModel> albums = new ArrayList<>();
     ArrayList<String> album = new ArrayList<String>();
@@ -632,7 +649,7 @@ public class Tab_new_newstamil extends Fragment {
 
                             Log.e("LIST","List added");
                         }
-                    } else if (subtitle.equals("Beyond Coimbatore")) {
+                    } else if (subtitle.equals("நாடு மற்றும் உலக செய்திகள்")) {
                         Log.e("Response", "object data beyond today" );
                         for (int j = 0; j < arr.length(); j++) {
 
@@ -687,7 +704,7 @@ public class Tab_new_newstamil extends Fragment {
                             //modelList.add(models);
                             beyond.add(models);
                         }
-                    } else if (subtitle.equals("Feature Videos")) {
+                    } else if (subtitle.equals("சிறப்பு காணொளி")) {
                         for (int j = 0; j < arr.length(); j++) {
                             ItemModel models=new ItemModel();
                             JSONObject object = (JSONObject) arr.get(j);
@@ -742,7 +759,7 @@ public class Tab_new_newstamil extends Fragment {
 
 
 
-                    } else if (subtitle.equals("Special Column")) {
+                    } else if (subtitle.equals("சிறப்பு கட்டுரைகள்")) {
                         Log.e("Response", "object data special column" );
                         for (int j = 0; j < arr.length(); j++) {
                             ItemModel models=new ItemModel();
@@ -796,7 +813,7 @@ public class Tab_new_newstamil extends Fragment {
                             //modelList.add(models);
                             special.add(models);
                         }
-                    } else if (subtitle.equals("Photo Stories")) {
+                    } else if (subtitle.equals(" புகைப்பட செய்திகள் ")) {
                         for (int j = 0; j < arr.length(); j++) {
                             ItemModel models=new ItemModel();
                             JSONObject object = (JSONObject) arr.get(j);
@@ -942,7 +959,7 @@ public class Tab_new_newstamil extends Fragment {
                 model.setEventlist(events);
                 model.setVideoList(videos);
                 model.setPhotoStoryList(photo);
-                modelList.add(model);
+                modelLists.add(model);
             }
 
 
@@ -1503,9 +1520,10 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
         Context context;
         private  int currentvisiblecount;
         String urlaudio;
+     private List<ItemModel>modelList=new ArrayList<>();
         @Override
         public int getItemCount() {
-            return modelList.size();
+            return modelLists.size();
         }
         public Recyclerviewtaballadapter(List<ItemModel> students, RecyclerView recyclerView) {
             modelList = students;
@@ -1579,7 +1597,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     return vhImageradio;
                 case VIEW_TYPE_LOADING:
                     ViewGroup vImageloading = (ViewGroup) mInflater.inflate ( R.layout.layout_loading_item, parent, false );
-                  Userviewholdertaball vhImageloading = new Userviewholdertaball( vImageloading );
+                  LoadingViewHolder vhImageloading = new LoadingViewHolder( vImageloading );
                     return vhImageloading;
             }
 
@@ -1588,11 +1606,17 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
         @SuppressLint("ResourceAsColor")
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            fontname = sharedpreferences.getString(Fonts.FONT,"");
             if (holder instanceof Userviewholdertaball) {
 
                 final Userviewholdertaball userViewHolder = (Userviewholdertaball) holder;
 
                 String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
+
+
+
+
+
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
 
                 String simplycity_title_reqular = "fonts/Lora-Regular.ttf";;
@@ -1602,6 +1626,9 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
 
                 String simplycity_title = "fonts/Lora-Regular.ttf";
                 final Typeface pala = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
+
+
+
                 final ItemModel itemmodel = modelList.get(position);
                 userViewHolder.comment_button.setText("Comment");
                 userViewHolder.comment_button.setTypeface(seguiregular_bold);
@@ -1666,10 +1693,6 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
 
 
 
-
-
-
-
                 userViewHolder.editername.setTypeface(seguiregular);
                 userViewHolder.editername.setText(itemmodel.getEditername());
                 userViewHolder.shortdescription.setTypeface(pala);
@@ -1677,7 +1700,20 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
-                userViewHolder.title_item.setTypeface(seguiregular);
+                String simplycity_title_reugular= "fonts/TAU_Elango_Madhavi.TTF";
+                tf= Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
+
+
+                if(fontname.equals("playfair")){
+                    tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
+                    userViewHolder.title_item.setTypeface(tf);
+                    userViewHolder.title_item.setTextSize(30);
+                }else {
+                    tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
+                    userViewHolder.title_item.setTypeface(tf);
+                    userViewHolder.title_item.setTextSize(20);
+                }
+
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular_bold);
                 //userViewHolder.date.setText(itemmodel.getPdate());
                 userViewHolder.likescount.setTypeface(seguiregular_bold);
@@ -1706,51 +1742,51 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                                 // Show a toast on clicking layout
 
 
-                                String type = ((ItemModel) modelList.get(position)).getQtypemain();
-                                String qtype = ((ItemModel) modelList.get(position)).getQtype();
-                                String ids = ((ItemModel) modelList.get(position)).getId();
+                                String type = ((ItemModel) modelLists.get(position)).getQtypemain();
+                                String qtype = ((ItemModel) modelLists.get(position)).getQtype();
+                                String ids = ((ItemModel) modelLists.get(position)).getId();
 
 
 
                                 if(type.equals("news")||type.equals("National")||type.equals("International")) {
-                                    Intent intent = new Intent(getActivity(), NewsDescription.class);
+                                    Intent intent = new Intent(getActivity(), TamilNewsDescription.class);
                                     intent.putExtra("ID", ids);
                                     startActivity(intent);
                                 }else if(type.equals("article")){
-                                    Intent intent = new Intent(getActivity(), Articledescription.class);
+                                    Intent intent = new Intent(getActivity(), TamilArticledescription.class);
                                     intent.putExtra("ID", ids);
                                     startActivity(intent);
 
                                 }else if (type.equals("doit")){
-                                    Intent intent = new Intent(getActivity(), DoitDescription.class);
+                                    Intent intent = new Intent(getActivity(), DoitDescriptiontamil.class);
                                     intent.putExtra("ID", ids);
                                     startActivity(intent);
                                 }else if(type.equals("farming")){
-                                    Intent intent = new Intent(getActivity(), Farmingdescription.class);
+                                    Intent intent = new Intent(getActivity(), Farmingdescriptiontamil.class);
                                     intent.putExtra("ID", ids);
                                     startActivity(intent);
                                 }else if(type.equals("food")||type.equals("foodtip")){
                                     if(qtype.equals("Food & Cooking")){
-                                        Intent intent = new Intent(getActivity(), FoodAndCookDescriptionPage.class);
+                                        Intent intent = new Intent(getActivity(), FoodAndCookDescriptionPagetamil.class);
                                         intent.putExtra("ID", ids);
                                         startActivity(intent);
                                     }else {
-                                        Intent intent = new Intent(getActivity(), TipsDescription.class);
+                                        Intent intent = new Intent(getActivity(), TipsDescriptionTamil.class);
                                         intent.putExtra("ID", ids);
                                         startActivity(intent);
                                     }
 
 
                                 }else if(type.equals("govt")){
-                                    Intent intent = new Intent(getActivity(), GovernmentnotificationsDescriptions.class);
+                                    Intent intent = new Intent(getActivity(), Govtdescriptiontamil.class);
                                     intent.putExtra("ID", ids);
                                     startActivity(intent);
                                 }else if(type.equals("health")){
-                                    Intent intent = new Intent(getActivity(), Healthylivingdescription.class);
+                                    Intent intent = new Intent(getActivity(), Healthdescriptiontamil.class);
                                     intent.putExtra("ID", ids);
                                     startActivity(intent);
                                 }else if(type.equals("science")){
-                                    Intent intent = new Intent(getActivity(), ScienceandTechnologyDescription.class);
+                                    Intent intent = new Intent(getActivity(), ScienceandTechnologyDescriptiontamil.class);
                                     intent.putExtra("ID", ids);
 
                                     startActivity(intent);
@@ -1759,7 +1795,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                                     intent.putExtra("ID", ids);
                                     startActivity(intent);
                                 }else if(type.equals("travels")){
-                                    Intent intent = new Intent(getActivity(), TravelsDescription.class);
+                                    Intent intent = new Intent(getActivity(), TravelsDescriptiontamil.class);
                                     intent.putExtra("ID", ids);
                                     startActivity(intent);
                                 }else if(type.equals("event")){
@@ -1779,7 +1815,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                                     intent.putExtra("IMAGE", itemmodel.getImage());
                                     startActivity(intent);
                                 }else if(type.equalsIgnoreCase("Job")){
-                                    Intent intent = new Intent(getActivity(), JobsDetailPage.class);
+                                    Intent intent = new Intent(getActivity(), JobsDetailPagetamil.class);
                                     intent.putExtra("ID", ids);
                                     intent.putExtra("TITLE", itemmodel.getTitle());
                                     startActivity(intent);
@@ -1804,7 +1840,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                                     startActivity(intent);
                                 }
                                 else if(type.equalsIgnoreCase("education")){
-                                    Intent intent = new Intent(getActivity(), EducationDescription.class);
+                                    Intent intent = new Intent(getActivity(), EducationDescriptiontamil.class);
                                     intent.putExtra("ID", ids);
                                     startActivity(intent);
                                 }else
@@ -2169,7 +2205,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 Horizontalviewholder horizontalviewholder=(Horizontalviewholder)holder;
                 String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
-                ItemModel model=modelList.get(position);
+                ItemModel model=modelLists.get(position);
                 List<ItemModel>videolist=model.getVideoList();
                 String title=null;
 
@@ -2202,7 +2238,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 Horizontalphotostory horizontalphotostory=(Horizontalphotostory)holder;
                 String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
-                ItemModel model=modelList.get(position);
+                ItemModel model=modelLists.get(position);
                 List<ItemModel>photolist=model.getPhotoStoryList();
                 horizontalphotostory.text_title.setTextColor(Color.WHITE);
                 String title=null;
@@ -2234,7 +2270,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 Horizontalevent horizontalsmalldesign=(Horizontalevent) holder;
                 String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
-                final ItemModel itemmodel = modelList.get(position);
+                final ItemModel itemmodel = modelLists.get(position);
                 List<ItemModel>list=itemmodel.getEventlist();
                 String title=null;
 
@@ -2263,7 +2299,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 Horizontalbeyond horizontalbeyond=(Horizontalbeyond) holder;
                 String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
-                final ItemModel itemmodel = modelList.get(position);
+                final ItemModel itemmodel = modelLists.get(position);
                 List<ItemModel>list=itemmodel.getBeyondlist();
                 String title=null;
 
@@ -2292,7 +2328,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 Horizontalspecial horizontalspecial=(Horizontalspecial) holder;
                 String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
-                final ItemModel itemmodel = modelList.get(position);
+                final ItemModel itemmodel = modelLists.get(position);
                 List<ItemModel>list=itemmodel.getSpeciallist();
                 String title=null;
 
@@ -2332,7 +2368,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
 
 
-                final ItemModel itemmodel = modelList.get(position);
+                final ItemModel itemmodel = modelLists.get(position);
                 userViewHolder.comment_button.setText("Comment");
                 userViewHolder.comment_button.setTypeface(seguiregular);
                 userViewHolder.comment_button.setTransformationMethod(null);
@@ -2395,7 +2431,14 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 userViewHolder.editername.setText(itemmodel.getEditername());
 
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
-                userViewHolder.title_item.setTypeface(seguiregular);
+                if(fontname.equals("playfair")){
+                    //  tf = Typeface.createFromAsset(getActivity().getAssets(), String.valueOf(seguiregular));
+                    userViewHolder.title_item.setTypeface(seguiregular);
+                }else {
+                    tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
+                    userViewHolder.title_item.setTypeface(tf);
+                    userViewHolder.title_item.setTextSize(20);
+                }
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular);
                 // userViewHolder.date.setText(itemmodel.getPdate());
                 // userViewHolder.likescount.setTypeface(seguiregular);
@@ -2870,41 +2913,46 @@ if(itemmodel.getAlbum()==null){
             else {
                 if (holder instanceof LoadingViewHolder) {
                     LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
-                    loadingViewHolder.progressBar.setIndeterminate(true);
+                    loadingViewHolder.progressBar.setVisibility(View.GONE);
                 }
             }
         }
 
         public void onButtonPressed(String playurl, String title,String image) {             if (mListener != null) {                 mListener.onFragmentInteraction(playurl,title,image);              }         }
 
+     public void Font(List<ItemModel> list){
+         Log.e("SIZE","adap  "+list.toString());
+         this.modelList.addAll(list);
 
+         notifyDataSetChanged();
+
+     }
         public int getItemViewType(int position) {
 
 
             ItemModel item = modelList.get(position);
            // return modelList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
             if(item.getQtypemain()!=null){
-                if(item.getQtypemain().equals("photostories")){
+                if(item.getQtypemain().equalsIgnoreCase("photostories")){
                     return VIEW_TYPE_PHOTOSTORY;
-                }else {
-                    return VIEW_TYPE_ITEM;
+                } else {
+                    return  VIEW_TYPE_ITEM;
                 }
-
             }else {
-                if (item.getSubqueuetitle().equals("Feature Videos") ) {
+                if (item.getSubqueuetitle().equals("சிறப்பு காணொளி\n")) {
                     return VIEW_TYPE_VIDEO;
-                } else if (item.getSubqueuetitle().equals("Photo Stories")) {
+                } else if (item.getSubqueuetitle().equals("புகைப்பட செய்திகள்")) {
                     return VIEW_TYPE_PHOTOSTORY_NEW;
-                }else if(item.getSubqueuetitle().equals("கோவையில் நாளைய நிகழ்வுகள்")){
+                } else if (item.getSubqueuetitle().equals("கோவையில் இன்றைய நிகழ்வுகள்")) {
 
                     return VIEW_TYPE_EVENT;
-                }else if(item.getSubqueuetitle().equals("Special Column")){
+                } else if (item.getSubqueuetitle().equals("சிறப்பு கட்டுரைகள்")) {
                     return VIEW_TYPE_SPECIAL;
-                }else if(item.getSubqueuetitle().equals("Beyond Coimbatore")){
+                } else
+                if (item.getSubqueuetitle().equals("நாடு மற்றும் உலக செய்திகள்")){
                     return VIEW_TYPE_BEYOND;
-                }
-                else {
-                    return VIEW_TYPE_ITEM;
+                }else {
+                    return VIEW_TYPE_LOADING;
                 }
 
                 //return VIEW_TYPE_ITEM;
@@ -2924,11 +2972,9 @@ if(itemmodel.getAlbum()==null){
         public void setLoaded() {
             loading = false;
         }
-public void ChangeFont(){
 
-}
 
-    }
+ }
     public static class MyDialogFragment extends DialogFragment {
         private String KEY_COMMENT = "comment";
         private String KEY_TYPE = "qtype";
@@ -3279,6 +3325,8 @@ public void ChangeFont(){
             private int visibleThreshold = 5;
             private int lastVisibleItem, totalItemCount;
             Context context;
+           String fontname;
+            SharedPreferences sharedpreferences;
 
             public RecyclerViewAdapter(List<ItemModels> students, RecyclerView recyclerView) {
                 commentlist = students;
@@ -3330,7 +3378,11 @@ public void ChangeFont(){
 
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+                sharedpreferences = getActivity().getSharedPreferences(mypreference,
+                        Context.MODE_PRIVATE);
 
+                
+                fontname = sharedpreferences.getString(Fonts.FONT,"");
                 if (holder instanceof UserViewHolder) {
 
                     final UserViewHolder userViewHolder = (UserViewHolder) holder;

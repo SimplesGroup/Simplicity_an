@@ -80,6 +80,7 @@ import simplicity_an.simplicity_an.OnLoadMoreListener;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 
 /**
@@ -147,6 +148,8 @@ public class JobsDetailPagetamil extends AppCompatActivity {
     WebView infodescrtion,infoaddress;
     TextView phonenumber_textview;
     LinearLayout commentboxlayout;
+    String fontname;
+    Typeface tf;
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,7 +168,7 @@ public class JobsDetailPagetamil extends AppCompatActivity {
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
 
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
-
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
         back = (ImageButton)findViewById(R.id.btn_back);
         if(colorcodes.equals("#FFFFFFFF")){

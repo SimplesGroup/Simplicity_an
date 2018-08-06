@@ -75,6 +75,7 @@ import simplicity_an.simplicity_an.MySingleton;
 import simplicity_an.simplicity_an.OnLoadMoreListener;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SigninpageActivity;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 /**
  * Created by kuppusamy on 2/1/2016.
@@ -153,6 +154,8 @@ ScrollView scrollView;
     public static final String backgroundcolor = "color";
     RelativeLayout mainlayout;
     String colorcodes;
+    String fontname;
+    Typeface tf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,7 +188,7 @@ ScrollView scrollView;
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
 
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
-
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
         back = (ImageButton)findViewById(R.id.btn_back);
         if(colorcodes.equals("#FFFFFFFF")){
@@ -338,10 +341,20 @@ if(activity==null){
 
         recycler_comment.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";;
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
+        tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         String simplycity_title_fontPathone = "fonts/TAU_Elango_Madhavi.TTF";;
         Typeface tf_regular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPathone);
-        tv.setTypeface(tf_regular);
+        if(fontname.equals("playfair")){
+            String playfa ="fonts/TAU_Elango_Madhavi.TTF";
+            tf = Typeface.createFromAsset(getApplicationContext().getAssets(), playfa);
+            tv.setTypeface(tf);
+
+        }else {
+            String play = "fonts/MUKTAMALAR-BOLD.TTF";
+            tf= Typeface.createFromAsset(getApplicationContext().getAssets(), play);
+            tv.setTypeface(tf);
+           // tv.setTextSize(30);
+        }
 
         sourcelinknews.setTypeface(tf);
         sourcelinksimplicity.setTypeface(tf);

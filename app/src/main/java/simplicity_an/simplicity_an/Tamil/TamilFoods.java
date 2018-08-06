@@ -95,6 +95,7 @@ import simplicity_an.simplicity_an.Tamil.Activity.TamilSportsnewsDescription;
 import simplicity_an.simplicity_an.Tamil.Activity.TipsDescriptionTamil;
 import simplicity_an.simplicity_an.Tamil.Activity.TravelsDescriptiontamil;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 import simplicity_an.simplicity_an.YoutubeVideoPlayer;
 
 /**
@@ -133,7 +134,9 @@ public class TamilFoods extends Fragment {
     FloatingActionButton fabsearch,fabinnerplus;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
 OnFragmentInteractionListener mListener;
-
+    String fontname;
+    Typeface tf;
+    public static final String FONT= "font";
     SwipeRefreshLayout swipeRefresh;
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -166,6 +169,7 @@ OnFragmentInteractionListener mListener;
         Tokenid=sharedpreferences.getString(GcmId,"");
         Log.e("coloR",colorcodes);
         requestQueue = Volley.newRequestQueue(getActivity());
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         lLayout = new LinearLayoutManager(getActivity());
         recyclerview_tab_all_news = (RecyclerView) view.findViewById(R.id.tab_all_recyclerview);
         recyclerview_tab_all_news.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
@@ -1067,7 +1071,14 @@ OnFragmentInteractionListener mListener;
                 userViewHolder.editername.setTypeface(seguiregular);
                 userViewHolder.editername.setText(itemmodel.getEditername());
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
-                userViewHolder.title_item.setTypeface(seguiregular);
+                if(fontname.equals("playfair")){
+                    //  tf = Typeface.createFromAsset(getActivity().getAssets(), String.valueOf(seguiregular));
+                    userViewHolder.title_item.setTypeface(seguiregular);
+                }else {
+                    tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
+                    userViewHolder.title_item.setTypeface(tf);
+                    userViewHolder.title_item.setTextSize(20);
+                }
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }
                 userViewHolder.item_type_name.setTypeface(tf_play);
                // userViewHolder.date.setText(itemmodel.getPdate());
@@ -1587,7 +1598,14 @@ OnFragmentInteractionListener mListener;
                 userViewHolder.editername.setText(itemmodel.getEditername());
                 if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){                     userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
                 userViewHolder.title_item.setText(itemmodel.getTitle());
-                userViewHolder.title_item.setTypeface(seguiregular);
+                if(fontname.equals("playfair")){
+                    //  tf = Typeface.createFromAsset(getActivity().getAssets(), String.valueOf(seguiregular));
+                    userViewHolder.title_item.setTypeface(seguiregular);
+                }else {
+                    tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
+                    userViewHolder.title_item.setTypeface(tf);
+                    userViewHolder.title_item.setTextSize(20);
+                }
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }
                 userViewHolder.item_type_name.setTypeface(tf_play);
                // userViewHolder.date.setText(itemmodel.getPdate());

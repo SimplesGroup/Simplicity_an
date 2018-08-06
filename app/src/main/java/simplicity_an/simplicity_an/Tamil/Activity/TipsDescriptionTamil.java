@@ -74,6 +74,7 @@ import simplicity_an.simplicity_an.OnLoadMoreListener;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 
 /**
@@ -138,6 +139,8 @@ public class TipsDescriptionTamil extends AppCompatActivity {
     public static final String backgroundcolor = "color";
     RelativeLayout mainlayout;
     String colorcodes;
+    String fontname;
+    Typeface tf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,7 +169,7 @@ public class TipsDescriptionTamil extends AppCompatActivity {
         }
 
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
-
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
         if(colorcodes.length()==0){
             int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
@@ -318,7 +321,7 @@ public class TipsDescriptionTamil extends AppCompatActivity {
             }
         });
         String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";;
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
+         tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
         titleofrecipie=(TextView)findViewById(R.id.textView_titlename);
         date=(TextView)findViewById(R.id.author);
         fooditemimage=(NetworkImageView)findViewById(R.id.thumbnailone);
@@ -330,7 +333,17 @@ public class TipsDescriptionTamil extends AppCompatActivity {
        /* Resources res = getResources();
         float  fontSize = res.getDimension(R.dimen.txtSize);
         desc.getSettings().setDefaultFontSize((int)fontSize);*/
-        titleofrecipie.setTypeface(tf);
+        if(fontname.equals("playfair")){
+            String playfa ="fonts/TAU_Elango_Madhavi.TTF";
+            tf = Typeface.createFromAsset(getApplicationContext().getAssets(), playfa);
+            titleofrecipie.setTypeface(tf);
+
+        }else {
+            String play = "fonts/MUKTAMALAR-BOLD.TTF";
+            tf= Typeface.createFromAsset(getApplicationContext().getAssets(), play);
+            titleofrecipie.setTypeface(tf);
+            titleofrecipie.setLineSpacing(0,0.8f);
+        }
         date.setTypeface(tf);
         comment_title.setTypeface(tf);
         loadmore_title.setTypeface(tf);

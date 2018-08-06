@@ -143,7 +143,7 @@ public class CartContinueUpdateAddress extends AppCompatActivity {
 
         addmoreproducts_textview.setText("ADD MORE PRODUCTS");
         back_tocart_textview.setText("BACK TO CART");
-        your_location_title_textview.setText("Your Delivery Location");
+        your_location_title_textview.setText("Your Delivery LocationSelection");
         change_address_tetview.setText("CHANGE");
         continue_textview.setText("CONTINUE");
         if (price!=null)

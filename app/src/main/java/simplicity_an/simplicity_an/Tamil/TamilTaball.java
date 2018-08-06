@@ -96,13 +96,15 @@ import simplicity_an.simplicity_an.Tamil.Activity.TamilNewsDescription;
 import simplicity_an.simplicity_an.Tamil.Activity.TamilSportsnewsDescription;
 import simplicity_an.simplicity_an.Tamil.Activity.TipsDescriptionTamil;
 import simplicity_an.simplicity_an.Tamil.Activity.TravelsDescriptiontamil;
+import simplicity_an.simplicity_an.Utils.ChangeFont;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 import simplicity_an.simplicity_an.YoutubeVideoPlayer;
 
 /**
  * Created by kuppusamy on 10/3/2016.
  */
-public class TamilTaball extends Fragment {
+public class TamilTaball extends Fragment implements ChangeFont {
     RecyclerView recyclerview_tab_all;
     String URL="http://simpli-city.in/request2.php?rtype=alldatatest&key=simples&language=2";
     String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples"; 				String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
@@ -123,8 +125,8 @@ public class TamilTaball extends Fragment {
     public static final String backgroundcolor = "color";
     String myprofileid,colorcodes;
     LinearLayoutManager lLayout;
-    Recyclerviewtaballadapter recyclerview_tab_all_adapter;
-    List<ItemModel> modelList=new ArrayList<ItemModel>();
+    private  static Recyclerviewtaballadapter recyclerview_tab_all_adapter;
+    public static List<ItemModel> modelLists=new ArrayList<ItemModel>();
     private boolean isFragmentLoaded=false;
     private OnFragmentInteractionListener mListener;
     public static final String Activity = "activity";
@@ -136,6 +138,9 @@ public class TamilTaball extends Fragment {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     String Tokenid;
     SwipeRefreshLayout swipeRefresh;
+    String fontname;
+    Typeface tf;
+    public static final String FONT= "font";
     public TamilTaball() {
         // Required empty public constructor
         // setUserVisibleHint(false);
@@ -166,6 +171,7 @@ public class TamilTaball extends Fragment {
         Log.e("coloR",colorcodes);
         Tokenid=sharedpreferences.getString(GcmId,"");
         requestQueue = Volley.newRequestQueue(getActivity());
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         lLayout = new LinearLayoutManager(getActivity());
         recyclerview_tab_all = (RecyclerView) view.findViewById(R.id.tab_all_recyclerview);
         recyclerview_tab_all.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
@@ -299,7 +305,7 @@ public class TamilTaball extends Fragment {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                 swipeRefresh.setRefreshing(true);                 modelList.clear();                 recyclerview_tab_all_adapter.notifyDataSetChanged();                  requestCount=0;                 getData();                                 ( new Handler()).postDelayed(new Runnable() {                     @Override                     public void run() {                         swipeRefresh.setRefreshing(false);                     }                 }, 3000);
+                 swipeRefresh.setRefreshing(true);                 modelLists.clear();                 recyclerview_tab_all_adapter.notifyDataSetChanged();                  requestCount=0;                 getData();                                 ( new Handler()).postDelayed(new Runnable() {                     @Override                     public void run() {                         swipeRefresh.setRefreshing(false);                     }                 }, 3000);
 
             }
         });
@@ -309,7 +315,7 @@ public class TamilTaball extends Fragment {
 
 
         getData();
-        recyclerview_tab_all_adapter = new Recyclerviewtaballadapter(modelList,recyclerview_tab_all);
+        recyclerview_tab_all_adapter = new Recyclerviewtaballadapter(modelLists,recyclerview_tab_all);
         recyclerview_tab_all.setAdapter(recyclerview_tab_all_adapter);
         recyclerview_tab_all_adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -330,6 +336,11 @@ public class TamilTaball extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void change() {
+        recyclerview_tab_all_adapter.Font(modelLists);
     }
      public interface OnFragmentInteractionListener {         public void onFragmentInteraction(String playurl, String title,String image);     }
 
@@ -501,7 +512,7 @@ public class TamilTaball extends Fragment {
                 }
                 model.setAlbumlist(albums);
                 model.setAlbum(album);
-                modelList.add(model);
+                modelLists.add(model);
 
             }
 
@@ -913,10 +924,10 @@ public class TamilTaball extends Fragment {
         private int visibleThreshold = 5;
         private int lastVisibleItem, totalItemCount;
         Context context;
-
+        private List<ItemModel>modelList=new ArrayList<>();
         @Override
         public int getItemCount() {
-            return modelList.size();
+            return modelLists.size();
         }
         public Recyclerviewtaballadapter(List<ItemModel> students, RecyclerView recyclerView) {
             modelList = students;
@@ -983,7 +994,7 @@ public class TamilTaball extends Fragment {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof Userviewholdertaball) {
-
+                fontname = sharedpreferences.getString(Fonts.FONT,"");
                 final Userviewholdertaball userViewHolder = (Userviewholdertaball) holder;
 
                 String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";
@@ -1081,7 +1092,19 @@ public class TamilTaball extends Fragment {
                 if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){                     userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
 
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
-                userViewHolder.title_item.setTypeface(seguiregular);
+                String simplycity_title_reugular= "fonts/TAU_Elango_Madhavi.TTF";
+                tf= Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
+
+
+                if(fontname.equals("playfair")){
+                    tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
+                    userViewHolder.title_item.setTypeface(tf);
+                    userViewHolder.title_item.setTextSize(30);
+                }else {
+                    tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
+                    userViewHolder.title_item.setTypeface(tf);
+                    userViewHolder.title_item.setTextSize(20);
+                }
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }
                 userViewHolder.item_type_name.setTypeface(tf_play);
                // userViewHolder.date.setText(itemmodel.getPdate());
@@ -1118,9 +1141,9 @@ public class TamilTaball extends Fragment {
                                 // Show a toast on clicking layout
 
 
-                                String type = ((ItemModel) modelList.get(position)).getQtypemain();
-                                String qtype = ((ItemModel) modelList.get(position)).getQtype();
-                                String ids = ((ItemModel) modelList.get(position)).getId();
+                                String type = ((ItemModel) modelLists.get(position)).getQtypemain();
+                                String qtype = ((ItemModel) modelLists.get(position)).getQtype();
+                                String ids = ((ItemModel) modelLists.get(position)).getId();
 
 
 
@@ -1564,7 +1587,7 @@ public class TamilTaball extends Fragment {
                     mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
 
 
-                final ItemModel itemmodel = modelList.get(position);
+                final ItemModel itemmodel = modelLists.get(position);
                 userViewHolder.comment_button.setText("கருத்து");
                 userViewHolder.comment_button.setTypeface(seguiregular);
                 userViewHolder.comment_button.setTransformationMethod(null);
@@ -1626,7 +1649,19 @@ public class TamilTaball extends Fragment {
                 if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){                      userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
 
                 userViewHolder.title_item.setText(itemmodel.getTitle());
-                userViewHolder.title_item.setTypeface(seguiregular);
+                String simplycity_title_reugular= "fonts/TAU_Elango_Madhavi.TTF";
+                tf= Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
+
+
+                if(fontname.equals("playfair")){
+                    tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
+                    userViewHolder.title_item.setTypeface(tf);
+                    userViewHolder.title_item.setTextSize(30);
+                }else {
+                    tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
+                    userViewHolder.title_item.setTypeface(tf);
+                    userViewHolder.title_item.setTextSize(20);
+                }
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }
                 userViewHolder.item_type_name.setTypeface(tf_play);
                // userViewHolder.date.setText(itemmodel.getPdate());
@@ -2093,7 +2128,13 @@ public class TamilTaball extends Fragment {
             }
         }
 
+        public void Font(List<ItemModel> list){
+            Log.e("SIZE","adap  "+list.toString());
+            this.modelList.addAll(list);
 
+            notifyDataSetChanged();
+
+        }
 
         public int getItemViewType(int position) {
 
@@ -2104,7 +2145,7 @@ public class TamilTaball extends Fragment {
             }/*else if(item.getQtypemain().equalsIgnoreCase("radio")){
            return VIEW_TYPE_RADIO;
         }*/  else{
-                return modelList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+                return modelLists.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
             }
 
         }

@@ -11,6 +11,7 @@ public class Fonts {
 public static String playfairfont="fonts/playfairDisplayRegular.ttf";
     public static String sanfranciscobold="fonts/Oxygen-Bold.ttf";
     public static String sanfranciscoregular="fonts/SystemSanFranciscoDisplayRegular.ttf";
+    public static String muktamalar="fonts/MUKTAMALAR-BOLD.TTF";
 
     public Typeface font(String s, Context context){
         if(s.equals("playfair")){

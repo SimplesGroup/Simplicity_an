@@ -79,6 +79,7 @@ import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Tab_All;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 
 /**
@@ -149,6 +150,8 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
     public static final String backgroundcolor = "color";
     RelativeLayout mainlayout;
     String colorcodes;
+    String fontname;
+    Typeface tf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -181,7 +184,7 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
 
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
-
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
         back = (ImageButton)findViewById(R.id.btn_back);
         if(colorcodes.equals("#FFFFFFFF")){

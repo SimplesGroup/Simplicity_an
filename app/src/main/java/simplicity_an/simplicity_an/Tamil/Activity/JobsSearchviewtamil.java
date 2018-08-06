@@ -741,7 +741,7 @@ public class JobsSearchviewtamil extends AppCompatActivity {
             holder.keyskills.setText(itemmodel.getKey_skills());
             holder.datesecondpage.setText(itemmodel.getJob_date());
             if (itemmodel.getTypeid() == 0) {
-                holder.location.setText("Location"+"-"+itemmodel.getLocation());
+                holder.location.setText("LocationSelection"+"-"+itemmodel.getLocation());
                 holder.postname.setText(itemmodel.getTitle());
                 holder.postcompany.setText(itemmodel.getCompany());
                 holder.myJobdateone.setText(itemmodel.getTformat());

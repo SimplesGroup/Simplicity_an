@@ -376,7 +376,7 @@ public class EventsDescription extends AppCompatActivity {
         location_text.setTypeface(tf);
         website_text.setTypeface(tf);
         venue_text.setText("Venue:");
-        location_text.setText("Location:");
+        location_text.setText("LocationSelection:");
         website_text.setText("Website:");
         venuecontactinfo.setText("VENUE  CONTACT INFORMATION");
 
@@ -885,7 +885,7 @@ JSONArray array=obj.getJSONArray("amt");
                     location_text.setVisibility(View.GONE);
                     location_details.setVisibility(View.GONE);
                 } else {
-                    location_text.setText("Location:");
+                    location_text.setText("LocationSelection:");
                     location_details.setText(obj.getString("location"));
                 }
 

@@ -810,7 +810,7 @@ public class FragmentInternship extends Fragment {
 
                 userViewHolder.name.setText(itemmodel.getTitle());
                 userViewHolder.name.setTypeface(seguiregular);
-                userViewHolder.timestamp.setText("Location:"+itemmodel.getLocation());
+                userViewHolder.timestamp.setText("LocationSelection:"+itemmodel.getLocation());
                 userViewHolder.postdate.setText(itemmodel.getTformat());
                 userViewHolder.timestamp.setTypeface(seguiregular);
                 userViewHolder.postdate.setTypeface(seguiregular);

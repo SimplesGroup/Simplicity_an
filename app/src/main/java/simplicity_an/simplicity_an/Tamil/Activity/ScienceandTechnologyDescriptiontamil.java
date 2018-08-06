@@ -79,6 +79,7 @@ import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Tab_All;
 import simplicity_an.simplicity_an.Tamil.MainActivityTamil;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 
 /**
@@ -148,6 +149,8 @@ public class ScienceandTechnologyDescriptiontamil extends AppCompatActivity {
     public static final String backgroundcolor = "color";
     RelativeLayout mainlayout;
     String colorcodes;
+    String fontname;
+    Typeface tf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,7 +170,7 @@ public class ScienceandTechnologyDescriptiontamil extends AppCompatActivity {
         }
 
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
-
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
         commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
         back = (ImageButton)findViewById(R.id.btn_back);
@@ -359,11 +362,21 @@ requestQueue=Volley.newRequestQueue(this);
         }
 
         String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
+         tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
         String playfair = "fonts/TAU_Elango_Madhavi.TTF";
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
-        titlename.setTypeface(tf_play);
+        if(fontname.equals("playfair")){
+            String playfa ="fonts/TAU_Elango_Madhavi.TTF";
+            tf = Typeface.createFromAsset(getApplicationContext().getAssets(), playfa);
+            titlename.setTypeface(tf);
+
+        }else {
+            String play = "fonts/MUKTAMALAR-BOLD.TTF";
+            tf= Typeface.createFromAsset(getApplicationContext().getAssets(), play);
+            titlename.setTypeface(tf);
+            titlename.setLineSpacing(0,0.8f);
+        }
         hashtags_title.setTypeface(tf);
         textview_date.setTypeface(tf);
         title_category.setTypeface(tf);

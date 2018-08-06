@@ -80,6 +80,7 @@ import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Tab_All;
 import simplicity_an.simplicity_an.Utils.Configurl;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 
 /**
@@ -151,6 +152,8 @@ public class TravelsDescriptiontamil extends AppCompatActivity {
     public static final String backgroundcolor = "color";
     RelativeLayout mainlayout;
     String colorcodes;
+    String fontname;
+    Typeface tf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -182,7 +185,7 @@ public class TravelsDescriptiontamil extends AppCompatActivity {
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
 
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
-
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
         back = (ImageButton)findViewById(R.id.btn_back);
         if(colorcodes.equals("#FFFFFFFF")){
@@ -345,12 +348,22 @@ public class TravelsDescriptiontamil extends AppCompatActivity {
                 getRequestQueue();
 
         String simplycity_title_fontPath = "fonts/TAU_Elango_Madhavi.TTF";;
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
+         tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
         String playfair = "fonts/TAU_Elango_Madhavi.TTF";
         Typeface tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
 
-        title.setTypeface(tf_play);
+        if(fontname.equals("playfair")){
+            String playfa ="fonts/TAU_Elango_Madhavi.TTF";
+            tf = Typeface.createFromAsset(getApplicationContext().getAssets(), playfa);
+            title.setTypeface(tf);
+
+        }else {
+            String play = "fonts/MUKTAMALAR-BOLD.TTF";
+            tf= Typeface.createFromAsset(getApplicationContext().getAssets(), play);
+            title.setTypeface(tf);
+            title.setLineSpacing(0,0.8f);
+        }
         hashtags_title.setTypeface(tf);
         short_description.setTypeface(tf);
         textview_date.setTypeface(tf);
