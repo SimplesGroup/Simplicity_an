@@ -60,7 +60,7 @@ public class Aboutapp extends AppCompatActivity {
         next_page.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in=new Intent(getApplicationContext(), MainPageEnglish.class);
+                Intent in=new Intent(getApplicationContext(), ThemeSelection.class);
                 startActivity(in);
                 finish();
             }

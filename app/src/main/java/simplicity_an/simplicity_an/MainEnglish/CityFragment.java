@@ -706,6 +706,8 @@ Log.e("RES",response.toString());
         StringRequest weather=new StringRequest(Request.Method.GET, WEATHER_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
+
                /* if(response!=null){
                     weather_update.setText(Html.fromHtml(response+"<sup>o</sup>"));
                 }else {

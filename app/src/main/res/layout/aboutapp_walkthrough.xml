@@ -7,12 +7,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_marginTop="50dp"
+        <RelativeLayout
+            android:layout_marginTop="60dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 <TextView
+
     android:layout_marginTop="10dp"
     android:layout_marginLeft="15dp"
     android:id="@+id/whatis_textview"
@@ -21,6 +22,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
     <TextView
+        android:layout_below="@+id/whatis_textview"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:id="@+id/simplicity_textview"
@@ -29,14 +31,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <TextView
+        android:layout_below="@+id/simplicity_textview"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
+        android:layout_marginRight="7dp"
         android:id="@+id/description_textview"
         android:textColor="@android:color/white"
         android:textSize="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <TextView
+        android:layout_below="@+id/description_textview"
         android:layout_marginTop="10dp"
         android:id="@+id/welcome_textview"
         android:textColor="@android:color/white"
@@ -45,7 +50,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <ImageButton
-        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/welcome_textview"
@@ -54,6 +60,6 @@
         android:src="@mipmap/forwardarrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-        </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

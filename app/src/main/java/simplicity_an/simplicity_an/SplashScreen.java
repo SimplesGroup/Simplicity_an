@@ -91,7 +91,6 @@ public class SplashScreen extends Activity{
                 Log.e("ColorCodes",userId);
                 SharedPreferences.Editor gcmidseditor=sharedpreferences.edit();
                 gcmidseditor.putString(GcmId,userId);
-                gcmidseditor.putString(FONT,"playfair");
                 gcmidseditor.commit();
                 playerid=userId;
                 if (registrationId != null)
@@ -128,7 +127,13 @@ public class SplashScreen extends Activity{
 
 
                     }else {
-                        Log.e("RES","hid");
+
+                        Intent i = new Intent(SplashScreen.this, Aboutapp.class);
+                        startActivity(i);
+                        finish();
+
+
+                       /* Log.e("RES","hid");
                          dialog = new Dialog(SplashScreen.this);
                         dialog.setContentView(R.layout.themeandlaguageselect);
 
@@ -489,7 +494,7 @@ public class SplashScreen extends Activity{
                             }
                         });
 
-                        dialog.show();
+                        dialog.show();*/
 
                     }
 
