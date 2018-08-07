@@ -41,14 +41,14 @@ public class LocationSelection extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.location);
 
-        sharedpreferences = conxt.getSharedPreferences(mypreference,
+        sharedpreferences = getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
         fontname=sharedpreferences.getString(FONT,"");
         String simplycity_title_sans = "fonts/Oxygen-Regular.ttf";
-        final Typeface sansfrancisco = Typeface.createFromAsset(conxt.getAssets(), simplycity_title_sans);
+        final Typeface sansfrancisco = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_sans);
 
         String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
-        final Typeface seguiregular = Typeface.createFromAsset(conxt.getAssets(), simplycity_title_fontPath);
+        final Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
 
         select=(TextView)findViewById(R.id.select);
@@ -73,17 +73,18 @@ public class LocationSelection extends AppCompatActivity {
         next_page.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in=new Intent(getApplicationContext(), MainPageEnglish.class);
+                Intent in=new Intent(getApplicationContext(), LanguageSelection.class);
                 startActivity(in);
                 finish();
             }
         });
-coimbatore.setOnClickListener(new View.OnClickListener() {
+        coimbatore.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        btncoimbatore.setBackgroundResource(R.mipmap.tick);
-        btnchennai.setBackgroundResource(R.mipmap.tickblack);
-        btnhyderabad.setBackgroundResource(R.mipmap.tickblack);
+        btncoimbatore.setVisibility(View.VISIBLE);
+            btncoimbatore.setBackgroundResource(R.mipmap.tick);
+            btnchennai.setVisibility(View.GONE);
+            btnhyderabad.setVisibility(View.GONE);
         chennai.setBackgroundColor(Color.parseColor("#000000"));
         coimbatore.setBackgroundColor(Color.parseColor("#666666"));
         hyderabad.setBackgroundColor(Color.parseColor("#000000"));
@@ -93,9 +94,10 @@ coimbatore.setOnClickListener(new View.OnClickListener() {
         chennai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnchennai.setVisibility(View.VISIBLE);
                 btnchennai.setBackgroundResource(R.mipmap.tick);
-                btncoimbatore.setBackgroundResource(R.mipmap.tickblack);
-                btnhyderabad.setBackgroundResource(R.mipmap.tickblack);
+                btncoimbatore.setVisibility(View.GONE);
+                btnhyderabad.setVisibility(View.GONE);
                 chennai.setBackgroundColor(Color.parseColor("#666666"));
                 coimbatore.setBackgroundColor(Color.parseColor("#000000"));
                 hyderabad.setBackgroundColor(Color.parseColor("#000000"));
@@ -105,9 +107,10 @@ coimbatore.setOnClickListener(new View.OnClickListener() {
         hyderabad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnhyderabad.setVisibility(View.VISIBLE);
                 btnhyderabad.setBackgroundResource(R.mipmap.tick);
-                btnchennai.setBackgroundResource(R.mipmap.tickblack);
-
+                btnchennai.setVisibility(View.GONE);
+                btncoimbatore.setVisibility(View.GONE);
                 chennai.setBackgroundColor(Color.parseColor("#000000"));
                 coimbatore.setBackgroundColor(Color.parseColor("#000000"));
                 hyderabad.setBackgroundColor(Color.parseColor("#666666"));

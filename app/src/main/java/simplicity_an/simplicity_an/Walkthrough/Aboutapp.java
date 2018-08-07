@@ -57,7 +57,8 @@ public class Aboutapp extends AppCompatActivity {
         welcome_textview.setText("Welcome to SimpliCity");
 
         description_textview.setText(Html.fromHtml("<html>"+descriptions+  "</html>"));
-        prefManager.setFirstTimeLaunch(false);
+        prefManager = new PrefManager(getApplicationContext());
+         prefManager.setFirstTimeLaunch(false);
 
         next_page.setOnClickListener(new View.OnClickListener() {
             @Override
