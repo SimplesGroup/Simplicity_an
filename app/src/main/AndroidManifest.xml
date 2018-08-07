@@ -64,6 +64,16 @@
         </activity>
         <activity
             android:label="@string/app_name"
+            android:name=".Walkthrough.LocationSelection"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name=".Walkthrough.LanguageSelection"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:label="@string/app_name"
             android:name=".Walkthrough.ThemeSelection"
             android:screenOrientation="portrait" >
         </activity>
@@ -117,16 +127,7 @@
             android:name=".MainTamil.MainPageTamil"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
-            android:label="@string/app_name"
-            android:name=".Walkthrough.LocationSelection"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:label="@string/app_name"
-            android:name=".Walkthrough.LanguageSelection"
-            android:screenOrientation="portrait" >
-        </activity>
+
         <activity
             android:hardwareAccelerated="true"
             android:label="@string/app_name"

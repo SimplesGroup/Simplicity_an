@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
+import simplicity_an.simplicity_an.PrefManager;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SplashScreen;
 
@@ -30,7 +31,7 @@ public class FontSelection extends AppCompatActivity {
     SharedPreferences sharedpreferences;
     public static final String mypreference = "mypref";
     public static final String backgroundcolor = "color";
-
+    private PrefManager prefManager;
     String language,font;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,11 +89,12 @@ public class FontSelection extends AppCompatActivity {
             }
         });
 
-
+        prefManager.setFirstTimeLaunch(false);
 
         nextpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                prefManager.setFirstTimeLaunch(false);
 font=sharedpreferences.getString(FONT,"");
 
                   if(font.equals("")) {

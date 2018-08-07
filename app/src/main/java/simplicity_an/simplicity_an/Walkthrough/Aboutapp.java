@@ -20,7 +20,7 @@ public class Aboutapp extends AppCompatActivity {
 
     TextView what_textview,simplicity_textview,description_textview,welcome_textview;
     ImageButton next_page;
-    private PrefManager prefManager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +57,7 @@ public class Aboutapp extends AppCompatActivity {
         welcome_textview.setText("Welcome to SimpliCity");
 
         description_textview.setText(Html.fromHtml("<html>"+descriptions+  "</html>"));
-        prefManager.setFirstTimeLaunch(false);
+
 
         next_page.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -40,7 +40,7 @@ public class LanguageSelection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.location);
+        setContentView(R.layout.language);
 
         sharedpreferences = getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
@@ -53,7 +53,7 @@ public class LanguageSelection extends AppCompatActivity {
 
 
         select=(TextView)findViewById(R.id.select);
-        language=(TextView)findViewById(R.id.location);
+        language=(TextView)findViewById(R.id.language);
         tamil=(TextView)findViewById(R.id.tamil);
         english=(TextView)findViewById(R.id.english);
         next_page=(ImageButton)findViewById(R.id.next_imagebutton);
