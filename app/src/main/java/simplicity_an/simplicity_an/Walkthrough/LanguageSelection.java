@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.R;
@@ -32,6 +33,8 @@ public class LanguageSelection extends AppCompatActivity {
     Button btntamil,btnenglish;
     ImageButton next_page;
     Context conxt;
+    public static final String Language = "lamguage";
+    String lang;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,16 +73,25 @@ public class LanguageSelection extends AppCompatActivity {
         next_page.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in=new Intent(getApplicationContext(), MainPageEnglish.class);
-                startActivity(in);
-                finish();
+                lang=sharedpreferences.getString(Language,"");
+                if(lang.equals("")){
+                    Toast.makeText(getApplicationContext(),"Select Your Language",Toast.LENGTH_LONG).show();
+                }else {
+                    Intent in = new Intent(getApplicationContext(), ThemeSelection.class);
+                    startActivity(in);
+                    finish();
+                }
             }
         });
         tamil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Language, "tamil");
+                editor.commit();
+                btntamil.setVisibility(View.VISIBLE);
                 btntamil.setBackgroundResource(R.mipmap.tick);
-                btnenglish.setBackgroundResource(R.mipmap.tickblack);
+                btnenglish.setVisibility(View.GONE);
                 tamil.setBackgroundColor(Color.parseColor("#666666"));
                 english.setBackgroundColor(Color.parseColor("#000000"));
 
@@ -90,8 +102,14 @@ public class LanguageSelection extends AppCompatActivity {
         english.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Language, "English");
+
+                editor.commit();
+                btnenglish.setVisibility(View.VISIBLE);
                 btnenglish.setBackgroundResource(R.mipmap.tick);
-                btntamil.setBackgroundResource(R.mipmap.tickblack);
+                btntamil.setVisibility(View.GONE);
+
                 tamil.setBackgroundColor(Color.parseColor("#000000"));
                 english.setBackgroundColor(Color.parseColor("#666666"));
             }

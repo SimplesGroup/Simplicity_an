@@ -13,13 +13,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import simplicity_an.simplicity_an.MainPageEnglish;
+import simplicity_an.simplicity_an.PrefManager;
 import simplicity_an.simplicity_an.R;
 
 public class Aboutapp extends AppCompatActivity {
 
     TextView what_textview,simplicity_textview,description_textview,welcome_textview;
     ImageButton next_page;
-
+    private PrefManager prefManager;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +57,12 @@ public class Aboutapp extends AppCompatActivity {
         welcome_textview.setText("Welcome to SimpliCity");
 
         description_textview.setText(Html.fromHtml("<html>"+descriptions+  "</html>"));
+        prefManager.setFirstTimeLaunch(false);
 
         next_page.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in=new Intent(getApplicationContext(), ThemeSelection.class);
+                Intent in=new Intent(getApplicationContext(), LocationSelection.class);
                 startActivity(in);
                 finish();
             }
