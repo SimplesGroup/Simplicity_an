@@ -1,108 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/map">
-
-    <LinearLayout
+    android:background="@drawable/language">
+    <RelativeLayout
+        android:layout_centerInParent="true"
+        android:id="@+id/start"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="160dp"
-        android:layout_marginRight="13dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <TextView
+
             android:id="@+id/select"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/footerline"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="80dp"
             android:text="SELECT YOUR"
-            android:layout_marginLeft="50dp"
-            android:textAlignment="textStart"
-            android:textColor="@android:color/white"
-            android:textSize="15dp" />
-
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <TextView
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="2dp"
+            android:layout_below="@+id/select"
             android:id="@+id/language"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/footerline"
-            android:text="LANGUAGE"
-            android:layout_marginLeft="50dp"
-            android:textAlignment="textStart"
             android:textColor="@android:color/white"
-            android:textSize="20dp" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginLeft="50dp"
+            android:textSize="21dp"
+            android:text="LANGUAGE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/start"
         android:orientation="vertical"
-        android:background="@color/Black">
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <LinearLayout
+            android:minWidth="180dp"
+            android:orientation="horizontal"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="80dp"
+            android:background="#666666"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="0dp"
-            android:orientation="horizontal">
-
+            android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/tamil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/footerline"
+                android:gravity="left|center_vertical"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
                 android:text="Tamil"
-                android:textAlignment="textStart"
-                android:layout_marginLeft="30dp"
+                android:id="@+id/tamil"
                 android:textColor="@android:color/white"
-                android:textSize="19dp" />
-            <Button
+                android:textSize="17dp"
+                android:layout_width="0dp"
+                android:layout_weight=".80"
+
+                android:layout_height="wrap_content" />
+            <ImageView
                 android:id="@+id/btn_tamil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:background="@color/Black"/>
+                android:background="@android:color/transparent"
+                android:scaleType="centerCrop"
+                android:layout_gravity="right|center_vertical"
+                android:layout_width="0dp"
+                android:layout_weight=".20"
+                android:layout_height="20dp" />
+
         </LinearLayout>
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="0dp"
-            android:orientation="horizontal">
-
+            android:minWidth="180dp"
+            android:orientation="horizontal"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="80dp"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
             <TextView
+                android:gravity="left|center_vertical"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:text="ENGLISH"
                 android:id="@+id/english"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/footerline"
-                android:layout_marginLeft="30dp"
-                android:text="English"
-                android:textAlignment="textStart"
                 android:textColor="@android:color/white"
-                android:textSize="19dp" />
-
-            <Button
+                android:textSize="17dp"
+                android:layout_weight=".80"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <ImageView
                 android:id="@+id/btn_english"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="60dp"
-                android:background="@color/Black"/>
+                android:background="@android:color/transparent"
+                android:scaleType="centerCrop"
+                android:layout_marginRight="10dp"
+
+                android:layout_gravity="right|center_vertical"
+                android:layout_weight=".20"
+                android:layout_width="0dp"
+                android:layout_height="20dp" />
+
         </LinearLayout>
 
 
     </LinearLayout>
     <ImageButton
-        android:id="@+id/next_imagebutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/welcome_textview"
+        android:id="@+id/next_theme"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
         android:background="@android:color/transparent"
-        android:src="@mipmap/forwardarrow" />
-</LinearLayout>
+        android:src="@mipmap/forwardarrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

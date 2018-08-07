@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ public class LanguageSelection extends AppCompatActivity {
     String fontname;
     public static final String backgroundcolor = "color";
     TextView select,language,tamil,english;
-    Button btntamil,btnenglish;
+    ImageView btntamil,btnenglish;
     ImageButton next_page;
     Context conxt;
     public static final String Language = "lamguage";
@@ -56,9 +57,9 @@ public class LanguageSelection extends AppCompatActivity {
         language=(TextView)findViewById(R.id.language);
         tamil=(TextView)findViewById(R.id.tamil);
         english=(TextView)findViewById(R.id.english);
-        next_page=(ImageButton)findViewById(R.id.next_imagebutton);
-        btntamil=(Button)findViewById(R.id.btn_tamil);
-        btnenglish=(Button)findViewById(R.id.btn_english);
+        next_page=(ImageButton)findViewById(R.id.next_theme);
+        btntamil=(ImageView)findViewById(R.id.btn_tamil);
+        btnenglish=(ImageView)findViewById(R.id.btn_english);
 
 
         Typeface bold=Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/SystemSanFranciscoDisplayBold.ttf");
@@ -90,7 +91,7 @@ public class LanguageSelection extends AppCompatActivity {
                 editor.putString(Language, "tamil");
                 editor.commit();
                 btntamil.setVisibility(View.VISIBLE);
-                btntamil.setBackgroundResource(R.mipmap.tick);
+                btntamil.setImageResource(R.mipmap.tick);
                 btnenglish.setVisibility(View.GONE);
                 tamil.setBackgroundColor(Color.parseColor("#666666"));
                 english.setBackgroundColor(Color.parseColor("#000000"));
@@ -108,7 +109,7 @@ public class LanguageSelection extends AppCompatActivity {
 
                 editor.commit();
                 btnenglish.setVisibility(View.VISIBLE);
-                btnenglish.setBackgroundResource(R.mipmap.tick);
+                btnenglish.setImageResource(R.mipmap.tick);
                 btntamil.setVisibility(View.GONE);
 
                 tamil.setBackgroundColor(Color.parseColor("#000000"));
