@@ -106,14 +106,13 @@ public class LanguageSelection extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(Language, "English");
-
                 editor.commit();
                 btnenglish.setVisibility(View.VISIBLE);
                 btnenglish.setImageResource(R.mipmap.tick);
                 btntamil.setVisibility(View.GONE);
 
-                tamil.setBackgroundColor(Color.parseColor("#000000"));
-                english.setBackgroundColor(Color.parseColor("#666666"));
+                /*tamil.setBackgroundColor(Color.parseColor("#000000"));
+                english.setBackgroundColor(Color.parseColor("#666666"));*/
             }
 
         });

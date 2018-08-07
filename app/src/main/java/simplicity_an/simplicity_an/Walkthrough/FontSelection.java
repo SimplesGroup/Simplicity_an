@@ -41,7 +41,7 @@ public class FontSelection extends AppCompatActivity {
         setContentView(R.layout.fontselection_walkthrough);
         sharedpreferences =  getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
-        language=sharedpreferences.getString(language,"");
+
         selectyour_text=(TextView)findViewById(R.id.font_textview);
         style_text=(TextView)findViewById(R.id.style_textview);
         classic_textview=(TextView)findViewById(R.id.classic_textview);
@@ -88,29 +88,31 @@ public class FontSelection extends AppCompatActivity {
                 editor.commit();
             }
         });
+        prefManager = new PrefManager(getApplicationContext());
 
-        prefManager.setFirstTimeLaunch(false);
 
         nextpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 prefManager.setFirstTimeLaunch(false);
 font=sharedpreferences.getString(FONT,"");
-
+language=sharedpreferences.getString(Language,"");
                   if(font.equals("")) {
                       Toast.makeText(getApplicationContext()," Select Your Font Style",Toast.LENGTH_LONG).show();
 
                   }else {
-                      if (language.equals("English")) {
-                          Intent i = new Intent(getApplicationContext(), MainPageEnglish.class);
-                          startActivity(i);
-                          finish();
-                      } else {
-                          Intent i = new Intent(getApplicationContext(), MainPageTamil.class);
-                          startActivity(i);
-                          finish();
-                      }
 
+                      if(language!=null) {
+                          if (language.equals("English")) {
+                              Intent i = new Intent(getApplicationContext(), MainPageEnglish.class);
+                              startActivity(i);
+                              finish();
+                          } else {
+                              Intent i = new Intent(getApplicationContext(), MainPageTamil.class);
+                              startActivity(i);
+                              finish();
+                          }
+                      }
                   }
 
 
