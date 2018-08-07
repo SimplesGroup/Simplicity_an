@@ -42,14 +42,14 @@ public class LanguageSelection extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.location);
 
-        sharedpreferences = conxt.getSharedPreferences(mypreference,
+        sharedpreferences = getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
         fontname=sharedpreferences.getString(FONT,"");
         String simplycity_title_sans = "fonts/Oxygen-Regular.ttf";
-        final Typeface sansfrancisco = Typeface.createFromAsset(conxt.getAssets(), simplycity_title_sans);
+        final Typeface sansfrancisco = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_sans);
 
         String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
-        final Typeface seguiregular = Typeface.createFromAsset(conxt.getAssets(), simplycity_title_fontPath);
+        final Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
 
 
         select=(TextView)findViewById(R.id.select);
@@ -94,6 +94,7 @@ public class LanguageSelection extends AppCompatActivity {
                 btnenglish.setVisibility(View.GONE);
                 tamil.setBackgroundColor(Color.parseColor("#666666"));
                 english.setBackgroundColor(Color.parseColor("#000000"));
+
 
 
             }
