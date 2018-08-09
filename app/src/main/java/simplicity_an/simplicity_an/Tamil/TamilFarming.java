@@ -1071,8 +1071,12 @@ OnFragmentInteractionListener mListener;
 
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
                 if(fontname.equals("playfair")){
-                    //  tf = Typeface.createFromAsset(getActivity().getAssets(), String.valueOf(seguiregular));
-                    userViewHolder.title_item.setTypeface(seguiregular);
+                    String simplycity_title_reugular= "fonts/TAU_Elango_Madhavi.TTF";
+                    tf= Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
+
+                    userViewHolder.title_item.setTypeface(tf);
+                    userViewHolder.title_item.setTextSize(25);
+                    userViewHolder.title_item.setLineSpacing(0,0.8f);
                 }else {
                     tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
                     userViewHolder.title_item.setTypeface(tf);
@@ -1595,8 +1599,12 @@ OnFragmentInteractionListener mListener;
                 if(itemmodel.getPdate().equals("null")||itemmodel.getPdate().equals("")){                   userViewHolder.shortdescription.setText(Html.fromHtml( itemmodel.getShortdescription()));                 }else {                    if(itemmodel.getShortdescription().equals("")){                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()));                     }else {                        userViewHolder.shortdescription.setText(Html.fromHtml(itemmodel.getPdate()+"&nbsp;"+"|"+"&nbsp;"+itemmodel.getShortdescription()));                     }                 }
                 userViewHolder.title_item.setText(itemmodel.getTitle());
                 if(fontname.equals("playfair")){
-                    //  tf = Typeface.createFromAsset(getActivity().getAssets(), String.valueOf(seguiregular));
-                    userViewHolder.title_item.setTypeface(seguiregular);
+                    String simplycity_title_reugular= "fonts/TAU_Elango_Madhavi.TTF";
+                    tf= Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
+
+                    userViewHolder.title_item.setTypeface(tf);
+                    userViewHolder.title_item.setTextSize(25);
+                    userViewHolder.title_item.setLineSpacing(0,0.8f);
                 }else {
                     tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
                     userViewHolder.title_item.setTypeface(tf);

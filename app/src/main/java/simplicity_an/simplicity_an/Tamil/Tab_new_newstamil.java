@@ -1707,11 +1707,13 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 if(fontname.equals("playfair")){
                     tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
                     userViewHolder.title_item.setTypeface(tf);
-                    userViewHolder.title_item.setTextSize(30);
+                    userViewHolder.title_item.setTextSize(25);
+                    userViewHolder.title_item.setLineSpacing(0,0.8f);
                 }else {
                     tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
                     userViewHolder.title_item.setTypeface(tf);
                     userViewHolder.title_item.setTextSize(20);
+               
                 }
 
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular_bold);
@@ -2432,12 +2434,17 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
 
                 userViewHolder.title_item.setText(Html.fromHtml(itemmodel.getTitle()));
                 if(fontname.equals("playfair")){
-                    //  tf = Typeface.createFromAsset(getActivity().getAssets(), String.valueOf(seguiregular));
-                    userViewHolder.title_item.setTypeface(seguiregular);
+                    String simplycity_title_reugular= "fonts/TAU_Elango_Madhavi.TTF";
+                    tf= Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
+
+                    userViewHolder.title_item.setTypeface(tf);
+                    userViewHolder.title_item.setTextSize(25);
+                    userViewHolder.title_item.setLineSpacing(0,0.8f);
                 }else {
                     tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
                     userViewHolder.title_item.setTypeface(tf);
                     userViewHolder.title_item.setTextSize(20);
+
                 }
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }                userViewHolder.item_type_name.setTypeface(seguiregular);
                 // userViewHolder.date.setText(itemmodel.getPdate());

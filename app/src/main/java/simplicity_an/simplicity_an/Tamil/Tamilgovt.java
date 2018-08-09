@@ -1060,7 +1060,8 @@ OnFragmentInteractionListener mListener;
                 if(fontname.equals("playfair")){
                     tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
                     userViewHolder.title_item.setTypeface(tf);
-                    userViewHolder.title_item.setTextSize(30);
+                    userViewHolder.title_item.setTextSize(25);
+                    userViewHolder.title_item.setLineSpacing(0,0.8f);
                 }else {
                     tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
                     userViewHolder.title_item.setTypeface(tf);
@@ -1594,7 +1595,8 @@ OnFragmentInteractionListener mListener;
                 if(fontname.equals("playfair")){
                     tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
                     userViewHolder.title_item.setTypeface(tf);
-                    userViewHolder.title_item.setTextSize(30);
+                    userViewHolder.title_item.setTextSize(25);
+                    userViewHolder.title_item.setLineSpacing(0,0.8f);
                 }else {
                     tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
                     userViewHolder.title_item.setTypeface(tf);

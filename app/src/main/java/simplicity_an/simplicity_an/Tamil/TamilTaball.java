@@ -1099,7 +1099,8 @@ public class TamilTaball extends Fragment implements ChangeFont {
                 if(fontname.equals("playfair")){
                     tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
                     userViewHolder.title_item.setTypeface(tf);
-                    userViewHolder.title_item.setTextSize(30);
+                    userViewHolder.title_item.setTextSize(25);
+                    userViewHolder.title_item.setLineSpacing(0,0.8f);
                 }else {
                     tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
                     userViewHolder.title_item.setTypeface(tf);
@@ -1654,9 +1655,12 @@ public class TamilTaball extends Fragment implements ChangeFont {
 
 
                 if(fontname.equals("playfair")){
-                    tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
+                    String simplycity_title_reugulars= "fonts/TAU_Elango_Madhavi.TTF";
+                    tf= Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugulars);
+
                     userViewHolder.title_item.setTypeface(tf);
-                    userViewHolder.title_item.setTextSize(30);
+                    userViewHolder.title_item.setTextSize(25);
+                    userViewHolder.title_item.setLineSpacing(0,0.8f);
                 }else {
                     tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
                     userViewHolder.title_item.setTypeface(tf);
