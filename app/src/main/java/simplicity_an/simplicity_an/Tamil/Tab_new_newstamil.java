@@ -599,12 +599,14 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                     JSONObject jsonObject = new JSONObject(data1.toString());
                        String subtitle = jsonObject.isNull("subqtype_title") ? null : jsonObject
                                 .getString("subqtype_title");
-                        model.setSubqueuetitle(subtitle);
+
 
                     String s = jsonObject.getString("subqtype_title");
+                    s = s.trim();
+                    model.setSubqueuetitle(s);
                     JSONArray arr = new JSONArray(data.toString());
-                    Log.e("Response", "object data" + subtitle.toString());
-                    if (subtitle.equals("கோவையில் நாளைய நிகழ்வுகள்")) {
+                    Log.e("Response", "object data" + s);
+                    if (s.equals("கோவையில் நாளைய நிகழ்வுகள்")) {
                         Log.e("Response", "object data events today" );
                         for (int j = 0; j < arr.length(); j++) {
                             ItemModel models=new ItemModel();
@@ -619,7 +621,7 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                             models.setPdate(dateeve);
                             // model.setPdate(obj.getString("pdate"));
                             models.setTitle(object.getString("title"));
-                            models.setSubqueuetitle(subtitle);
+                            models.setSubqueuetitle(s);
                             models.setYoutubelink(object.getString("youtube_link"));
                             models.setPlayurl(object.getString("radio_file"));
                             Log.e("LIST",object.getString("title"));
@@ -649,7 +651,7 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
 
                             Log.e("LIST","List added");
                         }
-                    } else if (subtitle.equals("நாடு மற்றும் உலக செய்திகள்")) {
+                    } else if (s.equals("நாடு மற்றும் உலக செய்திகள்")) {
                         Log.e("Response", "object data beyond today" );
                         for (int j = 0; j < arr.length(); j++) {
 
@@ -665,7 +667,7 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                             models.setPdate(dateeve);
                             // model.setPdate(obj.getString("pdate"));
                             models.setTitle(object.getString("title"));
-                            models.setSubqueuetitle(subtitle);
+                            models.setSubqueuetitle(s);
                             models.setYoutubelink(object.getString("youtube_link"));
                             models.setPlayurl(object.getString("radio_file"));
 
@@ -704,7 +706,7 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                             //modelList.add(models);
                             beyond.add(models);
                         }
-                    } else if (subtitle.equals("சிறப்பு காணொளி")) {
+                    } else if (s.equals("சிறப்பு காணொளி")) {
                         for (int j = 0; j < arr.length(); j++) {
                             ItemModel models=new ItemModel();
                             JSONObject object = (JSONObject) arr.get(j);
@@ -718,7 +720,7 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                             models.setPdate(dateeve);
                             // model.setPdate(obj.getString("pdate"));
                             models.setTitle(object.getString("title"));
-                            models.setSubqueuetitle(subtitle);
+                            models.setSubqueuetitle(s);
                             models.setYoutubelink(object.getString("youtube_link"));
                             models.setPlayurl(object.getString("radio_file"));
                             /*String imagevid = object.isNull("image") ? null : object
@@ -759,7 +761,7 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
 
 
 
-                    } else if (subtitle.equals("சிறப்பு கட்டுரைகள்")) {
+                    } else if (s.equals("சிறப்பு கட்டுரைகள்")) {
                         Log.e("Response", "object data special column" );
                         for (int j = 0; j < arr.length(); j++) {
                             ItemModel models=new ItemModel();
@@ -775,7 +777,7 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                             models.setPdate(dateeve);
                             // model.setPdate(obj.getString("pdate"));
                             models.setTitle(object.getString("title"));
-                            models.setSubqueuetitle(subtitle);
+                            models.setSubqueuetitle(s);
                             models.setYoutubelink(object.getString("youtube_link"));
                             models.setPlayurl(object.getString("radio_file"));
 
@@ -813,7 +815,7 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                             //modelList.add(models);
                             special.add(models);
                         }
-                    } else if (subtitle.equals(" புகைப்பட செய்திகள் ")) {
+                    } else if (s.equals("புகைப்பட செய்திகள்")) {
                         for (int j = 0; j < arr.length(); j++) {
                             ItemModel models=new ItemModel();
                             JSONObject object = (JSONObject) arr.get(j);
@@ -828,7 +830,7 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                             models.setPdate(dateeve);
                             // model.setPdate(obj.getString("pdate"));
                             models.setTitle(object.getString("title"));
-                            models.setSubqueuetitle(subtitle);
+                            models.setSubqueuetitle(s);
                             models.setYoutubelink(object.getString("youtube_link"));
                             models.setPlayurl(object.getString("radio_file"));
 
@@ -2215,12 +2217,42 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     title=videolist.get(j).getSubqueuetitle();
                 }
 
-                horizontalviewholder.text_title.setTextColor(Color.WHITE);
+             //   horizontalviewholder.text_title.setTextColor(Color.WHITE);
+
+                if(colorcodes.equals("#FFFFFFFF")){
+                    horizontalviewholder.text_title.setTextColor(Color.BLACK);
+
+                }else {
+                    horizontalviewholder.text_title.setTextColor(Color.WHITE);
+                }
+
+
+
+
+
+                if(fontname.equals("playfair")){
+                    String simplycity_title_reugular= "fonts/TAU_Elango_Madhavi.TTF";
+                    tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
+                    horizontalviewholder.text_title.setTypeface(tf);
+                    horizontalviewholder.text_title.setTextSize(20);
+                    //horizontalviewholder.text_title.setLineSpacing(0,0.8f);
+                }else {
+                    tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
+                    horizontalviewholder.text_title.setTypeface(tf);
+                    horizontalviewholder.text_title.setTextSize(15);
+
+                }
                 horizontalviewholder.text_title.setText(title);
                 horizontalviewholder.seeall_text.setText("See all");
                 horizontalviewholder.seeall_text.setTypeface(seguiregular);
-                horizontalviewholder.text_title.setTypeface(seguiregular);
-                horizontalviewholder.seeall_text.setTextColor(Color.WHITE);
+                if(colorcodes.equals("#FFFFFFFF")){
+                    horizontalviewholder.seeall_text.setTextColor(Color.BLACK);
+                    horizontalviewholder.seeall_text.setBackgroundColor(Color.parseColor("#666666"));
+
+                }else {
+                    horizontalviewholder.seeall_text.setTextColor(Color.WHITE);
+                    horizontalviewholder.seeall_text.setBackgroundColor(Color.parseColor("#666666"));
+                }
                 LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity().getApplicationContext(),LinearLayoutManager.HORIZONTAL,false);
                 horizontalviewholder.horizontal_recylerview.setLayoutManager(linearLayoutManager);
                 Horizontaladaptertamil horizontaladapter=new Horizontaladaptertamil(videolist,horizontalviewholder.horizontal_recylerview,getActivity());
@@ -2242,18 +2274,41 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                 ItemModel model=modelLists.get(position);
                 List<ItemModel>photolist=model.getPhotoStoryList();
-                horizontalphotostory.text_title.setTextColor(Color.WHITE);
+                if(colorcodes.equals("#FFFFFFFF")){
+                    horizontalphotostory.text_title.setTextColor(Color.BLACK);
+
+                }else {
+                    horizontalphotostory.text_title.setTextColor(Color.WHITE);
+                }
                 String title=null;
 
                 for(int j=0;j<photolist.size();j++){
                     title=photolist.get(j).getSubqueuetitle();
                 }
+                if(fontname.equals("playfair")){
+                    String simplycity_title_reugular= "fonts/TAU_Elango_Madhavi.TTF";
+                    tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_reugular);
+                    horizontalphotostory.text_title.setTypeface(tf);
+                    horizontalphotostory.text_title.setTextSize(20);
+                    horizontalphotostory.text_title.setLineSpacing(0,0.8f);
+                }else {
+                    tf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
+                    horizontalphotostory.text_title.setTypeface(tf);
+                    horizontalphotostory.text_title.setTextSize(15);
 
+                }
+                if(colorcodes.equals("#FFFFFFFF")){
+                    horizontalphotostory.seeall_text.setTextColor(Color.BLACK);
+                    horizontalphotostory.seeall_text.setBackgroundColor(Color.parseColor("#666666"));
+                }else {
+                    horizontalphotostory.seeall_text.setTextColor(Color.WHITE);
+                    horizontalphotostory.seeall_text.setBackgroundColor(Color.parseColor("#666666"));
+                }
                 horizontalphotostory.text_title.setText(title);
                 horizontalphotostory.seeall_text.setText("See all");
                 horizontalphotostory.seeall_text.setTypeface(seguiregular);
-                horizontalphotostory.text_title.setTypeface(seguiregular);
-                horizontalphotostory.seeall_text.setTextColor(Color.WHITE);
+              //  horizontalphotostory.text_title.setTypeface(seguiregular);
+               // horizontalphotostory.seeall_text.setTextColor(Color.WHITE);
                 HorizontalPhotostoryadaptertamil horizontalPhotostoryadapter=new HorizontalPhotostoryadaptertamil(photolist,horizontalphotostory.horizontal_recylerview,getActivity());
                 horizontalphotostory.horizontal_recylerview.setAdapter(horizontalPhotostoryadapter);
 
@@ -2946,7 +3001,7 @@ if(itemmodel.getAlbum()==null){
                     return  VIEW_TYPE_ITEM;
                 }
             }else {
-                if (item.getSubqueuetitle().equals("சிறப்பு காணொளி\n")) {
+                if (item.getSubqueuetitle().equals("சிறப்பு காணொளி")) {
                     return VIEW_TYPE_VIDEO;
                 } else if (item.getSubqueuetitle().equals("புகைப்பட செய்திகள்")) {
                     return VIEW_TYPE_PHOTOSTORY_NEW;
