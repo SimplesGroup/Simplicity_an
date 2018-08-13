@@ -20,6 +20,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -38,10 +39,14 @@ import com.onesignal.OneSignal;
 import java.util.Hashtable;
 import java.util.Map;
 
+import simplicity_an.simplicity_an.MainEnglish.CityFragment;
+import simplicity_an.simplicity_an.MainEnglish.EntertainmentFragment;
 import simplicity_an.simplicity_an.MainEnglish.HappeningFrag;
+import simplicity_an.simplicity_an.MainEnglish.SettingsFragment;
 import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.MusicplayerBottom;
 import simplicity_an.simplicity_an.R;
+import simplicity_an.simplicity_an.SearchWebPage;
 import simplicity_an.simplicity_an.Tamil.TamilEntertainmentall;
 import simplicity_an.simplicity_an.Tamil.TamilRadio;
 import simplicity_an.simplicity_an.Tamil.TamilTaball;
@@ -54,7 +59,9 @@ import simplicity_an.simplicity_an.Tamil.Tamilnews;
  */
 
 public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFragmentInteractionListener,TamilRadio.OnFragmentInteractionListener, TamilEntertainmentall.OnFragmentInteractionListener,Tamilentertainmentmusic.OnFragmentInteractionListener,Tamilentertainmentradio.OnFragmentInteractionListener,Tamilnews.OnFragmentInteractionListener{
-    ImageButton city,happening,search,audio_video,settings;
+    ImageView search;
+    private static Button happening,audio_video,settings,explore;
+    private static Button city;
     SharedPreferences sharedpreferences;
     public static final String backgroundcolor = "color";
     String colorcodes;
@@ -72,6 +79,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
     String language_data,radio_button_values;
     String url_change_lang="http://simpli-city.in/request2.php?rtype=updatelanguage&key=simples";
     String playerid;
+    RelativeLayout main_tamil_layout;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +100,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
         radio_title=get.getStringExtra("TITLE");
         radio_url=get.getStringExtra("URL");
 //Check();
+        main_tamil_layout=(RelativeLayout)findViewById(R.id.maintamil);
 
 
         OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
@@ -111,42 +120,60 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
 
         CheckPlayerid();
        // isFirstTime();
-        city=(ImageButton)findViewById(R.id.btn_versiontwocity);
-        happening=(ImageButton)findViewById(R.id.btn_versiontwobeyond);
-        search=(ImageButton)findViewById(R.id.btn_versiontwosearch);
-        audio_video=(ImageButton)findViewById(R.id.btn_versiontwoexplore);
-        settings=(ImageButton)findViewById(R.id.btn_versiontwonotifications);
+        city=(Button)findViewById(R.id.btn_news_tamil);
+        happening=(Button)findViewById(R.id.btn_events_tamil);
+        search=(ImageView) findViewById(R.id.btn_city_tamil);
+        audio_video=(Button)findViewById(R.id.btn_specials_tamil);
+        settings=(Button)findViewById(R.id.btn_shop_tamil);
         topLevelLayout=(RelativeLayout)findViewById(R.id.top_layout);
       topLevelLayout.setVisibility(View.GONE);
 
         if(colorcodes.equals("#FFFFFFFF")){
-            city.setBackgroundResource(R.color.white);
-            happening.setBackgroundResource(R.color.white);
-            search.setBackgroundResource(R.color.white);
-            audio_video.setBackgroundResource(R.color.white);
-            settings.setBackgroundResource(R.color.white);
-            city.setImageResource(R.mipmap.newstamilone);
-            happening.setImageResource(R.mipmap.eventstamilone);
-            search.setImageResource(R.mipmap.searchtamilone);
-            audio_video.setImageResource(R.mipmap.specialstamilone);
-            settings.setImageResource(R.mipmap.moretamilone);
+
+
+            happening.setTextColor(Color.parseColor("#666666"));
+            audio_video.setTextColor(Color.parseColor("#666666"));
+            settings.setTextColor(Color.parseColor("#666666"));
+            main_tamil_layout.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
+            city.setTextColor(Color.BLACK);
+
         }
         else{
-            happening.setBackgroundResource(R.color.mytransparent);
-            search.setBackgroundResource(R.color.mytransparent);
-            audio_video.setBackgroundResource(R.color.mytransparent);
-            settings.setBackgroundResource(R.color.mytransparent);
-            city.setImageResource(R.mipmap.newstamil);
-            happening.setImageResource(R.mipmap.eventstamil);
-            search.setImageResource(R.mipmap.searchtamil);
-            audio_video.setImageResource(R.mipmap.specialtamil);
-            settings.setImageResource(R.mipmap.moretamil);
+
+
+            main_tamil_layout.setBackgroundColor(Color.parseColor("#FF000000"));
+            city.setTextColor(Color.WHITE);
+            happening.setTextColor(Color.parseColor("#666666"));
+            audio_video.setTextColor(Color.parseColor("#666666"));
+            settings.setTextColor(Color.parseColor("#666666"));
         }
+
 
 
         city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Fragment selectedFragment = null;
+                selectedFragment = CityFragmentTamil.newInstance();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, selectedFragment);
+                transaction.commit();
+                if(colorcodes.length()==0){
+
+                }else {
+                    if(colorcodes.equalsIgnoreCase("004")){
+                        Log.e("Msg","hihihi");
+                    }else {
+                        city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
+                        happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        city.setTextColor(Color.WHITE);
+                        happening.setTextColor(Color.parseColor("#666666"));
+                        audio_video.setTextColor(Color.parseColor("#666666"));
+                        settings.setTextColor(Color.parseColor("#666666"));
+                    }
 
                 /*if(colorcodes.equals("#FFFFFFFF")){
                     //city.setBackgroundResource(R.color.white);
@@ -171,7 +198,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     audio_video.setImageResource(R.mipmap.specialtamil);
                     settings.setImageResource(R.mipmap.moretamil);
                 }*/
-                Fragment selectedFragment = null;
+              /*  Fragment selectedFragment = null;
                 selectedFragment = CityFragmentTamil.newInstance();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, selectedFragment);
@@ -327,13 +354,36 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                             audio_video.setImageResource(R.mipmap.specialstamilone);
                             settings.setImageResource(R.mipmap.moretamilone);
                         }
-                    }
+                    }*/
                 }
             }
         });
         happening.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                Fragment selectedFragment = null;
+                selectedFragment = HappeningFragTamil.newInstance();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, selectedFragment);
+                transaction.commit();
+                if(colorcodes.length()==0){
+
+                }else {
+                    if(colorcodes.equalsIgnoreCase("004")){
+
+                    }else {
+                        happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
+                        city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        Log.e("Msg","hievent");
+                        happening.setTextColor(Color.WHITE);
+                        city.setTextColor(Color.parseColor("#666666"));
+                        audio_video.setTextColor(Color.parseColor("#666666"));
+                        settings.setTextColor(Color.parseColor("#666666"));
+                    }
                /* if(colorcodes.equals("#FFFFFFFF")){
                     city.setBackgroundResource(R.color.white);
                     //happening.setBackgroundResource(R.color.white);
@@ -358,7 +408,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     audio_video.setImageResource(R.mipmap.specialtamil);
                     settings.setImageResource(R.mipmap.moretamil);
                 }*/
-                Fragment selectedFragment = null;
+                /*Fragment selectedFragment = null;
                 selectedFragment = HappeningFragTamil.newInstance();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, selectedFragment);
@@ -515,13 +565,35 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                             audio_video.setImageResource(R.mipmap.specialstamilone);
                             settings.setImageResource(R.mipmap.moretamilone);
                         }
-                    }
+                    }*/
                 }
             }
         });
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                SearchWebPage fragment = new SearchWebPage();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, fragment);
+                transaction.commit();
+                if (colorcodes.length() == 0) {
+
+                } else {
+                    if (colorcodes.equalsIgnoreCase("004")) {
+                        Log.e("Msg", "hihihi");
+                    }else {
+                        happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        city.setTextColor(Color.parseColor("#666666"));
+                        happening.setTextColor(Color.parseColor("#666666"));
+                        audio_video.setTextColor(Color.parseColor("#666666"));
+                        settings.setTextColor(Color.parseColor("#666666"));
+                    }
+
+
                 //  if(myprofileid!=null) {
                 /*if(colorcodes.equals("#FFFFFFFF")){
                     city.setBackgroundResource(R.color.white);
@@ -548,7 +620,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                 }*/
             /*    Intent in = new Intent(getApplicationContext(), ExploreMain.class);
                     startActivity(in);*/
-              FragmentManager fragmentManager= getSupportFragmentManager();
+              /*FragmentManager fragmentManager= getSupportFragmentManager();
                 MainFragTamil fragments = new MainFragTamil();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frame_layout, fragments);
@@ -704,7 +776,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                             audio_video.setImageResource(R.mipmap.specialstamilone);
                             settings.setImageResource(R.mipmap.moretamilone);
                         }
-                    }
+                    }*/
                 }
                 /*}else {
                     Intent in = new Intent(getApplicationContext(), SigninpageActivity.class);
@@ -715,6 +787,28 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
         audio_video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                Fragment selectedFragment = null;
+                selectedFragment = EntertainmentFragmentTamil.newInstance();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, selectedFragment);
+                transaction.commit();
+                if(colorcodes.length()==0){
+
+                }else {
+                    if(colorcodes.equalsIgnoreCase("004")){
+                        Log.e("Msg","hihihi");
+                    }else {
+                        audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
+                        happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        audio_video.setTextColor(Color.WHITE);
+                        city.setTextColor(Color.parseColor("#666666"));
+                        happening.setTextColor(Color.parseColor("#666666"));
+                        settings.setTextColor(Color.parseColor("#666666"));
+                    }
               /*  if(colorcodes.equals("#FFFFFFFF")){
                     city.setBackgroundResource(R.color.white);
                     happening.setBackgroundResource(R.color.white);
@@ -738,7 +832,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     audio_video.setImageResource(R.mipmap.specialtamil);
                     settings.setImageResource(R.mipmap.moretamil);
                 }*/
-                Fragment selectedFragment = null;
+                /*Fragment selectedFragment = null;
                 selectedFragment = EntertainmentFragmentTamil.newInstance();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, selectedFragment);
@@ -895,13 +989,35 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                             //audio_video.setImageResource(R.mipmap.specialone);
                             settings.setImageResource(R.mipmap.moretamilone);
                         }
-                    }
+                    }*/
                 }
             }
         });
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                SettingsFragmentTamil fragment = new SettingsFragmentTamil();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frame_layout, fragment);
+                fragmentTransaction.commit();
+                if(colorcodes.length()==0){
+
+                }else {
+                    if(colorcodes.equalsIgnoreCase("004")){
+                        Log.e("Msg","hihihi");
+                    }else {
+                        settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
+                        happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                        settings.setTextColor(Color.WHITE);
+                        city.setTextColor(Color.parseColor("#666666"));
+                        happening.setTextColor(Color.parseColor("#666666"));
+                        audio_video.setTextColor(Color.parseColor("#666666"));
+                    }
+
                 /*if(colorcodes.equals("#FFFFFFFF")){
                     city.setBackgroundResource(R.color.white);
                     happening.setBackgroundResource(R.color.white);
@@ -925,7 +1041,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     audio_video.setImageResource(R.mipmap.specialtamil);
                     settings.setImageResource(R.mipmap.moretamil);
                 }*/
-                FragmentManager fragmentManager = getSupportFragmentManager();
+                /*FragmentManager fragmentManager = getSupportFragmentManager();
                 SettingsFragmentTamil fragment = new SettingsFragmentTamil();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frame_layout, fragment);
@@ -1081,7 +1197,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                             search.setImageResource(R.mipmap.searchtamilone);
                             audio_video.setImageResource(R.mipmap.specialstamilone);
                         }
-                    }
+                    }*/
                 }
             }
         });

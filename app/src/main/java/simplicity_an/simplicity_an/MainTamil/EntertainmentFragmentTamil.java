@@ -94,9 +94,10 @@ public class EntertainmentFragmentTamil extends Fragment  {
     public static final String Activity = "activity";
     public static final String Language = "lamguage";
     public static final String CONTENTID = "contentid";
-    ImageButton city,beyond,more,btnsearch,search,explore,notifications,themechange_button;
+    ImageButton beyond,more,search,explore,notifications,themechange_button;
     String activity,contentid,colorcodes;
-
+    Button btnspecials,btnevents,btnmore,city;
+    ImageView btnsearch;
     CoordinatorLayout mCoordinator;
     //Need this to set the title of the app bar
     CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -147,10 +148,11 @@ public class EntertainmentFragmentTamil extends Fragment  {
             myprofileid = myprofileid.replaceAll("\\D+","");
         }
         font_button=(ImageView) view.findViewById(R.id.fontbutton);
-        explore=(ImageButton)getActivity().findViewById(R.id.btn_versiontwoexplore);
-        beyond=(ImageButton)getActivity().findViewById(R.id.btn_versiontwobeyond);
-        city=(ImageButton)getActivity().findViewById(R.id.btn_versiontwocity);
-        btnsearch = (ImageButton)getActivity().findViewById(R.id.btn_versiontwosearch);
+        city=(Button) getActivity().findViewById(R.id.btn_news_tamil);
+        btnspecials=(Button)getActivity().findViewById(R.id.btn_specials_tamil);
+        btnevents = (Button)getActivity().findViewById(R.id.btn_events_tamil);
+        btnsearch = (ImageView) getActivity().findViewById(R.id.btn_city_tamil);
+        btnmore = (Button)getActivity().findViewById(R.id.btn_shop_tamil);
         more = (ImageButton)getActivity().findViewById(R.id.btn_versiontwonotifications);
         url_notification_count_valueget=url_noti_count+myprofileid;
         URLPOSTQTYPE=urlpost;
@@ -190,84 +192,56 @@ public class EntertainmentFragmentTamil extends Fragment  {
                 startActivity(searchpage);
             }
         });
-        if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"), Color.parseColor("##383838")};
-            GradientDrawable gd = new GradientDrawable(
-                    GradientDrawable.Orientation.TOP_BOTTOM,
-                    colors);
-            gd.setCornerRadius(0f);
+        if(colorcodes!=null) {
+            if (colorcodes.equals("#FFFFFFFF")) {
+                int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF")};
 
-            mainlayout.setBackgroundDrawable(gd);
-         explore.setBackgroundResource(R.color.theme1button);
-            fabplus.setBackgroundResource(R.color.theme1button);
-            fabinnerplus.setBackgroundResource(R.color.theme1button);
-            fabsearch.setBackgroundResource(R.color.theme1button);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
-            editor.commit();
-        }else {
-            if(colorcodes.equalsIgnoreCase("004")){
-                Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"), Color.parseColor("#383838")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
                 gd.setCornerRadius(0f);
 
                 mainlayout.setBackgroundDrawable(gd);
-                explore.setBackgroundResource(R.color.theme1button);
+
+
+            } else {
+                int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+                mainlayout.setBackgroundDrawable(gd);
+                // city.setBackgroundColor(getResources().getColor(R.color.theme1button));
                 fabplus.setBackgroundResource(R.color.theme1button);
                 fabinnerplus.setBackgroundResource(R.color.theme1button);
                 fabsearch.setBackgroundResource(R.color.theme1button);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(backgroundcolor, "#383838");
+
                 editor.commit();
-            }else {
 
-                if(colorcodes!=null){
-                    if(!colorcodes.equals("#FFFFFFFF")) {
-                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
-
-                        GradientDrawable gd = new GradientDrawable(
-                                GradientDrawable.Orientation.TOP_BOTTOM,
-                                colors);
-                        gd.setCornerRadius(0f);
-
-                        mainlayout.setBackgroundDrawable(gd);
-
-
-                    }
-                    else{
-                        int[] color = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
-
-                        GradientDrawable g = new GradientDrawable(
-                                GradientDrawable.Orientation.TOP_BOTTOM,
-                                color);
-                        g.setCornerRadius(0f);
-
-                        mainlayout.setBackgroundDrawable(g);
-                        explore.setBackgroundResource(R.color.theme13);
-                        explore.setImageResource(R.mipmap.specialstamilone);
-                    }
-                }else {
-                    int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"), Color.parseColor("#383838")};
-
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            colors);
-                    gd.setCornerRadius(0f);
-
-                    mainlayout.setBackgroundDrawable(gd);
-                  explore.setBackgroundResource(R.color.theme1button);
-                    fabplus.setBackgroundResource(R.color.theme1button);
-                    fabinnerplus.setBackgroundResource(R.color.theme1button);
-                    fabsearch.setBackgroundResource(R.color.theme1button);
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
-
-                    editor.commit();
-                }
             }
+        }else{
+            int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+
+            GradientDrawable gd = new GradientDrawable(
+                    GradientDrawable.Orientation.TOP_BOTTOM,
+                    colors);
+            gd.setCornerRadius(0f);
+
+            mainlayout.setBackgroundDrawable(gd);
+
+            fabplus.setBackgroundResource(R.color.theme1button);
+            fabinnerplus.setBackgroundResource(R.color.theme1button);
+            fabsearch.setBackgroundResource(R.color.theme1button);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(backgroundcolor, "#383838");
+
+            editor.commit();
+
+
         }
         if(myprofileid!=null) {
 
@@ -369,17 +343,17 @@ public class EntertainmentFragmentTamil extends Fragment  {
             title_coimbatore.setTypeface(tf1);
             title_coimbatore.setTextSize(30);
         }
-        if(colorcodes.equals("#FFFFFFFF")){
+       /* if(colorcodes.equals("#FFFFFFFF")){
             explore.setBackgroundResource(R.color.theme13);
             explore.setImageResource(R.mipmap.specialstamilone);
-           /* city.setBackgroundResource(R.color.white);
+           *//* city.setBackgroundResource(R.color.white);
             btnevents.setBackgroundResource(R.color.mytransparent);
             btnmore.setBackgroundResource(R.color.mytransparent);
             btnspecials.setBackgroundResource(R.color.mytransparent);
             city.setImageResource(R.mipmap.news);
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
-            btnspecials.setImageResource(R.mipmap.specials);*/
+            btnspecials.setImageResource(R.mipmap.specials);*//*
         }
         else{
 
@@ -527,7 +501,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
                 more.setImageResource(R.mipmap.moretamil);
                 btnsearch.setImageResource(R.mipmap.searchtamil);
             }
-        }
+        }*/
 
         date_text.setTypeface(tf_roboto);
 
@@ -678,68 +652,68 @@ public class EntertainmentFragmentTamil extends Fragment  {
         notifications=(ImageButton)view.findViewById(R.id.btn_versiontwonotifications);*/
 
         if(colorcodes.equalsIgnoreCase("#383838")){
-           explore.setBackgroundResource(R.color.theme1button);
+         //  explore.setBackgroundResource(R.color.theme1button);
             fabplus.setBackgroundResource(R.color.theme1button);
             fabinnerplus.setBackgroundResource(R.color.theme1button);
             fabsearch.setBackgroundResource(R.color.theme1button);
         }else if(colorcodes.equalsIgnoreCase("#59247c")){
-           explore.setBackgroundResource(R.color.theme2);
+          // explore.setBackgroundResource(R.color.theme2);
             fabplus.setBackgroundResource(R.color.theme2);
             fabinnerplus.setBackgroundResource(R.color.theme2);
             fabsearch.setBackgroundResource(R.color.theme2);
         }else if(colorcodes.equalsIgnoreCase("#1d487a")){
-           explore.setBackgroundResource(R.color.theme3);
+         //  explore.setBackgroundResource(R.color.theme3);
             fabplus.setBackgroundResource(R.color.theme3);
             fabinnerplus.setBackgroundResource(R.color.theme3);
             fabsearch.setBackgroundResource(R.color.theme3);
         }else if(colorcodes.equalsIgnoreCase("#7A4100")){
-           explore.setBackgroundResource(R.color.theme4);
+          // explore.setBackgroundResource(R.color.theme4);
             fabplus.setBackgroundResource(R.color.theme4);
             fabinnerplus.setBackgroundResource(R.color.theme4);
             fabsearch.setBackgroundResource(R.color.theme4);
         }else if(colorcodes.equalsIgnoreCase("#6E0138")){
-           explore.setBackgroundResource(R.color.theme5);
+         //  explore.setBackgroundResource(R.color.theme5);
             fabplus.setBackgroundResource(R.color.theme5);
             fabinnerplus.setBackgroundResource(R.color.theme5);
             fabsearch.setBackgroundResource(R.color.theme5);
         }else if(colorcodes.equalsIgnoreCase("#00BFD4")){
-            explore.setBackgroundResource(R.color.theme6);
+           // explore.setBackgroundResource(R.color.theme6);
             fabplus.setBackgroundResource(R.color.theme6);
             fabinnerplus.setBackgroundResource(R.color.theme6);
             fabsearch.setBackgroundResource(R.color.theme6);
         }else if(colorcodes.equalsIgnoreCase("#185546")){
-           explore.setBackgroundResource(R.color.theme7);
+         //  explore.setBackgroundResource(R.color.theme7);
             fabplus.setBackgroundResource(R.color.theme7);
             fabinnerplus.setBackgroundResource(R.color.theme7);
             fabsearch.setBackgroundResource(R.color.theme7);
         }else if(colorcodes.equalsIgnoreCase("#D0A06F")){
-           explore.setBackgroundResource(R.color.theme8);
+          // explore.setBackgroundResource(R.color.theme8);
             fabplus.setBackgroundResource(R.color.theme8);
             fabinnerplus.setBackgroundResource(R.color.theme8);
             fabsearch.setBackgroundResource(R.color.theme8);
         }else if(colorcodes.equalsIgnoreCase("#82C6E6")){
-            explore.setBackgroundResource(R.color.theme9);
+            //explore.setBackgroundResource(R.color.theme9);
             fabplus.setBackgroundResource(R.color.theme9);
             fabinnerplus.setBackgroundResource(R.color.theme9);
             fabsearch.setBackgroundResource(R.color.theme9);
         }else if(colorcodes.equalsIgnoreCase("#339900")){
-           explore.setBackgroundResource(R.color.theme10);
+          // explore.setBackgroundResource(R.color.theme10);
             fabplus.setBackgroundResource(R.color.theme10);
             fabinnerplus.setBackgroundResource(R.color.theme10);
             fabsearch.setBackgroundResource(R.color.theme10);
         }else if(colorcodes.equalsIgnoreCase("#CC9C00")){
-           explore.setBackgroundResource(R.color.theme11);
+          // explore.setBackgroundResource(R.color.theme11);
             fabplus.setBackgroundResource(R.color.theme11);
             fabinnerplus.setBackgroundResource(R.color.theme11);
             fabsearch.setBackgroundResource(R.color.theme11);
         }else if(colorcodes.equalsIgnoreCase("#00B09B")){
-           explore.setBackgroundResource(R.color.theme12);
+           //explore.setBackgroundResource(R.color.theme12);
             fabplus.setBackgroundResource(R.color.theme12);
             fabinnerplus.setBackgroundResource(R.color.theme12);
             fabsearch.setBackgroundResource(R.color.theme12);
         }
         else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
-            explore.setBackgroundResource(R.color.theme13);
+//            explore.setBackgroundResource(R.color.theme13);
             fabplus.setBackgroundResource(R.color.theme13);
             fabinnerplus.setBackgroundResource(R.color.theme13);
             fabsearch.setBackgroundResource(R.color.theme13);

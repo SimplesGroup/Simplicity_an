@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +19,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +41,7 @@ import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Tamil.Activity.SavedArticleTamil;
 import simplicity_an.simplicity_an.TermsandCondition;
+import simplicity_an.simplicity_an.Utils.Fonts;
 
 /**
  * Created by kuppusamy on 5/19/2017.
@@ -61,10 +66,16 @@ public class SettingsFragmentTamil extends Fragment {
     public static final String USERIMAGE= "myprofileimage";
     public static final String USERMAILID= "myprofileemail";
     NotificationManagerCompat mNotificationManagerCompat;
-    ImageButton city,specials,events,btsearch,more;
+    ImageButton specials,events,btsearch,more;
+    Button btnspecials,btnevents,btnmore,city;
+    ImageView btnsearch;
     String activity,contentid,colorcodes;
+    String fontname;
+    Typeface tf;
+    RelativeLayout mainlayout;
     public static final String backgroundcolor = "color";
     public static final String Language = "lamguage";
+    String simplycity_title_fontPath;
     public static SettingsFragmentTamil newInstance() {
         SettingsFragmentTamil fragment = new SettingsFragmentTamil();
         return fragment;
@@ -79,7 +90,7 @@ public class SettingsFragmentTamil extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.frag_settings,container,false);
         String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
-        final Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
+        tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
         sharedpreferences = getActivity().getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
         if (sharedpreferences.contains(MYUSERID)) {
@@ -88,12 +99,70 @@ public class SettingsFragmentTamil extends Fragment {
             myprofileid = sharedpreferences.getString(MYUSERID, "");
             myprofileid = myprofileid.replaceAll("\\D+", "");
         }
+        fontname=sharedpreferences.getString(Fonts.FONT,"");
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
-        city=(ImageButton)getActivity().findViewById(R.id.btn_versiontwocity);
-        specials=(ImageButton)getActivity().findViewById(R.id.btn_versiontwoexplore);
-        events = (ImageButton)getActivity().findViewById(R.id.btn_versiontwobeyond);
-        btsearch = (ImageButton)getActivity().findViewById(R.id.btn_versiontwosearch);
-        more = (ImageButton)getActivity().findViewById(R.id.btn_versiontwonotifications);
+        city=(Button) getActivity().findViewById(R.id.btn_news);
+        btnspecials=(Button)getActivity().findViewById(R.id.btn_specials);
+        btnevents = (Button)getActivity().findViewById(R.id.btn_events);
+        btnsearch = (ImageView) getActivity().findViewById(R.id.btn_citys);
+        btnmore = (Button)getActivity().findViewById(R.id.btn_shop);
+
+        if(fontname.equals("playfair")){
+             simplycity_title_fontPath = "fonts/Lora-Regular.ttf";
+            tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
+        }else {
+             simplycity_title_fontPath = "fonts/SystemSanFranciscoDisplayRegular.ttf";
+            tf = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
+        }
+
+        mainlayout=(RelativeLayout)view.findViewById(R.id.version_main_layout);
+        if(colorcodes!=null) {
+            if (colorcodes.equals("#FFFFFFFF")) {
+                int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+                mainlayout.setBackgroundDrawable(gd);
+
+
+            } else {
+                int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+
+                GradientDrawable gd = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        colors);
+                gd.setCornerRadius(0f);
+
+                mainlayout.setBackgroundDrawable(gd);
+                // city.setBackgroundColor(getResources().getColor(R.color.theme1button));
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#383838");
+
+                editor.commit();
+
+            }
+        }else{
+            int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+
+            GradientDrawable gd = new GradientDrawable(
+                    GradientDrawable.Orientation.TOP_BOTTOM,
+                    colors);
+            gd.setCornerRadius(0f);
+
+            mainlayout.setBackgroundDrawable(gd);
+
+
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(backgroundcolor, "#383838");
+
+            editor.commit();
+
+
+        }
 
         mNotificationManagerCompat = NotificationManagerCompat.from(getActivity());
 
@@ -182,17 +251,17 @@ public class SettingsFragmentTamil extends Fragment {
         notification_data=(TextView)view.findViewById(R.id.notificationdata_data);
         notification_title=(TextView)view.findViewById(R.id.notification_title);
 
-        if(colorcodes.equals("#FFFFFFFF")){
+        /*if(colorcodes.equals("#FFFFFFFF")){
             more.setBackgroundResource(R.color.theme13);
             more.setImageResource(R.mipmap.moretamilone);
-           /* city.setBackgroundResource(R.color.white);
+           *//* city.setBackgroundResource(R.color.white);
             btnevents.setBackgroundResource(R.color.mytransparent);
             btnmore.setBackgroundResource(R.color.mytransparent);
             btnspecials.setBackgroundResource(R.color.mytransparent);
             city.setImageResource(R.mipmap.news);
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
-            btnspecials.setImageResource(R.mipmap.specials);*/
+            btnspecials.setImageResource(R.mipmap.specials);*//*
         }
         else{
 
@@ -341,7 +410,7 @@ public class SettingsFragmentTamil extends Fragment {
                 specials.setImageResource(R.mipmap.specialtamil);
             }
         }
-
+*/
 
         profileimage.setImageUrl(userimage,mImageLoader);
         settings_title_text.setTypeface(tf);

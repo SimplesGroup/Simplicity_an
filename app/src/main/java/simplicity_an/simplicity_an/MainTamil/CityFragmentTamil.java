@@ -110,7 +110,9 @@ public class CityFragmentTamil extends Fragment {
     public static final String Activity = "activity";
     public static final String CONTENTID = "contentid";
     public static final String backgroundcolor = "color";
-    ImageButton city,beyond,search,explore,notifications,btnspecials,btnevents,btnsearch,btnmore;
+    Button btnspecials,btnevents,btnmore;
+    ImageView btnsearch;
+    Button city;
     String activity,contentid,colorcodes;
     FloatingActionButton fabsearch,fabinnerplus;
     CoordinatorLayout mCoordinator;
@@ -123,6 +125,7 @@ public class CityFragmentTamil extends Fragment {
     RelativeLayout mainlayout;
     FloatingActionButton fabplus;
     NetworkImageView specialday_image;
+    ImageButton beyond,search,explore,notifications;
     String specialdayurl="http://simpli-city.in/request2.php?rtype=specialday&key=simples&language=2";
     public static final String Language = "lamguage";
     ImageLoader mImageLoader;
@@ -157,11 +160,11 @@ public class CityFragmentTamil extends Fragment {
                 Context.MODE_PRIVATE);
 
         requestQueue= Volley.newRequestQueue(getActivity());
-        city=(ImageButton)getActivity().findViewById(R.id.btn_versiontwocity);
-        btnspecials=(ImageButton)getActivity().findViewById(R.id.btn_versiontwoexplore);
-        btnevents = (ImageButton)getActivity().findViewById(R.id.btn_versiontwobeyond);
-        btnsearch = (ImageButton)getActivity().findViewById(R.id.btn_versiontwosearch);
-        btnmore = (ImageButton)getActivity().findViewById(R.id.btn_versiontwonotifications);
+        city=(Button) getActivity().findViewById(R.id.btn_news_tamil);
+        btnspecials=(Button)getActivity().findViewById(R.id.btn_specials_tamil);
+        btnevents = (Button)getActivity().findViewById(R.id.btn_events_tamil);
+        btnsearch = (ImageView) getActivity().findViewById(R.id.btn_city_tamil);
+        btnmore = (Button)getActivity().findViewById(R.id.btn_shop_tamil);
         font_button=(ImageView) view.findViewById(R.id.fontbutton);
         contentid=sharedpreferences.getString(CONTENTID,"");
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
@@ -271,8 +274,8 @@ public class CityFragmentTamil extends Fragment {
                         g.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(g);
-                        city.setBackgroundResource(R.color.theme13);
-                        city.setImageResource(R.mipmap.newstamilone);
+                      /*  city.setBackgroundResource(R.color.theme13);
+                        city.setImageResource(R.mipmap.newstamilone);*/
                     }
                 }else {
                     int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"), Color.parseColor("#383838")};
@@ -283,7 +286,7 @@ public class CityFragmentTamil extends Fragment {
                     gd.setCornerRadius(0f);
 
                     mainlayout.setBackgroundDrawable(gd);
-                    city.setBackgroundResource(R.color.theme1button);
+                   // city.setBackgroundResource(R.color.theme1button);
                     fabplus.setBackgroundResource(R.color.theme1button);
                     fabinnerplus.setBackgroundResource(R.color.theme1button);
                     fabsearch.setBackgroundResource(R.color.theme1button);
@@ -333,8 +336,8 @@ public class CityFragmentTamil extends Fragment {
         }
 
         if(colorcodes.equals("#FFFFFFFF")){
-            city.setBackgroundResource(R.color.theme13);
-            city.setImageResource(R.mipmap.newstamilone);
+           /* city.setBackgroundResource(R.color.theme13);
+            city.setImageResource(R.mipmap.newstamilone);*/
            /* city.setBackgroundResource(R.color.white);
             btnevents.setBackgroundResource(R.color.mytransparent);
             btnmore.setBackgroundResource(R.color.mytransparent);
@@ -343,11 +346,16 @@ public class CityFragmentTamil extends Fragment {
             btnevents.setImageResource(R.mipmap.events);
             btnmore.setImageResource(R.mipmap.more);
             btnspecials.setImageResource(R.mipmap.specials);*/
+
+            city.setTextColor(Color.BLACK);
+            btnevents.setTextColor(Color.parseColor("#666666"));
+            btnspecials.setTextColor(Color.parseColor("#666666"));
+            btnmore.setTextColor(Color.parseColor("#666666"));
         }
         else{
 
             if(colorcodes.equals("#383838")) {
-                city.setBackgroundResource(R.color.theme1button);
+                /*city.setBackgroundResource(R.color.theme1button);
                 city.setImageResource(R.mipmap.newstamil);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 btnevents.setBackgroundResource(R.color.mytransparent);
@@ -356,10 +364,14 @@ public class CityFragmentTamil extends Fragment {
                 btnsearch.setImageResource(R.mipmap.searchtamil);
                 btnevents.setImageResource(R.mipmap.eventstamil);
                 btnmore.setImageResource(R.mipmap.moretamil);
-                btnspecials.setImageResource(R.mipmap.specialtamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);*/
+                city.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#666666"));
+                btnspecials.setTextColor(Color.parseColor("#666666"));
+                btnmore.setTextColor(Color.parseColor("#666666"));
             }
             else if(colorcodes.equals("#59247c")) {
-                city.setBackgroundResource(R.color.theme2);
+              /*  city.setBackgroundResource(R.color.theme2);
                 city.setImageResource(R.mipmap.newstamil);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 btnevents.setBackgroundResource(R.color.mytransparent);
@@ -368,10 +380,14 @@ public class CityFragmentTamil extends Fragment {
                 btnsearch.setImageResource(R.mipmap.searchtamil);
                 btnevents.setImageResource(R.mipmap.eventstamil);
                 btnmore.setImageResource(R.mipmap.moretamil);
-                btnspecials.setImageResource(R.mipmap.specialtamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);*/
+                city.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#666666"));
+                btnspecials.setTextColor(Color.parseColor("#666666"));
+                btnmore.setTextColor(Color.parseColor("#666666"));
             }
             else if(colorcodes.equals("#1d487a")) {
-                city.setBackgroundResource(R.color.theme3);
+               /* city.setBackgroundResource(R.color.theme3);
                 city.setImageResource(R.mipmap.newstamil);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 btnevents.setBackgroundResource(R.color.mytransparent);
@@ -380,10 +396,14 @@ public class CityFragmentTamil extends Fragment {
                 btnsearch.setImageResource(R.mipmap.searchtamil);
                 btnevents.setImageResource(R.mipmap.eventstamil);
                 btnmore.setImageResource(R.mipmap.moretamil);
-                btnspecials.setImageResource(R.mipmap.specialtamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);*/
+                city.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#666666"));
+                btnspecials.setTextColor(Color.parseColor("#666666"));
+                btnmore.setTextColor(Color.parseColor("#666666"));
             }
             else if(colorcodes.equals("#7A4100")) {
-                city.setBackgroundResource(R.color.theme4);
+                /*city.setBackgroundResource(R.color.theme4);
                 city.setImageResource(R.mipmap.newstamil);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 btnevents.setBackgroundResource(R.color.mytransparent);
@@ -392,10 +412,14 @@ public class CityFragmentTamil extends Fragment {
                 btnsearch.setImageResource(R.mipmap.searchtamil);
                 btnevents.setImageResource(R.mipmap.eventstamil);
                 btnmore.setImageResource(R.mipmap.moretamil);
-                btnspecials.setImageResource(R.mipmap.specialtamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);*/
+                city.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#666666"));
+                btnspecials.setTextColor(Color.parseColor("#666666"));
+                btnmore.setTextColor(Color.parseColor("#666666"));
             }
             else if(colorcodes.equals("#6E0138")) {
-                city.setBackgroundResource(R.color.theme5);
+                /*city.setBackgroundResource(R.color.theme5);
                 city.setImageResource(R.mipmap.newstamil);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 btnevents.setBackgroundResource(R.color.mytransparent);
@@ -404,10 +428,14 @@ public class CityFragmentTamil extends Fragment {
                 btnsearch.setImageResource(R.mipmap.searchtamil);
                 btnevents.setImageResource(R.mipmap.eventstamil);
                 btnmore.setImageResource(R.mipmap.moretamil);
-                btnspecials.setImageResource(R.mipmap.specialtamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);*/
+                city.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#666666"));
+                btnspecials.setTextColor(Color.parseColor("#666666"));
+                btnmore.setTextColor(Color.parseColor("#666666"));
             }
             else if(colorcodes.equals("#00BFD4")) {
-                city.setBackgroundResource(R.color.theme6);
+                /*city.setBackgroundResource(R.color.theme6);
                 city.setImageResource(R.mipmap.newstamil);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 btnevents.setBackgroundResource(R.color.mytransparent);
@@ -416,10 +444,14 @@ public class CityFragmentTamil extends Fragment {
                 btnsearch.setImageResource(R.mipmap.searchtamil);
                 btnevents.setImageResource(R.mipmap.eventstamil);
                 btnmore.setImageResource(R.mipmap.moretamil);
-                btnspecials.setImageResource(R.mipmap.specialtamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);*/
+                city.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#666666"));
+                btnspecials.setTextColor(Color.parseColor("#666666"));
+                btnmore.setTextColor(Color.parseColor("#666666"));
             }
             else if(colorcodes.equals("#185546")) {
-                city.setBackgroundResource(R.color.theme7);
+                /*city.setBackgroundResource(R.color.theme7);
                 city.setImageResource(R.mipmap.newstamil);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 btnevents.setBackgroundResource(R.color.mytransparent);
@@ -428,10 +460,14 @@ public class CityFragmentTamil extends Fragment {
                 btnsearch.setImageResource(R.mipmap.searchtamil);
                 btnevents.setImageResource(R.mipmap.eventstamil);
                 btnmore.setImageResource(R.mipmap.moretamil);
-                btnspecials.setImageResource(R.mipmap.specialtamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);*/
+                city.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#666666"));
+                btnspecials.setTextColor(Color.parseColor("#666666"));
+                btnmore.setTextColor(Color.parseColor("#666666"));
             }
             else if(colorcodes.equals("#D0A06F")) {
-                city.setBackgroundResource(R.color.theme8);
+               /* city.setBackgroundResource(R.color.theme8);
                 city.setImageResource(R.mipmap.newstamil);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 btnevents.setBackgroundResource(R.color.mytransparent);
@@ -440,10 +476,14 @@ public class CityFragmentTamil extends Fragment {
                 btnsearch.setImageResource(R.mipmap.searchtamil);
                 btnevents.setImageResource(R.mipmap.eventstamil);
                 btnmore.setImageResource(R.mipmap.moretamil);
-                btnspecials.setImageResource(R.mipmap.specialtamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);*/
+                city.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#666666"));
+                btnspecials.setTextColor(Color.parseColor("#666666"));
+                btnmore.setTextColor(Color.parseColor("#666666"));
             }
             else if(colorcodes.equals("#82C6E6")) {
-                city.setBackgroundResource(R.color.theme9);
+                /*city.setBackgroundResource(R.color.theme9);
                 city.setImageResource(R.mipmap.newstamil);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 btnevents.setBackgroundResource(R.color.mytransparent);
@@ -452,10 +492,14 @@ public class CityFragmentTamil extends Fragment {
                 btnsearch.setImageResource(R.mipmap.searchtamil);
                 btnevents.setImageResource(R.mipmap.eventstamil);
                 btnmore.setImageResource(R.mipmap.moretamil);
-                btnspecials.setImageResource(R.mipmap.specialtamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);*/
+                city.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#666666"));
+                btnspecials.setTextColor(Color.parseColor("#666666"));
+                btnmore.setTextColor(Color.parseColor("#666666"));
             }
             else if(colorcodes.equals("#339900")) {
-                city.setBackgroundResource(R.color.theme10);
+               /* city.setBackgroundResource(R.color.theme10);
                 city.setImageResource(R.mipmap.newstamil);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 btnevents.setBackgroundResource(R.color.mytransparent);
@@ -464,10 +508,14 @@ public class CityFragmentTamil extends Fragment {
                 btnsearch.setImageResource(R.mipmap.searchtamil);
                 btnevents.setImageResource(R.mipmap.eventstamil);
                 btnmore.setImageResource(R.mipmap.moretamil);
-                btnspecials.setImageResource(R.mipmap.specialtamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);*/
+                city.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#666666"));
+                btnspecials.setTextColor(Color.parseColor("#666666"));
+                btnmore.setTextColor(Color.parseColor("#666666"));
             }
             else if(colorcodes.equals("#CC9C00")) {
-                city.setBackgroundResource(R.color.theme11);
+                /*city.setBackgroundResource(R.color.theme11);
                 city.setImageResource(R.mipmap.newstamil);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 btnevents.setBackgroundResource(R.color.mytransparent);
@@ -476,10 +524,14 @@ public class CityFragmentTamil extends Fragment {
                 btnsearch.setImageResource(R.mipmap.searchtamil);
                 btnevents.setImageResource(R.mipmap.eventstamil);
                 btnmore.setImageResource(R.mipmap.moretamil);
-                btnspecials.setImageResource(R.mipmap.specialtamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);*/
+                city.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#666666"));
+                btnspecials.setTextColor(Color.parseColor("#666666"));
+                btnmore.setTextColor(Color.parseColor("#666666"));
             }
             else if(colorcodes.equals("#00B09B")) {
-                city.setBackgroundResource(R.color.theme12);
+               /* city.setBackgroundResource(R.color.theme12);
                 city.setImageResource(R.mipmap.newstamil);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
                 btnevents.setBackgroundResource(R.color.mytransparent);
@@ -488,7 +540,11 @@ public class CityFragmentTamil extends Fragment {
                 btnsearch.setImageResource(R.mipmap.searchtamil);
                 btnevents.setImageResource(R.mipmap.eventstamil);
                 btnmore.setImageResource(R.mipmap.moretamil);
-                btnspecials.setImageResource(R.mipmap.specialtamil);
+                btnspecials.setImageResource(R.mipmap.specialtamil);*/
+                city.setTextColor(Color.WHITE);
+                btnevents.setTextColor(Color.parseColor("#666666"));
+                btnspecials.setTextColor(Color.parseColor("#666666"));
+                btnmore.setTextColor(Color.parseColor("#666666"));
             }
         }
 
