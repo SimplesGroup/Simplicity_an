@@ -356,12 +356,14 @@ public class Farmingdescriptiontamil extends AppCompatActivity {
             String playfa ="fonts/TAU_Elango_Madhavi.TTF";
             tf = Typeface.createFromAsset(getApplicationContext().getAssets(), playfa);
             tv.setTypeface(tf);
+            tv.setTextSize(27);
 
         }else {
             String play = "fonts/MUKTAMALAR-BOLD.TTF";
             tf= Typeface.createFromAsset(getApplicationContext().getAssets(), play);
             tv.setTypeface(tf);
-            tv.setLineSpacing(0,0.8f);
+            tv.setLineSpacing(0,0.6f);
+            tv.setTextSize(22);
         }
         hashtags_title.setTypeface(tf);
         textview_date.setTypeface(tf);

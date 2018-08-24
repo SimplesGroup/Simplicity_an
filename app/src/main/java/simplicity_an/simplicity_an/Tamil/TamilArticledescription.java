@@ -348,12 +348,13 @@ if(activity==null){
             String playfa ="fonts/TAU_Elango_Madhavi.TTF";
             tf = Typeface.createFromAsset(getApplicationContext().getAssets(), playfa);
             tv.setTypeface(tf);
+            tv.setTextSize(27);
 
         }else {
             String play = "fonts/MUKTAMALAR-BOLD.TTF";
             tf= Typeface.createFromAsset(getApplicationContext().getAssets(), play);
             tv.setTypeface(tf);
-           // tv.setTextSize(30);
+            tv.setTextSize(22);
         }
 
         sourcelinknews.setTypeface(tf);

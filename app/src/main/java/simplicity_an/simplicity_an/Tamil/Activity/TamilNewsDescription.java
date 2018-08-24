@@ -366,13 +366,15 @@ public class TamilNewsDescription extends AppCompatActivity {
         if(fontname.equals("playfair")){
             String playfa ="fonts/TAU_Elango_Madhavi.TTF";
             tf = Typeface.createFromAsset(getApplicationContext().getAssets(), playfa);
+            tv.setTextSize(27);
             tv.setTypeface(tf);
 
         }else {
             String play = "fonts/MUKTAMALAR-BOLD.TTF";
             tf= Typeface.createFromAsset(getApplicationContext().getAssets(), play);
             tv.setTypeface(tf);
-            tv.setLineSpacing(0,0.8f);
+            tv.setTextSize(22);
+            tv.setLineSpacing(0,0.6f);
         }
         short_description.setTypeface(tf);
         title_category.setTypeface(tf);

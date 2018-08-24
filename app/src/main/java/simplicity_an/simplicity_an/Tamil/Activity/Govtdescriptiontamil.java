@@ -357,12 +357,14 @@ requestQueue=Volley.newRequestQueue(this);
             String playfa ="fonts/TAU_Elango_Madhavi.TTF";
             tf = Typeface.createFromAsset(getApplicationContext().getAssets(), playfa);
             titlename.setTypeface(tf);
+            titlename.setTextSize(27);
 
         }else {
             String play = "fonts/MUKTAMALAR-BOLD.TTF";
             tf= Typeface.createFromAsset(getApplicationContext().getAssets(), play);
             titlename.setTypeface(tf);
-            titlename.setLineSpacing(0,0.8f);
+            titlename.setLineSpacing(0,0.6f);
+            titlename.setTextSize(22);
         }
         date.setTypeface(tf);
         textview_date.setTypeface(tf);

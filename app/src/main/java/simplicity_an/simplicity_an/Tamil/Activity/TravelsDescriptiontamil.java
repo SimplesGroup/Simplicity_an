@@ -357,12 +357,14 @@ public class TravelsDescriptiontamil extends AppCompatActivity {
             String playfa ="fonts/TAU_Elango_Madhavi.TTF";
             tf = Typeface.createFromAsset(getApplicationContext().getAssets(), playfa);
             title.setTypeface(tf);
+            title.setTextSize(27);
 
         }else {
             String play = "fonts/MUKTAMALAR-BOLD.TTF";
             tf= Typeface.createFromAsset(getApplicationContext().getAssets(), play);
             title.setTypeface(tf);
-            title.setLineSpacing(0,0.8f);
+            title.setLineSpacing(0,0.6f);
+            title.setTextSize(22);
         }
         hashtags_title.setTypeface(tf);
         short_description.setTypeface(tf);
