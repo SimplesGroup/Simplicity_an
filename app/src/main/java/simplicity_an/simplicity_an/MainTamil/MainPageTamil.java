@@ -165,11 +165,16 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     if(colorcodes.equalsIgnoreCase("004")){
                         Log.e("Msg","hihihi");
                     }else {
+                        if(colorcodes.equals("#FFFFFFFF")){
+                            city.setTextColor(Color.BLACK);
+                        }else {
+                            city.setTextColor(Color.WHITE);
+                        }
                         city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
                         happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
-                        city.setTextColor(Color.WHITE);
+
                         happening.setTextColor(Color.parseColor("#666666"));
                         audio_video.setTextColor(Color.parseColor("#666666"));
                         settings.setTextColor(Color.parseColor("#666666"));
@@ -374,12 +379,19 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     if(colorcodes.equalsIgnoreCase("004")){
 
                     }else {
+
+
                         happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
                         city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
-                        Log.e("Msg","hievent");
-                        happening.setTextColor(Color.WHITE);
+
+                        if(colorcodes.equals("#FFFFFFFF")){
+                            happening.setTextColor(Color.BLACK);
+                        }else if(colorcodes.equals("#323232")){
+                            happening.setTextColor(Color.WHITE);
+                        }
+                       // happening.setTextColor(Color.BLACK);
                         city.setTextColor(Color.parseColor("#666666"));
                         audio_video.setTextColor(Color.parseColor("#666666"));
                         settings.setTextColor(Color.parseColor("#666666"));
@@ -583,6 +595,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     if (colorcodes.equalsIgnoreCase("004")) {
                         Log.e("Msg", "hihihi");
                     }else {
+
                         happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
@@ -800,11 +813,16 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     if(colorcodes.equalsIgnoreCase("004")){
                         Log.e("Msg","hihihi");
                     }else {
+
                         audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
                         happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
-                        audio_video.setTextColor(Color.WHITE);
+                        if(colorcodes.equals("#FFFFFFFF")){
+                            audio_video.setTextColor(Color.BLACK);
+                        }else if(colorcodes.equals("#323232")) {
+                            audio_video.setTextColor(Color.WHITE);
+                        }
                         city.setTextColor(Color.parseColor("#666666"));
                         happening.setTextColor(Color.parseColor("#666666"));
                         settings.setTextColor(Color.parseColor("#666666"));
@@ -1008,11 +1026,16 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     if(colorcodes.equalsIgnoreCase("004")){
                         Log.e("Msg","hihihi");
                     }else {
+
                         settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
                         happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
-                        settings.setTextColor(Color.WHITE);
+                        if(colorcodes.equals("#FFFFFFFF")){
+                            settings.setTextColor(Color.BLACK);
+                        }else if(colorcodes.equals("#323232")) {
+                            settings.setTextColor(Color.WHITE);
+                        }
                         city.setTextColor(Color.parseColor("#666666"));
                         happening.setTextColor(Color.parseColor("#666666"));
                         audio_video.setTextColor(Color.parseColor("#666666"));
@@ -1214,14 +1237,28 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_layout, CityFragmentTamil.newInstance());
             transaction.commit();
-            if(colorcodes.length()==0){
+            city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
+
+            happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+            settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+
+            if(colorcodes.equals("#FFFFFFFF")){
+                city.setTextColor(Color.BLACK);
+            }else {
+                settings.setTextColor(Color.WHITE);
+            }
+            happening.setTextColor(Color.parseColor("#666666"));
+            audio_video.setTextColor(Color.parseColor("#666666"));
+            settings.setTextColor(Color.parseColor("#666666"));
+           /* if(colorcodes.length()==0){
 
             }else {
                 if(colorcodes.equalsIgnoreCase("004")){
                     Log.e("Msg","hihihi");
                 }else {
                     if(colorcodes.equalsIgnoreCase("#383838")){
-                        city.setBackgroundResource(R.color.theme1button);
+                       // city.setBackgroundResource(R.color.theme1button);
                     }else if(colorcodes.equalsIgnoreCase("#59247c")){
                         city.setBackgroundResource(R.color.theme2);
                     }else if(colorcodes.equalsIgnoreCase("#1d487a")){
@@ -1246,10 +1283,10 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                         city.setBackgroundResource(R.color.theme12);
                     }
                     else if(colorcodes.equalsIgnoreCase("#ffffff")){
-                        settings.setBackgroundResource(R.color.theme13);
+                        //settings.setBackgroundResource(R.color.theme13);
                     }
                 }
-            }
+            }*/
         }
     }
     private boolean isFirstTime()

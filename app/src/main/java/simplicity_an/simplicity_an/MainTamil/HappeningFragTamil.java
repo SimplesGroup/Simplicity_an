@@ -121,6 +121,7 @@ public class HappeningFragTamil extends Fragment {
     String fontname;
     Typeface tf1;
     public static final String FONT= "font";
+    RelativeLayout main_tamil_layout;
     public static HappeningFragTamil newInstance() {
         HappeningFragTamil fragment = new HappeningFragTamil();
         return fragment;
@@ -195,7 +196,7 @@ public class HappeningFragTamil extends Fragment {
             }
         });
         mainlayout=(RelativeLayout)view.findViewById(R.id.version_main_layout);
-
+        main_tamil_layout=(RelativeLayout)getActivity().findViewById(R.id.maintamil);
 
         if(colorcodes!=null) {
             if (colorcodes.equals("#FFFFFFFF")) {
@@ -711,62 +712,62 @@ public class HappeningFragTamil extends Fragment {
         notifications=(ImageButton)view.findViewById(R.id.btn_versiontwonotifications);
 */
         if(colorcodes.equalsIgnoreCase("#383838")){
-            beyond.setBackgroundResource(R.color.theme1button);
+         //   beyond.setBackgroundResource(R.color.theme1button);
             fabplus.setBackgroundResource(R.color.theme1button);
             fabinnerplus.setBackgroundResource(R.color.theme1button);
             fabsearch.setBackgroundResource(R.color.theme1button);
         }else if(colorcodes.equalsIgnoreCase("#59247c")){
-            beyond.setBackgroundResource(R.color.theme2);
+          //  beyond.setBackgroundResource(R.color.theme2);
             fabplus.setBackgroundResource(R.color.theme2);
             fabinnerplus.setBackgroundResource(R.color.theme2);
             fabsearch.setBackgroundResource(R.color.theme2);
         }else if(colorcodes.equalsIgnoreCase("#1d487a")){
-            beyond.setBackgroundResource(R.color.theme3);
+         //   beyond.setBackgroundResource(R.color.theme3);
             fabplus.setBackgroundResource(R.color.theme3);
             fabinnerplus.setBackgroundResource(R.color.theme3);
             fabsearch.setBackgroundResource(R.color.theme3);
         }else if(colorcodes.equalsIgnoreCase("#7A4100")){
-            beyond.setBackgroundResource(R.color.theme4);
+           // beyond.setBackgroundResource(R.color.theme4);
             fabplus.setBackgroundResource(R.color.theme4);
             fabinnerplus.setBackgroundResource(R.color.theme4);
             fabsearch.setBackgroundResource(R.color.theme4);
         }else if(colorcodes.equalsIgnoreCase("#6E0138")){
-            beyond.setBackgroundResource(R.color.theme5);
+          //  beyond.setBackgroundResource(R.color.theme5);
             fabplus.setBackgroundResource(R.color.theme5);
             fabinnerplus.setBackgroundResource(R.color.theme5);
             fabsearch.setBackgroundResource(R.color.theme5);
         }else if(colorcodes.equalsIgnoreCase("#00BFD4")){
-            beyond.setBackgroundResource(R.color.theme6);
+           // beyond.setBackgroundResource(R.color.theme6);
             fabplus.setBackgroundResource(R.color.theme6);
             fabinnerplus.setBackgroundResource(R.color.theme6);
             fabsearch.setBackgroundResource(R.color.theme6);
         }else if(colorcodes.equalsIgnoreCase("#185546")){
-            beyond.setBackgroundResource(R.color.theme7);
+           // beyond.setBackgroundResource(R.color.theme7);
             fabplus.setBackgroundResource(R.color.theme7);
             fabinnerplus.setBackgroundResource(R.color.theme7);
             fabsearch.setBackgroundResource(R.color.theme7);
         }else if(colorcodes.equalsIgnoreCase("#D0A06F")){
-            beyond.setBackgroundResource(R.color.theme8);
+           // beyond.setBackgroundResource(R.color.theme8);
             fabplus.setBackgroundResource(R.color.theme8);
             fabinnerplus.setBackgroundResource(R.color.theme8);
             fabsearch.setBackgroundResource(R.color.theme8);
         }else if(colorcodes.equalsIgnoreCase("#82C6E6")){
-            beyond.setBackgroundResource(R.color.theme9);
+          //  beyond.setBackgroundResource(R.color.theme9);
             fabplus.setBackgroundResource(R.color.theme9);
             fabinnerplus.setBackgroundResource(R.color.theme9);
             fabsearch.setBackgroundResource(R.color.theme9);
         }else if(colorcodes.equalsIgnoreCase("#339900")){
-            beyond.setBackgroundResource(R.color.theme10);
+           // beyond.setBackgroundResource(R.color.theme10);
             fabplus.setBackgroundResource(R.color.theme10);
             fabinnerplus.setBackgroundResource(R.color.theme10);
             fabsearch.setBackgroundResource(R.color.theme10);
         }else if(colorcodes.equalsIgnoreCase("#CC9C00")){
-            beyond.setBackgroundResource(R.color.theme11);
+          //  beyond.setBackgroundResource(R.color.theme11);
             fabplus.setBackgroundResource(R.color.theme11);
             fabinnerplus.setBackgroundResource(R.color.theme11);
             fabsearch.setBackgroundResource(R.color.theme11);
         }else if(colorcodes.equalsIgnoreCase("#00B09B")){
-            beyond.setBackgroundResource(R.color.theme12);
+           // beyond.setBackgroundResource(R.color.theme12);
             fabplus.setBackgroundResource(R.color.theme12);
             fabinnerplus.setBackgroundResource(R.color.theme12);
             fabsearch.setBackgroundResource(R.color.theme12);
@@ -1001,6 +1002,7 @@ public class HappeningFragTamil extends Fragment {
                     gd.setCornerRadius(0f);
 
                     mainlayout.setBackgroundDrawable(gd);
+                    main_tamil_layout.setBackgroundColor(Color.parseColor("#FF000000"));
 
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putString(backgroundcolor, "#383838");
@@ -1024,6 +1026,8 @@ public class HappeningFragTamil extends Fragment {
                     gd.setCornerRadius(0f);
 
                     mainlayout.setBackgroundDrawable(gd);
+                    main_tamil_layout.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
+
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putString(backgroundcolor, "#FFFFFFFF");
                     editor.commit();

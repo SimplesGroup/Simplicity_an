@@ -191,11 +191,15 @@ LinearLayout footer;
                     if(colorcodes.equalsIgnoreCase("004")){
                         Log.e("Msg","hihihi");
                     }else {
+                        if(colorcodes.equals("#FFFFFFFF")){
+                            city.setTextColor(Color.BLACK);
+                        }else {
+                            city.setTextColor(Color.WHITE);
+                        }
                         city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
                         happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
-                        city.setTextColor(Color.WHITE);
                         happening.setTextColor(Color.parseColor("#666666"));
                         audio_video.setTextColor(Color.parseColor("#666666"));
                         settings.setTextColor(Color.parseColor("#666666"));
@@ -447,12 +451,17 @@ LinearLayout footer;
                     if(colorcodes.equalsIgnoreCase("004")){
 
                     }else {
+                        if(colorcodes.equals("#FFFFFFFF")){
+                            happening.setTextColor(Color.BLACK);
+                        }else {
+                            happening.setTextColor(Color.WHITE);
+                        }
                         happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
                         city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         Log.e("Msg","hievent");
-                        happening.setTextColor(Color.WHITE);
+
                         city.setTextColor(Color.parseColor("#666666"));
                         audio_video.setTextColor(Color.parseColor("#666666"));
                         settings.setTextColor(Color.parseColor("#666666"));
@@ -969,11 +978,16 @@ LinearLayout footer;
                     if(colorcodes.equalsIgnoreCase("004")){
                         Log.e("Msg","hihihi");
                     }else {
+                        if(colorcodes.equals("#FFFFFFFF")){
+                            audio_video.setTextColor(Color.BLACK);
+                        }else {
+                            audio_video.setTextColor(Color.WHITE);
+                        }
                         audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
                         happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
-                        audio_video.setTextColor(Color.WHITE);
+
                         city.setTextColor(Color.parseColor("#666666"));
                         happening.setTextColor(Color.parseColor("#666666"));
                         settings.setTextColor(Color.parseColor("#666666"));
@@ -1215,11 +1229,16 @@ LinearLayout footer;
                     if(colorcodes.equalsIgnoreCase("004")){
                         Log.e("Msg","hihihi");
                     }else {
+                        if(colorcodes.equals("#FFFFFFFF")){
+                            settings.setTextColor(Color.BLACK);
+                        }else {
+                            settings.setTextColor(Color.WHITE);
+                        }
                         settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
                         happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                         audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
-                        settings.setTextColor(Color.WHITE);
+
                         city.setTextColor(Color.parseColor("#666666"));
                         happening.setTextColor(Color.parseColor("#666666"));
                         audio_video.setTextColor(Color.parseColor("#666666"));
@@ -1435,11 +1454,15 @@ LinearLayout footer;
         transaction.replace(R.id.frame_layout, CityFragment.newInstance());
         transaction.commit();
             city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line);
-
+            if(colorcodes.equals("#FFFFFFFF")){
+                city.setTextColor(Color.BLACK);
+            }else {
+                city.setTextColor(Color.WHITE);
+            }
             happening.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
             audio_video.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
             settings.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
-            city.setTextColor(Color.WHITE);
+            
             happening.setTextColor(Color.parseColor("#666666"));
             audio_video.setTextColor(Color.parseColor("#666666"));
             settings.setTextColor(Color.parseColor("#666666"));

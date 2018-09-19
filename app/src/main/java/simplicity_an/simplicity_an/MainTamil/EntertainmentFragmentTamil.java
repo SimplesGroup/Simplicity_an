@@ -120,6 +120,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
     Typeface tf1;
      ImageView font_button;
     public static final String FONT= "font";
+    RelativeLayout main_tamil_layout;
     public static EntertainmentFragmentTamil newInstance() {
         EntertainmentFragmentTamil fragment = new EntertainmentFragmentTamil();
         return fragment;
@@ -179,6 +180,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
             }
         });
         mainlayout=(RelativeLayout)view.findViewById(R.id.version_main_layout);
+        main_tamil_layout=(RelativeLayout)getActivity().findViewById(R.id.maintamil);
         fabplus=(FloatingActionButton)view.findViewById(R.id.fabButtonplus) ;
         fabsearch=(FloatingActionButton)view.findViewById(R.id.fabsearch) ;
         fabinnerplus=(FloatingActionButton)view.findViewById(R.id.fabinnerplus) ;
@@ -828,30 +830,26 @@ public class EntertainmentFragmentTamil extends Fragment  {
 
 
                 if(colorcodes.equals("#FFFFFFFF")){
+
                     Fragment fragment = new EntertainmentFragmentTamil();
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.frame_layout, fragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-
                     int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
-
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
                             colors);
                     gd.setCornerRadius(0f);
-
                     mainlayout.setBackgroundDrawable(gd);
-
+                    main_tamil_layout.setBackgroundColor(Color.parseColor("#FF000000"));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putString(backgroundcolor, "#383838");
                     editor.commit();
 
 
                 }else if(colorcodes.equals("#383838")) {
-
-
 
                     Fragment fragment = new EntertainmentFragmentTamil();
                     FragmentManager fragmentManager = getFragmentManager();
@@ -864,12 +862,11 @@ public class EntertainmentFragmentTamil extends Fragment  {
                             GradientDrawable.Orientation.TOP_BOTTOM,
                             colors);
                     gd.setCornerRadius(0f);
-
                     mainlayout.setBackgroundDrawable(gd);
+                    main_tamil_layout.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putString(backgroundcolor, "#FFFFFFFF");
                     editor.commit();
-
 
                 }
                 // showAlertDialog();

@@ -1667,7 +1667,7 @@ public class TabColumnstamil extends Fragment {
                 String powers = "";
                 String powerstwo = "";
                 // Chcek for empty status message
-                if (itemmodel.getAlbumcount()==0) {
+                if (itemmodel.getAlbumcount()==1) {
 
                     userViewHolder.feedImageView.setImageUrl(itemmodel.getImage(), mImageLoader);
                     userViewHolder.feedImageView.setDefaultImageResId(R.mipmap.ic_launcher);

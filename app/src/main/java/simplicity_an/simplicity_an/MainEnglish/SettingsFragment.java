@@ -1,5 +1,6 @@
 package simplicity_an.simplicity_an.MainEnglish;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -87,6 +88,7 @@ public class SettingsFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -250,7 +252,20 @@ public class SettingsFragment extends Fragment {
         updateprofile_text=(TextView)view.findViewById(R.id.update_title) ;
         notification_data=(TextView)view.findViewById(R.id.notificationdata_data);
         notification_title=(TextView)view.findViewById(R.id.notification_title);
+        if(colorcodes.equals("#FFFFFFFF")){
 
+            btnmore.setTextColor(Color.WHITE);
+            btnevents.setTextColor(Color.parseColor("#CCCCCC"));
+            city.setTextColor(Color.parseColor("#CCCCCC"));
+            btnspecials.setTextColor(Color.parseColor("#CCCCCC"));
+
+
+
+            btnevents.setBackgroundResource(R.color.mytransparent);
+            btnmore.setBackgroundResource(R.color.mytransparent);
+            btnspecials.setBackgroundResource(R.color.mytransparent);
+
+        }
 
         /*if(colorcodes.equals("#FFFFFFFF")){
 
@@ -577,6 +592,40 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        if(colorcodes.equals("#FFFFFFFF")){
+            terms.setTextColor(Color.BLACK);
+            about.setTextColor(Color.BLACK);
+            ourteam.setTextColor(Color.BLACK);
+            followus.setTextColor(Color.BLACK);
+            rate.setTextColor(Color.BLACK);
+            contact.setTextColor(Color.BLACK);
+            privacy.setTextColor(Color.BLACK);
+            language.setTextColor(Color.BLACK);
+ //                 languagedata.setTextColor(Color.BLACK);
+            location.setTextColor(Color.BLACK);
+            locationdata.setTextColor(Color.BLACK);
+            savedarticle_title.setTextColor(Color.BLACK);
+            settings_title_text.setTextColor(Color.BLACK);
+            updateprofile_text.setTextColor(Color.BLACK);
+            notification_title.setTextColor(Color.BLACK);
+            notification_data.setTextColor(Color.BLACK);
+            followuson_twitter.setImageResource(R.mipmap.twitterblack);
+            followuson_twitter.setBackgroundResource(R.color.mytransparent);
+            followusnon_instagram.setBackgroundResource(R.color.mytransparent);
+            followusnon_instagram.setImageResource(R.mipmap.instagramblack);
+            followuson_fb.setImageResource(R.mipmap.fbblack);
+            followuson_fb.setBackgroundResource(R.color.mytransparent);
+            aboutpage.setImageResource(R.mipmap.arrowrightblack);
+            ourteampage.setImageResource(R.mipmap.arrowrightblack);
+            ratethisapp.setImageResource(R.mipmap.arrowrightblack);
+            contactapp.setImageResource(R.mipmap.arrowrightblack);
+            termsapp.setImageResource(R.mipmap.arrowrightblack);
+            privacyapp.setImageResource(R.mipmap.arrowrightblack);
+            savedarticle_button.setImageResource(R.mipmap.arrowrightblack);
+            language_spin.setBackgroundColor(Color.BLACK);
+            notification_data.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.arrowrightblack, 0, 0, 0);
+
+        }
 
 
 

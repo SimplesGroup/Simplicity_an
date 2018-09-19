@@ -142,6 +142,7 @@ public class CityFragmentTamil extends Fragment {
     Typeface tf1;
     public static final String FONT= "font";
     TextView line_vertical_textview;
+    RelativeLayout main_tamil_layout;
     public static CityFragmentTamil newInstance() {
         CityFragmentTamil fragment = new CityFragmentTamil();
         return fragment;
@@ -218,6 +219,7 @@ public class CityFragmentTamil extends Fragment {
         line_vertical_textview.setText(Html.fromHtml("&nbsp;"+"|"+"&nbsp;"));
 
         mainlayout=(RelativeLayout)view.findViewById(R.id.version_main_layout);
+        main_tamil_layout=(RelativeLayout)getActivity().findViewById(R.id.maintamil);
         if(colorcodes.length()==0){
             int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"), Color.parseColor("#383838")};
             GradientDrawable gd = new GradientDrawable(
@@ -868,7 +870,7 @@ public class CityFragmentTamil extends Fragment {
             fabsearch.setBackgroundResource(R.color.theme12);
         }
         else if(colorcodes.equalsIgnoreCase("#FFFFFFFF")){
-            city.setBackgroundResource(R.color.theme13);
+           // city.setBackgroundResource(R.color.theme13);
             fabplus.setBackgroundResource(R.color.theme13);
             fabinnerplus.setBackgroundResource(R.color.theme13);
             fabsearch.setBackgroundResource(R.color.theme13);
@@ -1136,7 +1138,7 @@ public class CityFragmentTamil extends Fragment {
                     gd.setCornerRadius(0f);
 
                     mainlayout.setBackgroundDrawable(gd);
-
+                    main_tamil_layout.setBackgroundColor(Color.parseColor("#FF000000"));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putString(backgroundcolor, "#383838");
                     editor.commit();
@@ -1159,6 +1161,8 @@ public class CityFragmentTamil extends Fragment {
                     gd.setCornerRadius(0f);
 
                     mainlayout.setBackgroundDrawable(gd);
+                    main_tamil_layout.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
+
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putString(backgroundcolor, "#FFFFFFFF");
                     editor.commit();

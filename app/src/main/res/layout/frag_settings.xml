@@ -165,7 +165,6 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:textSize="17dp"
-
                 android:textColor="@android:color/white"
                 android:layout_below="@+id/footerline2"
                 android:layout_width="wrap_content"
@@ -211,8 +210,6 @@
                 android:layout_marginRight="20dp"
                 android:layout_alignParentRight="true"
                 android:popupBackground="@drawable/citycenterbg"
-
-
                 />
         <LinearLayout
             android:layout_width="match_parent"
