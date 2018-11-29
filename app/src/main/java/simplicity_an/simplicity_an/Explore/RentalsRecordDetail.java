@@ -23,7 +23,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 import simplicity_an.simplicity_an.Events;
-import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.R;
 
 /**

@@ -46,7 +46,6 @@ import java.util.Map;
 
 import simplicity_an.simplicity_an.CustomVolleyRequest;
 import simplicity_an.simplicity_an.Events;
-import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.R;
 
 /**

@@ -52,7 +52,7 @@ import simplicity_an.simplicity_an.Directories;
 import simplicity_an.simplicity_an.Events;
 import simplicity_an.simplicity_an.FoodActivity;
 import simplicity_an.simplicity_an.JobsActivity;
-import simplicity_an.simplicity_an.MainPageEnglish;
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
 import simplicity_an.simplicity_an.MusicActivity;
 import simplicity_an.simplicity_an.OnLoadMoreListener;
 import simplicity_an.simplicity_an.R;
@@ -149,7 +149,7 @@ public class ExploreMain extends AppCompatActivity {
 
                     mainlayout.setBackgroundDrawable(gd);
                 }else {
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -159,13 +159,13 @@ public class ExploreMain extends AppCompatActivity {
                     mainlayout.setBackgroundDrawable(gd);
                    search_button.setBackgroundResource(R.color.theme1button);
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
+                   editor.putString(backgroundcolor, "#262626");
 
                     editor.commit();
                 }
             }
         }
-        if(colorcodes.equalsIgnoreCase("#383838")){
+        if(colorcodes.equalsIgnoreCase("#262626")){
             search_button.setBackgroundResource(R.color.theme1button);
         }else if(colorcodes.equalsIgnoreCase("#59247c")){
             search_button.setBackgroundResource(R.color.theme2);
