@@ -2203,7 +2203,12 @@ public class TabColumnstamil extends Fragment {
         LinearLayoutManager mLayoutManager;
         String postid, myuserid, qtypevalue;
         String description_comment;
-
+        SharedPreferences sharedpreferences;
+        public static final String mypreference = "mypref";
+        public static final String MYUSERID= "myprofileid";
+        public static final String USERNAME= "myprofilename";
+        public static final String USERIMAGE= "myprofileimage";
+        String my_profilename,my_profileimage,myprofileid;
         public MyDialogFragment() {
 
         }
@@ -2227,6 +2232,24 @@ public class TabColumnstamil extends Fragment {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View root = inflater.inflate(R.layout.taballcomments, container, false);
+            sharedpreferences = getActivity(). getSharedPreferences(mypreference,
+                    Context.MODE_PRIVATE);
+
+            if (sharedpreferences.contains(MYUSERID)) {
+
+                myprofileid=sharedpreferences.getString(MYUSERID,"");
+                myprofileid = myprofileid.replaceAll("\\D+","");
+            }
+            if (sharedpreferences.contains(USERNAME)) {
+
+                my_profilename=sharedpreferences.getString(USERNAME,"");
+
+            }
+            if (sharedpreferences.contains(USERIMAGE)) {
+
+                my_profileimage=sharedpreferences.getString(USERIMAGE,"");
+
+            }
             // titles = (TextView) root.findViewById(R.id.comments_title);
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
@@ -2262,10 +2285,10 @@ public class TabColumnstamil extends Fragment {
             post_review.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    pdialog = new ProgressDialog(getActivity());
+                   /* pdialog = new ProgressDialog(getActivity());
                     pdialog.show();
                     pdialog.setContentView(R.layout.custom_progressdialog);
-                    pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));*/
                     if(myuserid!=null) {
 
                         try {
@@ -2274,11 +2297,11 @@ public class TabColumnstamil extends Fragment {
                                 @Override
                                 public void onResponse(String response) {
                                     Log.e("Res", response.toString().trim());
-                                    pdialog.dismiss();
+                                 //   pdialog.dismiss();
                                     if (response.equalsIgnoreCase("error")) {
                                         Toast.makeText(getActivity(), response, Toast.LENGTH_LONG).show();
                                     } else {
-
+AddnewCommnent();
                                         /*commentbox_editext.setText("");
                                         AddnewCommnent();
                                         scrollView.post(new Runnable() {
@@ -2352,7 +2375,17 @@ public class TabColumnstamil extends Fragment {
 
             return root;
         }
-
+        public void AddnewCommnent(){
+            int curSize = rcAdapter.getItemCount();
+            ItemModels models=new ItemModels();
+            models.setName(my_profilename);
+            models.setProfilepic(my_profileimage);
+            models.setComment(description_comment);
+            commentlist.add(models);
+            recycler.setVisibility(View.VISIBLE);
+            rcAdapter.notifyDataSetChanged();
+            rcAdapter.notifyItemRangeInserted(curSize, commentlist.size());
+        }
         public void dissmissDialog() {
             // TODO Auto-generated method stub
             if (pdialog != null) {

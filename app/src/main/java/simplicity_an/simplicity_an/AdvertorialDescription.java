@@ -181,7 +181,7 @@ ScrollView scrollView;
         }
 
         if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+            int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
@@ -190,12 +190,12 @@ ScrollView scrollView;
             mainlayout.setBackgroundDrawable(gd);
 
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
+           editor.putString(backgroundcolor, "#262626");
             editor.commit();
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -204,13 +204,13 @@ ScrollView scrollView;
                 mainlayout.setBackgroundDrawable(gd);
 
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
+               editor.putString(backgroundcolor, "#262626");
                 editor.commit();
             }else {
 
                 if(colorcodes!=null){
                     if(colorcodes.equals("#FFFFFFFF")){
-                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -219,7 +219,7 @@ ScrollView scrollView;
 
                         mainlayout.setBackgroundDrawable(gd);
                     } else {
-                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                        int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -229,12 +229,12 @@ ScrollView scrollView;
                         mainlayout.setBackgroundDrawable(gd);
 
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(backgroundcolor, "#383838");
+                       editor.putString(backgroundcolor, "#262626");
 
                         editor.commit();
                     }
                 }else {
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -244,7 +244,7 @@ ScrollView scrollView;
                     mainlayout.setBackgroundDrawable(gd);
 
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
+                   editor.putString(backgroundcolor, "#262626");
 
                     editor.commit();
                 }

@@ -172,7 +172,7 @@ public class TipsDescriptionTamil extends AppCompatActivity {
         fontname=sharedpreferences.getString(Fonts.FONT,"");
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
         if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+            int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
@@ -181,12 +181,12 @@ public class TipsDescriptionTamil extends AppCompatActivity {
             mainlayout.setBackgroundDrawable(gd);
 
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
+           editor.putString(backgroundcolor, "#262626");
             editor.commit();
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -195,7 +195,7 @@ public class TipsDescriptionTamil extends AppCompatActivity {
                 mainlayout.setBackgroundDrawable(gd);
 
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
+               editor.putString(backgroundcolor, "#262626");
                 editor.commit();
             }else {
 
@@ -209,7 +209,7 @@ public class TipsDescriptionTamil extends AppCompatActivity {
 
                     mainlayout.setBackgroundDrawable(gd);
                 }else {
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -219,7 +219,7 @@ public class TipsDescriptionTamil extends AppCompatActivity {
                     mainlayout.setBackgroundDrawable(gd);
 
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
+                   editor.putString(backgroundcolor, "#262626");
 
                     editor.commit();
                 }
@@ -386,17 +386,17 @@ public class TipsDescriptionTamil extends AppCompatActivity {
                 public void onClick(View v) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(commentbox_editext.getWindowToken(), 0);
-                    pdialog = new ProgressDialog(getApplicationContext());
+                   /* pdialog = new ProgressDialog(getApplicationContext());
                     pdialog.show();
                     pdialog.setContentView(R.layout.custom_progressdialog);
-                    pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));*/
                     //Showing the progress dialog
                     //final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, urlpost,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String s) {
-                                    pdialog.dismiss();
+                                  //  pdialog.dismiss();
                                     //Disimissing the progress dialog
                                     //  loading.dismiss();
                                     //Showing toast message of the response

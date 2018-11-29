@@ -6,33 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.onesignal.OneSignal;
 
-import java.util.Hashtable;
-import java.util.Map;
-
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.Walkthrough.Aboutapp;
 
@@ -156,7 +138,7 @@ public class SplashScreen extends Activity{
                         colorone.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                                 GradientDrawable gd = new GradientDrawable(
                                         GradientDrawable.Orientation.TOP_BOTTOM,
@@ -165,7 +147,7 @@ public class SplashScreen extends Activity{
 
 
                                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putString(backgroundcolor, "#383838");
+                               editor.putString(backgroundcolor, "#262626");
                                 editor.commit();
 
                             }
@@ -360,7 +342,7 @@ public class SplashScreen extends Activity{
                         colorthirteen.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                                int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
                                 GradientDrawable gd = new GradientDrawable(
                                         GradientDrawable.Orientation.TOP_BOTTOM,
                                         colors);

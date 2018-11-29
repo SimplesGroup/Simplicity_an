@@ -125,6 +125,25 @@
                             android:layout_gravity="center_horizontal"
                             android:background="@drawable/buttonselector"
                             android:src="@mipmap/playfairblack" />
+                        <TextView
+
+                            android:id="@+id/linevertical_settings_versiontwo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:textAlignment="center"
+                            android:textColor="@android:color/white"
+                            android:textSize="12dp" />
+                        <ImageButton
+                            android:layout_marginBottom="3dp"
+                            android:id="@+id/settingsbutton"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:scaleType="centerCrop"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/buttonselector"
+                            android:src="@drawable/settingswhite"
+                            />
                     </LinearLayout>
                     <LinearLayout
                         android:visibility="gone"

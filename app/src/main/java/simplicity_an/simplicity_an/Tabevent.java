@@ -196,7 +196,7 @@ OnFragmentInteractionListener mListener;
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi");
             }else {
-                if(colorcodes.equalsIgnoreCase("#383838")){
+                if(colorcodes.equalsIgnoreCase("#262626")){
                     fabevent.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
@@ -2246,19 +2246,19 @@ OnFragmentInteractionListener mListener;
                 public void onClick(View v) {
 
                     try {
-                        pdialog = new ProgressDialog(getActivity());
+                        /*pdialog = new ProgressDialog(getActivity());
                         pdialog.show();
                         pdialog.setContentView(R.layout.custom_progressdialog);
-                        pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));*/
                         StringRequest comment_post_request = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
                                 Log.e("Res", response.toString().trim());
-                                pdialog.dismiss();
+                              //  pdialog.dismiss();
                                 if (response.equalsIgnoreCase("error")) {
                                     Toast.makeText(getActivity(), response, Toast.LENGTH_LONG).show();
                                 } else {
-
+                                    MyDialogFragment.this.dismiss();
                                         /*commentbox_editext.setText("");
                                         AddnewCommnent();
                                         scrollView.post(new Runnable() {

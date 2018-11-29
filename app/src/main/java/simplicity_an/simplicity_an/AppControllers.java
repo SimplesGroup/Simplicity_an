@@ -17,6 +17,7 @@ import com.onesignal.OneSignal;
 
 import org.json.JSONObject;
 
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
 import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
 
 public class AppControllers extends MultiDexApplication {

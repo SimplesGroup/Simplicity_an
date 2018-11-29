@@ -138,7 +138,7 @@ public class BeyondActivity extends AppCompatActivity {
 
                     mainlayout.setBackgroundDrawable(gd);
                 }else {
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -147,7 +147,7 @@ public class BeyondActivity extends AppCompatActivity {
 
                     mainlayout.setBackgroundDrawable(gd);
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
+                   editor.putString(backgroundcolor, "#262626");
 
                     editor.commit();
                 }
@@ -276,7 +276,7 @@ public class BeyondActivity extends AppCompatActivity {
 
 
 
-        if(colorcodes.equalsIgnoreCase("#383838")){
+        if(colorcodes.equalsIgnoreCase("#262626")){
             beyond.setBackgroundResource(R.color.theme1);
         }else if(colorcodes.equalsIgnoreCase("#580093")){
             beyond.setBackgroundResource(R.color.theme2);
@@ -373,7 +373,7 @@ public class BeyondActivity extends AppCompatActivity {
                 colorone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                        int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -382,7 +382,7 @@ public class BeyondActivity extends AppCompatActivity {
 
                         mainlayout.setBackgroundDrawable(gd);
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(backgroundcolor, "#383838");
+                       editor.putString(backgroundcolor, "#262626");
 
                         editor.commit();
                     }

@@ -59,6 +59,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
+
 /**
  * Created by kuppusamy on 1/21/2016.
  */
@@ -132,7 +134,7 @@ public class JobsActivity extends AppCompatActivity {
 
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
         if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+            int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
@@ -141,12 +143,12 @@ public class JobsActivity extends AppCompatActivity {
             mainlayout.setBackgroundDrawable(gd);
 
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
+           editor.putString(backgroundcolor, "#262626");
             editor.commit();
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -155,7 +157,7 @@ public class JobsActivity extends AppCompatActivity {
                 mainlayout.setBackgroundDrawable(gd);
 
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
+               editor.putString(backgroundcolor, "#262626");
                 editor.commit();
             }else {
 
@@ -169,7 +171,7 @@ public class JobsActivity extends AppCompatActivity {
 
                     mainlayout.setBackgroundDrawable(gd);
                 }else {
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -179,7 +181,7 @@ public class JobsActivity extends AppCompatActivity {
                     mainlayout.setBackgroundDrawable(gd);
 
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
+                   editor.putString(backgroundcolor, "#262626");
 
                     editor.commit();
                 }

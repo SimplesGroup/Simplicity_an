@@ -57,6 +57,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
+
 
 public class DoitYourself extends AppCompatActivity {
     ArrayAdapter<String> SpinnerAdapter;

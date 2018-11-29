@@ -142,7 +142,7 @@ public class TamilBeyond extends AppCompatActivity {
 
                     mainlayout.setBackgroundDrawable(gd);
                 }else {
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -151,7 +151,7 @@ public class TamilBeyond extends AppCompatActivity {
 
                     mainlayout.setBackgroundDrawable(gd);
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
+                   editor.putString(backgroundcolor, "#262626");
 
                     editor.commit();
                 }
@@ -273,7 +273,7 @@ public class TamilBeyond extends AppCompatActivity {
         explore=(ImageButton)findViewById(R.id.btn_versiontwoexplore);
         notifications=(ImageButton)findViewById(R.id.btn_versiontwonotifications);
 
-        if(colorcodes.equalsIgnoreCase("#383838")){
+        if(colorcodes.equalsIgnoreCase("#262626")){
             beyond.setBackgroundResource(R.color.theme1);
         }else if(colorcodes.equalsIgnoreCase("#580093")){
             beyond.setBackgroundResource(R.color.theme2);
@@ -377,7 +377,7 @@ public class TamilBeyond extends AppCompatActivity {
                 colorone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                        int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -386,7 +386,7 @@ public class TamilBeyond extends AppCompatActivity {
 
                         mainlayout.setBackgroundDrawable(gd);
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(backgroundcolor, "#383838");
+                       editor.putString(backgroundcolor, "#262626");
 
                         editor.commit();
                     }

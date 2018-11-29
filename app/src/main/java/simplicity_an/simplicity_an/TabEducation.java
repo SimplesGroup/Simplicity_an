@@ -193,7 +193,7 @@ int like_finalvalues;
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi");
             }else {
-                if(colorcodes.equalsIgnoreCase("#383838")){
+                if(colorcodes.equalsIgnoreCase("#262626")){
                     fabeducation.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
@@ -2186,6 +2186,12 @@ String youtubelink;
         RecyclerView recycler;
         LinearLayoutManager mLayoutManager;
         String postid, myuserid,qtypevalue;
+        SharedPreferences sharedpreferences;
+        public static final String mypreference = "mypref";
+        public static final String MYUSERID= "myprofileid";
+        public static final String USERNAME= "myprofilename";
+        public static final String USERIMAGE= "myprofileimage";
+        String description_comment,my_profilename,my_profileimage,myprofileid;
 
         public MyDialogFragment() {
 
@@ -2210,6 +2216,25 @@ String youtubelink;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View root = inflater.inflate(R.layout.taballcomments, container, false);
+            sharedpreferences = getActivity(). getSharedPreferences(mypreference,
+                    Context.MODE_PRIVATE);
+
+            if (sharedpreferences.contains(MYUSERID)) {
+
+                myprofileid=sharedpreferences.getString(MYUSERID,"");
+                myprofileid = myprofileid.replaceAll("\\D+","");
+            }
+            if (sharedpreferences.contains(USERNAME)) {
+
+                my_profilename=sharedpreferences.getString(USERNAME,"");
+
+            }
+            if (sharedpreferences.contains(USERIMAGE)) {
+
+                my_profileimage=sharedpreferences.getString(USERIMAGE,"");
+
+            }
+
             // titles = (TextView) root.findViewById(R.id.comments_title);
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
@@ -2247,19 +2272,19 @@ String youtubelink;
                 public void onClick(View v) {
 
                     try {
-                        pdialog = new ProgressDialog(getActivity());
+                       /* pdialog = new ProgressDialog(getActivity());
                         pdialog.show();
                         pdialog.setContentView(R.layout.custom_progressdialog);
-                        pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));*/
                         StringRequest comment_post_request = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
                                 Log.e("Res", response.toString().trim());
-                                pdialog.dismiss();
+                              //  pdialog.dismiss();
                                 if (response.equalsIgnoreCase("error")) {
                                     Toast.makeText(getActivity(), response, Toast.LENGTH_LONG).show();
                                 } else {
-
+                                    AddnewCommnent();
                                         /*commentbox_editext.setText("");
                                         AddnewCommnent();
                                         scrollView.post(new Runnable() {
@@ -2328,7 +2353,17 @@ String youtubelink;
 
             return root;
         }
-
+        public void AddnewCommnent(){
+            int curSize = rcAdapter.getItemCount();
+            ItemModels models=new ItemModels();
+            models.setName(my_profilename);
+            models.setProfilepic(my_profileimage);
+            models.setComment(description_comment);
+            commentlist.add(models);
+            recycler.setVisibility(View.VISIBLE);
+            rcAdapter.notifyDataSetChanged();
+            rcAdapter.notifyItemRangeInserted(curSize, commentlist.size());
+        }
         public void dissmissDialog() {
             // TODO Auto-generated method stub
             if (pdialog != null) {

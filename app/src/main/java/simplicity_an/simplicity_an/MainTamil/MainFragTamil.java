@@ -188,7 +188,7 @@ public class MainFragTamil extends Fragment {
         }
         else{
 
-            if(colorcodes.equals("#383838")) {
+            if(colorcodes.equals("#262626")) {
                 btnsearch.setBackgroundResource(R.color.theme1button);
                 btnsearch.setImageResource(R.mipmap.searchtamil);
                 city.setBackgroundResource(R.color.mytransparent);

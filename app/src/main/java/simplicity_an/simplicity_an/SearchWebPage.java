@@ -8,15 +8,19 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import simplicity_an.simplicity_an.MainEnglish.CityFragment;
 
 public class SearchWebPage extends Fragment {
     SharedPreferences sharedpreferences;
@@ -32,7 +36,10 @@ public class SearchWebPage extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
+    public static SearchWebPage newInstance() {
+        SearchWebPage fragment = new SearchWebPage();
+        return fragment;
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,19 +54,38 @@ public class SearchWebPage extends Fragment {
        /* Intent get=getIntent();
         search_valueone=get.getStringExtra("IDSEARCH");
         search_value = get.getStringExtra("QUERY");*/
-        search = (WebView) view.findViewById(R.id.search_web);
-        search.getSettings().setLoadsImagesAutomatically(true);
-        search.getSettings().setPluginState(WebSettings.PluginState.ON);
-        search.getSettings().setAllowFileAccess(true);
+        search = (WebView) view.findViewById(R.id.textView_desc);
+
 
         search.getSettings().setJavaScriptEnabled(true);
-        search.loadUrl("http://simpli-city.in/app/home.php");
+        search.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        search.loadUrl("https://simplicity.in/app/home.php");
         search.setWebViewClient(new MyBrowser());
         pdialog = new ProgressDialog(getActivity());
         pdialog.show();
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        search.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                //This is the filter
+                if (event.getAction()!=KeyEvent.ACTION_DOWN)
+                    return true;
+
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (search.canGoBack()) {
+                        search.goBack();
+                       // Dlog.d(“canGoBack”);
+                    } else {
+                      //  Dlog.d(“canNotGoBack”);
+                        (getActivity()).onBackPressed();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
         return view;
     }
 
@@ -87,4 +113,21 @@ public class SearchWebPage extends Fragment {
             return true;
         }
     }
+
+
+    public boolean onKeyDown(int keyCode, @NonNull KeyEvent event){
+        if(event.getAction() == KeyEvent.ACTION_DOWN){
+            switch(keyCode){
+                case KeyEvent.KEYCODE_BACK:
+                    if(search.canGoBack()){
+                        search.goBack();
+                    }/*else{
+                        getActivity().finish();
+                    }*/
+                    return true;
+            }
+        }
+        return false;
+    }
+
 }

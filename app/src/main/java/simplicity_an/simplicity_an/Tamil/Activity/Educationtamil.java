@@ -48,9 +48,7 @@ import simplicity_an.simplicity_an.AppControllers;
 import simplicity_an.simplicity_an.FragmentEducationnews;
 import simplicity_an.simplicity_an.FragmentInnovatelearning;
 import simplicity_an.simplicity_an.FragmentInternship;
-import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
-import simplicity_an.simplicity_an.NewsSearchview;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SimplicitySearchview;
 

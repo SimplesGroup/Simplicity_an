@@ -12,8 +12,6 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import simplicity_an.simplicity_an.MainPageEnglish;
-import simplicity_an.simplicity_an.PrefManager;
 import simplicity_an.simplicity_an.R;
 
 public class Aboutapp extends AppCompatActivity {

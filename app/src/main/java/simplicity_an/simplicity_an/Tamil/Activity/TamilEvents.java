@@ -235,7 +235,7 @@ addnewevent.setOnClickListener(new View.OnClickListener() {
         search.setImageResource(R.mipmap.audiotamil);
         notification.setImageResource(R.mipmap.moretamil);*/
 
-        if(colorcodes.equalsIgnoreCase("#383838")){
+        if(colorcodes.equalsIgnoreCase("#262626")){
             addnewevent.setBackgroundResource(R.color.theme1button);
         }else if(colorcodes.equalsIgnoreCase("#59247c")){
             addnewevent.setBackgroundResource(R.color.theme2);

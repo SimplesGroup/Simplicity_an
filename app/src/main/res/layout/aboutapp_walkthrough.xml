@@ -32,7 +32,7 @@
         android:layout_height="wrap_content" />
     <TextView
         android:layout_below="@+id/simplicity_textview"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="7dp"
         android:id="@+id/description_textview"
@@ -49,17 +49,18 @@
         android:textSize="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+    </ScrollView>
     <ImageButton
         android:layout_alignParentBottom="true"
 
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/welcome_textview"
+
         android:id="@+id/next_imagebutton"
         android:background="@android:color/transparent"
         android:src="@mipmap/forwardarrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-        </RelativeLayout>
-    </ScrollView>
 </RelativeLayout>

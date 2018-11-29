@@ -35,6 +35,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -195,7 +196,7 @@ SwipeRefreshLayout swipeRefresh;
         if(colorcodes.equalsIgnoreCase("004")){
             Log.e("Msg","hihihi");
         }else {
-            if(colorcodes.equalsIgnoreCase("#383838")){
+            if(colorcodes.equalsIgnoreCase("#262626")){
                 fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                 fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                 fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
@@ -2139,7 +2140,12 @@ SwipeRefreshLayout swipeRefresh;
         RecyclerView recycler;
         LinearLayoutManager mLayoutManager;
         String postid, myuserid,qtypevalue;
-
+        SharedPreferences sharedpreferences;
+        public static final String mypreference = "mypref";
+        public static final String MYUSERID= "myprofileid";
+        public static final String USERNAME= "myprofilename";
+        public static final String USERIMAGE= "myprofileimage";
+        String description_comment,my_profilename,my_profileimage,myprofileid;
         public MyDialogFragment() {
 
         }
@@ -2163,6 +2169,24 @@ SwipeRefreshLayout swipeRefresh;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View root = inflater.inflate(R.layout.taballcomments, container, false);
+            sharedpreferences = getActivity(). getSharedPreferences(mypreference,
+                    Context.MODE_PRIVATE);
+
+            if (sharedpreferences.contains(MYUSERID)) {
+
+                myprofileid=sharedpreferences.getString(MYUSERID,"");
+                myprofileid = myprofileid.replaceAll("\\D+","");
+            }
+            if (sharedpreferences.contains(USERNAME)) {
+
+                my_profilename=sharedpreferences.getString(USERNAME,"");
+
+            }
+            if (sharedpreferences.contains(USERIMAGE)) {
+
+                my_profileimage=sharedpreferences.getString(USERIMAGE,"");
+
+            }
             // titles = (TextView) root.findViewById(R.id.comments_title);
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
@@ -2209,10 +2233,10 @@ SwipeRefreshLayout swipeRefresh;
                                 if (response.equalsIgnoreCase("error")) {
                                     Toast.makeText(getActivity(), response, Toast.LENGTH_LONG).show();
                                 } else {
-
-                                        /*commentbox_editext.setText("");
+AddnewCommnent();
+                                       /* commentbox.setText("");
                                         AddnewCommnent();
-                                        scrollView.post(new Runnable() {
+                                       *//* scrollView.post(new Runnable() {
                                             public void run() {
                                                 scrollView.fullScroll(ScrollView.FOCUS_DOWN);
                                             }
@@ -2278,7 +2302,17 @@ SwipeRefreshLayout swipeRefresh;
 
             return root;
         }
-
+        public void AddnewCommnent(){
+            int curSize = rcAdapter.getItemCount();
+            ItemModels models=new ItemModels();
+            models.setName(my_profilename);
+            models.setProfilepic(my_profileimage);
+            models.setComment(description_comment);
+            commentlist.add(models);
+            recycler.setVisibility(View.VISIBLE);
+            rcAdapter.notifyDataSetChanged();
+            rcAdapter.notifyItemRangeInserted(curSize, commentlist.size());
+        }
         public void dissmissDialog() {
             // TODO Auto-generated method stub
             if (pdialog != null) {

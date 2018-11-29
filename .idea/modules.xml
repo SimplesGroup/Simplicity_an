@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Simplicity_an.iml" filepath="$PROJECT_DIR$/Simplicity_an.iml" />
-      <module fileurl="file://C:\Users\user\AndroidStudioProjects\Simplicity_an\.idea\Simplicity_an.iml" filepath="C:\Users\user\AndroidStudioProjects\Simplicity_an\.idea\Simplicity_an.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Simplicity_an.iml" filepath="$PROJECT_DIR$/.idea/Simplicity_an.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

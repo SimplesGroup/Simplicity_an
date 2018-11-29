@@ -28,6 +28,8 @@ import com.android.volley.toolbox.NetworkImageView;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
+
 /**
  * Created by kuppusamy on 4/5/2016.
  */

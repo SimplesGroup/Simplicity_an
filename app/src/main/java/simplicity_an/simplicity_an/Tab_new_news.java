@@ -66,7 +66,7 @@ import java.util.Map;
 import simplicity_an.simplicity_an.HorizontalAdapters.HorizontalPhotostoryadapter;
 import simplicity_an.simplicity_an.HorizontalAdapters.Horizontaladapter;
 import simplicity_an.simplicity_an.HorizontalAdapters.VerticalAdapters;
-import simplicity_an.simplicity_an.MainEnglish.EntertainmentFragment;
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
 import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
 import simplicity_an.simplicity_an.Utils.ChangeFont;
 import simplicity_an.simplicity_an.Utils.Configurl;
@@ -75,7 +75,8 @@ import simplicity_an.simplicity_an.Utils.Fonts;
 public class Tab_new_news extends Fragment implements ChangeFont  {
     RecyclerView recyclerview_tab_all_news;
     String URL="http://simpli-city.in/request2.php?rtype=alldatatest&key=simples&qtype=news";
-    String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples"; 				String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
+    String URLLIKES="http://simpli-city.in/request2.php?rtype=add-liketest&key=simples";
+    String URLSAVE="http://simpli-city.in/request2.php?rtype=addfav&key=simples";
     String URLALL;
     RequestQueue requestQueue;
     private int requestCount = 1;
@@ -199,7 +200,7 @@ String fontname;
 
                 Log.e("Msg","hihihi");
             }else {
-                if(colorcodes.equalsIgnoreCase("#383838")){
+                if(colorcodes.equalsIgnoreCase("#262626")){
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
@@ -1915,8 +1916,8 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
 
                                 if(myprofileid!=null) {
                                     FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-                                    Tabnews.MyDialogFragment frag;
-                                    frag = new Tabnews.MyDialogFragment();
+                                    MyDialogFragment frag;
+                                    frag = new MyDialogFragment();
                                     Bundle args = new Bundle();
                                     args.putString("POSTID", itemmodel.getId());
                                     args.putString("USERID", myprofileid);
@@ -2943,6 +2944,12 @@ if(itemmodel.getAlbum()==null){
         RecyclerView recycler;
         LinearLayoutManager mLayoutManager;
         String postid, myuserid,qtypevalue;
+        SharedPreferences sharedpreferences;
+        public static final String mypreference = "mypref";
+        public static final String MYUSERID= "myprofileid";
+        public static final String USERNAME= "myprofilename";
+        public static final String USERIMAGE= "myprofileimage";
+        String description_comment,my_profilename,my_profileimage,myprofileid;
 
         public MyDialogFragment() {
 
@@ -2967,6 +2974,24 @@ if(itemmodel.getAlbum()==null){
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View root = inflater.inflate(R.layout.taballcomments, container, false);
+            sharedpreferences =  getActivity().getSharedPreferences(mypreference,
+                    Context.MODE_PRIVATE);
+
+            if (sharedpreferences.contains(MYUSERID)) {
+
+                myprofileid=sharedpreferences.getString(MYUSERID,"");
+                myprofileid = myprofileid.replaceAll("\\D+","");
+            }
+            if (sharedpreferences.contains(USERNAME)) {
+
+                my_profilename=sharedpreferences.getString(USERNAME,"");
+
+            }
+            if (sharedpreferences.contains(USERIMAGE)) {
+
+                my_profileimage=sharedpreferences.getString(USERIMAGE,"");
+
+            }
             // titles = (TextView) root.findViewById(R.id.comments_title);
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
@@ -2979,10 +3004,10 @@ if(itemmodel.getAlbum()==null){
             close_back = (Button) root.findViewById(R.id.cancel_button);
             // mCoordinator = (CoordinatorLayout) root.findViewById(R.id.root_coordinator);             mCollapsingToolbarLayout = (CollapsingToolbarLayout) root.findViewById(R.id.collapsing_toolbar_layout);
             recycler = (RecyclerView) root.findViewById(R.id.commentpagelist_recyclerview);
-            recycler.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-            recycler.setHasFixedSize(true);
+           // recycler.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+            //recycler.setHasFixedSize(true);
             recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recycler.setNestedScrollingEnabled(false);
+          recycler.setNestedScrollingEnabled(false);
             pdialog = new ProgressDialog(getActivity());
             pdialog.show();
             pdialog.setContentView(R.layout.custom_progressdialog);
@@ -3010,17 +3035,12 @@ if(itemmodel.getAlbum()==null){
                             public void onResponse(String response) {
                                 Log.e("Res", response.toString().trim());
 
-                                if (response.equalsIgnoreCase("error")) {
+                              if (response.equalsIgnoreCase("error")) {
                                     Toast.makeText(getActivity(), response, Toast.LENGTH_LONG).show();
                                 } else {
+                                  AddnewCommnent();
 
-                                        /*commentbox_editext.setText("");
-                                        AddnewCommnent();
-                                        scrollView.post(new Runnable() {
-                                            public void run() {
-                                                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                                            }
-                                        });*/
+
 
                                 }
                             }
@@ -3054,6 +3074,8 @@ if(itemmodel.getAlbum()==null){
                     } catch (Exception e) {
 
                     }
+
+
                 }
 
             });
@@ -3098,7 +3120,17 @@ if(itemmodel.getAlbum()==null){
             super.onDestroy();
             dissmissDialog();
         }
-
+        public void AddnewCommnent(){
+            int curSize = rcAdapter.getItemCount();
+            ItemModels models=new ItemModels();
+            models.setName(my_profilename);
+            models.setProfilepic(my_profileimage);
+            models.setComment(description_comment);
+            commentlist.add(models);
+            recycler.setVisibility(View.VISIBLE);
+            rcAdapter.notifyDataSetChanged();
+            rcAdapter.notifyItemRangeInserted(curSize, commentlist.size());
+        }
         static class UserViewHolder extends RecyclerView.ViewHolder {
             public TextView name, locations,commentsdecription;
 

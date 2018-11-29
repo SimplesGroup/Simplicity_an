@@ -197,7 +197,7 @@ public class Farmingdescriptiontamil extends AppCompatActivity {
 
 
         if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+            int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
@@ -206,12 +206,12 @@ public class Farmingdescriptiontamil extends AppCompatActivity {
             mainlayout.setBackgroundDrawable(gd);
 
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
+           editor.putString(backgroundcolor, "#262626");
             editor.commit();
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -220,13 +220,13 @@ public class Farmingdescriptiontamil extends AppCompatActivity {
                 mainlayout.setBackgroundDrawable(gd);
 
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
+               editor.putString(backgroundcolor, "#262626");
                 editor.commit();
             }else {
 
                 if(colorcodes!=null){
                     if(colorcodes == "#FFFFFFFF"){
-                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -235,7 +235,7 @@ public class Farmingdescriptiontamil extends AppCompatActivity {
 
                         mainlayout.setBackgroundDrawable(gd);
                     } else {
-                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                        int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -245,12 +245,12 @@ public class Farmingdescriptiontamil extends AppCompatActivity {
                         mainlayout.setBackgroundDrawable(gd);
 
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(backgroundcolor, "#383838");
+                       editor.putString(backgroundcolor, "#262626");
 
                         editor.commit();
                     }
                 }else {
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -260,7 +260,7 @@ public class Farmingdescriptiontamil extends AppCompatActivity {
                     mainlayout.setBackgroundDrawable(gd);
 
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
+                   editor.putString(backgroundcolor, "#262626");
 
                     editor.commit();
                 }
@@ -488,10 +488,10 @@ public class Farmingdescriptiontamil extends AppCompatActivity {
                 public void onClick(View v) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(commentbox_editext.getWindowToken(), 0);
-                    pdialog = new ProgressDialog(getApplicationContext());
+                   /* pdialog = new ProgressDialog(getApplicationContext());
                     pdialog.show();
                     pdialog.setContentView(R.layout.custom_progressdialog);
-                    pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));*/
                     if(myprofileid!=null) {
 
                         try {
@@ -500,7 +500,7 @@ public class Farmingdescriptiontamil extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     Log.e("Res", response.toString().trim());
-                                    pdialog.dismiss();
+                                    //pdialog.dismiss();
                                     if (response.equalsIgnoreCase("error")) {
                                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                                     } else {

@@ -8,7 +8,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,9 +15,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.R;
-import simplicity_an.simplicity_an.Tab_new_news;
 
 /**
  * Created by user on 8/6/2018.

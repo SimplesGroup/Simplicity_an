@@ -210,7 +210,7 @@ public class TamilRadio extends Fragment {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi");
             }else {
-                if(colorcodes.equalsIgnoreCase("#383838")){
+                if(colorcodes.equalsIgnoreCase("#262626")){
                     fabradio.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));

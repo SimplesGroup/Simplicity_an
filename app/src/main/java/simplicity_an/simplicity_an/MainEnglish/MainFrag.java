@@ -131,7 +131,8 @@ public class MainFrag extends Fragment {
         btnspecials=(Button)getActivity().findViewById(R.id.btn_specials);
         btnevents = (Button)getActivity().findViewById(R.id.btn_events);
         btnsearch = (ImageView) getActivity().findViewById(R.id.btn_citys);
-        btnmore = (Button)getActivity().findViewById(R.id.btn_shop);        toolbartitle=(TextView)view.findViewById(R.id.simplicitynewtitle);
+        btnmore = (Button)getActivity().findViewById(R.id.btn_shop);
+        toolbartitle=(TextView)view.findViewById(R.id.simplicitynewtitle);
         toolbartitle.setTypeface(barkentina);
       search=(android.support.v7.widget.SearchView)view.findViewById(R.id.searchview_main);
         search.setActivated(true);
@@ -160,7 +161,7 @@ public class MainFrag extends Fragment {
             btnmore.setImageResource(R.mipmap.more);
             btnspecials.setImageResource(R.mipmap.specials);*/
         }
-        else   if(colorcodes.equals("#383838")) {
+        else   if(colorcodes.equals("#262626")) {
             btnmore.setTextColor(Color.parseColor("#CCCCCC"));
             btnevents.setTextColor(Color.parseColor("#CCCCCC"));
             city.setTextColor(Color.parseColor("#CCCCCC"));

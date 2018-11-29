@@ -1,7 +1,5 @@
 package simplicity_an.simplicity_an.MainTamil;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,7 +39,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -62,12 +59,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import simplicity_an.simplicity_an.MainEnglish.CityFragment;
-import simplicity_an.simplicity_an.MainPageEnglish;
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SimplicitySearchview;
-import simplicity_an.simplicity_an.Tab_All;
-import simplicity_an.simplicity_an.Tab_new_news;
 import simplicity_an.simplicity_an.Tamil.TabColumnstamil;
 import simplicity_an.simplicity_an.Tamil.Tab_new_newstamil;
 import simplicity_an.simplicity_an.Tamil.TamilFarming;
@@ -79,7 +73,6 @@ import simplicity_an.simplicity_an.Tamil.TamilTaball;
 import simplicity_an.simplicity_an.Tamil.Tamileducation;
 import simplicity_an.simplicity_an.Tamil.Tamilgovt;
 import simplicity_an.simplicity_an.Tamil.Tamiljob;
-import simplicity_an.simplicity_an.Tamil.Tamilnews;
 import simplicity_an.simplicity_an.Tamil.Tamiltravel;
 import simplicity_an.simplicity_an.Utils.ChangeFont;
 import simplicity_an.simplicity_an.Utils.Configurl;
@@ -131,7 +124,7 @@ public class CityFragmentTamil extends Fragment {
     ImageLoader mImageLoader;
     LinearLayout layout;
     LinearLayout footerbar;
-    private ImageButton play_music,fastforward,backforward,close_player,themechange_button;
+    private ImageButton play_music,fastforward,backforward,close_player,themechange_button,settings_button;
     ImageView font_button;
     TextView music_title_name;
     String url_change_lang="http://simpli-city.in/request2.php?rtype=updatelanguage&key=simples";
@@ -141,8 +134,9 @@ public class CityFragmentTamil extends Fragment {
     String fontname;
     Typeface tf1;
     public static final String FONT= "font";
-    TextView line_vertical_textview;
+    TextView line_vertical_textview,line_settings_vertical_textview;
     RelativeLayout main_tamil_layout;
+    String      weatherdata;
     public static CityFragmentTamil newInstance() {
         CityFragmentTamil fragment = new CityFragmentTamil();
         return fragment;
@@ -214,14 +208,34 @@ public class CityFragmentTamil extends Fragment {
                 startActivity(searchpage);
             }
         });
-
+        settings_button=(ImageButton)view.findViewById(R.id.settingsbutton);
         line_vertical_textview=(TextView)view.findViewById(R.id.linevertical_versiontwo);
         line_vertical_textview.setText(Html.fromHtml("&nbsp;"+"|"+"&nbsp;"));
-
+        line_settings_vertical_textview=(TextView) view.findViewById(R.id.linevertical_settings_versiontwo);
+        line_settings_vertical_textview.setText(Html.fromHtml("&nbsp;"+"|"+"&nbsp;"));
+        settings_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new SettingsFragmentTamil();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frame_layout, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                btnevents.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                btnspecials.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                btnmore.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                city.setTextColor(Color.parseColor("#666666"));
+                btnevents.setTextColor(Color.parseColor("#666666"));
+                btnspecials.setTextColor(Color.parseColor("#666666"));
+                btnmore.setTextColor(Color.parseColor("#666666"));
+            }
+        });
         mainlayout=(RelativeLayout)view.findViewById(R.id.version_main_layout);
         main_tamil_layout=(RelativeLayout)getActivity().findViewById(R.id.maintamil);
         if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"), Color.parseColor("#383838")};
+            int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
@@ -233,12 +247,12 @@ public class CityFragmentTamil extends Fragment {
             fabinnerplus.setBackgroundResource(R.color.theme1button);
             fabsearch.setBackgroundResource(R.color.theme1button);
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
+           editor.putString(backgroundcolor, "#262626");
             editor.commit();
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"), Color.parseColor("#383838")};
+                int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -250,13 +264,13 @@ public class CityFragmentTamil extends Fragment {
                 fabinnerplus.setBackgroundResource(R.color.theme1button);
                 fabsearch.setBackgroundResource(R.color.theme1button);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
+               editor.putString(backgroundcolor, "#262626");
                 editor.commit();
             }else {
 
                 if(colorcodes!=null){
                     if(!colorcodes.equals("#FFFFFFFF")) {
-                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                        int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -268,7 +282,7 @@ public class CityFragmentTamil extends Fragment {
 
                     }
                     else{
-                        int[] color = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                        int[] color = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF")};
 
                         GradientDrawable g = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -280,7 +294,7 @@ public class CityFragmentTamil extends Fragment {
                         city.setImageResource(R.mipmap.newstamilone);*/
                     }
                 }else {
-                    int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"), Color.parseColor("#383838")};
+                    int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -293,7 +307,7 @@ public class CityFragmentTamil extends Fragment {
                     fabinnerplus.setBackgroundResource(R.color.theme1button);
                     fabsearch.setBackgroundResource(R.color.theme1button);
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
+                   editor.putString(backgroundcolor, "#262626");
 
                     editor.commit();
                 }
@@ -315,6 +329,7 @@ public class CityFragmentTamil extends Fragment {
 //            language_title.setTypeface(tf1);
            // date_text.setTypeface(tf1);
             line_vertical_textview.setTypeface(tf1);
+            line_settings_vertical_textview.setTypeface(tf1);
         }else {
             tf1=Typeface.createFromAsset(getActivity().getAssets(),Fonts.muktamalar);
             title_coimbatore.setTypeface(tf1);
@@ -322,12 +337,14 @@ public class CityFragmentTamil extends Fragment {
 //            date_text.setTypeface(tf1);
            // language_title.setTypeface(tf1);
             line_vertical_textview.setTypeface(tf1);
+            line_settings_vertical_textview.setTypeface(tf1);
         }
         title_coimbatore.setText("வணக்கம் கோவை");
         if(colorcodes.equals("#FFFFFFFF"))
         {
             title_coimbatore.setTextColor(Color.BLACK);
             line_vertical_textview.setTextColor(Color.BLACK);
+            line_settings_vertical_textview.setTextColor(Color.BLACK);
 
 
         }
@@ -335,6 +352,7 @@ public class CityFragmentTamil extends Fragment {
         {
             title_coimbatore.setTextColor(Color.WHITE);
             line_vertical_textview.setTextColor(Color.WHITE);
+            line_settings_vertical_textview.setTextColor(Color.WHITE);
         }
 
         if(colorcodes.equals("#FFFFFFFF")){
@@ -356,7 +374,7 @@ public class CityFragmentTamil extends Fragment {
         }
         else{
 
-            if(colorcodes.equals("#383838")) {
+            if(colorcodes.equals("#262626")) {
                 /*city.setBackgroundResource(R.color.theme1button);
                 city.setImageResource(R.mipmap.newstamil);
                 btnsearch.setBackgroundResource(R.color.mytransparent);
@@ -752,7 +770,7 @@ public class CityFragmentTamil extends Fragment {
         StringRequest weather=new StringRequest(Request.Method.GET, WEATHER_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                String weatherdata;
+
                 /*if(response!=null){
                     weather_update.setText(Html.fromHtml(response+"<sup>o</sup>"));
                 }else {
@@ -783,9 +801,42 @@ public class CityFragmentTamil extends Fragment {
         });
         weather.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(weather);
-
+        if(weatherdata!=null){
+            if(dayOfTheWeek.equalsIgnoreCase("Sun")){
+                date_text.setText(Html.fromHtml("ஞாயிறு"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+            }else if(dayOfTheWeek.equalsIgnoreCase("Mon")){
+                date_text.setText(Html.fromHtml("திங்கள்"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+            }else if(dayOfTheWeek.equalsIgnoreCase("Tue")){
+                date_text.setText(Html.fromHtml("செவ்வாய் "+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+            }else if (dayOfTheWeek.equalsIgnoreCase("Wed")){
+                date_text.setText(Html.fromHtml("புதன்"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+            }else if(dayOfTheWeek.equalsIgnoreCase("Thu")){
+                date_text.setText(Html.fromHtml("வியாழன்"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+            }else if(dayOfTheWeek.equalsIgnoreCase("Fri")){
+                date_text.setText(Html.fromHtml("வெள்ளி"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+            }else if(dayOfTheWeek.equalsIgnoreCase("Sat")){
+                date_text.setText(Html.fromHtml("சனி"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+            }
+        }else {
+            if(dayOfTheWeek.equalsIgnoreCase("Sun")){
+                date_text.setText(Html.fromHtml("ஞாயிறு"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+            }else if(dayOfTheWeek.equalsIgnoreCase("Mon")){
+                date_text.setText(Html.fromHtml("திங்கள்"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+            }else if(dayOfTheWeek.equalsIgnoreCase("Tue")){
+                date_text.setText(Html.fromHtml("செவ்வாய் "+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+            }else if (dayOfTheWeek.equalsIgnoreCase("Wed")){
+                date_text.setText(Html.fromHtml("புதன்"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+            }else if(dayOfTheWeek.equalsIgnoreCase("Thu")){
+                date_text.setText(Html.fromHtml("வியாழன்"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+            }else if(dayOfTheWeek.equalsIgnoreCase("Fri")){
+                date_text.setText(Html.fromHtml("வெள்ளி"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+            }else if(dayOfTheWeek.equalsIgnoreCase("Sat")){
+                date_text.setText(Html.fromHtml("சனி"+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+            }
+        }
         if(colorcodes.equals("#FFFFFFFF")){
             themechange_button.setImageResource(R.drawable.themenormal);
+            settings_button.setImageResource(R.drawable.settingsblack);
             if(fontname.equals("playfair")){
                 font_button.setImageResource(R.mipmap.sanblack);
             }else {
@@ -794,7 +845,7 @@ public class CityFragmentTamil extends Fragment {
 
         }else {
             themechange_button.setImageResource(R.drawable.themewhite);
-
+            settings_button.setImageResource(R.drawable.settingswhite);
             if(fontname.equals("playfair")){
                 font_button.setImageResource(R.mipmap.sanwhite);
             }else {
@@ -808,7 +859,7 @@ public class CityFragmentTamil extends Fragment {
         explore=(ImageButton)view.findViewById(R.id.btn_versiontwoexplore);
         notifications=(ImageButton)view.findViewById(R.id.btn_versiontwonotifications);
 */
-        if(colorcodes.equalsIgnoreCase("#383838")){
+        if(colorcodes.equalsIgnoreCase("#262626")){
            // city.setBackgroundResource(R.color.theme1button);
             fabplus.setBackgroundResource(R.color.theme1button);
             fabinnerplus.setBackgroundResource(R.color.theme1button);
@@ -1130,7 +1181,7 @@ public class CityFragmentTamil extends Fragment {
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
 
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -1140,11 +1191,11 @@ public class CityFragmentTamil extends Fragment {
                     mainlayout.setBackgroundDrawable(gd);
                     main_tamil_layout.setBackgroundColor(Color.parseColor("#FF000000"));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
+                   editor.putString(backgroundcolor, "#262626");
                     editor.commit();
 
 
-                }else if(colorcodes.equals("#383838")) {
+                }else if(colorcodes.equals("#262626")) {
 
 
 
@@ -1154,7 +1205,7 @@ public class CityFragmentTamil extends Fragment {
                     fragmentTransaction.replace(R.id.frame_layout, fragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-                    int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                    int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
                             colors);
@@ -1198,7 +1249,7 @@ public class CityFragmentTamil extends Fragment {
                         fragmentTransaction.replace(R.id.frame_layout, fragment);
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
-                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                        int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -1221,7 +1272,7 @@ public class CityFragmentTamil extends Fragment {
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(backgroundcolor, "#383838");
+                       editor.putString(backgroundcolor, "#262626");
                         editor.commit();
                        // dialog.dismiss();
 
@@ -1654,7 +1705,7 @@ public class CityFragmentTamil extends Fragment {
                         fragmentTransaction.replace(R.id.frame_layout, fragment);
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
-                        int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                        int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
                                 colors);

@@ -60,6 +60,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
+
 public class Radioplayeractivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener{
     TextView category,subtitle,authername,title,timecurrentseekbar,timebalanceseekbar;
     SeekBar songduration,sound;

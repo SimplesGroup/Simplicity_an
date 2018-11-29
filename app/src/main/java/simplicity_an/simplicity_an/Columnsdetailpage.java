@@ -42,13 +42,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Cache;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
@@ -60,13 +58,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
 import simplicity_an.simplicity_an.Utils.Configurl;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
@@ -220,7 +218,7 @@ if(activity==null){
             back.setImageResource(R.mipmap.back);
         }
         if(colorcodes.length()==0){
-            int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
+            int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
@@ -229,12 +227,12 @@ if(activity==null){
             mainlayout.setBackgroundDrawable(gd);
 
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
+           editor.putString(backgroundcolor, "#262626");
             editor.commit();
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
+                int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -243,13 +241,13 @@ if(activity==null){
                 mainlayout.setBackgroundDrawable(gd);
 
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
+               editor.putString(backgroundcolor, "#262626");
                 editor.commit();
             }else {
 
                 if(colorcodes!=null){
                     if(colorcodes == "#FFFFFFFF"){
-                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -258,7 +256,7 @@ if(activity==null){
 
                         mainlayout.setBackgroundDrawable(gd);
                     } else {
-                        int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
+                        int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -268,12 +266,12 @@ if(activity==null){
                         mainlayout.setBackgroundDrawable(gd);
 
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(backgroundcolor, "#383838");
+                       editor.putString(backgroundcolor, "#262626");
 
                         editor.commit();
                     }
                 }else {
-                    int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
+                    int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -283,7 +281,7 @@ if(activity==null){
                     mainlayout.setBackgroundDrawable(gd);
 
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
+                   editor.putString(backgroundcolor, "#262626");
 
                     editor.commit();
                 }
@@ -467,10 +465,10 @@ if(myprofileid!=null){
         public void onClick(View v) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(commentbox_editext.getWindowToken(), 0);
-            pdialog = new ProgressDialog(getApplicationContext());
+            /*pdialog = new ProgressDialog(getApplicationContext());
             pdialog.show();
             pdialog.setContentView(R.layout.custom_progressdialog);
-            pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));*/
 
             if(myprofileid!=null) {
 
@@ -480,7 +478,7 @@ if(myprofileid!=null){
                         @Override
                         public void onResponse(String response) {
                             Log.e("Res", response.toString().trim());
-                            pdialog.dismiss();
+                          //  pdialog.dismiss();
                             if (response.equalsIgnoreCase("error")) {
                                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                             } else {

@@ -1,7 +1,6 @@
 package simplicity_an.simplicity_an;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,23 +13,16 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.CalendarContract;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -42,16 +34,13 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Cache;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
@@ -62,7 +51,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,6 +60,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
 import simplicity_an.simplicity_an.Utils.Configurl;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
@@ -197,7 +186,7 @@ public class EventsDescription extends AppCompatActivity {
             back.setImageResource(R.mipmap.back);
         }
         if(colorcodes.length()==0){
-            int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
+            int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
@@ -206,12 +195,12 @@ public class EventsDescription extends AppCompatActivity {
             mainlayout.setBackgroundDrawable(gd);
 
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
+           editor.putString(backgroundcolor, "#262626");
             editor.commit();
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
+                int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -220,13 +209,13 @@ public class EventsDescription extends AppCompatActivity {
                 mainlayout.setBackgroundDrawable(gd);
 
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
+               editor.putString(backgroundcolor, "#262626");
                 editor.commit();
             }else {
 
                 if(colorcodes!=null){
                     if(colorcodes.equals("#FFFFFFFF")){
-                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                        int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -238,7 +227,7 @@ public class EventsDescription extends AppCompatActivity {
                         editor.putString(backgroundcolor, "#FFFFFFFF");
                         editor.commit();
                     } else {
-                        int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
+                        int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -248,12 +237,12 @@ public class EventsDescription extends AppCompatActivity {
                         mainlayout.setBackgroundDrawable(gd);
 
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(backgroundcolor, "#383838");
+                       editor.putString(backgroundcolor, "#262626");
 
                         editor.commit();
                     }
                 }else {
-                    int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
+                    int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -263,7 +252,7 @@ public class EventsDescription extends AppCompatActivity {
                     mainlayout.setBackgroundDrawable(gd);
 
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
+                   editor.putString(backgroundcolor, "#262626");
 
                     editor.commit();
                 }

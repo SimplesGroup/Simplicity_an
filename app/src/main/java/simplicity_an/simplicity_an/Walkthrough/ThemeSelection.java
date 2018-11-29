@@ -79,7 +79,7 @@ public class ThemeSelection extends AppCompatActivity{
                 dark_tick.setImageResource(R.mipmap.tick);
                 tick_light.setVisibility(View.GONE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
+               editor.putString(backgroundcolor, "#262626");
                 editor.commit();
             }
         });

@@ -8,7 +8,7 @@
     android:background="@android:color/black"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".MainPageEnglish">
+    tools:context=".MainEnglish.MainPageEnglish">
     <RelativeLayout
 
         android:layout_above="@+id/footer"
@@ -18,7 +18,7 @@
 
             android:id="@+id/frame_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:animateLayoutChanges="true">
 
@@ -123,7 +123,7 @@
                 android:textColor="@android:color/white"
                 android:textAllCaps="false"
                 android:background="@android:color/transparent"
-                android:text="Settings"
+                android:text="Shop"
                 android:textSize="12dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"

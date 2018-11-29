@@ -46,6 +46,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
+
 /**
  * Created by kuppusamy on 2/11/2016.
  */
@@ -219,7 +221,7 @@ addnewevent.setOnClickListener(new View.OnClickListener() {
         }
     }
 });
-        if(colorcodes.equalsIgnoreCase("#383838")){
+        if(colorcodes.equalsIgnoreCase("#262626")){
             addnewevent.setBackgroundResource(R.color.theme1button);
         }else if(colorcodes.equalsIgnoreCase("#59247c")){
             addnewevent.setBackgroundResource(R.color.theme2);

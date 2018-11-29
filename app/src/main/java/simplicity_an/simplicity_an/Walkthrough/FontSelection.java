@@ -15,11 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import simplicity_an.simplicity_an.MainPageEnglish;
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.PrefManager;
 import simplicity_an.simplicity_an.R;
-import simplicity_an.simplicity_an.SplashScreen;
 
 public class FontSelection extends AppCompatActivity {
     TextView selectyour_text,style_text;

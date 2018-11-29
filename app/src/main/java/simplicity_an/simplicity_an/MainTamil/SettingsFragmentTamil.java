@@ -119,7 +119,7 @@ public class SettingsFragmentTamil extends Fragment {
         mainlayout=(RelativeLayout)view.findViewById(R.id.version_main_layout);
         if(colorcodes!=null) {
             if (colorcodes.equals("#FFFFFFFF")) {
-                int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF")};
+                int[] colors = {Color.parseColor(colorcodes),  Color.parseColor("#FFFFFFFF")};
 
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
@@ -130,7 +130,7 @@ public class SettingsFragmentTamil extends Fragment {
 
 
             } else {
-                int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
@@ -141,13 +141,13 @@ public class SettingsFragmentTamil extends Fragment {
                 // city.setBackgroundColor(getResources().getColor(R.color.theme1button));
 
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
+               editor.putString(backgroundcolor, "#262626");
 
                 editor.commit();
 
             }
         }else{
-            int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+            int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
@@ -158,7 +158,7 @@ public class SettingsFragmentTamil extends Fragment {
 
 
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
+           editor.putString(backgroundcolor, "#262626");
 
             editor.commit();
 
@@ -266,7 +266,7 @@ public class SettingsFragmentTamil extends Fragment {
         }
         else{
 
-            if(colorcodes.equals("#383838")) {
+            if(colorcodes.equals("#262626")) {
                 more.setBackgroundResource(R.color.theme1button);
                 more.setImageResource(R.mipmap.moretamil);
                 city.setBackgroundResource(R.color.mytransparent);

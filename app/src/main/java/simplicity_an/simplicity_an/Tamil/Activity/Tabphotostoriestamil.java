@@ -194,7 +194,7 @@ public class Tabphotostoriestamil extends Fragment {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi");
             }else {
-                if(colorcodes.equalsIgnoreCase("#383838")){
+                if(colorcodes.equalsIgnoreCase("#262626")){
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                 }else if(colorcodes.equalsIgnoreCase("#59247c")){

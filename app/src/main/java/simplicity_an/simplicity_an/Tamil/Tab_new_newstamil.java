@@ -63,36 +63,23 @@ import java.util.List;
 import java.util.Map;
 
 import simplicity_an.simplicity_an.AdvertisementPage;
-import simplicity_an.simplicity_an.Articledescription;
 import simplicity_an.simplicity_an.Columnistdetail;
 import simplicity_an.simplicity_an.Columnsdetailpage;
 import simplicity_an.simplicity_an.DividerItemDecoration;
-import simplicity_an.simplicity_an.DoitDescription;
-import simplicity_an.simplicity_an.EducationDescription;
 import simplicity_an.simplicity_an.EventsDescription;
-import simplicity_an.simplicity_an.Farmingdescription;
-import simplicity_an.simplicity_an.FoodAndCookDescriptionPage;
-import simplicity_an.simplicity_an.GovernmentnotificationsDescriptions;
-import simplicity_an.simplicity_an.Healthylivingdescription;
-import simplicity_an.simplicity_an.HorizontalAdapters.Horizontaladapter;
-import simplicity_an.simplicity_an.HorizontalAdapters.VerticalAdapters;
-import simplicity_an.simplicity_an.JobsDetailPage;
 import simplicity_an.simplicity_an.LifestyleDetail;
 import simplicity_an.simplicity_an.LikeListFragment;
-import simplicity_an.simplicity_an.MainPageEnglish;
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
 import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
 import simplicity_an.simplicity_an.MySingleton;
-import simplicity_an.simplicity_an.NewsDescription;
 import simplicity_an.simplicity_an.OnLoadMoreListener;
 import simplicity_an.simplicity_an.PhotoStoriesDetail;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.RecyclerView_OnClickListener;
 import simplicity_an.simplicity_an.ReportNewsOrComplaints;
-import simplicity_an.simplicity_an.ScienceandTechnologyDescription;
 import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.SimplicitySearchview;
 import simplicity_an.simplicity_an.SportsnewsDescription;
-import simplicity_an.simplicity_an.Tab_new_news;
 import simplicity_an.simplicity_an.Tabnews;
 import simplicity_an.simplicity_an.Tamil.Activity.DoitDescriptiontamil;
 import simplicity_an.simplicity_an.Tamil.Activity.EducationDescriptiontamil;
@@ -108,8 +95,6 @@ import simplicity_an.simplicity_an.Tamil.Activity.TravelsDescriptiontamil;
 import simplicity_an.simplicity_an.Tamil.HorizontalAdapters.HorizontalPhotostoryadaptertamil;
 import simplicity_an.simplicity_an.Tamil.HorizontalAdapters.Horizontaladaptertamil;
 import simplicity_an.simplicity_an.Tamil.HorizontalAdapters.VerticalAdapterstamil;
-import simplicity_an.simplicity_an.TipsDescription;
-import simplicity_an.simplicity_an.TravelsDescription;
 import simplicity_an.simplicity_an.Utils.ChangeFont;
 import simplicity_an.simplicity_an.Utils.Configurl;
 import simplicity_an.simplicity_an.Utils.Fonts;
@@ -245,7 +230,7 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi");
             }else {
-                if(colorcodes.equalsIgnoreCase("#383838")){
+                if(colorcodes.equalsIgnoreCase("#262626")){
                     fabnews.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                     fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
@@ -2172,8 +2157,8 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
 
                                 if(myprofileid!=null) {
                                     FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-                                    Tabnews.MyDialogFragment frag;
-                                    frag = new Tabnews.MyDialogFragment();
+                                   MyDialogFragment frag;
+                                    frag = new MyDialogFragment();
                                     Bundle args = new Bundle();
                                     args.putString("POSTID", itemmodel.getId());
                                     args.putString("USERID", myprofileid);
@@ -2932,8 +2917,8 @@ if(itemmodel.getAlbum()==null){
 
                                 if(myprofileid!=null) {
                                     FragmentTransaction ftcom = getChildFragmentManager().beginTransaction();
-                                    Tabnews.MyDialogFragment fragcom;
-                                    fragcom = new Tabnews.MyDialogFragment();
+                                    MyDialogFragment fragcom;
+                                    fragcom = new MyDialogFragment();
                                     Bundle argscom = new Bundle();
                                     argscom.putString("POSTID", itemmodel.getId());
                                     argscom.putString("USERID", myprofileid);
@@ -3067,7 +3052,12 @@ if(itemmodel.getAlbum()==null){
         RecyclerView recycler;
         LinearLayoutManager mLayoutManager;
         String postid, myuserid,qtypevalue;
-
+        SharedPreferences sharedpreferences;
+        public static final String mypreference = "mypref";
+        public static final String MYUSERID= "myprofileid";
+        public static final String USERNAME= "myprofilename";
+        public static final String USERIMAGE= "myprofileimage";
+        String description_comment,my_profilename,my_profileimage,myprofileid;
         public MyDialogFragment() {
 
         }
@@ -3091,6 +3081,24 @@ if(itemmodel.getAlbum()==null){
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View root = inflater.inflate(R.layout.taballcomments, container, false);
+            sharedpreferences = getActivity(). getSharedPreferences(mypreference,
+                    Context.MODE_PRIVATE);
+
+            if (sharedpreferences.contains(MYUSERID)) {
+
+                myprofileid=sharedpreferences.getString(MYUSERID,"");
+                myprofileid = myprofileid.replaceAll("\\D+","");
+            }
+            if (sharedpreferences.contains(USERNAME)) {
+
+                my_profilename=sharedpreferences.getString(USERNAME,"");
+
+            }
+            if (sharedpreferences.contains(USERIMAGE)) {
+
+                my_profileimage=sharedpreferences.getString(USERIMAGE,"");
+
+            }
             // titles = (TextView) root.findViewById(R.id.comments_title);
             requestQueue = Volley.newRequestQueue(getActivity());
             postid = getArguments().getString("POSTID");
@@ -3137,7 +3145,7 @@ if(itemmodel.getAlbum()==null){
                                 if (response.equalsIgnoreCase("error")) {
                                     Toast.makeText(getActivity(), response, Toast.LENGTH_LONG).show();
                                 } else {
-
+AddnewCommnent();
                                         /*commentbox_editext.setText("");
                                         AddnewCommnent();
                                         scrollView.post(new Runnable() {
@@ -3217,7 +3225,17 @@ if(itemmodel.getAlbum()==null){
             }
 
         }
-
+        public void AddnewCommnent(){
+            int curSize = rcAdapter.getItemCount();
+            ItemModels models=new ItemModels();
+            models.setName(my_profilename);
+            models.setProfilepic(my_profileimage);
+            models.setComment(description_comment);
+            commentlist.add(models);
+            recycler.setVisibility(View.VISIBLE);
+            rcAdapter.notifyDataSetChanged();
+            rcAdapter.notifyItemRangeInserted(curSize, commentlist.size());
+        }
         public void onDestroy() {
             super.onDestroy();
             dissmissDialog();

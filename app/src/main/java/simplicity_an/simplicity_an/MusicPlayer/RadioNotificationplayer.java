@@ -38,7 +38,7 @@ import com.android.volley.toolbox.Volley;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import simplicity_an.simplicity_an.MainPageEnglish;
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.MySingleton;
 import simplicity_an.simplicity_an.R;
@@ -211,7 +211,7 @@ if(radio_play_url!=null){
 
                     mainlayout.setBackgroundDrawable(gd);
                 }else {
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -221,7 +221,7 @@ if(radio_play_url!=null){
                     mainlayout.setBackgroundDrawable(gd);
 
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
+                   editor.putString(backgroundcolor, "#262626");
 
                     editor.commit();
                 }

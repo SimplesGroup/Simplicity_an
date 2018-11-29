@@ -13,7 +13,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -37,7 +36,6 @@ import java.util.ArrayList;
 import simplicity_an.simplicity_an.AboutPage;
 import simplicity_an.simplicity_an.Contactpage;
 import simplicity_an.simplicity_an.CustomizeNotification;
-import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.MySingleton;
 import simplicity_an.simplicity_an.OurTeamPage;
 import simplicity_an.simplicity_an.PrivacyPolicy;
@@ -121,7 +119,7 @@ public class SettingsFragment extends Fragment {
         mainlayout=(RelativeLayout)view.findViewById(R.id.version_main_layout);
         if(colorcodes!=null) {
             if (colorcodes.equals("#FFFFFFFF")) {
-                int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF")};
+                int[] colors = {Color.parseColor(colorcodes),  Color.parseColor("#FFFFFFFF")};
 
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
@@ -132,7 +130,7 @@ public class SettingsFragment extends Fragment {
 
 
             } else {
-                int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
@@ -143,13 +141,13 @@ public class SettingsFragment extends Fragment {
                 // city.setBackgroundColor(getResources().getColor(R.color.theme1button));
 
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
+               editor.putString(backgroundcolor, "#262626");
 
                 editor.commit();
 
             }
         }else{
-            int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+            int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
@@ -160,7 +158,7 @@ public class SettingsFragment extends Fragment {
 
 
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
+           editor.putString(backgroundcolor, "#262626");
 
             editor.commit();
 
@@ -286,7 +284,7 @@ public class SettingsFragment extends Fragment {
         }
         else{
 
-            if(colorcodes.equals("#383838")) {
+            if(colorcodes.equals("#262626")) {
 
                 btnmore.setTextColor(Color.WHITE);
                 btnevents.setTextColor(Color.parseColor("#CCCCCC"));

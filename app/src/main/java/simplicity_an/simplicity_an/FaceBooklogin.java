@@ -35,10 +35,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.Utils.Configurl;
 

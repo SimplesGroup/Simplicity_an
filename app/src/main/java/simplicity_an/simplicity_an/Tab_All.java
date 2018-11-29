@@ -190,7 +190,7 @@ String fontname;
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi");
             }else {
-                if(colorcodes.equalsIgnoreCase("#383838")){
+                if(colorcodes.equalsIgnoreCase("#262626")){
                    fab.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                     fabplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                 }else if(colorcodes.equalsIgnoreCase("#59247c")){
@@ -2258,6 +2258,12 @@ Log.e("URL","hh"+itemmodel.getYoutubelink());
         LinearLayoutManager mLayoutManager;
         String postid, myuserid,qtypevalue;
 String description_comment;
+        SharedPreferences sharedpreferences;
+        public static final String mypreference = "mypref";
+        public static final String MYUSERID= "myprofileid";
+        public static final String USERNAME= "myprofilename";
+        public static final String USERIMAGE= "myprofileimage";
+        String my_profilename,my_profileimage,myprofileid;
         public MyDialogFragment() {
 
         }
@@ -2301,6 +2307,25 @@ String description_comment;
             pdialog.show();
             pdialog.setContentView(R.layout.custom_progressdialog);
             pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            sharedpreferences = getActivity(). getSharedPreferences(mypreference,
+                    Context.MODE_PRIVATE);
+
+            if (sharedpreferences.contains(MYUSERID)) {
+
+                myprofileid=sharedpreferences.getString(MYUSERID,"");
+                myprofileid = myprofileid.replaceAll("\\D+","");
+            }
+            if (sharedpreferences.contains(USERNAME)) {
+
+                my_profilename=sharedpreferences.getString(USERNAME,"");
+
+            }
+            if (sharedpreferences.contains(USERIMAGE)) {
+
+                my_profileimage=sharedpreferences.getString(USERIMAGE,"");
+
+            }
             // titles.setTypeface(tf);
             // titles.setText("Comments");
             post_review.setTypeface(tf);
@@ -2316,10 +2341,10 @@ String description_comment;
             post_review.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    pdialog = new ProgressDialog(getActivity());
+                    /*pdialog = new ProgressDialog(getActivity());
                     pdialog.show();
                     pdialog.setContentView(R.layout.custom_progressdialog);
-                    pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));*/
                     if(myuserid!=null) {
 
                         try {
@@ -2328,11 +2353,11 @@ String description_comment;
                                 @Override
                                 public void onResponse(String response) {
                                     Log.e("Res", response.toString().trim());
-                                        pdialog.dismiss();
+                                       // pdialog.dismiss();
                                     if (response.equalsIgnoreCase("error")) {
                                         Toast.makeText(getActivity(), response, Toast.LENGTH_LONG).show();
                                     } else {
-
+AddnewCommnent();
 
                                     }
                                 }
@@ -2399,7 +2424,17 @@ String description_comment;
 
             return root;
         }
-
+        public void AddnewCommnent(){
+            int curSize = rcAdapter.getItemCount();
+            ItemModels models=new ItemModels();
+            models.setName(my_profilename);
+            models.setProfilepic(my_profileimage);
+            models.setComment(description_comment);
+            commentlist.add(models);
+            recycler.setVisibility(View.VISIBLE);
+            rcAdapter.notifyDataSetChanged();
+            rcAdapter.notifyItemRangeInserted(curSize, commentlist.size());
+        }
         public void dissmissDialog() {
             // TODO Auto-generated method stub
             if (pdialog != null) {

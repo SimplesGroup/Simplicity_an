@@ -62,11 +62,9 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import simplicity_an.simplicity_an.AdvertisementPage;
 import simplicity_an.simplicity_an.AppControllers;
 import simplicity_an.simplicity_an.Articledescription;
 import simplicity_an.simplicity_an.DividerItemDecoration;
-import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.OnLoadMoreListener;
 import simplicity_an.simplicity_an.R;

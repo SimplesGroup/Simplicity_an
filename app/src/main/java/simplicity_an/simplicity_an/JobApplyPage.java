@@ -64,12 +64,12 @@ public class JobApplyPage extends Activity {
             mainlayout.setBackgroundDrawable(gd);
 
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
+           editor.putString(backgroundcolor, "#262626");
             editor.commit();
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
+                int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -78,7 +78,7 @@ public class JobApplyPage extends Activity {
                 mainlayout.setBackgroundDrawable(gd);
 
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
+               editor.putString(backgroundcolor, "#262626");
                 editor.commit();
             }else {
 
@@ -92,7 +92,7 @@ public class JobApplyPage extends Activity {
 
                     mainlayout.setBackgroundDrawable(gd);
                 }else {
-                    int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
+                    int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -102,7 +102,7 @@ public class JobApplyPage extends Activity {
                     mainlayout.setBackgroundDrawable(gd);
 
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
+                   editor.putString(backgroundcolor, "#262626");
 
                     editor.commit();
                 }

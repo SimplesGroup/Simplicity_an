@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SimpliCity</string>
     <string name="queryhintsearchview">Search for anything in Coimbatore</string>
+    <string name="queryhintforshopsearch">Search for products/brands in Coimbatore</string>
     <string name="facebook_app_id">200693687060449</string>
 
     <string name="next">NEXT</string>

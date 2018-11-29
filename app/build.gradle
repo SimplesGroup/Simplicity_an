@@ -11,8 +11,8 @@ android {
                 onesignal_google_project_number: "534790179677"]
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 51
-        versionName "4.4.15"
+        versionCode 52
+        versionName "4.4.16"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

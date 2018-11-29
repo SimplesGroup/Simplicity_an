@@ -14,7 +14,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -39,11 +38,9 @@ import com.onesignal.OneSignal;
 import java.util.Hashtable;
 import java.util.Map;
 
-import simplicity_an.simplicity_an.MainEnglish.CityFragment;
-import simplicity_an.simplicity_an.MainEnglish.EntertainmentFragment;
 import simplicity_an.simplicity_an.MainEnglish.HappeningFrag;
-import simplicity_an.simplicity_an.MainEnglish.SettingsFragment;
-import simplicity_an.simplicity_an.MainPageEnglish;
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
+import simplicity_an.simplicity_an.MainEnglish.ShopFragment;
 import simplicity_an.simplicity_an.MusicplayerBottom;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SearchWebPage;
@@ -214,7 +211,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     if(colorcodes.equalsIgnoreCase("004")){
                         Log.e("Msg","hihihi");
                     }else {
-                        if(colorcodes.equalsIgnoreCase("#383838")){
+                        if(colorcodes.equalsIgnoreCase("#262626")){
                             city.setBackgroundResource(R.color.theme1button);
                             happening.setBackgroundResource(R.color.mytransparent);
                             search.setBackgroundResource(R.color.mytransparent);
@@ -431,7 +428,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     if(colorcodes.equalsIgnoreCase("004")){
                         Log.e("Msg","hihihi");
                     }else {
-                        if(colorcodes.equalsIgnoreCase("#383838")){
+                        if(colorcodes.equalsIgnoreCase("#262626")){
                             happening.setBackgroundResource(R.color.theme1button);
                             search.setBackgroundResource(R.color.mytransparent);
                             city.setBackgroundResource(R.color.mytransparent);
@@ -861,7 +858,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     if(colorcodes.equalsIgnoreCase("004")){
                         Log.e("Msg","hihihi");
                     }else {
-                        if(colorcodes.equalsIgnoreCase("#383838")){
+                        if(colorcodes.equalsIgnoreCase("#262626")){
                             audio_video.setBackgroundResource(R.color.theme1button);
                             happening.setBackgroundResource(R.color.mytransparent);
                             search.setBackgroundResource(R.color.mytransparent);
@@ -1016,7 +1013,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
             public void onClick(View v) {
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                SettingsFragmentTamil fragment = new SettingsFragmentTamil();
+                ShopFragment fragment = new ShopFragment();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frame_layout, fragment);
                 fragmentTransaction.commit();
@@ -1075,7 +1072,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                     if(colorcodes.equalsIgnoreCase("004")){
                         Log.e("Msg","hihihi");
                     }else {
-                        if(colorcodes.equalsIgnoreCase("#383838")){
+                        if(colorcodes.equalsIgnoreCase("#262626")){
                             settings.setBackgroundResource(R.color.theme1button);
                             happening.setBackgroundResource(R.color.mytransparent);
                             search.setBackgroundResource(R.color.mytransparent);
@@ -1257,7 +1254,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                 if(colorcodes.equalsIgnoreCase("004")){
                     Log.e("Msg","hihihi");
                 }else {
-                    if(colorcodes.equalsIgnoreCase("#383838")){
+                    if(colorcodes.equalsIgnoreCase("#262626")){
                        // city.setBackgroundResource(R.color.theme1button);
                     }else if(colorcodes.equalsIgnoreCase("#59247c")){
                         city.setBackgroundResource(R.color.theme2);
@@ -1380,7 +1377,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                 if(colorcodes.equalsIgnoreCase("004")){
                     Log.e("Msg","hihihi");
                 }else {
-                    if(colorcodes.equalsIgnoreCase("#383838")){
+                    if(colorcodes.equalsIgnoreCase("#262626")){
                         settings.setBackgroundResource(R.color.theme1button);
                     }else if(colorcodes.equalsIgnoreCase("#59247c")){
                         settings.setBackgroundResource(R.color.theme2);
@@ -1472,7 +1469,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                 if(colorcodes.equalsIgnoreCase("004")){
                     Log.e("Msg","hihihi");
                 }else {
-                    if(colorcodes.equalsIgnoreCase("#383838")){
+                    if(colorcodes.equalsIgnoreCase("#262626")){
                         happening.setBackgroundResource(R.color.theme1button);
                     }else if(colorcodes.equalsIgnoreCase("#59247c")){
                         happening.setBackgroundResource(R.color.theme2);
@@ -1518,7 +1515,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                 if(colorcodes.equalsIgnoreCase("004")){
                     Log.e("Msg","hihihi");
                 }else {
-                    if(colorcodes.equalsIgnoreCase("#383838")){
+                    if(colorcodes.equalsIgnoreCase("#262626")){
                         search.setBackgroundResource(R.color.theme1button);
                     }else if(colorcodes.equalsIgnoreCase("#59247c")){
                         search.setBackgroundResource(R.color.theme2);
@@ -1565,7 +1562,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
                 if(colorcodes.equalsIgnoreCase("004")){
                     Log.e("Msg","hihihi");
                 }else {
-                    if(colorcodes.equalsIgnoreCase("#383838")){
+                    if(colorcodes.equalsIgnoreCase("#262626")){
                         city.setBackgroundResource(R.color.theme1button);
                     }else if(colorcodes.equalsIgnoreCase("#59247c")){
                         city.setBackgroundResource(R.color.theme2);
@@ -1649,7 +1646,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
         colorone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
@@ -1658,7 +1655,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
 
 
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
+               editor.putString(backgroundcolor, "#262626");
                 editor.commit();
 
             }
@@ -1853,7 +1850,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
         colorthirteen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);

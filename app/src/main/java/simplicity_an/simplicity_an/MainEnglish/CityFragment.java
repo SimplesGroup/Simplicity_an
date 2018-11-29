@@ -1,7 +1,5 @@
 package simplicity_an.simplicity_an.MainEnglish;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -33,7 +30,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -42,7 +38,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -62,17 +57,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import simplicity_an.simplicity_an.MainPageEnglish;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
 import simplicity_an.simplicity_an.PrefManager;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SimplicitySearchview;
-import simplicity_an.simplicity_an.TabAdvertorial;
 import simplicity_an.simplicity_an.TabColumns;
 import simplicity_an.simplicity_an.TabEducation;
-import simplicity_an.simplicity_an.TabEntertainmentAll;
-import simplicity_an.simplicity_an.TabEntertainmentMusic;
-import simplicity_an.simplicity_an.TabEntertainmentTheatre;
 import simplicity_an.simplicity_an.TabFarming;
 import simplicity_an.simplicity_an.TabFood;
 import simplicity_an.simplicity_an.TabHealth;
@@ -80,15 +70,8 @@ import simplicity_an.simplicity_an.TabScience;
 import simplicity_an.simplicity_an.TabTravel;
 import simplicity_an.simplicity_an.Tab_All;
 import simplicity_an.simplicity_an.Tab_new_news;
-import simplicity_an.simplicity_an.Tabarticle;
-import simplicity_an.simplicity_an.Tabcolumnist;
-import simplicity_an.simplicity_an.Tabevent;
-import simplicity_an.simplicity_an.Tabeventtoday;
-import simplicity_an.simplicity_an.Tabeventtomorrow;
 import simplicity_an.simplicity_an.Tabgovt;
 import simplicity_an.simplicity_an.Tabjobs;
-import simplicity_an.simplicity_an.Tabnews;
-import simplicity_an.simplicity_an.Tabphotostories;
 import simplicity_an.simplicity_an.Tabsports;
 import simplicity_an.simplicity_an.Utils.ChangeFont;
 import simplicity_an.simplicity_an.Utils.Configurl;
@@ -123,7 +106,7 @@ public class CityFragment extends Fragment {
     public static final String backgroundcolor = "color";
     public static final String Language = "lamguage";
     public static final String CONTENTID = "contentid";
-    ImageButton beyond,search,explore,notifications,themechange_button;
+    ImageButton beyond,search,explore,notifications,themechange_button,settings_button;
     ImageView font_button;
     String activity,contentid,colorcodes;
 Button btnspecials,btnevents,btnmore;
@@ -153,7 +136,7 @@ Button city;
     String tab_id;
     String fontname;
     Typeface tf_play,tf;
-    TextView line_vertical_textview;
+    TextView line_vertical_textview,line_settings_vertical_textview;
     RelativeLayout main_english_layout;
     public static CityFragment newInstance() {
         CityFragment fragment = new CityFragment();
@@ -174,6 +157,7 @@ Button city;
         btnmore = (Button)getActivity().findViewById(R.id.btn_shop);
 
  font_button=(ImageView) view.findViewById(R.id.fontbutton);
+settings_button=(ImageButton)view.findViewById(R.id.settingsbutton) ;
 main_english_layout=(RelativeLayout)getActivity().findViewById(R.id.mainenglish);
         sharedpreferences = getActivity(). getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
@@ -234,7 +218,27 @@ tab_id=get.getStringExtra("TAB");
 
 line_vertical_textview=(TextView)view.findViewById(R.id.linevertical_versiontwo);
      line_vertical_textview.setText(Html.fromHtml("&nbsp;"+"|"+"&nbsp;"));
-
+        line_settings_vertical_textview=(TextView) view.findViewById(R.id.linevertical_settings_versiontwo);
+        line_settings_vertical_textview.setText(Html.fromHtml("&nbsp;"+"|"+"&nbsp;"));
+settings_button.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Fragment fragment = new SettingsFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        btnevents.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+        city.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+        btnspecials.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+        btnmore.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+        city.setTextColor(Color.parseColor("#666666"));
+        btnevents.setTextColor(Color.parseColor("#666666"));
+        btnspecials.setTextColor(Color.parseColor("#666666"));
+        btnmore.setTextColor(Color.parseColor("#666666"));
+    }
+});
        /* if(fontname.equals("sanfrancisco")){
             String playfair ="fonts/Oxygen-Bold.ttf";
             tf_play = Typeface.createFromAsset(getActivity().getAssets(), playfair);
@@ -266,7 +270,7 @@ line_vertical_textview=(TextView)view.findViewById(R.id.linevertical_versiontwo)
 
        if(colorcodes!=null) {
             if (colorcodes.equals("#FFFFFFFF")) {
-                int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF")};
+                int[] colors = {Color.parseColor(colorcodes),  Color.parseColor("#FFFFFFFF")};
 
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
@@ -277,7 +281,7 @@ line_vertical_textview=(TextView)view.findViewById(R.id.linevertical_versiontwo)
 
 
             } else {
-                int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
@@ -290,13 +294,13 @@ line_vertical_textview=(TextView)view.findViewById(R.id.linevertical_versiontwo)
                 fabinnerplus.setBackgroundResource(R.color.theme1button);
                 fabsearch.setBackgroundResource(R.color.theme1button);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
+               editor.putString(backgroundcolor, "#262626");
 
                 editor.commit();
 
             }
         }else{
-           int[] colors = {Color.parseColor("#00000000"),Color.parseColor("#00000000"),  Color.parseColor("#00000000")};
+           int[] colors = {Color.parseColor("#262626"),  Color.parseColor("#00000000")};
 
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
@@ -309,7 +313,7 @@ line_vertical_textview=(TextView)view.findViewById(R.id.linevertical_versiontwo)
             fabinnerplus.setBackgroundResource(R.color.theme1button);
             fabsearch.setBackgroundResource(R.color.theme1button);
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
+           editor.putString(backgroundcolor, "#262626");
 
             editor.commit();
 
@@ -333,12 +337,13 @@ line_vertical_textview=(TextView)view.findViewById(R.id.linevertical_versiontwo)
         {
             title_coimbatore.setTextColor(Color.BLACK);
             line_vertical_textview.setTextColor(Color.BLACK);
-
+            line_settings_vertical_textview.setTextColor(Color.BLACK);
         }
         else
         {
             title_coimbatore.setTextColor(Color.WHITE);
             line_vertical_textview.setTextColor(Color.WHITE);
+            line_settings_vertical_textview.setTextColor(Color.WHITE);
         }
         if(colorcodes.equals("#FFFFFFFF")){
             /*city.setBackgroundColor(getResources().getColor(R.color.theme13));
@@ -357,7 +362,7 @@ line_vertical_textview=(TextView)view.findViewById(R.id.linevertical_versiontwo)
         }
         else{
 
-            if(colorcodes.equals("#383838")) {
+            if(colorcodes.equals("#262626")) {
                 /*city.setBackgroundColor(getResources().getColor(R.color.theme1button));
                 btnevents.setBackgroundColor(getResources().getColor(R.color.mytransparent));
                 btnmore.setBackgroundColor(getResources().getColor(R.color.mytransparent));
@@ -726,9 +731,16 @@ Log.e("RES",response.toString());
         });
         weather.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(weather);
+if(weatherdata!=null){
+    date_text.setText(Html.fromHtml(dayOfTheWeek+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
 
+}else {
+    date_text.setText(Html.fromHtml(dayOfTheWeek+","+"&nbsp;"+sMonthNamefull+"&nbsp;"+"|"+"&nbsp;"+"<a style=font-size:xx-large>&#9729;</a>"+weatherdata+"<sup>o</sup>"+"&nbsp;"+"|"));
+
+}
         if(colorcodes.equals("#FFFFFFFF")){
             themechange_button.setImageResource(R.drawable.themenormal);
+            settings_button.setImageResource(R.drawable.settingsblack);
             if(fontname.equals("playfair")){
                 font_button.setImageResource(R.mipmap.sanblack);
             }else {
@@ -738,6 +750,7 @@ Log.e("RES",response.toString());
 
         }else {
             themechange_button.setImageResource(R.drawable.themewhite);
+            settings_button.setImageResource(R.drawable.settingswhite);
             if(fontname.equals("playfair")){
                 font_button.setImageResource(R.mipmap.sanwhite);
             }else {
@@ -778,7 +791,7 @@ Log.e("RES",response.toString());
 */
 
 
-        if(colorcodes.equalsIgnoreCase("#383838")){
+        if(colorcodes.equalsIgnoreCase("#262626")){
            //city.setBackgroundColor(getResources().getColor(R.color.theme1button));;
             fabplus.setBackgroundResource(R.color.theme1button);
             fabinnerplus.setBackgroundResource(R.color.theme1button);
@@ -873,7 +886,7 @@ Log.e("CHANGE LAMG",response.toString());
                         params.put("rtype","playerid_new");
                         params.put("phone","android");
                         params.put("player_id",playerid);
-                        params.put("language","2");
+                        params.put("language","1");
                         return params;
                     }
                 };
@@ -1048,7 +1061,7 @@ ChangeFont new_news=new Tab_new_news();
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
 
-                    int[] colors = { Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
+                    int[] colors = { Color.parseColor("#262626"),Color.parseColor("#FF000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -1058,11 +1071,11 @@ ChangeFont new_news=new Tab_new_news();
                     mainlayout.setBackgroundDrawable(gd);
                     main_english_layout.setBackgroundColor(Color.parseColor("#FF000000"));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
+                   editor.putString(backgroundcolor, "#262626");
                     editor.commit();
 
 
-                }else if(colorcodes.equals("#383838")) {
+                }else if(colorcodes.equals("#262626")) {
 
 
 
@@ -1072,7 +1085,7 @@ ChangeFont new_news=new Tab_new_news();
                     fragmentTransaction.replace(R.id.frame_layout, fragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-                    int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                    int[] colors = {Color.parseColor("#FFFFFFFF"),  Color.parseColor("#FFFAF6F6")};
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
                             colors);
@@ -1119,7 +1132,7 @@ ChangeFont new_news=new Tab_new_news();
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
 
-                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                        int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -1144,7 +1157,7 @@ ChangeFont new_news=new Tab_new_news();
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(backgroundcolor, "#383838");
+                       editor.putString(backgroundcolor, "#262626");
                         editor.commit();
                        // dialog.dismiss();
 
@@ -1590,7 +1603,7 @@ ChangeFont new_news=new Tab_new_news();
                         fragmentTransaction.replace(R.id.frame_layout, fragment);
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
-                        int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
+                        int[] colors = {Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFAF6F6")};
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
                                 colors);

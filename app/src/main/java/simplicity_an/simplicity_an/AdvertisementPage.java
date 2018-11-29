@@ -62,6 +62,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
+
 /**
  * Created by kuppusamy on 6/30/2017.
  */
@@ -198,7 +200,7 @@ public class AdvertisementPage extends AppCompatActivity {
         description.getSettings().setJavaScriptEnabled(true);
        // webView.getSettings().setSupportZoom(true);
         description.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        description.loadUrl(notifiid.toString());
+        description.loadUrl("https://simplicity.in/app/home.php");
         commentbox=(LinearLayout)findViewById(R.id.comments_versiontwo) ;
         comment_title=(TextView)findViewById(R.id.comments_title);
         loadmore_title=(TextView)findViewById(R.id.loadmore);

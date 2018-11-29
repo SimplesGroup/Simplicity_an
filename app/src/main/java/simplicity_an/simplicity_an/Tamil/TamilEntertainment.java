@@ -141,7 +141,7 @@ public class TamilEntertainment extends AppCompatActivity implements TamilEntert
         fabsearch=(FloatingActionButton)findViewById(R.id.fabsearch) ;
         fabinnerplus=(FloatingActionButton)findViewById(R.id.fabinnerplus) ;
         if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+            int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
@@ -153,12 +153,12 @@ public class TamilEntertainment extends AppCompatActivity implements TamilEntert
             fabinnerplus.setBackgroundResource(R.color.theme1button);
             fabsearch.setBackgroundResource(R.color.theme1button);
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(backgroundcolor, "#383838");
+           editor.putString(backgroundcolor, "#262626");
             editor.commit();
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -170,7 +170,7 @@ public class TamilEntertainment extends AppCompatActivity implements TamilEntert
                 fabinnerplus.setBackgroundResource(R.color.theme1button);
                 fabsearch.setBackgroundResource(R.color.theme1button);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(backgroundcolor, "#383838");
+               editor.putString(backgroundcolor, "#262626");
                 editor.commit();
             }else {
 
@@ -184,7 +184,7 @@ public class TamilEntertainment extends AppCompatActivity implements TamilEntert
 
                     mainlayout.setBackgroundDrawable(gd);
                 }else {
-                    int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
@@ -197,7 +197,7 @@ public class TamilEntertainment extends AppCompatActivity implements TamilEntert
                     fabinnerplus.setBackgroundResource(R.color.theme1button);
                     fabsearch.setBackgroundResource(R.color.theme1button);
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(backgroundcolor, "#383838");
+                   editor.putString(backgroundcolor, "#262626");
 
                     editor.commit();
                 }
@@ -320,7 +320,7 @@ public class TamilEntertainment extends AppCompatActivity implements TamilEntert
         notifications=(ImageButton)findViewById(R.id.btn_versiontwonotifications);
 
 
-        if(colorcodes.equalsIgnoreCase("#383838")){
+        if(colorcodes.equalsIgnoreCase("#262626")){
             explore.setBackgroundResource(R.color.theme1button);
             fabplus.setBackgroundResource(R.color.theme1button);
             fabinnerplus.setBackgroundResource(R.color.theme1button);
@@ -461,7 +461,7 @@ public class TamilEntertainment extends AppCompatActivity implements TamilEntert
                 colorone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int[] colors = {Color.parseColor("#383838"), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                        int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -474,7 +474,7 @@ public class TamilEntertainment extends AppCompatActivity implements TamilEntert
                         fabinnerplus.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                         fabsearch.setBackgroundTintList(getResources().getColorStateList(R.color.theme1button));
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(backgroundcolor, "#383838");
+                       editor.putString(backgroundcolor, "#262626");
                         editor.commit();
 
                     }
