@@ -1103,19 +1103,27 @@ public class Tamilnews extends Fragment {
                     userViewHolder.item_image.setVisibility(View.GONE);
                 }
                 Log.e("msg","hi"+"jobe");
-if(itemmodel.getQtypemain().equalsIgnoreCase("job")){
-                    Log.e("msg","hi"+"jobenter");
-    userViewHolder.editername.setTypeface(tf_special);
-    userViewHolder.title_item.setTypeface(tf_special);
-    userViewHolder.title_item.setTextSize(21);
-    userViewHolder.item_type_name.setTypeface(tf_special);
-
-}else if(itemmodel.getQtypemain().equalsIgnoreCase("event")){
-    userViewHolder.editername.setTypeface(tf_special);
-    userViewHolder.title_item.setTypeface(tf_special);
-    userViewHolder.title_item.setTextSize(21);
-    userViewHolder.item_type_name.setTypeface(tf_special);
-}
+                String font_ad_tamil= "fonts/Oxygen-Bold.ttf";
+                Typeface  tf_ad= Typeface.createFromAsset(getActivity().getAssets(), font_ad_tamil);
+                if(itemmodel.getQtypemain().equals("job")){
+                    userViewHolder.editername.setTypeface(tf_ad);
+                    userViewHolder.title_item.setTypeface(tf_ad);
+                    userViewHolder.title_item.setTextSize(21);
+                    userViewHolder.item_type_name.setTypeface(tf_ad);
+                    userViewHolder.shortdescription.setTypeface(tf_ad);
+                }else if(itemmodel.getQtypemain().equals("event")){
+                    userViewHolder.editername.setTypeface(tf_ad);
+                    userViewHolder.title_item.setTypeface(tf_ad);
+                    userViewHolder.title_item.setTextSize(21);
+                    userViewHolder.item_type_name.setTypeface(tf_ad);
+                    userViewHolder.shortdescription.setTypeface(tf_ad);
+                }else  if(itemmodel.getQtypemain().equals("Sponsered")||itemmodel.getQtype().equals("Sponsored")){
+                    userViewHolder.editername.setTypeface(tf_ad);
+                    userViewHolder.title_item.setTypeface(tf_ad);
+                    userViewHolder.title_item.setTextSize(21);
+                    userViewHolder.item_type_name.setTypeface(tf_ad);
+                    userViewHolder.shortdescription.setTypeface(tf_ad);
+                }
                 userViewHolder.setClickListener(new RecyclerView_OnClickListener.OnClickListener() {
 
                     @Override

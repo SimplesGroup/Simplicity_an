@@ -1065,6 +1065,28 @@ OnFragmentInteractionListener mListener;
                     userViewHolder.title_item.setTypeface(tf);
                     userViewHolder.title_item.setTextSize(20);
                 }
+
+                String font_ad_tamil= "fonts/Oxygen-Bold.ttf";
+                Typeface  tf_ad= Typeface.createFromAsset(getActivity().getAssets(), font_ad_tamil);
+                if(itemmodel.getQtypemain().equals("job")){
+                    userViewHolder.editername.setTypeface(tf_ad);
+                    userViewHolder.title_item.setTypeface(tf_ad);
+                    userViewHolder.title_item.setTextSize(21);
+                    userViewHolder.item_type_name.setTypeface(tf_ad);
+                    userViewHolder.shortdescription.setTypeface(tf_ad);
+                }else if(itemmodel.getQtypemain().equals("event")){
+                    userViewHolder.editername.setTypeface(tf_ad);
+                    userViewHolder.title_item.setTypeface(tf_ad);
+                    userViewHolder.title_item.setTextSize(21);
+                    userViewHolder.item_type_name.setTypeface(tf_ad);
+                    userViewHolder.shortdescription.setTypeface(tf_ad);
+                }else  if(itemmodel.getQtypemain().equals("Sponsered")||itemmodel.getQtype().equals("Sponsored")){
+                    userViewHolder.editername.setTypeface(tf_ad);
+                    userViewHolder.title_item.setTypeface(tf_ad);
+                    userViewHolder.title_item.setTextSize(21);
+                    userViewHolder.item_type_name.setTypeface(tf_ad);
+                    userViewHolder.shortdescription.setTypeface(tf_ad);
+                }
                 if(itemmodel.getEditername().equals("")){                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype()));                 }else {                     userViewHolder.item_type_name.setText(Html.fromHtml(itemmodel.getQtype() + "&nbsp;"+"&nbsp;"+"&nbsp;" + "|" + "&nbsp;"+"&nbsp;"+"&nbsp;" + itemmodel.getEditername()));                 }
                 userViewHolder.item_type_name.setTypeface(tf_play);
 
