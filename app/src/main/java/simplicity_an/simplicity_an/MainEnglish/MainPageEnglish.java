@@ -109,7 +109,6 @@ LinearLayout footer;
         id=get.getStringExtra("ID");
         radio_title=get.getStringExtra("TITLE");
         radio_url=get.getStringExtra("URL");
-
 //Check();
 //isFirstTime();
         Instructions();
