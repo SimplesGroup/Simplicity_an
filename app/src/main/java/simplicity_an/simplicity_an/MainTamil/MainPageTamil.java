@@ -1013,7 +1013,7 @@ public class MainPageTamil extends AppCompatActivity implements TamilTaball.OnFr
             public void onClick(View v) {
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                ShopFragment fragment = new ShopFragment();
+                SettingsFragmentTamil fragment = new SettingsFragmentTamil();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frame_layout, fragment);
                 fragmentTransaction.commit();
