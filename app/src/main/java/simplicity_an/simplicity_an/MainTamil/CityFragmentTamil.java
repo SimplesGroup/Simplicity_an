@@ -646,7 +646,7 @@ public class CityFragmentTamil extends Fragment {
                 param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
                 param.put("rtype","playerid_new");
                 param.put("player_id",playerid);
-                param.put("language","1");
+                param.put("language","2");
                 param.put("phone","android");
 
                 return param;

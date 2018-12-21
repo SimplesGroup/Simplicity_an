@@ -74,7 +74,7 @@ public class AdvertisementPage extends AppCompatActivity {
     WebView description;
 
     ImageButton comment,share,menu,back,favourite;
-    String notifiid,shareurl,sharetitle;
+    String notifiid,shareurl,sharetitle, notifiidexplore;
     int favcount;
     RequestQueue queue;
     List<ItemModel> modelList=new ArrayList<ItemModel>();
@@ -169,6 +169,7 @@ public class AdvertisementPage extends AppCompatActivity {
 
         Intent getnotifi=getIntent();
         notifiid=getnotifi.getStringExtra("ID");
+        notifiidexplore=getnotifi.getStringExtra("IDEX");
         Log.e("ID","ids"+notifiid);
 
         if(myprofileid!=null){
@@ -200,7 +201,13 @@ public class AdvertisementPage extends AppCompatActivity {
         description.getSettings().setJavaScriptEnabled(true);
        // webView.getSettings().setSupportZoom(true);
         description.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        description.loadUrl("https://simplicity.in/app/home.php");
+        if(notifiidexplore!=null){
+            description.loadUrl(notifiidexplore);
+        }else {
+            description.loadUrl("https://simplicity.in/app/home.php");
+        }
+
+
         commentbox=(LinearLayout)findViewById(R.id.comments_versiontwo) ;
         comment_title=(TextView)findViewById(R.id.comments_title);
         loadmore_title=(TextView)findViewById(R.id.loadmore);

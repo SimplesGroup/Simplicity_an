@@ -528,7 +528,7 @@ private String title;
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), AdvertisementPage.class);
-                    intent.putExtra("ID", data.getUrl());
+                    intent.putExtra("IDEX", data.getUrl());
                     startActivity(intent);
                 }
             });
