@@ -272,11 +272,11 @@ public class ShopFragment extends Fragment {
     StringRequest getDataFromTheServer(final int requestCount){
 
 
-        StringRequest request=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
+        StringRequest request=new StringRequest(Request.Method.POST, Configurl.exploreurl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e("Response","shop"+response.toString());
-               try{
+               /*try{
                     JSONObject object=new JSONObject(response.toString());
                     JSONArray array=object.getJSONArray("result");
                     String data=array.optString(1);
@@ -288,7 +288,7 @@ public class ShopFragment extends Fragment {
                     }
                 }catch (JSONException e){
 
-                }
+                }*/
 
 
             }
@@ -304,7 +304,7 @@ public class ShopFragment extends Fragment {
                 param.put("Key", "Simplicity");
                 param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
                 param.put("language", "1");
-                param.put("rtype", "explore");
+                param.put("rtype", "index");
 
                 param.put("page", String.valueOf(requestCount));
                 /*if(myprofileid!=null){

@@ -204,7 +204,7 @@ public class AdvertisementPage extends AppCompatActivity {
         if(notifiidexplore!=null){
             description.loadUrl(notifiidexplore);
         }else {
-            description.loadUrl("https://simplicity.in/app/home.php");
+            description.loadUrl(notifiid);
         }
 
 

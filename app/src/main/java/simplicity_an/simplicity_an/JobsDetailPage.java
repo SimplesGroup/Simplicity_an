@@ -174,7 +174,7 @@ public class JobsDetailPage extends AppCompatActivity {
         }
 
 
-        if(colorcodes.length()==0){
+        if (colorcodes.length() == 0) {
             int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
@@ -183,24 +183,13 @@ public class JobsDetailPage extends AppCompatActivity {
 
             mainlayout.setBackgroundDrawable(gd);
 
-            commentboxlayout = (LinearLayout)findViewById(R.id.commentbox_city);
-            back = (ImageButton)findViewById(R.id.btn_back);
-            if(colorcodes.equals("#FFFFFFFF")){
-                commentboxlayout.setBackgroundColor(Color.WHITE);
-                back.setImageResource(R.mipmap.backtamilone);
-            }
-            else{
-                commentboxlayout.setBackgroundColor(Color.BLACK);
-                back.setImageResource(R.mipmap.back);
-            }
-
             SharedPreferences.Editor editor = sharedpreferences.edit();
-           editor.putString(backgroundcolor, "#262626");
+            editor.putString(backgroundcolor, "#262626");
             editor.commit();
-        }else {
-            if(colorcodes.equalsIgnoreCase("004")){
-                Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#FF000000"), Color.parseColor("#FF000000"),Color.parseColor("#383838")};
+        } else {
+            if (colorcodes.equalsIgnoreCase("004")) {
+                Log.e("Msg", "hihihi" + colorcodes);
+                int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -209,11 +198,11 @@ public class JobsDetailPage extends AppCompatActivity {
                 mainlayout.setBackgroundDrawable(gd);
 
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-               editor.putString(backgroundcolor, "#262626");
+                editor.putString(backgroundcolor, "#262626");
                 editor.commit();
-            }else {
+            } else {
 
-                if(colorcodes!=null){
+                if (colorcodes != null) {
                     if(colorcodes.equals("#FFFFFFFF")){
                         int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF")};
 
@@ -223,8 +212,11 @@ public class JobsDetailPage extends AppCompatActivity {
                         gd.setCornerRadius(0f);
 
                         mainlayout.setBackgroundDrawable(gd);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(backgroundcolor, "#FFFFFFFF");
+                        editor.commit();
                     } else {
-                        int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+                        int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -234,11 +226,11 @@ public class JobsDetailPage extends AppCompatActivity {
                         mainlayout.setBackgroundDrawable(gd);
 
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                       editor.putString(backgroundcolor, "#262626");
+                        editor.putString(backgroundcolor, "#262626");
 
                         editor.commit();
                     }
-                }else {
+                } else {
                     int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
 
                     GradientDrawable gd = new GradientDrawable(
@@ -249,12 +241,14 @@ public class JobsDetailPage extends AppCompatActivity {
                     mainlayout.setBackgroundDrawable(gd);
 
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                   editor.putString(backgroundcolor, "#262626");
+                    editor.putString(backgroundcolor, "#262626");
 
                     editor.commit();
                 }
             }
         }
+
+
         Intent getnotifi=getIntent();
         notifiid=getnotifi.getStringExtra("ID");
         titl=getnotifi.getStringExtra("TITLE");

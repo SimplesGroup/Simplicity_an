@@ -332,19 +332,7 @@ public class TipsDescription extends AppCompatActivity {
         });
         String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
       //  Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
-        if(fontname.equals("sanfrancisco")){
-            String playfair ="fonts/Oxygen-Bold.ttf";
-            tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
-            String simplycity_title_bold = "fonts/SystemSanFranciscoDisplayRegular.ttf";
-            tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
-            titleofrecipie.setTextSize(20);
-            titleofrecipie.setLineSpacing(0,1f);
-        }else {
-            String playfair = "fonts/playfairDisplayRegular.ttf";
-            tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
-            String simplycity_title_bold = "fonts/Lora-Regular.ttf";
-            tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
-        }
+
         titleofrecipie=(TextView)findViewById(R.id.textView_titlename);
         date=(TextView)findViewById(R.id.author);
         fooditemimage=(NetworkImageView)findViewById(R.id.thumbnailone);
@@ -372,7 +360,19 @@ public class TipsDescription extends AppCompatActivity {
             loadmore_title.setTextColor(Color.WHITE);
             date.setTextColor(Color.WHITE);
         }
-
+        if(fontname.equals("sanfrancisco")){
+            String playfair ="fonts/Oxygen-Bold.ttf";
+            tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
+            String simplycity_title_bold = "fonts/SystemSanFranciscoDisplayRegular.ttf";
+            tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
+            titleofrecipie.setTextSize(20);
+            titleofrecipie.setLineSpacing(0,1f);
+        }else {
+            String playfair = "fonts/playfairDisplayRegular.ttf";
+            tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
+            String simplycity_title_bold = "fonts/Lora-Regular.ttf";
+            tf = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_bold);
+        }
         StringRequest jsonreq = new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
 
 
