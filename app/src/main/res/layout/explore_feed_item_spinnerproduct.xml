@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_marginBottom="5dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:layout_width="0dp"
+            android:layout_weight=".25"
+            android:id="@+id/product_imgae"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:layout_height="75dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight=".50"
+            android:layout_width="0dp"
+            android:layout_height="75dp">
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center|left"
+                android:id="@+id/text_product_title"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Spinner
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/spin_product_price_list"
+                android:layout_width="wrap_content"
+                android:layout_height="20sp">
+
+            </Spinner>
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center|left"
+                android:textSize="14sp"
+                android:id="@+id/text_product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageButton
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/btn_product_favourites"
+                android:layout_gravity="bottom|right"
+                android:background="@android:color/transparent"
+                android:src="@mipmap/heartwhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:background="@color/searchviewhintcolor"
+            android:orientation="vertical"
+
+            android:layout_weight=".25"
+            android:layout_width="0dp"
+            android:layout_height="75dp">
+            <TextView
+                android:layout_marginTop="27dp"
+                android:layout_gravity="center|center_vertical"
+                android:text="ADD TO CART"
+                android:textSize="15sp"
+                android:id="@+id/text_product_addtocart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

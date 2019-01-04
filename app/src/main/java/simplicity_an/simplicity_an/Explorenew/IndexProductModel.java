@@ -1,10 +1,170 @@
 package simplicity_an.simplicity_an.Explorenew;
 
+import java.util.List;
+
 public class IndexProductModel {
     private String id;
     private String title;
     private String image;
     private String main_category_id,category_id,category_title,category_description;
+private String company_id,sub_category_id,low_category_id,product_id,product_title,product_description,company_title,description;
+private String measurement,quantity,price,stock,offer_type_text,offer_type;
+private int quantity_id,offer_price;
+private int visit_list,cart_list;
+private List<IndexProductModel>pricelist;
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCompany_title() {
+        return company_title;
+    }
+
+    public void setCompany_title(String company_title) {
+        this.company_title = company_title;
+    }
+
+    public String getMeasurement() {
+        return measurement;
+    }
+
+    public void setMeasurement(String measurement) {
+        this.measurement = measurement;
+    }
+
+    public int getQuantity_id() {
+        return quantity_id;
+    }
+
+    public void setQuantity_id(int quantity_id) {
+        this.quantity_id = quantity_id;
+    }
+
+    public int getOffer_price() {
+        return offer_price;
+    }
+
+    public void setOffer_price(int offer_price) {
+        this.offer_price = offer_price;
+    }
+
+    public void setCart_list(int cart_list) {
+        this.cart_list = cart_list;
+    }
+
+    public int getCart_list() {
+        return cart_list;
+    }
+
+    public int getVisit_list() {
+        return visit_list;
+    }
+
+    public void setVisit_list(int visit_list) {
+        this.visit_list = visit_list;
+    }
+
+    public List<IndexProductModel> getPricelist() {
+        return pricelist;
+    }
+
+    public void setPricelist(List<IndexProductModel> pricelist) {
+        this.pricelist = pricelist;
+    }
+
+    public String getCompany_id() {
+        return company_id;
+    }
+
+    public void setCompany_id(String company_id) {
+        this.company_id = company_id;
+    }
+
+    public String getSub_category_id() {
+        return sub_category_id;
+    }
+
+    public void setSub_category_id(String sub_category_id) {
+        this.sub_category_id = sub_category_id;
+    }
+
+    public String getLow_category_id() {
+        return low_category_id;
+    }
+
+    public void setLow_category_id(String low_category_id) {
+        this.low_category_id = low_category_id;
+    }
+
+    public String getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(String product_id) {
+        this.product_id = product_id;
+    }
+
+    public String getProduct_title() {
+        return product_title;
+    }
+
+    public void setProduct_title(String product_title) {
+        this.product_title = product_title;
+    }
+
+    public String getProduct_description() {
+        return product_description;
+    }
+
+    public void setProduct_description(String product_description) {
+        this.product_description = product_description;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
+    }
+
+    public String getOffer_type_text() {
+        return offer_type_text;
+    }
+
+    public void setOffer_type_text(String offer_type_text) {
+        this.offer_type_text = offer_type_text;
+    }
+
+    public String getOffer_type() {
+        return offer_type;
+    }
+
+    public void setOffer_type(String offer_type) {
+        this.offer_type = offer_type;
+    }
 
     public String getCategory_description() {
         return category_description;

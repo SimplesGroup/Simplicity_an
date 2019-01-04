@@ -43,6 +43,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -143,9 +144,13 @@ shopDataList=new ArrayList<IndexProductModel>();
             public boolean onQueryTextSubmit(String query) {
                 // TODO Auto-generated method stub
 
-
+                shopDataList.clear();
+                shopAdapter.notifyDataSetChanged();
                 search_value = query;
-
+                RecyclerView.LayoutManager gridLayoutManager=new LinearLayoutManager(getActivity());
+                requestCount=1;
+getData();
+               // Toast.makeText(getActivity(),"clicked",Toast.LENGTH_LONG).show();
                /* Intent simplicity = new Intent(getActivity(), SimplicitySearchview.class);
                 simplicity.putExtra("QUERY", search_value);
                 startActivity(simplicity);*/
@@ -238,8 +243,17 @@ shopDataList=new ArrayList<IndexProductModel>();
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_shop);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_shop);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        if(search_value!=null){
+            RecyclerView.LayoutManager gridLayoutManager=new LinearLayoutManager(getActivity());
+            recyclerView.setLayoutManager(gridLayoutManager);
+        }else {
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+
+            recyclerView.setLayoutManager(gridLayoutManager);
+        }
+
+
+
         shopAdapter = new IndexAdapter(getActivity(), shopDataList);
         recyclerView.setAdapter(shopAdapter);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
