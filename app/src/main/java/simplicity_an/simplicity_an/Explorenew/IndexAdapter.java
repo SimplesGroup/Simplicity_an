@@ -200,7 +200,7 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
                     holders.title_category.setText(data.getProduct_title());
-                    List<IndexProductModel>list=data.getPricelist();
+                   /* List<IndexProductModel>list=data.getPricelist();
                     List<String>item=new ArrayList<>();
             final ArrayList<String>priceitem=new ArrayList<>();
                     for(int i=0;i< list.size();i++){
@@ -211,10 +211,11 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         String item_price=model.getPrice();
                         priceitem.add(item_price);
 
-                    }
+                    }*/
 holders.product_image.setImageUrl(data.getImage(), mImageLoader);
 
 
+/*
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, item);
 
             // Drop down layout style - list view with radio button
@@ -236,6 +237,7 @@ holders.product_image.setImageUrl(data.getImage(), mImageLoader);
 
                 }
             });
+*/
 holders.add_to_cart.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -333,7 +335,7 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
             }
 
             holders.title_category_withoutspin.setText(data.getProduct_title());
-            List<IndexProductModel>list=data.getPricelist();
+           /* List<IndexProductModel>list=data.getPricelist();
 
             for(int i=0;i< list.size();i++){
                 IndexProductModel model=list.get(i);
@@ -343,7 +345,7 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
 
                 holders.price_item_withoutspin.setText(item_price);
 
-            }
+            }*/
             holders.product_image_withoutspin.setImageUrl(data.getImage(), mImageLoader);
 
 
@@ -383,8 +385,10 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
        this.shopdataList.addAll(lists);
         notifyDataSetChanged();
     }
-    public void Listitem(String msg){
-        Log.e("Response",msg+"hi");
+    public void Listitem(){
+        this.shopdataList.clear();
+        notifyDataSetChanged();
+
     }
     public class Shopmodelview extends RecyclerView.ViewHolder{
         private TextView title_category;

@@ -25,12 +25,16 @@ import simplicity_an.simplicity_an.MainEnglish.ShopFragment;
 import simplicity_an.simplicity_an.Utils.Configurl;
 
 public class Servicerequest {
-private static  List<IndexProductModel>list=new ArrayList<>();
+private   List<IndexProductModel>list=new ArrayList<>();
 
-private static  List<IndexProductModel>categorylist=new ArrayList<>();
-private static List<IndexProductModel>companylist=new ArrayList<>();
-private static List<IndexProductModel>productlist=new ArrayList<>();
+private   List<IndexProductModel>categorylist=new ArrayList<>();
+private  List<IndexProductModel>companylist=new ArrayList<>();
+private  List<IndexProductModel>productlist=new ArrayList<>();
  RequestQueue vollRequestQueue;
+private RequestInterface requestInterface;
+ public Servicerequest(RequestInterface requestInterfaces){
+     this.requestInterface=requestInterfaces;
+ }
 
     public List<IndexProductModel>index(final String lang, final String rtype, final String pagenum, final String profileid, final String searchtext, Context context){
 
@@ -56,33 +60,45 @@ private static List<IndexProductModel>productlist=new ArrayList<>();
                     String product_data=jsonObject.optString("product");
 
 
-                  //  if(cat_count!=0) {
+                   // if(cat_count!=0) {
 
                         JSONArray category_array = new JSONArray(datas.toString());
 
-                        Log.e("Response", "shopcat" + datas.toString());
+                        //Log.e("Response", "shopcat" + datas.toString());
 
                         for (int i = 0; i < category_array.length(); i++) {
                             JSONObject obj = (JSONObject) category_array.get(i);
-                            Log.e("Response", "shopcatdata" + obj.getString("category_title"));
+                           // Log.e("Response", "shopcatdata" + obj.getString("category_title"));
                             IndexProductModel model = new IndexProductModel();
                             String imageeve = obj.isNull("image") ? null : obj
                                     .getString("image");
                             model.setImage(imageeve);
                             model.setCategory_title(obj.getString("category_title"));
                             model.setUrl(obj.getString("url"));
-                            model.setMain_category_id("0");
+
+
+                            if(searchtext.equals("")|| searchtext==null){
+                                Log.e("Response","maincate");
+                                model.setMain_category_id("0");
+                            }else {
+                                model.setMain_category_id(obj.getString("main_category_id"));
+
+
+                            }
+
+
+
                             categorylist.add(model);
                         }
-                  //  }
+                  // }
 
-                   // if (product_count!=0){
+                    if (product_count!=0){
 
                         JSONArray product_array=new JSONArray(product_data.toString());
-                        Log.e("Response", "shopproduct" + product_data.toString());
+                       // Log.e("Response", "shopproduct" + product_data.toString());
                         for (int i = 0; i < product_array.length(); i++) {
                             JSONObject obj = (JSONObject) product_array.get(i);
-                            Log.e("Response", "shopprodata" + obj.getString("category_title"));
+                         //   Log.e("Response", "shopprodata" + obj.getString("category_title"));
                             IndexProductModel model = new IndexProductModel();
                             String imageeve = obj.isNull("image") ? null : obj
                                     .getString("image");
@@ -123,16 +139,16 @@ model.setPricelist(price);
                         }
 
 
-                  //  }
+                  }
 
 
-                //    if (company_count!=0){
+                    if (company_count!=0){
 
                         JSONArray company_array=new JSONArray(company_data.toString());
-                        Log.e("Response", "shopcompany" + company_data.toString());
+                      //  Log.e("Response", "shopcompany" + company_data.toString());
                         for (int i = 0; i < company_array.length(); i++) {
                             JSONObject obj = (JSONObject) company_array.get(i);
-                            Log.e("Response", "shopcatdata" + obj.getString("category_title"));
+                           // Log.e("Response", "shopcatdata" + obj.getString("category_title"));
                             IndexProductModel model = new IndexProductModel();
                             String imageeve = obj.isNull("image") ? null : obj
                                     .getString("image");
@@ -146,19 +162,28 @@ model.setPricelist(price);
                             model.setUrl(obj.getString("url"));
                             companylist.add(model);
                         }
-                   // }
+                    }
 
 
                 }catch (JSONException e){
 
                 }
-                list.addAll(categorylist);
-                list.addAll(companylist);
-                list.addAll(productlist);
+                if(categorylist.size()>0){
+                    list.addAll(categorylist);
+                }
+                if(companylist.size()>0){
+                    list.addAll(companylist);
+                }
+                if(productlist.size()>0){
+                    list.addAll(productlist);
+                }
 
-                Log.e("Response","from+"+list.toString());
 
-CallPage();
+
+                Log.e("Response","from+"+list.size());
+requestInterface.Send(list);
+
+//CallPage();
 
 
             }
@@ -193,11 +218,6 @@ CallPage();
 
         return list;
     }
-public List<IndexProductModel>CallPage(){
 
-    RequestInterface requestInterface=new ShopFragment();
-    requestInterface.Datacall(list);
-        return list;
-}
 
 }

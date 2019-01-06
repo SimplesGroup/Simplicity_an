@@ -3,28 +3,18 @@ package simplicity_an.simplicity_an.MainEnglish;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 
-import simplicity_an.simplicity_an.AdvertisementPage;
-import simplicity_an.simplicity_an.CustomVolleyRequest;
 import simplicity_an.simplicity_an.Explorenew.IndexAdapter;
 import simplicity_an.simplicity_an.Explorenew.IndexProductModel;
 import simplicity_an.simplicity_an.Explorenew.RequestInterface;
 import simplicity_an.simplicity_an.Explorenew.Servicerequest;
-import simplicity_an.simplicity_an.MySingleton;
-import simplicity_an.simplicity_an.OnLoadMoreListener;
 import simplicity_an.simplicity_an.R;
-import simplicity_an.simplicity_an.SimplicitySearchview;
-import simplicity_an.simplicity_an.Tab_new_news;
-import simplicity_an.simplicity_an.Tabarticle;
-import simplicity_an.simplicity_an.Utils.Configurl;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
 import android.os.Handler;
@@ -35,7 +25,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,38 +32,23 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ShopFragment extends Fragment implements RequestInterface {
     private TextView title_shop;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
-   private static List<IndexProductModel> shopDataList ;
+   private    List<IndexProductModel> shopDataList ;
+   private List<IndexProductModel>datalist;
     private int requestCount = 1;
     private RequestQueue requestQueue;
  private static    IndexAdapter shopAdapter;
+ private static SearchAdapter searchAdapter;
     android.support.v7.widget.SearchView search;
 
     private SharedPreferences sharedpreferences;
@@ -85,6 +59,7 @@ public class ShopFragment extends Fragment implements RequestInterface {
     RelativeLayout mainlayout;
     ProgressDialog pdialog;
     private String search_value;
+    private Servicerequest servicerequest;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,6 +91,9 @@ public class ShopFragment extends Fragment implements RequestInterface {
         requestQueue = Volley.newRequestQueue(getActivity());
         title_shop = (TextView) view.findViewById(R.id.title_shop_textview);
 shopDataList=new ArrayList<IndexProductModel>();
+datalist=new ArrayList<>();
+
+servicerequest=new Servicerequest(this);
 
         mainlayout = (RelativeLayout) view.findViewById(R.id.shop_layout);
         search = (android.support.v7.widget.SearchView) view.findViewById(R.id.searchview_main);
@@ -135,6 +113,11 @@ shopDataList=new ArrayList<IndexProductModel>();
 
 
             }
+
+            @Override
+            public int hashCode() {
+                return super.hashCode();
+            }
         });
 
 
@@ -145,9 +128,10 @@ shopDataList=new ArrayList<IndexProductModel>();
                 // TODO Auto-generated method stub
 
                 shopDataList.clear();
-                shopAdapter.notifyDataSetChanged();
+                datalist.clear();
+                shopAdapter.Listitem();
                 search_value = query;
-                RecyclerView.LayoutManager gridLayoutManager=new LinearLayoutManager(getActivity());
+               // RecyclerView.LayoutManager gridLayoutManager=new LinearLayoutManager(getActivity());
                 requestCount=1;
 getData();
                // Toast.makeText(getActivity(),"clicked",Toast.LENGTH_LONG).show();
@@ -299,7 +283,7 @@ getData();
         // requestQueue.add(getDataFromTheServer(requestCount));
 
 
-        Servicerequest servicerequest = new Servicerequest();
+    //    Servicerequest servicerequest = new Servicerequest(getActivity());
         if (myprofileid != null) {
             shopDataList = servicerequest.index("1", "index", String.valueOf(requestCount), myprofileid, "", getActivity());
 
@@ -357,14 +341,35 @@ getData();
         searchText.setHintTextColor(getResources().getColor(R.color.white));
     }
 
-    @Override
-    public void Datacall(List<IndexProductModel> list) {
 
-        shopDataList = list;
-        Log.e("Response", "listnews" + shopDataList.toString());
+
+    @Override
+    public void Send(List<IndexProductModel> listdata) {
+
+
+        datalist=listdata;
         shopAdapter.data(shopDataList);
+       /* for(int i=0;i<shopDataList.size();i++){
+            IndexProductModel model=shopDataList.get(i);
+
+            Log.e("search",model.getMain_category_id().toString());
+
+            //Toast.makeText(getActivity(),model.getMain_category_id(),Toast.LENGTH_LONG).show();
+        }*/
+
+
+
+
     }
 
+    @Override
+    public void searchdata(List<IndexProductModel> listsearch) {
+
+        datalist=listsearch;
+        shopAdapter.data(shopDataList);
+
+
+    }
 
 
 }
