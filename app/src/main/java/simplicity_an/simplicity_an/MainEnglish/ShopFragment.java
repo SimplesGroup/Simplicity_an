@@ -43,12 +43,12 @@ public class ShopFragment extends Fragment implements RequestInterface {
     private TextView title_shop;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
-   private    List<IndexProductModel> shopDataList ;
-   private List<IndexProductModel>datalist;
+    private    List<IndexProductModel> shopDataList ;
+    private List<IndexProductModel>datalist;
     private int requestCount = 1;
     private RequestQueue requestQueue;
- private static    IndexAdapter shopAdapter;
- private static SearchAdapter searchAdapter;
+    private static    IndexAdapter shopAdapter;
+
     android.support.v7.widget.SearchView search;
 
     private SharedPreferences sharedpreferences;
@@ -90,10 +90,10 @@ public class ShopFragment extends Fragment implements RequestInterface {
         fontname = sharedpreferences.getString(Fonts.FONT, "");
         requestQueue = Volley.newRequestQueue(getActivity());
         title_shop = (TextView) view.findViewById(R.id.title_shop_textview);
-shopDataList=new ArrayList<IndexProductModel>();
-datalist=new ArrayList<>();
+        shopDataList=new ArrayList<IndexProductModel>();
+        datalist=new ArrayList<>();
 
-servicerequest=new Servicerequest(this);
+        servicerequest=new Servicerequest(this);
 
         mainlayout = (RelativeLayout) view.findViewById(R.id.shop_layout);
         search = (android.support.v7.widget.SearchView) view.findViewById(R.id.searchview_main);
@@ -131,10 +131,10 @@ servicerequest=new Servicerequest(this);
                 datalist.clear();
                 shopAdapter.Listitem();
                 search_value = query;
-               // RecyclerView.LayoutManager gridLayoutManager=new LinearLayoutManager(getActivity());
+                // RecyclerView.LayoutManager gridLayoutManager=new LinearLayoutManager(getActivity());
                 requestCount=1;
-getData();
-               // Toast.makeText(getActivity(),"clicked",Toast.LENGTH_LONG).show();
+                getData();
+                // Toast.makeText(getActivity(),"clicked",Toast.LENGTH_LONG).show();
                /* Intent simplicity = new Intent(getActivity(), SimplicitySearchview.class);
                 simplicity.putExtra("QUERY", search_value);
                 startActivity(simplicity);*/
@@ -226,15 +226,8 @@ getData();
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_shop);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_shop);
+//RecyclerLayouts();
 
-        if(search_value!=null){
-            RecyclerView.LayoutManager gridLayoutManager=new LinearLayoutManager(getActivity());
-            recyclerView.setLayoutManager(gridLayoutManager);
-        }else {
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-
-            recyclerView.setLayoutManager(gridLayoutManager);
-        }
 
 
 
@@ -283,7 +276,7 @@ getData();
         // requestQueue.add(getDataFromTheServer(requestCount));
 
 
-    //    Servicerequest servicerequest = new Servicerequest(getActivity());
+        //    Servicerequest servicerequest = new Servicerequest(getActivity());
         if (myprofileid != null) {
             shopDataList = servicerequest.index("1", "index", String.valueOf(requestCount), myprofileid, "", getActivity());
 
@@ -370,8 +363,18 @@ getData();
 
 
     }
+    @Override
+public void RecyclerLayouts(String search_values){
+    if(search_values.equals("")|| search_values==null){
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
 
+        recyclerView.setLayoutManager(gridLayoutManager);
+    }else {
+        RecyclerView.LayoutManager gridLayoutManager=new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(gridLayoutManager);
 
+    }
 }
 
+}
 

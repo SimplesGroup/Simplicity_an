@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -200,7 +201,7 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
                     holders.title_category.setText(data.getProduct_title());
-                   /* List<IndexProductModel>list=data.getPricelist();
+                    List<IndexProductModel>list=data.getPricelist();
                     List<String>item=new ArrayList<>();
             final ArrayList<String>priceitem=new ArrayList<>();
                     for(int i=0;i< list.size();i++){
@@ -211,18 +212,60 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         String item_price=model.getPrice();
                         priceitem.add(item_price);
 
-                    }*/
+                    }
 holders.product_image.setImageUrl(data.getImage(), mImageLoader);
 
+            ArrayAdapter<String> adapter =
+                    new ArrayAdapter<String>(context, R.layout.explore_my_spinner_style, item)
+                    {
 
-/*
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, item);
+                        public View getView(int position, View convertView, ViewGroup parent) {
+                            View v = super.getView(position, convertView, parent);
+
+                            ((TextView) v).setTextSize(16);
+                            if (colorcodes.equals("#FFFFFFFF")) {
+                                ((TextView) v).setTextColor(
+                                        context.getResources().getColorStateList(R.color.Black)
+                                );
+                            }else {
+                                ((TextView) v).setTextColor(
+                                        context.getResources().getColorStateList(R.color.white)
+                                );
+                            }
+
+                            return v;
+                        }
+
+                       public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                            View v = super.getDropDownView(position, convertView, parent);
+                            //v.setBackgroundResource(R.drawable.spinner_bg);
+                           if (colorcodes.equals("#FFFFFFFF")) {
+                               v.setBackgroundColor(Color.WHITE);
+                               ((TextView) v).setTextColor(
+                                       context. getResources().getColorStateList(R.color.Black)
+                               );
+                           }else {
+                               v.setBackgroundColor(Color.BLACK);
+                               ((TextView) v).setTextColor(
+                                       context. getResources().getColorStateList(R.color.white)
+                               );
+                           }
+
+
+                            //((TextView) v).setTypeface(fontStyle);
+                            ((TextView) v).setGravity(Gravity.CENTER);
+
+                            return v;
+                        }
+                    };
+
+           ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, item);
 
             // Drop down layout style - list view with radio button
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+           // dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
             // attaching data adapter to spinner
-            holders.price_spinner.setAdapter(dataAdapter);
+            holders.price_spinner.setAdapter(adapter);
             holders.price_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -237,7 +280,7 @@ holders.product_image.setImageUrl(data.getImage(), mImageLoader);
 
                 }
             });
-*/
+
 holders.add_to_cart.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -335,7 +378,7 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
             }
 
             holders.title_category_withoutspin.setText(data.getProduct_title());
-           /* List<IndexProductModel>list=data.getPricelist();
+           List<IndexProductModel>list=data.getPricelist();
 
             for(int i=0;i< list.size();i++){
                 IndexProductModel model=list.get(i);
@@ -345,7 +388,7 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
 
                 holders.price_item_withoutspin.setText(item_price);
 
-            }*/
+            }
             holders.product_image_withoutspin.setImageUrl(data.getImage(), mImageLoader);
 
 
@@ -356,18 +399,23 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
 
     @Override
     public int getItemViewType(int position) {
-        IndexProductModel model=shopdataList.get(position);
-
-        if(model.getMain_category_id().equals("1")){
-            return  VIEW_TYPE_ITEM_ONE;
-        }else if(model.getMain_category_id().equals("2")){
-            return VIEW_TYPE_ITEM_TWO;
-        }else if(model.getMain_category_id().equals("3")){
-            return VIEW_TYPE_ITEM_THREE;
-        }else {
+        IndexProductModel model = shopdataList.get(position);
+        if (model.getItem_arrayname().equals("category")) {
             return VIEW_TYPE_ITEM_INDEX;
-        }
+        } else if (model.getItem_arrayname().equals("company")) {
+            return VIEW_TYPE_ITEM_TWO;
+        } else   {
+            if (model.getMain_category_id().equals("1")) {
+                return VIEW_TYPE_ITEM_ONE;
+            } else if (model.getMain_category_id().equals("2")) {
+                return VIEW_TYPE_ITEM_TWO;
+            } else if (model.getMain_category_id().equals("3")) {
+                return VIEW_TYPE_ITEM_THREE;
+            } else {
+                return VIEW_TYPE_ITEM_INDEX;
+            }
 
+        }
     }
 
     public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
@@ -381,6 +429,8 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
         return shopdataList.size();
     }
     public void data(List<IndexProductModel> lists){
+        shopdataList.clear();
+        notifyDataSetChanged();
         Log.e("Response","adpter"+lists.toString());
        this.shopdataList.addAll(lists);
         notifyDataSetChanged();

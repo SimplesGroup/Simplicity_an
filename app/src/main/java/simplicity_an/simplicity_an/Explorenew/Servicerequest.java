@@ -75,7 +75,7 @@ private RequestInterface requestInterface;
                             model.setImage(imageeve);
                             model.setCategory_title(obj.getString("category_title"));
                             model.setUrl(obj.getString("url"));
-
+                            model.setItem_arrayname("category");
 
                             if(searchtext.equals("")|| searchtext==null){
                                 Log.e("Response","maincate");
@@ -114,7 +114,7 @@ private RequestInterface requestInterface;
                             model.setUrl(obj.getString("url"));
                             model.setVisit_list(obj.getInt("visit_list"));
                             model.setCart_list(obj.getInt("cart_list"));
-
+                            model.setItem_arrayname("product");
                         JSONArray pricelistarray=obj.getJSONArray("price_list");
 
                         List<IndexProductModel>price=new ArrayList<>();
@@ -160,6 +160,7 @@ model.setPricelist(price);
                             model.setCompany_title(obj.getString("company_title"));
                             model.setDescription(obj.getString("description"));
                             model.setUrl(obj.getString("url"));
+                            model.setItem_arrayname("company");
                             companylist.add(model);
                         }
                     }
@@ -181,9 +182,10 @@ model.setPricelist(price);
 
 
                 Log.e("Response","from+"+list.size());
+                requestInterface.RecyclerLayouts(searchtext);
 requestInterface.Send(list);
 
-//CallPage();
+
 
 
             }
@@ -215,7 +217,6 @@ requestInterface.Send(list);
             }
         };
         vollRequestQueue.add(request);
-
         return list;
     }
 

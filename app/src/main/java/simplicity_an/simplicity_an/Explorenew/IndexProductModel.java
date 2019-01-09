@@ -13,6 +13,15 @@ private int quantity_id,offer_price;
 private int visit_list,cart_list;
 private List<IndexProductModel>pricelist;
 
+private  String item_arrayname;
+
+    public String getItem_arrayname() {
+        return item_arrayname;
+    }
+
+    public void setItem_arrayname(String item_arrayname) {
+        this.item_arrayname = item_arrayname;
+    }
 
     public String getDescription() {
         return description;
