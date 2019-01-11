@@ -288,7 +288,9 @@ public class ShopFragment extends Fragment implements RequestInterface {
             shopDataList = servicerequest.index("1", "index", String.valueOf(requestCount), myprofileid, search_value, getActivity());
 
         } else {
+
             shopDataList = servicerequest.index("1", "index", String.valueOf(requestCount), "", "", getActivity());
+            servicerequest.getCompanylist("1","company_list ",String.valueOf(requestCount),"","","3",getActivity());
         }
 
         pdialog.dismiss();

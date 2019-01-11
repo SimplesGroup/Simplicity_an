@@ -43,7 +43,7 @@ private RequestInterface requestInterface;
         StringRequest request=new StringRequest(Request.Method.POST, Configurl.exploreurl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("Response","shops"+response.toString());
+              //  Log.e("Response","shops"+response.toString());
                 try{
 
                     JSONObject object=new JSONObject(response.toString());
@@ -78,7 +78,7 @@ private RequestInterface requestInterface;
                             model.setItem_arrayname("category");
 
                             if(searchtext.equals("")|| searchtext==null){
-                                Log.e("Response","maincate");
+                               // Log.e("Response","maincate");
                                 model.setMain_category_id("0");
                             }else {
                                 model.setMain_category_id(obj.getString("main_category_id"));
@@ -218,6 +218,46 @@ requestInterface.Send(list);
         };
         vollRequestQueue.add(request);
         return list;
+    }
+
+
+    public void getCompanylist(final String lang, final String rtype, final String pagenum, final String profileid, final String searchtext, final String cattegory, Context context){
+        vollRequestQueue=Volley.newRequestQueue(context);
+
+        StringRequest company_request=new StringRequest(Request.Method.POST, Configurl.exploreurl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("Response","shop__company"+response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>param=new HashMap<>();
+                param.put("Key", "Simplicity");
+                param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                param.put("language", lang);
+                param.put("rtype", rtype);
+                param.put("category",cattegory);
+                param.put("page", pagenum);
+                if(profileid!=null){
+                    param.put("user_id ",profileid);
+                }else {
+
+                }
+                if(searchtext!=null){
+                    param.put("search_text",searchtext);
+                }
+                return param;
+            }
+        };
+        vollRequestQueue.add(company_request);
+
+
     }
 
 
