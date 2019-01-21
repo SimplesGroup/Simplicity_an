@@ -290,7 +290,7 @@ public class ShopFragment extends Fragment implements RequestInterface {
         } else {
 
             shopDataList = servicerequest.index("1", "index", String.valueOf(requestCount), "", "", getActivity());
-            servicerequest.getCompanylist("1","company_list ",String.valueOf(requestCount),"","","3",getActivity());
+            servicerequest.getCompanylist("1","company_list",String.valueOf(requestCount),"","","3",getActivity());
         }
 
         pdialog.dismiss();

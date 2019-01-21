@@ -43,7 +43,7 @@ private RequestInterface requestInterface;
         StringRequest request=new StringRequest(Request.Method.POST, Configurl.exploreurl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-              //  Log.e("Response","shops"+response.toString());
+                Log.e("Response","shopsfirst"+response.toString());
                 try{
 
                     JSONObject object=new JSONObject(response.toString());
@@ -74,6 +74,8 @@ private RequestInterface requestInterface;
                                     .getString("image");
                             model.setImage(imageeve);
                             model.setCategory_title(obj.getString("category_title"));
+                            model.setCategory_id(obj.getString("category_id"));
+
                             model.setUrl(obj.getString("url"));
                             model.setItem_arrayname("category");
 
@@ -242,7 +244,7 @@ requestInterface.Send(list);
                 param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
                 param.put("language", lang);
                 param.put("rtype", rtype);
-                param.put("category",cattegory);
+                param.put("category_id",cattegory);
                 param.put("page", pagenum);
                 if(profileid!=null){
                     param.put("user_id ",profileid);
