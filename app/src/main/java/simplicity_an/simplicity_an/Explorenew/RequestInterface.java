@@ -11,5 +11,9 @@ interface CompanylistRequest{
     void SendComp(List<IndexProductModel>listdata);
     void searchdataComp(List<IndexProductModel>listsearch);
 }
+interface Productlist{
+    void Sendproductlist(List<IndexProductModel>listdata);
+    void searchproductlist(List<IndexProductModel>listsearch);
+}
 
 }

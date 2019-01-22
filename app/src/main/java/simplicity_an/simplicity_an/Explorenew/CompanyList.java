@@ -282,6 +282,8 @@ private TextView textView_Noresult;
         } else {
 
             servicerequest.getCompanylist("1","company_list",String.valueOf(requestCount),"","",category_id,getApplicationContext());
+            servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),"","","17","1","","",getApplicationContext());
+
         }
 
         pdialog.dismiss();
