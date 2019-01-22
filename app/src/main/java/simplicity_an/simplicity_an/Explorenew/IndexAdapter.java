@@ -167,8 +167,9 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             holders.category_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, AdvertisementPage.class);
-                    intent.putExtra("IDEX", data.getUrl());
+                    Intent intent = new Intent(context, CompanyList.class);
+                    intent.putExtra("ITEM_NAME", data.getCategory_title());
+                    intent.putExtra("CAT_ID",data.getCategory_id());
                     context.startActivity(intent);
                 }
             });
