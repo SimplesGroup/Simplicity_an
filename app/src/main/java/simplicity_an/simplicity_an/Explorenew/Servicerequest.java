@@ -32,10 +32,13 @@ private  List<IndexProductModel>companylist=new ArrayList<>();
 private  List<IndexProductModel>productlist=new ArrayList<>();
  RequestQueue vollRequestQueue;
 private RequestInterface requestInterface;
+private RequestInterface.CompanylistRequest requestcompanylist;
  public Servicerequest(RequestInterface requestInterfaces){
      this.requestInterface=requestInterfaces;
  }
-
+public Servicerequest(RequestInterface.CompanylistRequest requestcompanylists){
+    this.requestcompanylist=requestcompanylists;
+}
     public List<IndexProductModel>index(final String lang, final String rtype, final String pagenum, final String profileid, final String searchtext, Context context){
 
         vollRequestQueue=Volley.newRequestQueue(context);
@@ -43,7 +46,11 @@ private RequestInterface requestInterface;
         StringRequest request=new StringRequest(Request.Method.POST, Configurl.exploreurl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("Response","shopsfirst"+response.toString());
+              //  Log.e("Response","shops"+response.toString());
+                categorylist.clear();
+                productlist.clear();
+                companylist.clear();
+                list.clear();
                 try{
 
                     JSONObject object=new JSONObject(response.toString());
@@ -75,7 +82,6 @@ private RequestInterface requestInterface;
                             model.setImage(imageeve);
                             model.setCategory_title(obj.getString("category_title"));
                             model.setCategory_id(obj.getString("category_id"));
-
                             model.setUrl(obj.getString("url"));
                             model.setItem_arrayname("category");
 
@@ -230,6 +236,156 @@ requestInterface.Send(list);
             @Override
             public void onResponse(String response) {
                 Log.e("Response","shop__company"+response.toString());
+                categorylist.clear();
+                productlist.clear();
+                companylist.clear();
+                    list.clear();
+                try{
+
+                    JSONObject object=new JSONObject(response.toString());
+
+                    JSONObject jsonObject=object.optJSONObject("result");
+                    String total=jsonObject.optString("total");
+                    JSONObject totalobjects=new JSONObject(total.toString());
+
+                    int cat_count=totalobjects.optInt("category");
+                    int company_count=totalobjects.optInt("company");
+                    int product_count=totalobjects.optInt("product");
+                    String datas=jsonObject.optString("category");
+                    String company_data=jsonObject.optString("company");
+                    String product_data=jsonObject.optString("product");
+
+
+                    // if(cat_count!=0) {
+
+                    JSONArray category_array = new JSONArray(datas.toString());
+
+                    //Log.e("Response", "shopcat" + datas.toString());
+
+                    for (int i = 0; i < category_array.length(); i++) {
+                        JSONObject obj = (JSONObject) category_array.get(i);
+                        // Log.e("Response", "shopcatdata" + obj.getString("category_title"));
+                        IndexProductModel model = new IndexProductModel();
+                        String imageeve = obj.isNull("image") ? null : obj
+                                .getString("image");
+                        model.setImage(imageeve);
+                        model.setCategory_title(obj.getString("category_title"));
+                        model.setCategory_id(obj.getString("category_id"));
+                        model.setUrl(obj.getString("url"));
+                        model.setItem_arrayname("category");
+
+                        if(searchtext.equals("")|| searchtext==null){
+                            // Log.e("Response","maincate");
+                            model.setMain_category_id("0");
+                        }else {
+                            model.setMain_category_id(obj.getString("main_category_id"));
+
+
+                        }
+
+
+
+                        categorylist.add(model);
+                    }
+                    // }
+
+                    if (product_count!=0){
+
+                        JSONArray product_array=new JSONArray(product_data.toString());
+                        // Log.e("Response", "shopproduct" + product_data.toString());
+                        for (int i = 0; i < product_array.length(); i++) {
+                            JSONObject obj = (JSONObject) product_array.get(i);
+                            //   Log.e("Response", "shopprodata" + obj.getString("category_title"));
+                            IndexProductModel model = new IndexProductModel();
+                            String imageeve = obj.isNull("image") ? null : obj
+                                    .getString("image");
+                            model.setImage(imageeve);
+                            model.setMain_category_id(obj.getString("main_category_id"));
+                            model.setCategory_id(obj.getString("category_id"));
+                            model.setCompany_id(obj.getString("company_id"));
+                            model.setSub_category_id(obj.getString("sub_category_id"));
+                            model.setLow_category_id(obj.getString("low_category_id"));
+                            model.setProduct_id(obj.getString("product_id"));
+                            model.setProduct_title(obj.getString("product_title"));
+                            model.setProduct_description(obj.getString("product_description"));
+                            model.setUrl(obj.getString("url"));
+                            model.setVisit_list(obj.getInt("visit_list"));
+                            model.setCart_list(obj.getInt("cart_list"));
+                            model.setItem_arrayname("product");
+                            JSONArray pricelistarray=obj.getJSONArray("price_list");
+
+                            List<IndexProductModel>price=new ArrayList<>();
+                            for(int j=0;j<pricelistarray.length();j++){
+                                JSONObject obj_price=(JSONObject)pricelistarray.get(j);
+                                IndexProductModel model_price = new IndexProductModel();
+                                model_price.setMeasurement(obj_price.getString("measurement"));
+                                model_price.setQuantity(obj_price.getString("quantity"));
+                                model_price.setPrice(obj_price.getString("price"));
+                                model_price.setStock(obj_price.getString("stock"));
+                                model_price.setQuantity_id(obj_price.getInt("quantity_id"));
+                                model_price.setOffer_type_text(obj_price.getString("offer_type_text"));
+                                model_price.setOffer_type(obj_price.getString("offer_type"));
+                                model_price.setOffer_price(obj_price.getInt("offer_price"));
+                                price.add(model_price);
+
+
+                            }
+                            model.setPricelist(price);
+
+                            productlist.add(model);
+                        }
+
+
+                    }
+
+
+                    if (company_count!=0){
+
+                        JSONArray company_array=new JSONArray(company_data.toString());
+                        //  Log.e("Response", "shopcompany" + company_data.toString());
+                        for (int i = 0; i < company_array.length(); i++) {
+                            JSONObject obj = (JSONObject) company_array.get(i);
+                            // Log.e("Response", "shopcatdata" + obj.getString("category_title"));
+                            IndexProductModel model = new IndexProductModel();
+                            String imageeve = obj.isNull("image") ? null : obj
+                                    .getString("image");
+                            model.setImage(imageeve);
+                            model.setMain_category_id(obj.getString("main_category_id"));
+                            model.setCategory_id(obj.getString("category_id"));
+                            model.setCompany_id(obj.getString("company_id"));
+                            model.setCategory_title(obj.getString("category_title"));
+                            model.setCompany_title(obj.getString("company_title"));
+                            model.setDescription(obj.getString("description"));
+                            model.setUrl(obj.getString("url"));
+                            model.setItem_arrayname("company");
+                            companylist.add(model);
+                        }
+                    }
+
+
+                }catch (JSONException e){
+
+                }
+                if(categorylist.size()>0){
+                    list.addAll(categorylist);
+                }
+                if(companylist.size()>0){
+                    list.addAll(companylist);
+                }
+                if(productlist.size()>0){
+                    list.addAll(productlist);
+                }
+
+
+
+                Log.e("Response","from+"+list.size());
+                //requestInterface.RecyclerLayouts(searchtext);
+                requestcompanylist.SendComp(list);
+
+
+
+
+
             }
         }, new Response.ErrorListener() {
             @Override
