@@ -9,11 +9,29 @@ public class IndexProductModel {
     private String main_category_id,category_id,category_title,category_description;
 private String company_id,sub_category_id,low_category_id,product_id,product_title,product_description,company_title,description;
 private String measurement,quantity,price,stock,offer_type_text,offer_type;
+private String sub_category_title,low_category_title;
+
 private int quantity_id,offer_price;
 private int visit_list,cart_list;
 private List<IndexProductModel>pricelist;
 
 private  String item_arrayname;
+
+    public String getLow_category_title() {
+        return low_category_title;
+    }
+
+    public String getSub_category_title() {
+        return sub_category_title;
+    }
+
+    public void setLow_category_title(String low_category_title) {
+        this.low_category_title = low_category_title;
+    }
+
+    public void setSub_category_title(String sub_category_title) {
+        this.sub_category_title = sub_category_title;
+    }
 
     public String getItem_arrayname() {
         return item_arrayname;

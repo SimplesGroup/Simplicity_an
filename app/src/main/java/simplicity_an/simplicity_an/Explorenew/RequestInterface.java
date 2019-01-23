@@ -14,6 +14,8 @@ interface CompanylistRequest{
 interface Productlist{
     void Sendproductlist(List<IndexProductModel>listdata);
     void searchproductlist(List<IndexProductModel>listsearch);
+   void Subcategory(List<IndexProductModel>listsubcat);
+   void Lowcategory(List<IndexProductModel>listlowcat);
 }
 
 }

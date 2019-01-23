@@ -1,7 +1,6 @@
 package simplicity_an.simplicity_an.Explorenew;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -32,7 +31,7 @@ import simplicity_an.simplicity_an.OnLoadMoreListener;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
-public class CompanylistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ProductlistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageLoader mImageLoader;
 private final int VIEW_TYPE_ITEM_INDEX = 1;
 private final int VIEW_TYPE_ITEM_ONE = 2;
@@ -53,7 +52,7 @@ public static final String mypreference = "mypref";
 public static final String MYUSERID= "myprofileid";
 public static final String backgroundcolor = "color";
         String myprofileid,colorcodes,fontname;
-public CompanylistAdapter(Context mContext, List<IndexProductModel> productEnglishList){
+public ProductlistAdapter(Context mContext, List<IndexProductModel> productEnglishList){
         this.context = mContext;
         this.shopdataList = productEnglishList;
         }
@@ -160,12 +159,6 @@ final IndexProductModel data = shopdataList.get(position);
 @Override
 public void onClick(View v) {
 
-
-    Intent intent = new Intent(context, ProductList.class);
-    intent.putExtra("ITEM_NAME", data.getCategory_title());
-    intent.putExtra("CAT_ID",data.getCategory_id());
-    intent.putExtra("COMP_ID",data.getCompany_id());
-    context.startActivity(intent);
         }
         });
         }else if(holder instanceof Shopmodel_one){
@@ -340,16 +333,7 @@ final IndexProductModel data = shopdataList.get(position);
         }else {
         holders.title_category.setText(data.getCompany_title());
         }
-((Shopmodel_two) holder).product_image.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(context, ProductList.class);
-        intent.putExtra("ITEM_NAME", data.getCategory_title());
-        intent.putExtra("CAT_ID",data.getCategory_id());
-        intent.putExtra("COMP_ID",data.getCompany_id());
-        context.startActivity(intent);
-    }
-});
+
 
 
         }
@@ -417,7 +401,7 @@ public int getItemViewType(int position) {
         } else if (model.getMain_category_id().equals("3")) {
         return VIEW_TYPE_ITEM_THREE;
         } else {
-        return VIEW_TYPE_ITEM_TWO;
+        return VIEW_TYPE_ITEM_ONE;
         }
 
         }

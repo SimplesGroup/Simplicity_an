@@ -16,12 +16,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -29,10 +34,11 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
-public class CompanyList extends AppCompatActivity implements RequestInterface.CompanylistRequest {
+public class ProductList extends AppCompatActivity implements RequestInterface.Productlist{
     SharedPreferences sharedpreferences;
     public static final String backgroundcolor = "color";
     String activity,contentid,colorcodes;
@@ -51,22 +57,29 @@ public class CompanyList extends AppCompatActivity implements RequestInterface.C
     private List<IndexProductModel>datalist;
     private int requestCount = 1;
     private RequestQueue requestQueue;
-    private static    CompanylistAdapter companyAdapter;
+    private static    ProductlistAdapter productAdapter;
 
     android.support.v7.widget.SearchView search;
     ProgressDialog pdialog;
     private String search_value;
     private Servicerequest servicerequest;
 
-    String title_name_item,category_id;
-private TextView textView_Noresult;
+    String title_name_item,category_id,company_id;
+    private TextView textView_Noresult;
+    ArrayList<String>title_sub;
+    List<String>ids_sub;
+    List<String>title_low;
+    List<String>ids_low;
+    Spinner spinner_subcategory,spinner_lowcategory;
+    private ArrayAdapter<String> adapter,lowcatadapter;
+    String low_id,sub_id;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.explore_companylist_activity);
+        setContentView(R.layout.explore_productlist_activity);
         sharedpreferences =  getSharedPreferences(mypreference,
                 Context.MODE_PRIVATE);
         if (sharedpreferences.contains(MYUSERID)) {
@@ -83,10 +96,18 @@ private TextView textView_Noresult;
         Intent get=getIntent();
         title_name_item=get.getStringExtra("ITEM_NAME");
         category_id=get.getStringExtra("CAT_ID");
+        company_id=get.getStringExtra("COMP_ID");
         shopDataList=new ArrayList<IndexProductModel>();
         datalist=new ArrayList<>();
+        title_sub=new ArrayList<>();
+        ids_sub=new ArrayList<>();
+        title_low=new ArrayList<>();
+        ids_low=new ArrayList<>();
 
         servicerequest=new Servicerequest(this);
+
+        spinner_lowcategory=(Spinner)findViewById(R.id.spin_productlist_lowcat);
+        spinner_subcategory=(Spinner)findViewById(R.id.spin_productlist_subcat);
 
         main_complist_layout = (RelativeLayout) findViewById(R.id.shop_layout);
         search = (android.support.v7.widget.SearchView) findViewById(R.id.searchview_main);
@@ -122,15 +143,12 @@ private TextView textView_Noresult;
 
                 shopDataList.clear();
                 datalist.clear();
-                companyAdapter.Listitem();
+                productAdapter.Listitem();
                 search_value = query;
-                // RecyclerView.LayoutManager gridLayoutManager=new LinearLayoutManager(getActivity());
+
                 requestCount=1;
                 getData();
-                // Toast.makeText(getActivity(),"clicked",Toast.LENGTH_LONG).show();
-               /* Intent simplicity = new Intent(getActivity(), SimplicitySearchview.class);
-                simplicity.putExtra("QUERY", search_value);
-                startActivity(simplicity);*/
+
 
                 return false;
             }
@@ -231,8 +249,9 @@ private TextView textView_Noresult;
 
 
 
-        companyAdapter = new CompanylistAdapter(getApplicationContext(), shopDataList);
-        recyclerView.setAdapter(companyAdapter);
+        productAdapter = new ProductlistAdapter(getApplicationContext(), shopDataList);
+        recyclerView.setAdapter(productAdapter);
+       getData();
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
@@ -244,8 +263,8 @@ private TextView textView_Noresult;
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(true);
                 shopDataList.clear();
-                companyAdapter.Listitem();
-                companyAdapter.notifyDataSetChanged();
+                productAdapter.Listitem();
+                productAdapter.notifyDataSetChanged();
 
                 requestCount = 1;
                 getData();
@@ -262,11 +281,69 @@ private TextView textView_Noresult;
         });
 
 
-        getData();
+
+        getSubcat();
+
+
+
+       spinner_subcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position==0){
+
+                }else {
+                    String item = parent.getItemAtPosition(position).toString();
+                     sub_id=ids_sub.get(position-1).toString();
+                    Log.e("ID",sub_id);
+                    servicerequest.getProductlistLowcategory("1","low_category_list",sub_id,getApplicationContext());
+                    /*requestCount=1;
+                    productAdapter.Listitem();
+                    shopDataList.clear();
+                    datalist.clear();
+                    productAdapter.notifyDataSetChanged();*/
+                    //servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),"","",category_id,company_id,sub_id,"",getApplicationContext());
+
+                }
+
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+spinner_lowcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if(position==0){
+
+        }else {
+            String item = parent.getItemAtPosition(position).toString();
+            low_id=ids_low.get(position-1).toString();
+            Log.e("ID",low_id);
+           // servicerequest.getProductlistLowcategory("1","low_category_list",low_id,getApplicationContext());
+            requestCount=1;
+            productAdapter.Listitem();
+            shopDataList.clear();
+            datalist.clear();
+            productAdapter.notifyDataSetChanged();
+           // servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),"","",category_id,company_id,sub_id,low_id,getApplicationContext());
+
+        }
+
     }
 
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+});
 
 
+    }
     private void getData() {
         // requestQueue.add(getDataFromTheServer(requestCount));
 
@@ -274,28 +351,34 @@ private TextView textView_Noresult;
         //    Servicerequest servicerequest = new Servicerequest(getActivity());
         if (myprofileid != null) {
 
-            servicerequest.getCompanylist("1","company_list",String.valueOf(requestCount),myprofileid,"",category_id,getApplicationContext());
+
+            servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),myprofileid,"",category_id,company_id,"","",getApplicationContext());
 
         } else if (search_value != null) {
 
-            servicerequest.getCompanylist("1","company_list",String.valueOf(requestCount),"",search_value,category_id,getApplicationContext());
+            servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),"",search_value,category_id,company_id,"","",getApplicationContext());
+
 
         } else if (myprofileid != null && search_value != null) {
 
-            servicerequest.getCompanylist("1","company_list",String.valueOf(requestCount),myprofileid,search_value,category_id,getApplicationContext());
-        } else {
+            servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),myprofileid,search_value,category_id,company_id,"","",getApplicationContext());
 
-            servicerequest.getCompanylist("1","company_list",String.valueOf(requestCount),"","",category_id,getApplicationContext());
+        }
+        else {
 
+            servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),"","",category_id,company_id,"","",getApplicationContext());
         }
 
         pdialog.dismiss();
         requestCount++;
-        companyAdapter.notifyDataSetChanged();
+        productAdapter.notifyDataSetChanged();
 
 
     }
+private void getSubcat(){
+    servicerequest.getProductlistSubcategory("1","sub_category_list",category_id,company_id,getApplicationContext());
 
+}
 
 
 
@@ -335,28 +418,24 @@ private TextView textView_Noresult;
 
 
 
-
-
     @Override
-    public void SendComp(List<IndexProductModel> listdata) {
+    public void Sendproductlist(List<IndexProductModel> listdata) {
         datalist=listdata;
         shopDataList.addAll(listdata);
 
 
-       if(shopDataList.size()==0){
+        if(shopDataList.size()==0){
             recyclerView.setVisibility(View.GONE);
             textView_Noresult.setVisibility(View.VISIBLE);
         }else {
-            companyAdapter.data(listdata);
+            productAdapter.data(listdata);
             textView_Noresult.setVisibility(View.GONE);
 
         }
-
-
     }
 
     @Override
-    public void searchdataComp(List<IndexProductModel> listsearch) {
+    public void searchproductlist(List<IndexProductModel> listsearch) {
         datalist=listsearch;
         shopDataList.addAll(listsearch);
         if(shopDataList.size()==0){
@@ -364,10 +443,139 @@ private TextView textView_Noresult;
             textView_Noresult.setVisibility(View.VISIBLE);
 
         }else {
-            companyAdapter.data(listsearch);
+            productAdapter.data(listsearch);
             textView_Noresult.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void Subcategory(List<IndexProductModel> listsubcat) {
+if(listsubcat.size()==0){
+
+    spinner_subcategory.setVisibility(View.GONE);
+
+}else {
+    title_sub.add("Select your item");
+    for (int i = 0; i < listsubcat.size(); i++) {
+        IndexProductModel model = listsubcat.get(i);
+        String title_data = model.getSub_category_title();
+        String id_data = model.getSub_category_id();
+        // Log.e("SUB",title_data.toString());
+        title_sub.add(title_data);
+        ids_sub.add(id_data);
+    }
 
 
+    adapter = new ArrayAdapter<String>(this, R.layout.explore_my_spinner_style, title_sub) {
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v = super.getView(position, convertView, parent);
+
+            ((TextView) v).setTextSize(16);
+            if (colorcodes.equals("#FFFFFFFF")) {
+                ((TextView) v).setTextColor(
+                        getApplicationContext().getResources().getColorStateList(R.color.Black)
+                );
+            } else {
+                ((TextView) v).setTextColor(
+                        getApplicationContext().getResources().getColorStateList(R.color.white)
+                );
+            }
+
+            return v;
+        }
+
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            View v = super.getDropDownView(position, convertView, parent);
+            //v.setBackgroundResource(R.drawable.spinner_bg);
+            if (colorcodes.equals("#FFFFFFFF")) {
+                v.setBackgroundColor(Color.WHITE);
+                ((TextView) v).setTextColor(
+                        getApplicationContext().getResources().getColorStateList(R.color.Black)
+                );
+            } else {
+                v.setBackgroundColor(Color.BLACK);
+                ((TextView) v).setTextColor(
+                        getApplicationContext().getResources().getColorStateList(R.color.white)
+                );
+            }
+
+            ((TextView) v).setGravity(Gravity.CENTER);
+
+            return v;
+        }
+    };
+
+
+    spinner_subcategory.setAdapter(adapter);
+
+}
+
+
+
+    }
+
+    @Override
+    public void Lowcategory(List<IndexProductModel> listlowcat) {
+
+        /*if(listlowcat.size()==0){
+
+            spinner_lowcategory.setVisibility(View.GONE);
+
+        }else {*/
+title_low.add("Select your item");
+            for (int i = 0; i < listlowcat.size(); i++) {
+                IndexProductModel model = listlowcat.get(i);
+                String title_data = model.getLow_category_title();
+                String id_data = model.getLow_category_id();
+                // Log.e("SUB",title_data.toString());
+                title_low.add(title_data);
+                ids_low.add(id_data);
+            }
+
+
+            lowcatadapter = new ArrayAdapter<String>(this, R.layout.explore_my_spinner_style, title_low) {
+
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    View v = super.getView(position, convertView, parent);
+
+                    ((TextView) v).setTextSize(15);
+                    if (colorcodes.equals("#FFFFFFFF")) {
+                        ((TextView) v).setTextColor(
+                                getApplicationContext().getResources().getColorStateList(R.color.Black)
+                        );
+                    } else {
+                        ((TextView) v).setTextColor(
+                                getApplicationContext().getResources().getColorStateList(R.color.white)
+                        );
+                    }
+
+                    return v;
+                }
+
+                public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                    View v = super.getDropDownView(position, convertView, parent);
+                    //v.setBackgroundResource(R.drawable.spinner_bg);
+                    if (colorcodes.equals("#FFFFFFFF")) {
+                        v.setBackgroundColor(Color.WHITE);
+                        ((TextView) v).setTextColor(
+                                getApplicationContext().getResources().getColorStateList(R.color.Black)
+                        );
+                    } else {
+                        v.setBackgroundColor(Color.BLACK);
+                        ((TextView) v).setTextColor(
+                                getApplicationContext().getResources().getColorStateList(R.color.white)
+                        );
+                    }
+
+                    ((TextView) v).setGravity(Gravity.CENTER);
+
+                    return v;
+                }
+            };
+
+
+            spinner_lowcategory.setAdapter(lowcatadapter);
+        //}
     }
 }

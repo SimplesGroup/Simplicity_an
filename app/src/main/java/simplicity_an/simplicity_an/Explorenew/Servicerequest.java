@@ -30,14 +30,20 @@ private   List<IndexProductModel>list=new ArrayList<>();
 private   List<IndexProductModel>categorylist=new ArrayList<>();
 private  List<IndexProductModel>companylist=new ArrayList<>();
 private  List<IndexProductModel>productlist=new ArrayList<>();
+    private  List<IndexProductModel>subcatlist=new ArrayList<>();
+    private  List<IndexProductModel>lowcatlist=new ArrayList<>();
  RequestQueue vollRequestQueue;
 private RequestInterface requestInterface;
 private RequestInterface.CompanylistRequest requestcompanylist;
+private RequestInterface.Productlist requestProductlist;
  public Servicerequest(RequestInterface requestInterfaces){
      this.requestInterface=requestInterfaces;
  }
 public Servicerequest(RequestInterface.CompanylistRequest requestcompanylists){
     this.requestcompanylist=requestcompanylists;
+}
+public Servicerequest(RequestInterface.Productlist requestProductlists){
+     this.requestProductlist=requestProductlists;
 }
     public List<IndexProductModel>index(final String lang, final String rtype, final String pagenum, final String profileid, final String searchtext, Context context){
 
@@ -568,8 +574,9 @@ requestInterface.Send(list);
 
 
                 Log.e("Response","from+"+list.size());
-                //requestInterface.RecyclerLayouts(searchtext);
-               // requestcompanylist.SendComp(list);
+               // requestInterface.RecyclerLayouts(searchtext);
+
+                requestProductlist.Sendproductlist(list);
 
 
 
@@ -606,6 +613,188 @@ requestInterface.Send(list);
                 if (lowcatid!=null){
                     param.put("low_category_id",lowcatid);
                 }
+
+                return param;
+            }
+        };
+        vollRequestQueue.add(company_request);
+
+
+    }
+    public void getProductlistSubcategory(final String lang, final String rtype, final String cattegory,final String companyid, Context context){
+        vollRequestQueue=Volley.newRequestQueue(context);
+
+        StringRequest company_request=new StringRequest(Request.Method.POST, Configurl.exploreurl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("Response","shop__productlist"+response.toString());
+                categorylist.clear();
+                productlist.clear();
+                companylist.clear();
+                list.clear();
+               try{
+
+                    JSONObject object=new JSONObject(response.toString());
+
+                    JSONObject jsonObject=object.optJSONObject("result");
+                   Log.e("Response","shop__productlist"+jsonObject.toString());
+                   /* String total=jsonObject.optString("total");
+                    JSONObject totalobjects=new JSONObject(total.toString());*/
+
+
+                    String datas=jsonObject.optString("sub_category_list");
+
+                   Log.e("Response","shop__productlistar"+datas.toString());
+
+
+
+                    JSONArray category_array = new JSONArray(datas.toString());
+
+
+
+                    for (int i = 0; i < category_array.length(); i++) {
+                        JSONObject obj = (JSONObject) category_array.get(i);
+                        Log.e("Response", "shopcatdata" + obj.getString("sub_category_title"));
+                        IndexProductModel model = new IndexProductModel();
+
+                      model.setSub_category_id(obj.getString("sub_category_id"));
+                      model.setSub_category_title(obj.getString("sub_category_title"));
+
+
+
+
+
+                        subcatlist.add(model);
+                    }
+
+                   requestProductlist.Subcategory(subcatlist);
+
+
+
+
+
+                }catch (JSONException e){
+
+                }
+
+
+
+
+
+
+
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>param=new HashMap<>();
+                param.put("Key", "Simplicity");
+                param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                param.put("language", lang);
+                param.put("rtype", rtype);
+                param.put("category_id",cattegory);
+                param.put("company_id",companyid);
+
+
+
+
+
+                return param;
+            }
+        };
+        vollRequestQueue.add(company_request);
+
+
+    }
+
+
+    public void getProductlistLowcategory(final String lang, final String rtype, final String subcattegory, Context context){
+        vollRequestQueue=Volley.newRequestQueue(context);
+
+        StringRequest company_request=new StringRequest(Request.Method.POST, Configurl.exploreurl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("Response","shop__productlist_low"+response.toString());
+
+               lowcatlist.clear();
+               try{
+
+                    JSONObject object=new JSONObject(response.toString());
+
+                    JSONObject jsonObject=object.optJSONObject("result");
+
+                    String datas=jsonObject.optString("low_category_list");
+
+
+
+
+
+                    JSONArray category_array = new JSONArray(datas.toString());
+
+
+
+                    for (int i = 0; i < category_array.length(); i++) {
+                        JSONObject obj = (JSONObject) category_array.get(i);
+
+                        IndexProductModel model = new IndexProductModel();
+
+                        model.setLow_category_id(obj.getString("low_category_id"));
+                        model.setLow_category_title(obj.getString("low_category_title"));
+                        Log.e("Response", "shopcatdata" + obj.getString("low_category_title"));
+
+
+
+
+                        lowcatlist.add(model);
+                    }
+
+requestProductlist.Lowcategory(lowcatlist);
+
+
+
+
+
+                }catch (JSONException e){
+
+                }
+
+
+
+                Log.e("Response","from+"+list.size());
+
+
+
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>param=new HashMap<>();
+                param.put("Key", "Simplicity");
+                param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                param.put("language", lang);
+                param.put("rtype", rtype);
+                param.put("sub_category_id",subcattegory);
+
+
+
+
+
 
                 return param;
             }
