@@ -760,8 +760,6 @@ requestProductlist.Lowcategory(lowcatlist);
 
 
 
-
-
                 }catch (JSONException e){
 
                 }
