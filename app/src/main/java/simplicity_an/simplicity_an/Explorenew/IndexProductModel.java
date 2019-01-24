@@ -10,12 +10,104 @@ public class IndexProductModel {
 private String company_id,sub_category_id,low_category_id,product_id,product_title,product_description,company_title,description;
 private String measurement,quantity,price,stock,offer_type_text,offer_type;
 private String sub_category_title,low_category_title;
+private String wastage,netweight,net_price,material_price;
+private String stonename,stonecut,stonecolor,stoneclarity,stoneweight,stoneprice;
+    private int quantity_id,offer_price;
+    private int visit_list,cart_list;
 
-private int quantity_id,offer_price;
-private int visit_list,cart_list;
-private List<IndexProductModel>pricelist;
+    private  String item_arrayname;
+    private List<IndexProductModel>pricelist;
+    private List<IndexProductModel>stonelist;
 
-private  String item_arrayname;
+    public List<IndexProductModel> getStonelist() {
+        return stonelist;
+    }
+
+    public void setStonelist(List<IndexProductModel> stonelist) {
+        this.stonelist = stonelist;
+    }
+
+    public String getStonename() {
+        return stonename;
+    }
+
+    public void setStonename(String stonename) {
+        this.stonename = stonename;
+    }
+
+    public String getStonecut() {
+        return stonecut;
+    }
+
+    public void setStonecut(String stonecut) {
+        this.stonecut = stonecut;
+    }
+
+    public String getStonecolor() {
+        return stonecolor;
+    }
+
+    public void setStonecolor(String stonecolor) {
+        this.stonecolor = stonecolor;
+    }
+
+    public String getStoneclarity() {
+        return stoneclarity;
+    }
+
+    public void setStoneclarity(String stoneclarity) {
+        this.stoneclarity = stoneclarity;
+    }
+
+    public String getStoneweight() {
+        return stoneweight;
+    }
+
+    public void setStoneweight(String stoneweight) {
+        this.stoneweight = stoneweight;
+    }
+
+    public String getStoneprice() {
+        return stoneprice;
+    }
+
+    public void setStoneprice(String stoneprice) {
+        this.stoneprice = stoneprice;
+    }
+
+
+
+    public void setMaterial_price(String material_price) {
+        this.material_price = material_price;
+    }
+
+    public void setNet_price(String net_price) {
+        this.net_price = net_price;
+    }
+
+    public void setNetweight(String netweight) {
+        this.netweight = netweight;
+    }
+
+    public void setWastage(String wastage) {
+        this.wastage = wastage;
+    }
+
+    public String getMaterial_price() {
+        return material_price;
+    }
+
+    public String getNet_price() {
+        return net_price;
+    }
+
+    public String getNetweight() {
+        return netweight;
+    }
+
+    public String getWastage() {
+        return wastage;
+    }
 
     public String getLow_category_title() {
         return low_category_title;

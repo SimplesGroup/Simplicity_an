@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/searchviewhintcolor"
+    android:id="@+id/shop_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/textView_product_details_jewel_layout_label"
+        android:layout_marginTop="2dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15sp"
+            android:id="@+id/textView_product_detail_stone_label"
+            android:textSize="15sp"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <LinearLayout
+       android:paddingBottom="7dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/textView_product_details_jewel_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+
+                android:layout_weight=".40"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/text_stone_title_label"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight=".60"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/text_stone_title"
+                    android:layout_marginLeft="10dp"
+
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+
+                android:layout_weight=".40"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/text_stone_cut_label"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight=".60"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/text_stone_cut"
+                    android:layout_marginLeft="10dp"
+
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+
+                android:layout_weight=".40"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/text_stone_color_label"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight=".60"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/text_stone_color"
+                    android:layout_marginLeft="10dp"
+
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+
+                android:layout_weight=".40"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/text_stone_clarity_label"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight=".60"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/text_stone_clarity"
+                    android:layout_marginLeft="10dp"
+
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+
+                android:layout_weight=".40"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/text_stone_weight_label"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight=".60"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/text_stone_weight"
+                    android:layout_marginLeft="10dp"
+
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+
+                android:layout_weight=".40"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/text_stone_price_label"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight=".60"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/text_stone_price"
+                    android:layout_marginLeft="10dp"
+
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
+
+</RelativeLayout>

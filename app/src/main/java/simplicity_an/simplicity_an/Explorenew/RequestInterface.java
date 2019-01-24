@@ -17,5 +17,7 @@ interface Productlist{
    void Subcategory(List<IndexProductModel>listsubcat);
    void Lowcategory(List<IndexProductModel>listlowcat);
 }
-
+interface Productdetail{
+    void Productdetails(List<IndexProductModel>details);
+}
 }

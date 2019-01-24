@@ -1,6 +1,7 @@
 package simplicity_an.simplicity_an.Explorenew;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -125,7 +126,7 @@ public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int
         }
 
 @Override
-public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         sharedpreferences = context. getSharedPreferences(mypreference,
         Context.MODE_PRIVATE);
         fontname=sharedpreferences.getString(Fonts.FONT,"");
@@ -158,7 +159,11 @@ final IndexProductModel data = shopdataList.get(position);
         holders.category_image.setOnClickListener(new View.OnClickListener() {
 @Override
 public void onClick(View v) {
+    Intent intent = new Intent(context, ProductDetail.class);
+    intent.putExtra("MAIN_CAT_ID", data.getMain_category_id());
+    intent.putExtra("PRO_ID",data.getProduct_id());
 
+    context.startActivity(intent);
         }
         });
         }else if(holder instanceof Shopmodel_one){
@@ -221,6 +226,18 @@ public View getView(int position, View convertView, ViewGroup parent) {
         context.getResources().getColorStateList(R.color.white)
         );
         }
+
+        holders.product_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProductDetail.class);
+                intent.putExtra("MAIN_CAT_ID", data.getMain_category_id());
+                intent.putExtra("PRO_ID",data.getProduct_id());
+
+                context.startActivity(intent);
+            }
+        });
+
 
         return v;
         }
@@ -334,7 +351,16 @@ final IndexProductModel data = shopdataList.get(position);
         holders.title_category.setText(data.getCompany_title());
         }
 
+holders.product_image.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(context, ProductDetail.class);
+        intent.putExtra("MAIN_CAT_ID", data.getMain_category_id());
+        intent.putExtra("PRO_ID",data.getProduct_id());
 
+        context.startActivity(intent);
+    }
+});
 
         }
 
@@ -380,7 +406,16 @@ final IndexProductModel data = shopdataList.get(position);
         }
         holders.product_image_withoutspin.setImageUrl(data.getImage(), mImageLoader);
 
+holders.product_image_withoutspin.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(context, ProductDetail.class);
+        intent.putExtra("MAIN_CAT_ID", data.getMain_category_id());
+        intent.putExtra("PRO_ID",data.getProduct_id());
 
+        context.startActivity(intent);
+    }
+});
 
 
         }

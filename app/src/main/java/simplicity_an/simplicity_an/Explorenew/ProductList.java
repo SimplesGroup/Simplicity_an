@@ -108,6 +108,8 @@ public class ProductList extends AppCompatActivity implements RequestInterface.P
 
         spinner_lowcategory=(Spinner)findViewById(R.id.spin_productlist_lowcat);
         spinner_subcategory=(Spinner)findViewById(R.id.spin_productlist_subcat);
+        spinner_lowcategory.setVisibility(View.GONE);
+        spinner_subcategory.setVisibility(View.GONE);
 
         main_complist_layout = (RelativeLayout) findViewById(R.id.shop_layout);
         search = (android.support.v7.widget.SearchView) findViewById(R.id.searchview_main);
@@ -330,7 +332,7 @@ spinner_lowcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedList
             shopDataList.clear();
             datalist.clear();
             productAdapter.notifyDataSetChanged();
-           // servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),"","",category_id,company_id,sub_id,low_id,getApplicationContext());
+           servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),"","",category_id,company_id,sub_id,low_id,getApplicationContext());
 
         }
 
@@ -428,6 +430,7 @@ private void getSubcat(){
             recyclerView.setVisibility(View.GONE);
             textView_Noresult.setVisibility(View.VISIBLE);
         }else {
+            recyclerView.setVisibility(View.VISIBLE);
             productAdapter.data(listdata);
             textView_Noresult.setVisibility(View.GONE);
 
@@ -455,7 +458,8 @@ if(listsubcat.size()==0){
     spinner_subcategory.setVisibility(View.GONE);
 
 }else {
-    title_sub.add("Select your item");
+    spinner_subcategory.setVisibility(View.VISIBLE);
+    title_sub.add("CATEGORY");
     for (int i = 0; i < listsubcat.size(); i++) {
         IndexProductModel model = listsubcat.get(i);
         String title_data = model.getSub_category_title();
@@ -518,12 +522,14 @@ if(listsubcat.size()==0){
     @Override
     public void Lowcategory(List<IndexProductModel> listlowcat) {
 
-        /*if(listlowcat.size()==0){
+        if(listlowcat.size()==0){
 
             spinner_lowcategory.setVisibility(View.GONE);
 
-        }else {*/
-title_low.add("Select your item");
+        }else {
+
+            spinner_lowcategory.setVisibility(View.VISIBLE);
+title_low.add("CATEGORY");
             for (int i = 0; i < listlowcat.size(); i++) {
                 IndexProductModel model = listlowcat.get(i);
                 String title_data = model.getLow_category_title();
@@ -576,6 +582,6 @@ title_low.add("Select your item");
 
 
             spinner_lowcategory.setAdapter(lowcatadapter);
-        //}
+        }
     }
 }
