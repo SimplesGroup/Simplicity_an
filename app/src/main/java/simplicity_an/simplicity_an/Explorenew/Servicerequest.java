@@ -491,7 +491,7 @@ requestInterface.Send(list);
                     if (product_count!=0){
 
                         JSONArray product_array=new JSONArray(product_data.toString());
-                        // Log.e("Response", "shopproduct" + product_data.toString());
+                        Log.e("Response", "shopproduct_again" + product_data.toString());
                         for (int i = 0; i < product_array.length(); i++) {
                             JSONObject obj = (JSONObject) product_array.get(i);
                             //   Log.e("Response", "shopprodata" + obj.getString("category_title"));
@@ -1032,4 +1032,100 @@ requestProductlist.Lowcategory(lowcatlist);
 
 
     }
+
+
+
+    public void AddtocartandWhishlist(final String lang, final String rtype,final String profileid, final String maincatid,final String categoryid,final String companyid,final String productid,final String qtyid, Context context){
+        vollRequestQueue=Volley.newRequestQueue(context);
+
+        StringRequest company_request=new StringRequest(Request.Method.POST, Configurl.exploreurl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("Response","addcart"+response.toString());
+
+                lowcatlist.clear();
+                /*try{
+
+                    JSONObject object=new JSONObject(response.toString());
+
+                    JSONObject jsonObject=object.optJSONObject("result");
+
+                    String datas=jsonObject.optString("low_category_list");
+
+
+
+
+
+                    JSONArray category_array = new JSONArray(datas.toString());
+
+
+
+                    for (int i = 0; i < category_array.length(); i++) {
+                        JSONObject obj = (JSONObject) category_array.get(i);
+
+                        IndexProductModel model = new IndexProductModel();
+
+                        model.setLow_category_id(obj.getString("low_category_id"));
+                        model.setLow_category_title(obj.getString("low_category_title"));
+                        Log.e("Response", "shopcatdata" + obj.getString("low_category_title"));
+
+
+
+
+                        lowcatlist.add(model);
+                    }
+
+                    requestProductlist.Lowcategory(lowcatlist);
+
+
+
+                }catch (JSONException e){
+
+                }
+
+
+
+                Log.e("Response","from+"+list.size());
+*/
+
+
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>param=new HashMap<>();
+                param.put("Key", "Simplicity");
+                param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
+                param.put("rtype", rtype);
+                param.put("main_category_id",maincatid);
+                param.put("category_id",categoryid);
+                param.put("company_id",companyid);
+                param.put("product_id",productid);
+                param.put("user_id",profileid);
+                param.put("qty_id",qtyid);
+
+
+
+
+
+
+                return param;
+            }
+        };
+        vollRequestQueue.add(company_request);
+
+
+    }
+
+
+
+
 }

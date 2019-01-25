@@ -150,6 +150,11 @@ public class ProductList extends AppCompatActivity implements RequestInterface.P
 
                 requestCount=1;
                 getData();
+                title_sub.clear();
+                ids_sub.clear();
+                title_low.clear();
+                ids_low.clear();
+                getSubcat();
 
 
                 return false;
@@ -270,7 +275,11 @@ public class ProductList extends AppCompatActivity implements RequestInterface.P
 
                 requestCount = 1;
                 getData();
-
+                title_sub.clear();
+                ids_sub.clear();
+                title_low.clear();
+                ids_low.clear();
+                getSubcat();
                 (new Handler()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -299,12 +308,13 @@ public class ProductList extends AppCompatActivity implements RequestInterface.P
                      sub_id=ids_sub.get(position-1).toString();
                     Log.e("ID",sub_id);
                     servicerequest.getProductlistLowcategory("1","low_category_list",sub_id,getApplicationContext());
-                    /*requestCount=1;
+
                     productAdapter.Listitem();
                     shopDataList.clear();
                     datalist.clear();
-                    productAdapter.notifyDataSetChanged();*/
-                    //servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),"","",category_id,company_id,sub_id,"",getApplicationContext());
+                    productAdapter.notifyDataSetChanged();
+                    requestCount=1;
+                   servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),"","",category_id,company_id,sub_id,"",getApplicationContext());
 
                 }
 

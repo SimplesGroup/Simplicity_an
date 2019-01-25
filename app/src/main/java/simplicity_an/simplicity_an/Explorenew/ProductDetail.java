@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
@@ -71,6 +72,7 @@ RelativeLayout productdetail_label_layout,stonedetails_layout;
 NetworkImageView product_image;
 ImageLoader mImageLoader;
 
+String maincateegoryid,categoryid,companyid,productsid,qtyid;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -285,6 +287,36 @@ recyclerView_stone.setAdapter(productdetailstoneAdapter);
 
         getData();
 
+
+
+        addtocart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(myprofileid!=null){
+                    servicerequest.AddtocartandWhishlist("1","addtocart",myprofileid,maincateegoryid,categoryid,companyid,productsid,qtyid,getApplicationContext());
+
+                }else {
+                    Toast.makeText(getApplicationContext(),"User not logged in",Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        });
+        whishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(myprofileid!=null){
+                    servicerequest.AddtocartandWhishlist("1","addtowishlist",myprofileid,maincateegoryid,categoryid,companyid,productsid,qtyid,getApplicationContext());
+
+                }else {
+                    Toast.makeText(getApplicationContext(),"User not logged in",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
+
+
     }
 
     private void getData() {
@@ -333,6 +365,12 @@ recyclerView_stone.setAdapter(productdetailstoneAdapter);
 
             IndexProductModel model=details.get(i);
 
+            maincateegoryid=model.getMain_category_id();
+            categoryid=model.getCategory_id();
+            companyid=model.getCompany_id();
+            productsid=model.getProduct_id();
+
+
 if(model.getWastage()!=null || model.getNetweight()!=null || model.getMaterial_price()!=null){
 
     productdetail_label_layout.setVisibility(View.VISIBLE);
@@ -378,6 +416,7 @@ if(pricelist.size()==0){
     spinner_pricelist.setVisibility(View.VISIBLE);
     List<String>item=new ArrayList<>();
     final ArrayList<String>priceitem=new ArrayList<>();
+    final ArrayList<String>qtylist=new ArrayList<>();
     for(int j=0;j< pricelist.size();j++){
         IndexProductModel models=pricelist.get(j);
         String item_qty=models.getQuantity()+" "+models.getMeasurement();
@@ -385,6 +424,9 @@ if(pricelist.size()==0){
 
         String item_price=models.getPrice();
         priceitem.add(item_price);
+        String qid=String.valueOf(models.getQuantity_id());
+        qtylist.add(qid);
+
 
    }
     if (mImageLoader == null)
@@ -446,9 +488,11 @@ if(pricelist.size()==0){
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             String item = parent.getItemAtPosition(position).toString();
+
             String price=priceitem.get(position);
            textView_price.setText("Price Rs. "+price);
 
+            qtyid=qtylist.get(position);
         }
 
         @Override

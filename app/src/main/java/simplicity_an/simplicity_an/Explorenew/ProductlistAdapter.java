@@ -203,7 +203,7 @@ final ArrayList<String>priceitem=new ArrayList<>();
         String item_qty=model.getQuantity()+" "+model.getMeasurement();
         item.add(item_qty);
 
-        String item_price=model.getPrice();
+            String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
         priceitem.add(item_price);
 
         }
@@ -341,7 +341,8 @@ final IndexProductModel data = shopdataList.get(position);
         for(int i=0;i< list.size();i++){
         IndexProductModel model=list.get(i);
 
-        String item_price=model.getPrice();
+       // String item_price=model.getPrice();
+        String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
         holders.price_item.setText(item_price);
 
         }
@@ -399,8 +400,8 @@ final IndexProductModel data = shopdataList.get(position);
         IndexProductModel model=list.get(i);
         String item_qty=model.getQuantity()+" "+model.getMeasurement();
 
-        String item_price=model.getPrice();
-
+      //  String item_price=model.getPrice();
+            String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
         holders.price_item_withoutspin.setText(item_price);
 
         }

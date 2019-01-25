@@ -210,7 +210,7 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         String item_qty=model.getQuantity()+" "+model.getMeasurement();
                         item.add(item_qty);
 
-                        String item_price=model.getPrice();
+                        String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
                         priceitem.add(item_price);
 
                     }
@@ -272,7 +272,7 @@ holders.product_image.setImageUrl(data.getImage(), mImageLoader);
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     String item = parent.getItemAtPosition(position).toString();
                     String price=priceitem.get(position);
-                    holders.price_item.setText(price);
+                    holders.price_item.setText(price );
 
                 }
 
@@ -336,7 +336,7 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
                 for(int i=0;i< list.size();i++){
                     IndexProductModel model=list.get(i);
 
-                    String item_price=model.getPrice();
+                    String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
                     holders.price_item.setText(item_price);
 
                 }
@@ -385,8 +385,8 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
                 IndexProductModel model=list.get(i);
                 String item_qty=model.getQuantity()+" "+model.getMeasurement();
 
-                String item_price=model.getPrice();
-
+                //String item_price=model.getPrice();
+                String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
                 holders.price_item_withoutspin.setText(item_price);
 
             }

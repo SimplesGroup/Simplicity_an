@@ -51,6 +51,7 @@
                 android:layout_weight=".80"
                 android:layout_height="wrap_content" />
             <ImageButton
+                android:visibility="gone"
                 android:layout_marginRight="4dp"
                 android:layout_marginBottom="5dp"
                 android:id="@+id/btn_product_favourites"
@@ -65,15 +66,15 @@
         <LinearLayout
             android:background="@color/searchviewhintcolor"
             android:orientation="vertical"
-
+            android:layout_gravity="center"
             android:layout_weight=".25"
             android:layout_width="0dp"
-            android:layout_height="80dp">
+            android:layout_height="30dp">
             <TextView
-                android:layout_marginTop="27dp"
+               android:layout_marginTop="8sp"
                 android:layout_gravity="center|center_vertical"
-                android:text="ADD TO CART"
-                android:textSize="11sp"
+                android:text="Add"
+                android:textSize="13sp"
                 android:id="@+id/text_product_addtocart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
