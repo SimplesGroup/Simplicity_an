@@ -159,7 +159,7 @@ android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/thumbnailone"
                     android:textColor="#79ffffff"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:id="@+id/textView_photodescription" />
 
                 <LinearLayout

@@ -11,6 +11,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,7 +30,10 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import simplicity_an.simplicity_an.DoitDescription;
 import simplicity_an.simplicity_an.R;
+import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
 public class CompanyList extends AppCompatActivity implements RequestInterface.CompanylistRequest {
@@ -60,6 +64,9 @@ public class CompanyList extends AppCompatActivity implements RequestInterface.C
 
     String title_name_item,category_id;
 private TextView textView_Noresult;
+
+
+private TextView mycart_text,cart_count_text,wishlist_text;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +96,11 @@ private TextView textView_Noresult;
         servicerequest=new Servicerequest(this);
 
         main_complist_layout = (RelativeLayout) findViewById(R.id.shop_layout);
+
+        mycart_text=(TextView)findViewById(R.id.mycart_textview) ;
+        cart_count_text=(TextView)findViewById(R.id.cart_main_count) ;
+        wishlist_text=(TextView)findViewById(R.id.buynow_textview) ;
+
         search = (android.support.v7.widget.SearchView) findViewById(R.id.searchview_main);
         search.setActivated(true);
         search.setQueryHint("Search for products/brands in Coimbatore");
@@ -142,6 +154,31 @@ private TextView textView_Noresult;
                 return false;
             }
         });
+
+        mycart_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sharedpreferences.contains(MYUSERID)) {
+
+                    myprofileid = sharedpreferences.getString(MYUSERID, "");
+                    myprofileid = myprofileid.replaceAll("\\D+","");
+                }
+                if(myprofileid!=null) {
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    MyCart frag;
+                    frag = new MyCart();
+                    frag.show(ft, "txn_tag");
+                }else {
+                    Intent signin=new Intent(getApplicationContext(),SigninpageActivity.class);
+                    signin.putExtra("ACTIVITY","EXP");
+                    startActivity(signin);
+
+                }
+            }
+        });
+
+
+
 
         if (colorcodes != null) {
             if (colorcodes.equals("#FFFFFFFF")) {

@@ -19,7 +19,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -30,13 +29,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import simplicity_an.simplicity_an.CustomVolleyRequest;
-import simplicity_an.simplicity_an.GoogleSignintwo;
 import simplicity_an.simplicity_an.OnLoadMoreListener;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
-public class ProductlistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageLoader mImageLoader;
 private final int VIEW_TYPE_ITEM_INDEX = 1;
 private final int VIEW_TYPE_ITEM_ONE = 2;
@@ -59,7 +57,7 @@ public static final String backgroundcolor = "color";
         String myprofileid,colorcodes,fontname;
 
     String qtyid;
-public ProductlistAdapter(Context mContext, List<IndexProductModel> productEnglishList){
+public MyCartAdapter(Context mContext, List<IndexProductModel> productEnglishList){
         this.context = mContext;
         this.shopdataList = productEnglishList;
         }
@@ -113,7 +111,7 @@ public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int
         Shopmodelview indexmodel = new Shopmodelview( index );
         return indexmodel;
         case VIEW_TYPE_ITEM_ONE:
-        ViewGroup type_one = (ViewGroup) mInflater.inflate ( R.layout.explore_feed_item_spinnerproduct, parent, false );
+        ViewGroup type_one = (ViewGroup) mInflater.inflate ( R.layout.explore_feed_mycartitem, parent, false );
         Shopmodel_one type_one_model = new Shopmodel_one( type_one );
         return type_one_model;
         case VIEW_TYPE_ITEM_TWO:
@@ -185,22 +183,42 @@ final IndexProductModel data = shopdataList.get(position);
         if (colorcodes.equals("#FFFFFFFF")) {
         holders.title_category.setTextColor(Color.BLACK);
         holders.price_item.setTextColor(Color.BLACK);
+        holders.remove_cart.setTextColor(Color.BLACK);
+        holders.add_to_wishlist.setTextColor(Color.BLACK);
+        holders.add_to_cart_plus.setTextColor(Color.BLACK);
+        holders.add_to_cart_count.setTextColor(Color.BLACK);
+        holders.add_to_cart_minus.setTextColor(Color.BLACK);
 
 
         } else {
         holders.title_category.setTextColor(Color.WHITE);
         holders.price_item.setTextColor(Color.WHITE);
+            holders.remove_cart.setTextColor(Color.WHITE);
+            holders.add_to_wishlist.setTextColor(Color.WHITE);
+            holders.add_to_cart_plus.setTextColor(Color.WHITE);
+            holders.add_to_cart_count.setTextColor(Color.WHITE);
+            holders.add_to_cart_minus.setTextColor(Color.WHITE);
         }
         String simplycity_title = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_pala = Typeface.createFromAsset(context.getAssets(), simplycity_title);
         if (fontname.equals("playfair")) {
         holders.title_category.setTypeface(tf_pala);
         holders.price_item.setTypeface(tf_pala);
+            holders.remove_cart.setTypeface(tf_pala);
+            holders.add_to_wishlist.setTypeface(tf_pala);
+            holders.add_to_cart_plus.setTypeface(tf_pala);
+            holders.add_to_cart_count.setTypeface(tf_pala);
+            holders.add_to_cart_minus.setTypeface(tf_pala);
 
         } else {
         Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
         holders.title_category.setTypeface(sanf);
         holders.price_item.setTypeface(sanf);
+            holders.remove_cart.setTypeface(sanf);
+            holders.add_to_wishlist.setTypeface(sanf);
+            holders.add_to_cart_plus.setTypeface(sanf);
+            holders.add_to_cart_count.setTypeface(sanf);
+            holders.add_to_cart_minus.setTypeface(sanf);
 
         }
 
@@ -313,38 +331,23 @@ public void onNothingSelected(AdapterView<?> parent) {
         }
         });
 
-        holders.add_to_cart.setOnClickListener(new View.OnClickListener() {
-@Override
-public void onClick(View v) {
-    if (sharedpreferences.contains(MYUSERID)) {
+      holders.remove_cart.setText("Remove");
+      holders.add_to_wishlist.setText("Add to Wishlist");
 
-        myprofileid = sharedpreferences.getString(MYUSERID, "");
-        myprofileid = myprofileid.replaceAll("\\D+","");
-    }
-    if(myprofileid!=null){
-        Servicerequest servicerequest=new Servicerequest();
-      List<AddtocartMsg> result = servicerequest.AddtocartandWhishlist("1","addtocart",myprofileid,data.getMain_category_id(),data.getCategory_id(),data.getCompany_id(),data.getProduct_id(),qtyid,context);
-        holders.add_to_cart.setTextColor(Color.RED);
+      holders.add_to_cart_plus.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
 
+          }
+      });
 
-    }else {
-
-
-        Intent sign=new Intent(context,SigninpageActivity.class);
-        sign.putExtra("ACTIVITY","EXP");
-        context.startActivity(sign);
-
+holders.add_to_cart_minus.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
 
     }
-        }
-        });
+});
 
-        holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
-@Override
-public void onClick(View v) {
-
-        }
-        });
 
 
 
@@ -571,7 +574,8 @@ public class Shopmodel_one extends RecyclerView.ViewHolder{
     private TextView title_category,price_item;
     private NetworkImageView product_image;
     private ImageButton wishlist_btn;
-    private TextView add_to_cart;
+    private TextView add_to_cart_plus, add_to_cart_count, add_to_cart_minus;
+    private TextView remove_cart,add_to_wishlist;
     private Spinner price_spinner;
     public Shopmodel_one(View itemView) {
         super(itemView);
@@ -579,7 +583,11 @@ public class Shopmodel_one extends RecyclerView.ViewHolder{
 
         title_category=(TextView)itemView.findViewById(R.id.text_product_title);
         price_item=(TextView)itemView.findViewById(R.id.text_product_price);
-        add_to_cart=(TextView)itemView.findViewById(R.id.text_product_addtocart);
+        add_to_cart_plus=(TextView)itemView.findViewById(R.id.text_product_addtocart_plus);
+        add_to_cart_count=(TextView)itemView.findViewById(R.id.text_product_addtocart_count);
+        add_to_cart_minus=(TextView)itemView.findViewById(R.id.text_product_addtocart_minus);
+        remove_cart=(TextView)itemView.findViewById(R.id.text_remove);
+        add_to_wishlist=(TextView)itemView.findViewById(R.id.text_Addtowhishlist) ;
         wishlist_btn=(ImageButton)itemView.findViewById(R.id.btn_product_favourites);
         product_image=(NetworkImageView)itemView.findViewById(R.id.product_imgae);
         price_spinner=(Spinner)itemView.findViewById(R.id.spin_product_price_list);

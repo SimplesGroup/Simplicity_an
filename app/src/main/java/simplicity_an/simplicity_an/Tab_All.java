@@ -1323,13 +1323,6 @@ Log.e("URL","hh"+itemmodel.getYoutubelink());
                                                 JSONArray jsonArray=new JSONArray(data.toString());
 
 
-                                                /*JSONObject data = new JSONObject(response.toString());
-                                                String dir = data.getString("result");
-                                                Log.d("RES", dir);
-                                                JSONObject object=new JSONObject(dir);
-                                                String dir2=object.getString("message");
-                                                Log.d("RES", dir2);*/
-
                                                 for (int i = 0; i < jsonArray.length(); i++) {
                                                     JSONObject obj = (JSONObject) jsonArray.get(i);
                                                     String dirs = obj.getString("like_type");

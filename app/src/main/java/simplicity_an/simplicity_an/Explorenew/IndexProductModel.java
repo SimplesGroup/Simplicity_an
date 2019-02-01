@@ -14,7 +14,7 @@ private String wastage,netweight,net_price,material_price;
 private String stonename,stonecut,stonecolor,stoneclarity,stoneweight,stoneprice;
     private int quantity_id,offer_price;
     private int visit_list,cart_list;
-
+private String count,cart_id,qty_id;
     private  String item_arrayname;
     private List<IndexProductModel>pricelist;
     private List<IndexProductModel>stonelist;
@@ -25,6 +25,30 @@ private String stonename,stonecut,stonecolor,stoneclarity,stoneweight,stoneprice
 
     public void setStonelist(List<IndexProductModel> stonelist) {
         this.stonelist = stonelist;
+    }
+
+    public String getQty_id() {
+        return qty_id;
+    }
+
+    public void setQty_id(String qty_id) {
+        this.qty_id = qty_id;
+    }
+
+    public String getCart_id() {
+        return cart_id;
+    }
+
+    public void setCart_id(String cart_id) {
+        this.cart_id = cart_id;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
     }
 
     public String getStonename() {

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
@@ -297,6 +298,7 @@ public class ProductList extends AppCompatActivity implements RequestInterface.P
 
 
 
+
        spinner_subcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -478,7 +480,13 @@ if(listsubcat.size()==0){
         title_sub.add(title_data);
         ids_sub.add(id_data);
     }
+    if (colorcodes.equals("#FFFFFFFF")) {
+        spinner_subcategory.getBackground().setColorFilter(getApplicationContext().getResources().getColor(R.color.Black), PorterDuff.Mode.SRC_ATOP);
 
+    }else {
+        spinner_subcategory.getBackground().setColorFilter(getApplicationContext().getResources().getColor(R.color.whitecolor), PorterDuff.Mode.SRC_ATOP);
+
+    }
 
     adapter = new ArrayAdapter<String>(this, R.layout.explore_my_spinner_style, title_sub) {
 
@@ -519,7 +527,7 @@ if(listsubcat.size()==0){
             return v;
         }
     };
-
+    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
     spinner_subcategory.setAdapter(adapter);
 
@@ -537,7 +545,13 @@ if(listsubcat.size()==0){
             spinner_lowcategory.setVisibility(View.GONE);
 
         }else {
+            if (colorcodes.equals("#FFFFFFFF")) {
+                spinner_lowcategory.getBackground().setColorFilter(getApplicationContext().getResources().getColor(R.color.Black), PorterDuff.Mode.SRC_ATOP);
 
+            }else {
+                spinner_lowcategory.getBackground().setColorFilter(getApplicationContext().getResources().getColor(R.color.whitecolor), PorterDuff.Mode.SRC_ATOP);
+
+            }
             spinner_lowcategory.setVisibility(View.VISIBLE);
 title_low.add("CATEGORY");
             for (int i = 0; i < listlowcat.size(); i++) {

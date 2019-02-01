@@ -75,7 +75,7 @@ String activity,gcmids;
     public static final String USEREMAIL= "myprofileemail";
 ProgressDialog pdialog;
     String username,userimage,user_email,language_data;
-
+String activity_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +97,8 @@ ProgressDialog pdialog;
             // Log.e("IMAGEURL:",profilepicturefromfacebook);
 
         }
-
+        Intent get=getIntent();
+        activity_name=get.getStringExtra("ACTIVITY");
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -110,6 +111,7 @@ ProgressDialog pdialog;
 
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
+
 
 
     }
@@ -129,7 +131,7 @@ ProgressDialog pdialog;
 
 
     //After the signing we are calling this function
-    private void handleSignInResult(GoogleSignInResult result) {
+    public void handleSignInResult(GoogleSignInResult result) {
         //If the login succeed
         if (result.isSuccess()) {
 
@@ -139,133 +141,8 @@ ProgressDialog pdialog;
             pdialog.show();
             pdialog.setContentView(R.layout.custom_progressdialog);
             pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            Log.e("UserID","stated");
 
-           /* final StringRequest signintwo=new StringRequest(Request.Method.POST, UPLOAD_CHECK_USER, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-Log.e("UserID","empstart"+response.toString());
-                if(response.toString().trim().equalsIgnoreCase("no")){
-                    pdialog.dismiss();
-                    StringRequest upload=new StringRequest(Request.Method.POST, UPLOAD_URL, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String res) {
-                            if(res.toString().trim().equalsIgnoreCase("no")){
-                                Log.e("UserID","no cancel");
-                            }else {
-                                Log.e("UserIDnew", res);
-                                if(res==""||res==null||res.equalsIgnoreCase("no")){
-                                    Log.e("UserID","empty"+res);
-                                }else {
-                                    Log.e("UserIDnew", res);
-                                    String[] array = res.split(",");
-
-                                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                                    editor.putString(MYUSERID,array[0]);
-                                    editor.putString(USERNAME,array[1]);
-                                    editor.putString(USERIMAGE,array[2]);
-                                    editor.putString(USERMAILID,array[3].toString().trim());
-                                    Log.e("EMAIL,",array[3].toString());
-                                    editor.commit();
-                                    if (sharedpreferences.contains(USERNAME)) {
-                                        // name.setText(sharedpreferences.getString(Name, ""));
-                                        username=sharedpreferences.getString(USERNAME,"");
-                                        // Toast.makeText(SigninComplete.this, sharedpreferences.getString(GcmId,""), Toast.LENGTH_SHORT).show();
-                                    }
-                                    if (sharedpreferences.contains(USERIMAGE)) {
-                                        // name.setText(sharedpreferences.getString(Name, ""));
-                                        userimage=sharedpreferences.getString(USERIMAGE,"");
-                                        // Toast.makeText(SigninComplete.this, sharedpreferences.getString(GcmId,""), Toast.LENGTH_SHORT).show();
-                                    }
-                                    if (sharedpreferences.contains(USERMAILID)) {
-                                        // name.setText(sharedpreferences.getString(Name, ""));
-                                        user_email=sharedpreferences.getString(USERMAILID,"");
-                                        // Toast.makeText(SigninComplete.this, sharedpreferences.getString(GcmId,""), Toast.LENGTH_SHORT).show();
-                                    }
-                                    Log.e("EMAIL,","data"+user_email+userimage+username);
-                                    if(language_data.equals("English")) {
-                                        Intent main = new Intent(getApplicationContext(), MainPageEnglish.class);
-                                        startActivity(main);
-                                    }else {
-                                        Intent main = new Intent(getApplicationContext(), MainPageTamil.class);
-                                        startActivity(main);
-                                    }
-                                }
-
-                            }
-
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
-                    }){
-                        protected Map<String ,String> getParams()throws AuthFailureError{
-                          Map<String,String> params=new Hashtable<String, String>();
-
-                            params.put(KEY_EMAIL,acct.getEmail());
-                            params.put(KEY_NAME,acct.getDisplayName());
-                            params.put(KEY_PROFILEIMAGE,acct.getPhotoUrl().toString());
-
-                            params.put(KEY_GCM,gcmids);
-                            return  params;
-                        }
-                    };
-                    RequestQueue requestQueue = Volley.newRequestQueue(GoogleSignintwo.this);
-
-
-                    //Adding request to the queue
-                    requestQueue.add(upload);
-
-                }else {
-                    pdialog.dismiss();
-                    if(response==""||response==null){
-                        Log.e("UserID","emptycheck"+response);
-                    }else {
-                        Log.e("UserIDcheck","no cancel");
-                        Log.e("UserIDcheck", response);
-                        String[] array = response.split(",");
-
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(MYUSERID,array[0]);
-                        editor.putString(USERNAME,array[1]);
-                        editor.putString(USERIMAGE,array[2]);
-                        String emails=array[3].toString();
-                        editor.putString(USERMAILID,array[3].toString().trim());
-                        editor.commit();
-                        if(language_data.equals("English")) {
-                            Intent main = new Intent(getApplicationContext(), MainPageEnglish.class);
-                            startActivity(main);
-                        }else {
-                            Intent main = new Intent(getApplicationContext(), MainPageTamil.class);
-                            startActivity(main);
-                        }
-                    }
-
-
-
-                }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            }){
-                protected Map<String,String> getParams() throws AuthFailureError{
-                    Map<String ,String> params=new Hashtable<String, String>();
-Log.e("Email",gcmids);
-                    params.put(EMAILID_CHECK,acct.getEmail());
-                    params.put(KEY_GCM,gcmids);
-                    return params;
-                }
-            };
-            RequestQueue requestQueue = Volley.newRequestQueue(GoogleSignintwo.this);
-
-
-            //Adding request to the queue
-            requestQueue.add(signintwo);
-*/
             StringRequest upload=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String res) {
@@ -323,13 +200,20 @@ Log.e("Email",gcmids);
                                 // Toast.makeText(SigninComplete.this, sharedpreferences.getString(GcmId,""), Toast.LENGTH_SHORT).show();
                             }
                             Log.e("EMAIL,","data"+user_email+userimage+username);
-                            if(language_data.equals("English")) {
-                                Intent main = new Intent(getApplicationContext(), MainPageEnglish.class);
-                                startActivity(main);
+
+                            if(activity_name!=null){
+                            onBackPressed();
                             }else {
-                                Intent main = new Intent(getApplicationContext(), MainPageTamil.class);
-                                startActivity(main);
+                                if(language_data.equals("English")) {
+                                    Intent main = new Intent(getApplicationContext(), MainPageEnglish.class);
+                                    startActivity(main);
+                                }else {
+                                    Intent main = new Intent(getApplicationContext(), MainPageTamil.class);
+                                    startActivity(main);
+                                }
                             }
+
+
                         }
 
                     }
@@ -372,5 +256,8 @@ Log.e("Email",gcmids);
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

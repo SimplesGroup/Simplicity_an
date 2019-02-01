@@ -99,7 +99,9 @@ public class SigninpageActivity extends android.app.Activity {
             @Override
             public void onClick(View v) {
                 Intent facebook=new Intent(getApplicationContext(),FaceBooklogin.class);
+                facebook.putExtra("ACTIVITY",activity_name);
                 startActivity(facebook);
+                finish();
             }
         });
         googlesignin.setOnClickListener(new View.OnClickListener() {
@@ -107,21 +109,27 @@ public class SigninpageActivity extends android.app.Activity {
             public void onClick(View v) {
 
                 Intent gmailsignin=new Intent(getApplicationContext(),GoogleSignintwo.class);
+                gmailsignin.putExtra("ACTIVITY",activity_name);
                 startActivity(gmailsignin);
+                finish();
             }
         });
         gmail_login_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent gmailsignin=new Intent(getApplicationContext(),GoogleSignintwo.class);
+                gmailsignin.putExtra("ACTIVITY",activity_name);
                 startActivity(gmailsignin);
+                finish();
             }
         });
         facebook_login_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent facebook=new Intent(getApplicationContext(),FaceBooklogin.class);
+                facebook.putExtra("ACTIVITY",activity_name);
                 startActivity(facebook);
+                finish();
             }
         });
         closebutton.setOnClickListener(new View.OnClickListener() {

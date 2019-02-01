@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -34,8 +36,10 @@ import java.util.List;
 
 import simplicity_an.simplicity_an.AdvertisementPage;
 import simplicity_an.simplicity_an.CustomVolleyRequest;
+import simplicity_an.simplicity_an.GoogleSignintwo;
 import simplicity_an.simplicity_an.OnLoadMoreListener;
 import simplicity_an.simplicity_an.R;
+import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Tab_new_news;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
@@ -61,6 +65,7 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public static final String MYUSERID= "myprofileid";
     public static final String backgroundcolor = "color";
     String myprofileid,colorcodes,fontname;
+    String qtyid;
     public IndexAdapter(Context mContext, List<IndexProductModel> productEnglishList){
         this.context = mContext;
         this.shopdataList = productEnglishList;
@@ -139,6 +144,11 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 Context.MODE_PRIVATE);
         fontname=sharedpreferences.getString(Fonts.FONT,"");
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        if (sharedpreferences.contains(MYUSERID)) {
+
+            myprofileid = sharedpreferences.getString(MYUSERID, "");
+            myprofileid = myprofileid.replaceAll("\\D+","");
+        }
         if (holder instanceof Shopmodelview) {
         Shopmodelview    holders= (Shopmodelview) holder;
             if (mImageLoader == null)
@@ -204,6 +214,7 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     holders.title_category.setText(data.getProduct_title());
                     List<IndexProductModel>list=data.getPricelist();
                     List<String>item=new ArrayList<>();
+            final ArrayList<String>qtylist=new ArrayList<>();
             final ArrayList<String>priceitem=new ArrayList<>();
                     for(int i=0;i< list.size();i++){
                         IndexProductModel model=list.get(i);
@@ -212,10 +223,19 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                         String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
                         priceitem.add(item_price);
+                        String qid=String.valueOf(model.getQuantity_id());
+                        qtylist.add(qid);
 
                     }
 holders.product_image.setImageUrl(data.getImage(), mImageLoader);
+            holders.product_image.setImageUrl(data.getImage(), mImageLoader);
+            if (colorcodes.equals("#FFFFFFFF")) {
+                holders.price_spinner.getBackground().setColorFilter(context.getResources().getColor(R.color.Black), PorterDuff.Mode.SRC_ATOP);
 
+            }else {
+                holders.price_spinner.getBackground().setColorFilter(context.getResources().getColor(R.color.whitecolor), PorterDuff.Mode.SRC_ATOP);
+
+            }
             ArrayAdapter<String> adapter =
                     new ArrayAdapter<String>(context, R.layout.explore_my_spinner_style, item)
                     {
@@ -226,12 +246,12 @@ holders.product_image.setImageUrl(data.getImage(), mImageLoader);
                             ((TextView) v).setTextSize(16);
                             if (colorcodes.equals("#FFFFFFFF")) {
                                 ((TextView) v).setTextColor(
-                                        context.getResources().getColorStateList(R.color.Black)
-                                );
+                                        context.getResources().getColorStateList(R.color.Black));
+
                             }else {
                                 ((TextView) v).setTextColor(
-                                        context.getResources().getColorStateList(R.color.white)
-                                );
+                                        context.getResources().getColorStateList(R.color.white));
+
                             }
 
                             return v;
@@ -263,7 +283,7 @@ holders.product_image.setImageUrl(data.getImage(), mImageLoader);
            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, item);
 
             // Drop down layout style - list view with radio button
-           // dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+          adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
             // attaching data adapter to spinner
             holders.price_spinner.setAdapter(adapter);
@@ -273,7 +293,7 @@ holders.product_image.setImageUrl(data.getImage(), mImageLoader);
                     String item = parent.getItemAtPosition(position).toString();
                     String price=priceitem.get(position);
                     holders.price_item.setText(price );
-
+                    qtyid=qtylist.get(position);
                 }
 
                 @Override
@@ -285,6 +305,25 @@ holders.product_image.setImageUrl(data.getImage(), mImageLoader);
 holders.add_to_cart.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
+        if (sharedpreferences.contains(MYUSERID)) {
+
+            myprofileid = sharedpreferences.getString(MYUSERID, "");
+            myprofileid = myprofileid.replaceAll("\\D+","");
+        }
+        if(myprofileid!=null){
+            Servicerequest servicerequest=new Servicerequest();
+            servicerequest.AddtocartandWhishlist("1","addtocart",myprofileid,data.getMain_category_id(),data.getCategory_id(),data.getCompany_id(),data.getProduct_id(),qtyid,context);
+            List<AddtocartMsg> result = servicerequest.AddtocartandWhishlist("1","addtocart",myprofileid,data.getMain_category_id(),data.getCategory_id(),data.getCompany_id(),data.getProduct_id(),qtyid,context);
+            holders.add_to_cart.setTextColor(Color.RED);
+        }else {
+            Intent sign=new Intent(context,SigninpageActivity.class);
+            sign.putExtra("ACTIVITY","EXP");
+            context.startActivity(sign);
+
+
+
+
+        }
 
     }
 });
@@ -352,7 +391,7 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
 
         else if (holder instanceof Shopmodel_three){
 
-            Shopmodel_three    holders= (Shopmodel_three) holder;
+        final     Shopmodel_three    holders= (Shopmodel_three) holder;
             if (mImageLoader == null)
                 mImageLoader = CustomVolleyRequest.getInstance(context).getImageLoader();
             final IndexProductModel data = shopdataList.get(position);
@@ -392,6 +431,32 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
             }
             holders.product_image_withoutspin.setImageUrl(data.getImage(), mImageLoader);
 
+
+            holders.add_to_cart_withoutspin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (sharedpreferences.contains(MYUSERID)) {
+
+                        myprofileid = sharedpreferences.getString(MYUSERID, "");
+                        myprofileid = myprofileid.replaceAll("\\D+","");
+                    }
+                    if(myprofileid!=null){
+                        Servicerequest servicerequest=new Servicerequest();
+
+                        List<AddtocartMsg> result = servicerequest.AddtocartandWhishlist("1","addtocart",myprofileid,data.getMain_category_id(),data.getCategory_id(),data.getCompany_id(),data.getProduct_id(),qtyid,context);
+                        holders.add_to_cart_withoutspin.setTextColor(Color.RED);
+
+                    }else {
+                        // Toast.makeText(context,"User not logged in",Toast.LENGTH_LONG).show();
+
+                        Intent sign=new Intent(context,SigninpageActivity.class);
+                        sign.putExtra("ACTIVITY","EXP");
+                        context.startActivity(sign);
+
+
+                    }
+                }
+            });
 
 
 

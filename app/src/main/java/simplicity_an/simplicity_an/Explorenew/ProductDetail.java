@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
@@ -37,6 +38,7 @@ import java.util.List;
 
 import simplicity_an.simplicity_an.CustomVolleyRequest;
 import simplicity_an.simplicity_an.R;
+import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
 public class ProductDetail extends AppCompatActivity implements RequestInterface.Productdetail {
@@ -292,11 +294,20 @@ recyclerView_stone.setAdapter(productdetailstoneAdapter);
         addtocart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedpreferences.contains(MYUSERID)) {
+
+                    myprofileid = sharedpreferences.getString(MYUSERID, "");
+                    myprofileid = myprofileid.replaceAll("\\D+","");
+                }
                 if(myprofileid!=null){
-                    servicerequest.AddtocartandWhishlist("1","addtocart",myprofileid,maincateegoryid,categoryid,companyid,productsid,qtyid,getApplicationContext());
+                   List<AddtocartMsg> result=   servicerequest.AddtocartandWhishlist("1","addtocart",myprofileid,maincateegoryid,categoryid,companyid,productsid,qtyid,getApplicationContext());
+
+                        addtocart.setTextColor(Color.RED);
 
                 }else {
-                    Toast.makeText(getApplicationContext(),"User not logged in",Toast.LENGTH_LONG).show();
+                    Intent sign=new Intent(getApplicationContext(),SigninpageActivity.class);
+                    sign.putExtra("ACTIVITY","EXP");
+                    startActivity(sign);
                 }
 
 
@@ -309,7 +320,9 @@ recyclerView_stone.setAdapter(productdetailstoneAdapter);
                     servicerequest.AddtocartandWhishlist("1","addtowishlist",myprofileid,maincateegoryid,categoryid,companyid,productsid,qtyid,getApplicationContext());
 
                 }else {
-                    Toast.makeText(getApplicationContext(),"User not logged in",Toast.LENGTH_LONG).show();
+                    Intent sign=new Intent(getApplicationContext(),SigninpageActivity.class);
+                    sign.putExtra("ACTIVITY","EXP");
+                   startActivity(sign);
                 }
             }
         });
@@ -437,6 +450,16 @@ if(pricelist.size()==0){
     productdetails_title.setText(model.getProduct_title());
     productdetails_desc_label.setText("Description");
     productdetails_desc.setText(model.getProduct_description());
+
+
+    if (colorcodes.equals("#FFFFFFFF")) {
+        spinner_pricelist.getBackground().setColorFilter(getApplicationContext().getResources().getColor(R.color.Black), PorterDuff.Mode.SRC_ATOP);
+
+    }else {
+        spinner_pricelist.getBackground().setColorFilter(getApplicationContext().getResources().getColor(R.color.whitecolor), PorterDuff.Mode.SRC_ATOP);
+
+    }
+
     ArrayAdapter<String> adapter =
             new ArrayAdapter<String>(getApplicationContext(), R.layout.explore_my_spinner_style, item)
             {
@@ -449,10 +472,12 @@ if(pricelist.size()==0){
                         ((TextView) v).setTextColor(
                                 getApplicationContext().getResources().getColorStateList(R.color.Black)
                         );
+
                     }else {
                         ((TextView) v).setTextColor(
                                 getApplicationContext().getResources().getColorStateList(R.color.white)
                         );
+
                     }
 
                     return v;
@@ -481,7 +506,7 @@ if(pricelist.size()==0){
                 }
             };
 
-
+    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
     spinner_pricelist.setAdapter(adapter);
     spinner_pricelist.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

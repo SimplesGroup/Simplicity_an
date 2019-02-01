@@ -26,7 +26,7 @@ import simplicity_an.simplicity_an.Utils.Configurl;
 
 public class Servicerequest {
 private   List<IndexProductModel>list=new ArrayList<>();
-
+   private List<String>result;
 private   List<IndexProductModel>categorylist=new ArrayList<>();
 private  List<IndexProductModel>companylist=new ArrayList<>();
 private  List<IndexProductModel>productlist=new ArrayList<>();
@@ -37,6 +37,12 @@ private RequestInterface requestInterface;
 private RequestInterface.CompanylistRequest requestcompanylist;
 private RequestInterface.Productlist requestProductlist;
 private RequestInterface.Productdetail requestProductdetail;
+private List<AddtocartMsg>listcartmsg=new ArrayList<>();
+    String status;
+public Servicerequest(){
+
+}
+
  public Servicerequest(RequestInterface requestInterfaces){
      this.requestInterface=requestInterfaces;
  }
@@ -1035,62 +1041,38 @@ requestProductlist.Lowcategory(lowcatlist);
 
 
 
-    public void AddtocartandWhishlist(final String lang, final String rtype,final String profileid, final String maincatid,final String categoryid,final String companyid,final String productid,final String qtyid, Context context){
+    public List<AddtocartMsg> AddtocartandWhishlist(final String lang, final String rtype,final String profileid, final String maincatid,final String categoryid,final String companyid,final String productid,final String qtyid, Context context){
         vollRequestQueue=Volley.newRequestQueue(context);
 
         StringRequest company_request=new StringRequest(Request.Method.POST, Configurl.exploreurl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e("Response","addcart"+response.toString());
-
-                lowcatlist.clear();
-                /*try{
+result=new ArrayList<>();
+                result.clear();
+                listcartmsg.clear();
+                try{
 
                     JSONObject object=new JSONObject(response.toString());
+                    status=object.getString("status");
 
-                    JSONObject jsonObject=object.optJSONObject("result");
+                    String msg=object.getString("message");
+                    Log.e("Response",status.toString()+msg);
+                    result.add(status);
+                    result.add(msg);
+                    AddtocartMsg model=new AddtocartMsg();
+                    model.setMsg(msg);
+                    model.setStatus(status);
+                    listcartmsg.add(model);
+                   // JSONObject jsonObject=object.optJSONObject("result");
 
-                    String datas=jsonObject.optString("low_category_list");
-
-
-
-
-
-                    JSONArray category_array = new JSONArray(datas.toString());
-
-
-
-                    for (int i = 0; i < category_array.length(); i++) {
-                        JSONObject obj = (JSONObject) category_array.get(i);
-
-                        IndexProductModel model = new IndexProductModel();
-
-                        model.setLow_category_id(obj.getString("low_category_id"));
-                        model.setLow_category_title(obj.getString("low_category_title"));
-                        Log.e("Response", "shopcatdata" + obj.getString("low_category_title"));
-
-
-
-
-                        lowcatlist.add(model);
-                    }
-
-                    requestProductlist.Lowcategory(lowcatlist);
+Log.e("Response",result.toString());
 
 
 
                 }catch (JSONException e){
 
                 }
-
-
-
-                Log.e("Response","from+"+list.size());
-*/
-
-
-
-
 
             }
         }, new Response.ErrorListener() {
@@ -1121,7 +1103,7 @@ requestProductlist.Lowcategory(lowcatlist);
             }
         };
         vollRequestQueue.add(company_request);
-
+return listcartmsg;
 
     }
 

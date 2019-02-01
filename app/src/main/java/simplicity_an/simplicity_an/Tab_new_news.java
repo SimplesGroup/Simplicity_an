@@ -68,6 +68,7 @@ import simplicity_an.simplicity_an.HorizontalAdapters.Horizontaladapter;
 import simplicity_an.simplicity_an.HorizontalAdapters.VerticalAdapters;
 import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
 import simplicity_an.simplicity_an.MusicPlayer.RadioNotificationplayer;
+import simplicity_an.simplicity_an.Tamil.Tab_new_newstamil;
 import simplicity_an.simplicity_an.Utils.ChangeFont;
 import simplicity_an.simplicity_an.Utils.Configurl;
 import simplicity_an.simplicity_an.Utils.Fonts;
@@ -1000,7 +1001,7 @@ String fontname;
 
     static class Userviewholdertaball extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView likescount,dislikescount,commentscount,title_item,item_type_name,date;
-  public       TextView shortdescription,editername;
+        public   TextView shortdescription,editername;
         public Button share_button,comment_button,likes_button,save_button;
         ImageButton share_imagebutton,like_imagebutton,comment_imagebutton,arrow_imagebutton;
         public NetworkImageView item_image;
@@ -1214,30 +1215,30 @@ String fontname;
 
 
     }
- public class Horizontalviewholder extends RecyclerView.ViewHolder{
-RecyclerView horizontal_recylerview;
-TextView text_title,seeall_text;
-    public Horizontalviewholder(View itemView) {
-        super(itemView);
-        horizontal_recylerview=(RecyclerView)itemView.findViewById(R.id.horizontal_recylerview);
+    public class Horizontalviewholder extends RecyclerView.ViewHolder{
+        RecyclerView horizontal_recylerview;
+        TextView text_title,seeall_text;
+        public Horizontalviewholder(View itemView) {
+            super(itemView);
+            horizontal_recylerview=(RecyclerView)itemView.findViewById(R.id.horizontal_recylerview);
 
-        text_title=(TextView)itemView.findViewById(R.id.title_horizontal);
-        seeall_text=(TextView)itemView.findViewById(R.id.seeall_horizontal);
+            text_title=(TextView)itemView.findViewById(R.id.title_horizontal);
+            seeall_text=(TextView)itemView.findViewById(R.id.seeall_horizontal);
 
+        }
     }
-}
-public   class Horizontalphotostory extends RecyclerView.ViewHolder{
-    RecyclerView horizontal_recylerview;
-    TextView text_title,seeall_text;
-    public Horizontalphotostory(View itemView) {
-        super(itemView);
-        horizontal_recylerview=(RecyclerView)itemView.findViewById(R.id.horizontal_recylerview);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-        horizontal_recylerview.setLayoutManager(linearLayoutManager);
-        text_title=(TextView)itemView.findViewById(R.id.title_horizontal);
-        seeall_text=(TextView)itemView.findViewById(R.id.seeall_horizontal);
+    public   class Horizontalphotostory extends RecyclerView.ViewHolder{
+        RecyclerView horizontal_recylerview;
+        TextView text_title,seeall_text;
+        public Horizontalphotostory(View itemView) {
+            super(itemView);
+            horizontal_recylerview=(RecyclerView)itemView.findViewById(R.id.horizontal_recylerview);
+            LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+            horizontal_recylerview.setLayoutManager(linearLayoutManager);
+            text_title=(TextView)itemView.findViewById(R.id.title_horizontal);
+            seeall_text=(TextView)itemView.findViewById(R.id.seeall_horizontal);
+        }
     }
-}
     static class LoadingViewHolder extends RecyclerView.ViewHolder {
         public ProgressBar progressBar;
 
@@ -1247,31 +1248,30 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
         }
     }
 
- public    class Recyclerviewtaballadapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public    class Recyclerviewtaballadapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         LayoutInflater inflater;
 
         ImageLoader mImageLoader;
         private final int VIEW_TYPE_ITEM = 1;
         private final int VIEW_TYPE_EVENT=6;
-     private final int VIEW_TYPE_SPECIAL=8;
-     private final int VIEW_TYPE_BEYOND=9;
+        private final int VIEW_TYPE_SPECIAL=8;
+        private final int VIEW_TYPE_BEYOND=9;
         private final int VIEW_TYPE_LOADING = 3;
         private final int VIEW_TYPE_VIDEO=4;
         MediaPlayer mediaPlayer;
         boolean loading;
         OnLoadMoreListener onLoadMoreListener;
         private final int VIEW_TYPE_PHOTOSTORY = 2;
-     private final int VIEW_TYPE_PHOTOSTORY_NEW = 7;
+        private final int VIEW_TYPE_PHOTOSTORY_NEW = 7;
         private int visibleThreshold = 5;
         private int lastVisibleItem, totalItemCount;
         Context context;
         private  int currentvisiblecount;
         String urlaudio;
-      Userviewholdertaball userViewHolder;
-   private    List<ItemModel>modelList=new ArrayList<>();
+        private List<ItemModel>modelList=new ArrayList<>();
         @Override
         public int getItemCount() {
-            return modelList.size();
+            return modelLists.size();
         }
         public Recyclerviewtaballadapter(List<ItemModel> students, RecyclerView recyclerView) {
             modelList = students;
@@ -1325,7 +1325,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     return horizontalsmalldesign;
                 case VIEW_TYPE_SPECIAL:
                     ViewGroup viewGroupspl=(ViewGroup)mInflater.inflate(R.layout.horizontal_vertical_recyclerview,parent,false);
-                    Horizontalspecial horizontalspecial=new Horizontalspecial(viewGroupspl);
+                   Horizontalspecial horizontalspecial=new Horizontalspecial(viewGroupspl);
                     return horizontalspecial;
                 case VIEW_TYPE_BEYOND:
                     ViewGroup viewGroupbeyond=(ViewGroup)mInflater.inflate(R.layout.horizontal_vertical_recyclerview,parent,false);
@@ -1333,19 +1333,19 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     return horizontalbeyond;
                 case VIEW_TYPE_PHOTOSTORY:
                     ViewGroup vImages = (ViewGroup) mInflater.inflate ( R.layout.feed_item_versionfour_photostory, parent, false );
-                   UserViewHolderphotostories vhImages = new UserViewHolderphotostories( vImages );
+                    UserViewHolderphotostories vhImages = new UserViewHolderphotostories( vImages );
                     return vhImages;
                 case VIEW_TYPE_PHOTOSTORY_NEW:
-                    ViewGroup vImagesnew = (ViewGroup) mInflater.inflate ( R.layout.horizontal_recylerview_other, parent, false );
+                    ViewGroup vImagesnew = (ViewGroup) mInflater.inflate ( R.layout.horizontal_recyclerview, parent, false );
                     Horizontalphotostory vhImagesnew = new Horizontalphotostory( vImagesnew );
                     return vhImagesnew;
-              case VIEW_TYPE_VIDEO:
+                case VIEW_TYPE_VIDEO:
                     ViewGroup vImageradio = ( ViewGroup ) mInflater.inflate ( R.layout.horizontal_recyclerview, parent, false );
-                    Horizontalviewholder vhImageradio = new Horizontalviewholder ( vImageradio );
+                    Horizontalviewholder vhImageradio = new Horizontalviewholder( vImageradio );
                     return vhImageradio;
                 case VIEW_TYPE_LOADING:
                     ViewGroup vImageloading = (ViewGroup) mInflater.inflate ( R.layout.layout_loading_item, parent, false );
-                  LoadingViewHolder vhImageloading = new LoadingViewHolder( vImageloading );
+                    LoadingViewHolder vhImageloading = new LoadingViewHolder( vImageloading );
                     return vhImageloading;
             }
 
@@ -1354,12 +1354,10 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
         @SuppressLint("ResourceAsColor")
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            sharedpreferences = getActivity(). getSharedPreferences(mypreference,
-                    Context.MODE_PRIVATE);
-            colorcodes=sharedpreferences.getString(backgroundcolor,"");
+            fontname = sharedpreferences.getString(Fonts.FONT,"");
             if (holder instanceof Userviewholdertaball) {
 
-                 userViewHolder = (Userviewholdertaball) holder;
+                final Userviewholdertaball userViewHolder = (Userviewholdertaball) holder;
                 fontname=sharedpreferences.getString(Fonts.FONT,"");
                 String simplycity_title_fontPath = "fonts/playfairDisplayRegular.ttf";
                 final Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
@@ -1664,7 +1662,6 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                                     userViewHolder.play.setVisibility(View.GONE);
                                 }
                                 break;
-
                             case R.id.alltab_likescount:
                                 FragmentTransaction ftlike = getChildFragmentManager().beginTransaction();
                                 LikeListFragment frags;
@@ -1685,43 +1682,45 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                                         userViewHolder.like_imagebutton.setTag("heartfullred");
                                     }else if(backgroundImageName.equals("heartfullred")) {
                                         userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                                        userViewHolder.like_imagebutton.setTag("heart");
                                     }else {
 
                                     }
-                                    StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
+
+                                    StringRequest likes=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
                                             String res;
                                             Log.e("RES",response.toString());
                                             try {
                                                 Log.e("RES", "START");
-                                                JSONObject data = new JSONObject(response.toString());
-                                                String dir = data.getString("result");
-                                                Log.d("RES", dir);
-                                                JSONObject object=new JSONObject(dir);
-                                                String dir2=object.getString("message");
-                                                Log.d("RES", dir2);
 
-                                                for (int i = 0; i < object.length(); i++) {
+                                                JSONObject object=new JSONObject(response.toString());
+                                                JSONArray array=object.getJSONArray("result");
+                                                String data=array.optString(1);
+                                                JSONArray jsonArray=new JSONArray(data.toString());
 
-                                                    String dirs = object.getString("message");
+
+                                                for (int i = 0; i < jsonArray.length(); i++) {
+                                                    JSONObject obj = (JSONObject) jsonArray.get(i);
+                                                    String dirs = obj.getString("like_type");
 
                                                     Log.d("RES", dirs);
-                                                    res=object.getString("message");
-                                                    like_finalvalues=object.getInt("total_likes");
+                                                    res=object.getString("like_type");
+                                                    like_finalvalues=object.getInt("like_count");
                                                     Log.e("RES",res.toString());
 
 
                                                     if(res.equals("Liked")){
                                                         System.out.println(itemmodel.getId());
-                                                        like_finalvalues=object.getInt("total_likes");
+                                                        like_finalvalues=object.getInt("like_count");
                                                         Log.e("RES",String.valueOf(like_finalvalues));
 
 
 
                                                         userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
                                                     }else if(res.equals("Like")){
-                                                        like_finalvalues=object.getInt("total_likes");
+                                                        like_finalvalues=object.getInt("like_count");
                                                         Log.e("RES","dis"+String.valueOf(like_finalvalues));
 
 
@@ -1737,7 +1736,6 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                                             }catch (JSONException e){
 
                                             }
-
                                         }
                                     }, new Response.ErrorListener() {
                                         @Override
@@ -1748,9 +1746,13 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                                         protected Map<String,String> getParams()throws AuthFailureError{
                                             Map<String,String> param=new Hashtable<String, String>();
                                             String ids=itemmodel.getId();
-                                            param.put(QID, ids);
-                                            param.put(USERID, myprofileid);
-                                            param.put(QTYPE, itemmodel.getQtypemain());
+                                            param.put("Key","Simplicity");
+                                            param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                                            param.put("rtype","like");
+                                            param.put("id", ids);
+                                            Log.e("RESS",myprofileid);
+                                            param.put("user_id", myprofileid);
+                                            param.put("qtype", itemmodel.getQtypemain());
                                             return param;
                                         }
                                     };
@@ -1770,147 +1772,6 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                                 }
 
 
-                                break;
-                            case R.id.taball_savepage:
-                                if(myprofileid!=null) {
-
-                                    if (save_item_count == 1) {
-                                        userViewHolder.save_button.setText("Save");
-                                        userViewHolder.save_button.setTextColor(getResources().getColor(R.color.white));
-                                        userViewHolder.save_button.setTypeface(seguiregular);
-                                        userViewHolder.save_button.setTransformationMethod(null);
-                                        save_item_count--;
-
-
-
-
-
-                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLSAVE,
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String s) {
-                                                        //Disimissing the progress dialog
-
-                                                        //Showing toast message of the response
-                                                        if (s.equalsIgnoreCase("no")) {
-                                                            //Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show() ;
-                                                        } else {
-                                                            Log.e("response:", s);
-
-                                                        }
-
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError volleyError) {
-                                                        //Dismissing the progress dialog
-                                                        //loading.dismiss();
-
-                                                        //Showing toast
-                                                        //  Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                                                    }
-                                                }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-
-                                                Map<String, String> params = new Hashtable<String, String>();
-
-                                                //Adding parameters
-
-
-
-                                                params.put(QID, itemmodel.getId());
-                                                params.put(USERID, myprofileid);
-                                                params.put(QTYPE, itemmodel.getQtypemain());
-
-
-
-                                                return params;
-                                            }
-                                        };
-
-                                        //Creating a Request Queue
-                                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-
-                                        //Adding request to the queue
-                                        requestQueue.add(stringRequest);
-
-                                    } else {
-                                        userViewHolder.save_button.setText("Save");
-                                        userViewHolder.save_button.setTextColor(getResources().getColor(R.color.red));
-                                        userViewHolder.save_button.setTypeface(seguiregular);
-                                        userViewHolder.save_button.setTransformationMethod(null);
-                                        save_item_count++;
-
-
-
-                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLSAVE,
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String s) {
-                                                        //Disimissing the progress dialog
-
-                                                        //Showing toast message of the response
-                                                        if (s.equalsIgnoreCase("no")) {
-                                                            //Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show() ;
-                                                        } else {
-                                                            Log.e("response:", s);
-
-
-                                                        }
-
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError volleyError) {
-                                                        //Dismissing the progress dialog
-                                                        //loading.dismiss();
-
-                                                        //Showing toast
-                                                        //  Toast.makeText(CityCenterCommentPage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                                                    }
-                                                }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-                                                //Converting Bitmap to String
-
-                                                //Getting Image Name
-
-                                                //Creating parameters
-                                                Map<String, String> params = new Hashtable<String, String>();
-
-                                                //Adding parameters
-
-
-
-                                                params.put(QID, itemmodel.getId());
-                                                params.put(USERID, myprofileid);
-                                                params.put(QTYPE, itemmodel.getQtypemain());
-
-
-
-                                                return params;
-                                            }
-                                        };
-
-                                        //Creating a Request Queue
-                                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-
-                                        //Adding request to the queue
-                                        requestQueue.add(stringRequest);
-                                        //Toast.makeText(getActivity(),count,Toast.LENGTH_LONG).show();
-                                    }
-                                }else {
-                                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                                    editor.putString(Activity, "mainversiontamil");
-                                    editor.putString(CONTENTID, "0");
-                                    editor.commit();
-                                    Intent signin=new Intent(getActivity(),SigninpageActivity.class);
-                                    startActivity(signin);
-
-                                }
                                 break;
                             case R.id.button_comment:
 
@@ -2082,9 +1943,9 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 }
 
                 horizontalsmalldesign.text_title.setText(title);
-               horizontalsmalldesign.seeall_text.setText("See more");
-               horizontalsmalldesign.seeall_text.setTypeface(seguiregular);
-               horizontalsmalldesign.text_title.setTypeface(seguiregular);
+                horizontalsmalldesign.seeall_text.setText("See more");
+                horizontalsmalldesign.seeall_text.setTypeface(seguiregular);
+                horizontalsmalldesign.text_title.setTypeface(seguiregular);
                 VerticalAdapters adapters=new VerticalAdapters(list,horizontalsmalldesign.horizontal_recylerview,getActivity());
                 horizontalsmalldesign.horizontal_recylerview.setAdapter(adapters);
 
@@ -2207,9 +2068,9 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                 List<ItemModel>list=itemmodel.getSpeciallist();
                 String title=null;
 
-                    for(int j=0;j<list.size();j++){
-                      title=list.get(j).getSubqueuetitle();
-                    }
+                for(int j=0;j<list.size();j++){
+                    title=list.get(j).getSubqueuetitle();
+                }
 
 
                 horizontalspecial.text_title.setText(title);
@@ -2372,14 +2233,14 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                     userViewHolder.feedImageView_typefour_three.setVisibility(View.GONE);
                     userViewHolder.feedImageView_typefour_four.setVisibility(View.GONE);
                     int j;
-if(itemmodel.getAlbum()==null){
+                    if(itemmodel.getAlbum()==null){
 
-}else {
-    for( j=0;j<itemmodel.getAlbum().size();j++) {
-        powerstwo = itemmodel.getAlbum().get(0);
-    }
-    userViewHolder.feedImageView.setImageUrl(powerstwo, mImageLoader);
-}
+                    }else {
+                        for( j=0;j<itemmodel.getAlbum().size();j++) {
+                            powerstwo = itemmodel.getAlbum().get(0);
+                        }
+                        userViewHolder.feedImageView.setImageUrl(powerstwo, mImageLoader);
+                    }
 
 
                 }else if(itemmodel.getAlbumcount()==2){
@@ -2495,7 +2356,7 @@ if(itemmodel.getAlbum()==null){
                     userViewHolder.moreimagescount_textview.setVisibility(View.GONE);
                 }
 
-               if(fontname.equals("sanfrancisco")){
+                if(fontname.equals("sanfrancisco")){
                     Typeface sansbold=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
                     Typeface sansregular=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscoregular);
                     userViewHolder.title_item.setTypeface(sansbold);
@@ -2736,42 +2597,57 @@ if(itemmodel.getAlbum()==null){
                                         userViewHolder.like_imagebutton.setTag("heartfullred");
                                     }else if(backgroundImageName.equals("heartfullred")) {
                                         userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
+                                        userViewHolder.like_imagebutton.setTag("heart");
                                     }else {
 
                                     }
-                                    StringRequest likes=new StringRequest(Request.Method.POST, URLLIKES, new Response.Listener<String>() {
+
+                                    StringRequest likes=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
                                             String res;
                                             Log.e("RES",response.toString());
                                             try {
                                                 Log.e("RES", "START");
-                                                JSONObject data = new JSONObject(response.toString());
-                                                String dir = data.getString("result");
-                                                Log.d("RES", dir);
-                                                JSONObject object=new JSONObject(dir);
-                                                String dir2=object.getString("message");
-                                                Log.d("RES", dir2);
-                                                for (int i = 0; i < object.length(); i++) {
-                                                    String dirs = object.getString("message");
+
+                                                JSONObject object=new JSONObject(response.toString());
+                                                JSONArray array=object.getJSONArray("result");
+                                                String data=array.optString(1);
+                                                JSONArray jsonArray=new JSONArray(data.toString());
+
+
+                                                for (int i = 0; i < jsonArray.length(); i++) {
+                                                    JSONObject obj = (JSONObject) jsonArray.get(i);
+                                                    String dirs = obj.getString("like_type");
+
                                                     Log.d("RES", dirs);
-                                                    res=object.getString("message");
-                                                    like_finalvalues=object.getInt("total_likes");
+                                                    res=object.getString("like_type");
+                                                    like_finalvalues=object.getInt("like_count");
                                                     Log.e("RES",res.toString());
+
+
                                                     if(res.equals("Liked")){
                                                         System.out.println(itemmodel.getId());
-                                                        like_finalvalues=object.getInt("total_likes");
+                                                        like_finalvalues=object.getInt("like_count");
                                                         Log.e("RES",String.valueOf(like_finalvalues));
-                                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred);
-                                                        userViewHolder.like_imagebutton.setTag("heartfullred");
+
+
+
+                                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heartfullred); 				userViewHolder.like_imagebutton.setTag("heartfullred");
                                                     }else if(res.equals("Like")){
-                                                        like_finalvalues=object.getInt("total_likes");
+                                                        like_finalvalues=object.getInt("like_count");
                                                         Log.e("RES","dis"+String.valueOf(like_finalvalues));
-                                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart);
-                                                        userViewHolder.like_imagebutton.setTag("heart");
+
+
+
+                                                        userViewHolder.like_imagebutton.setImageResource(R.mipmap.heart); 				userViewHolder.like_imagebutton.setTag("heart");
                                                     }
+
                                                     userViewHolder.    likescount.setText(Html.fromHtml(like_finalvalues + "&nbsp;" + "Likes"));
+
+
                                                 }
+
                                             }catch (JSONException e){
 
                                             }
@@ -2785,9 +2661,13 @@ if(itemmodel.getAlbum()==null){
                                         protected Map<String,String> getParams()throws AuthFailureError{
                                             Map<String,String> param=new Hashtable<String, String>();
                                             String ids=itemmodel.getId();
-                                            param.put(QID, ids);
-                                            param.put(USERID, myprofileid);
-                                            param.put(QTYPE, itemmodel.getQtypemain());
+                                            param.put("Key","Simplicity");
+                                            param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
+                                            param.put("rtype","like");
+                                            param.put("id", ids);
+                                            Log.e("RESS",myprofileid);
+                                            param.put("user_id", myprofileid);
+                                            param.put("qtype", itemmodel.getQtypemain());
                                             return param;
                                         }
                                     };
@@ -2805,6 +2685,8 @@ if(itemmodel.getAlbum()==null){
                                     startActivity(sign);
 
                                 }
+
+
 
 
                                 break;
@@ -2865,9 +2747,9 @@ if(itemmodel.getAlbum()==null){
 
         public void Font(List<ItemModel> list){
             Log.e("SIZE","adap  "+list.toString());
-           this.modelList.addAll(list);
+            this.modelList.addAll(list);
 
-           notifyDataSetChanged();
+            notifyDataSetChanged();
 
         }
         public int getItemViewType(int position) {
@@ -2893,11 +2775,11 @@ if(itemmodel.getAlbum()==null){
                 } else if (item.getSubqueuetitle().equals("Special Column")) {
                     return VIEW_TYPE_SPECIAL;
                 } else
-                      if (item.getSubqueuetitle().equals("Beyond Coimbatore")){
+                if (item.getSubqueuetitle().equals("Beyond Coimbatore")){
                     return VIEW_TYPE_BEYOND;
                 }else {
                     return VIEW_TYPE_LOADING;
-                      }
+                }
             }
 
 
@@ -2913,8 +2795,9 @@ if(itemmodel.getAlbum()==null){
 
 
 
- }
-    public static class MyDialogFragment extends DialogFragment {
+    }
+
+                public static class MyDialogFragment extends DialogFragment {
         private String KEY_COMMENT = "comment";
         private String KEY_TYPE = "qtype";
         private String KEY_MYUID = "user_id";

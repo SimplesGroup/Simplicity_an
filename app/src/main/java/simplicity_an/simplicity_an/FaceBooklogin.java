@@ -73,6 +73,8 @@ ProgressDialog pdialog;
     private String KEY_GENDER = "gender";
     RequestQueue requestQueue;
     private String KEY_PROFILEIMAGE = "picture_link";
+    String activity_name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +98,7 @@ ProgressDialog pdialog;
         textitem = (TextView) findViewById(R.id.textView);
         callbackManager = CallbackManager.Factory.create();
         Intent getactivity=getIntent();
-
+        activity_name=getactivity.getStringExtra("ACTIVITY");
 
         if(AccessToken.getCurrentAccessToken() != null){
             RequestData();
@@ -148,115 +150,7 @@ ProgressDialog pdialog;
                         pdialog.setContentView(R.layout.custom_progressdialog);
                         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                       /* StringRequest facesigin=new StringRequest(Request.Method.POST, UPLOAD_CHECK_USER, new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                if(response.toString().trim().equalsIgnoreCase("no")){
-                                    pdialog.dismiss();
 
-                                    StringRequest upload=new StringRequest(Request.Method.POST, UPLOAD_URL, new Response.Listener<String>() {
-                                        @Override
-                                        public void onResponse(String response) {
-                                            if(response.toString().trim().equalsIgnoreCase("no")) {
-                                                Log.e("UserID","no cancel");
-                                            }else {
-                                                if(response==""||response==null){
-                                                    Log.e("UserID","empty");
-                                                }else {
-                                                    Log.e("UserID", response);
-                                                    String[] array = response.split(",");
-
-                                                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                                                    editor.putString(MYUSERID,array[0]);
-                                                    editor.putString(USERNAME,array[1]);
-                                                    editor.putString(USERIMAGE,array[2]);
-                                                    String emails=array[3].toString();
-                                                    editor.putString(USERMAILID,array[3].toString().trim());
-                                                    editor.commit();
-                                                    if(language_data.equals("English")) {
-                                                        Intent main = new Intent(getApplicationContext(), MainPageEnglish.class);
-                                                        startActivity(main);
-                                                    }else {
-                                                        Intent main = new Intent(getApplicationContext(), MainPageTamil.class);
-                                                        startActivity(main);
-                                                    }
-                                                }
-
-
-
-                                                Intent main=new Intent(getApplicationContext(),MainPageEnglish.class);
-                                                startActivity(main);
-
-                                            }
-                                        }
-                                    }, new Response.ErrorListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-
-                                        }
-                                    }){
-                                        protected Map<String ,String> getParams()throws AuthFailureError{
-                                            Map<String,String> params=new Hashtable<String, String>();
-
-                                            params.put(KEY_EMAIL,emaildata);
-                                            params.put(KEY_NAME,text);
-                                            params.put(KEY_PROFILEIMAGE,"https://graph.facebook.com/" + profileimage + "/picture");
-                                           // params.put(KEY_GENDER,gendervalue);
-                                            params.put(KEY_GCM,gcmids);
-                                            return  params;
-                                        }
-                                    };
-                                    upload.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                                    requestQueue.add(upload);
-
-
-
-
-                                }else {
-                                    pdialog.dismiss();
-                                  //  Log.e("Activity",activity);
-                                    if(response==""||response==null){
-                                        Log.e("UserID","empty");
-                                    }else {
-                                        Log.e("UserID", response);
-                                        String[] array = response.split(",");
-
-                                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                                        editor.putString(MYUSERID,array[0]);
-                                        editor.putString(USERNAME,array[1]);
-                                        editor.putString(USERIMAGE,array[2]);
-                                        String emails=array[3].toString();
-                                        editor.putString(USERMAILID,array[3].toString().trim());
-                                        editor.commit();
-                                        if(language_data.equals("English")) {
-                                            Intent main = new Intent(getApplicationContext(), MainPageEnglish.class);
-                                            startActivity(main);
-                                        }else {
-                                            Intent main = new Intent(getApplicationContext(), MainPageTamil.class);
-                                            startActivity(main);
-                                        }
-                                    }
-
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                            }
-                        }){
-                            protected Map<String,String> getParams()throws AuthFailureError{
-                                Map<String,String > params=new HashMap<String, String>();
-                                params.put(EMAILID_CHECK,emaildata);
-                                params.put(KEY_GCM,gcmids);
-                                return params;
-                            }
-                        };
-                        RequestQueue requestQueue = Volley.newRequestQueue(FaceBooklogin.this);
-
-
-                        //Adding request to the queue
-                        requestQueue.add(facesigin);*/
 
 
                         StringRequest upload=new StringRequest(Request.Method.POST, Configurl.api_new_url, new Response.Listener<String>() {
@@ -298,12 +192,16 @@ ProgressDialog pdialog;
                                         }catch (JSONException e){
 
                                         }
-                                        if(language_data.equals("English")) {
-                                            Intent main = new Intent(getApplicationContext(), MainPageEnglish.class);
-                                            startActivity(main);
+                                        if(activity_name!=null){
+                                            onBackPressed();
                                         }else {
-                                            Intent main = new Intent(getApplicationContext(), MainPageTamil.class);
-                                            startActivity(main);
+                                            if (language_data.equals("English")) {
+                                                Intent main = new Intent(getApplicationContext(), MainPageEnglish.class);
+                                                startActivity(main);
+                                            } else {
+                                                Intent main = new Intent(getApplicationContext(), MainPageTamil.class);
+                                                startActivity(main);
+                                            }
                                         }
                                     }
 
