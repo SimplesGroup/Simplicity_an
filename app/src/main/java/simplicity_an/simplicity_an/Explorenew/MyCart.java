@@ -89,11 +89,11 @@ private RelativeLayout main_complist_layout;
         }
 cartViewPresenter=new CartServiceRequest(this);
 
-        main_complist_layout = (RelativeLayout)root. findViewById(R.id.shop_layout);
-       mycart_titile_text=(TextView)root.findViewById(R.id.mycart_textview);
-        total_price_text=(TextView)root.findViewById(R.id.total_cartcount_price);
-        addmore_product_text=(TextView)root.findViewById(R.id.add_more_products);
-        textView_Noresult=(TextView)root.findViewById(R.id.text_noresultfound) ;
+        main_complist_layout = (RelativeLayout)root. findViewById(R.id.shop_layouts);
+       mycart_titile_text=(TextView)root.findViewById(R.id.mycart_title_shop);
+        total_price_text=(TextView)root.findViewById(R.id.total_cartcount_price_shop);
+        addmore_product_text=(TextView)root.findViewById(R.id.add_more_products_shop);
+        textView_Noresult=(TextView)root.findViewById(R.id.text_noresultfound_shop) ;
         if (colorcodes != null) {
             if (colorcodes.equals("#FFFFFFFF")) {
                 int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FFFFFFFF")};
@@ -137,46 +137,49 @@ cartViewPresenter=new CartServiceRequest(this);
 
 
         }
+        Log.e("Response",fontname+",,"+colorcodes);
 
 
-        /*if (colorcodes.equals("#FFFFFFFF")) {
+        if (colorcodes.equals("#262626")) {
             Log.e("Response",colorcodes+"theme");
+            mycart_titile_text.setTextColor(Color.WHITE);
+            addmore_product_text.setTextColor(Color.WHITE);
+            total_price_text.setTextColor(Color.WHITE);
+            textView_Noresult.setTextColor(Color.WHITE);
 
-           mycart_titile_text.setTextColor(Color.BLACK);
-            addmore_product_text.setTextColor(Color.BLACK);
-           total_price_text.setTextColor(Color.BLACK);
-           textView_Noresult.setTextColor(Color.BLACK);
+
 
         } else {
             Log.e("Response",colorcodes+"theme");
-            mycart_titile_text.setTextColor(Color.WHITE);
-         addmore_product_text.setTextColor(Color.WHITE);
-            total_price_text.setTextColor(Color.WHITE);
-            textView_Noresult.setTextColor(Color.WHITE);
-        }*/
 
-       // addmore_product_text.setText("Add more Products");
-       // total_price_text.setText("Rs.");
+            mycart_titile_text.setTextColor(Color.BLACK);
+            addmore_product_text.setTextColor(Color.BLACK);
+            total_price_text.setTextColor(Color.BLACK);
+            textView_Noresult.setTextColor(Color.BLACK);
+        }
+
+        addmore_product_text.setText("Add more Products");
+       total_price_text.setText("Rs.");
         String simplycity_title = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_pala = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
         if (fontname.equals("playfair")) {
-           /* mycart_titile_text.setTypeface(tf_pala);
+            mycart_titile_text.setTypeface(tf_pala);
             addmore_product_text.setTypeface(tf_pala);
             total_price_text.setTypeface(tf_pala);
-            textView_Noresult.setTypeface(tf_pala);*/
+            textView_Noresult.setTypeface(tf_pala);
         } else {
             Typeface sanf = Typeface.createFromAsset(getActivity().getAssets(), Fonts.sanfranciscobold);
-          /* mycart_titile_text.setTypeface(sanf);
+          mycart_titile_text.setTypeface(sanf);
             addmore_product_text.setTypeface(sanf);
             total_price_text.setTypeface(sanf);
-            textView_Noresult.setTypeface(sanf);*/
+            textView_Noresult.setTypeface(sanf);
         }
         pdialog = new ProgressDialog(getActivity());
         pdialog.show();
         pdialog.setContentView(R.layout.custom_progressdialog);
         pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        recyclerView = (RecyclerView)root.findViewById(R.id.recyclerview_shop);
-        swipeRefreshLayout = (SwipeRefreshLayout)root. findViewById(R.id.swipe_shop);
+        recyclerView = (RecyclerView)root.findViewById(R.id.recyclerview_shops);
+        swipeRefreshLayout = (SwipeRefreshLayout)root. findViewById(R.id.swipe_shop_mycart);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         myCartAdapter= new MyCartAdapter(getActivity(), mycartlist);

@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/black"
-    android:id="@+id/shop_layout"
+    android:id="@+id/shop_layouts"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 <LinearLayout
@@ -11,23 +11,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
+        android:layout_marginTop="35dp"
         android:textSize="21dp"
         android:text="My Cart"
-        android:id="@+id/mycart_title"
+        android:id="@+id/mycart_title_shop"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <android.support.v4.widget.SwipeRefreshLayout
 
-        android:layout_below="@+id/footerline"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/swipe_shop">
+        android:id="@+id/swipe_shop_mycart">
         <android.support.v7.widget.RecyclerView
             android:layout_marginTop="25dp"
 
-            android:id="@+id/recyclerview_shop"
+            android:id="@+id/recyclerview_shops"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -39,7 +40,7 @@
 </LinearLayout>
     <TextView
 
-        android:id="@+id/text_noresultfound"
+        android:id="@+id/text_noresultfound_shop"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -49,17 +50,19 @@
         android:layout_width="match_parent"
         android:layout_height="60dp">
         <TextView
-            android:id="@+id/total_cartcount_price"
+            android:id="@+id/total_cartcount_price_shop"
             android:background="@color/searchviewhintcolor"
             android:padding="5dp"
+            android:textAlignment="center"
             android:textSize="14dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
             android:layout_marginTop="4dp"
-            android:id="@+id/add_more_products"
+            android:id="@+id/add_more_products_shop"
             android:background="@color/searchviewhintcolor"
             android:padding="5dp"
+            android:textAlignment="center"
             android:textSize="14dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

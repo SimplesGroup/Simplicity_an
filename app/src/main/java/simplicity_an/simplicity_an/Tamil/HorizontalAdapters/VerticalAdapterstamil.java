@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,8 @@ public class VerticalAdapterstamil extends RecyclerView.Adapter<VerticalAdapters
         holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(model.getSubqueuetitle().equals("Special Column")){
+                Log.e("Response",model.getSubqueuetitle());
+                if(model.getSubqueuetitle().equals("Special Column")|| model.getSubqueuetitle().equals("சிறப்பு கட்டுரைகள்")){
                     Intent intent = new Intent(conxt, Columnsdetailpage.class);
                     intent.putExtra("ID", model.getId());
                    conxt. startActivity(intent);
@@ -66,7 +68,7 @@ public class VerticalAdapterstamil extends RecyclerView.Adapter<VerticalAdapters
                     Intent intent = new Intent(conxt, TamilEventsDescription.class);
                     intent.putExtra("ID", model.getId());
                   conxt.  startActivity(intent);
-                }else if(model.getSubqueuetitle().equals("Beyond Coimbatore")){
+                }else if(model.getSubqueuetitle().equals("Beyond Coimbatore")||model.getSubqueuetitle().equals("நாடு மற்றும் உலக செய்திகள்")){
                     Intent intent = new Intent(conxt, TamilNewsDescription.class);
                     intent.putExtra("ID", model.getId());
                     conxt.startActivity(intent);
@@ -76,7 +78,9 @@ public class VerticalAdapterstamil extends RecyclerView.Adapter<VerticalAdapters
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(model.getSubqueuetitle().equals("Special Column")){
+                Log.e("Response",model.getSubqueuetitle());
+
+                if(model.getSubqueuetitle().equals("Special Column")|| model.getSubqueuetitle().equals("சிறப்பு கட்டுரைகள்")){
                     Intent intent = new Intent(conxt, Columnsdetailpage.class);
                     intent.putExtra("ID", model.getId());
                     conxt. startActivity(intent);
@@ -84,7 +88,7 @@ public class VerticalAdapterstamil extends RecyclerView.Adapter<VerticalAdapters
                     Intent intent = new Intent(conxt, TamilEventsDescription.class);
                     intent.putExtra("ID", model.getId());
                     conxt.  startActivity(intent);
-                }else if(model.getSubqueuetitle().equals("Beyond Coimbatore")){
+                }else if(model.getSubqueuetitle().equals("Beyond Coimbatore")||model.getSubqueuetitle().equals("நாடு மற்றும் உலக செய்திகள்")){
                     Intent intent = new Intent(conxt, TamilNewsDescription.class);
                     intent.putExtra("ID", model.getId());
                     conxt.startActivity(intent);
@@ -94,7 +98,10 @@ public class VerticalAdapterstamil extends RecyclerView.Adapter<VerticalAdapters
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(model.getSubqueuetitle().equals("Special Column")){
+
+                Log.e("Response",model.getSubqueuetitle());
+
+                if(model.getSubqueuetitle().equals("Special Column")|| model.getSubqueuetitle().equals("சிறப்பு கட்டுரைகள்")){
                     Intent intent = new Intent(conxt, Columnsdetailpage.class);
                     intent.putExtra("ID", model.getId());
                     conxt. startActivity(intent);
@@ -102,7 +109,7 @@ public class VerticalAdapterstamil extends RecyclerView.Adapter<VerticalAdapters
                     Intent intent = new Intent(conxt, TamilEventsDescription.class);
                     intent.putExtra("ID", model.getId());
                     conxt.  startActivity(intent);
-                }else if(model.getSubqueuetitle().equals("Beyond Coimbatore")){
+                }else if(model.getSubqueuetitle().equals("Beyond Coimbatore")||model.getSubqueuetitle().equals("நாடு மற்றும் உலக செய்திகள்")){
                     Intent intent = new Intent(conxt, TamilNewsDescription.class);
                     intent.putExtra("ID", model.getId());
                     conxt.startActivity(intent);

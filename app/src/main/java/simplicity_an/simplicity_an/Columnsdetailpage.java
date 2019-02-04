@@ -423,7 +423,7 @@ if(activity==null){
                 param.put("Key","Simplicity");
                 param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
                 param.put("language","1");
-                param.put("rtype","columns");
+                param.put("rtype","article");
                 param.put("id",notifiid);
                 if(myprofileid!=null){
                     param.put("user_id",myprofileid);
