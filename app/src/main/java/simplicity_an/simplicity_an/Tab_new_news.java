@@ -1628,6 +1628,12 @@ String fontname;
                                     intent.putExtra("ID", ids);
                                     startActivity(intent);
                                 }
+                                else if(type.equals("lifestyle")){
+                                    Intent intent = new Intent(getActivity(), LifestyleDetail.class);
+                                    intent.putExtra("ID", ids);
+
+                                    startActivity(intent);
+                                }
                                 else if(type.equalsIgnoreCase("education")){
                                     Intent intent = new Intent(getActivity(), EducationDescription.class);
                                     intent.putExtra("ID", ids);

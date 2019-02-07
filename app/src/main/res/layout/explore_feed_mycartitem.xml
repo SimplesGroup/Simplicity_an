@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@android:color/transparent"
     android:layout_marginBottom="5dp"
     android:layout_height="wrap_content">
     <LinearLayout
@@ -25,7 +27,7 @@
             android:orientation="vertical"
             android:layout_weight=".50"
             android:layout_width="0dp"
-            android:layout_height="80dp">
+            android:layout_height="100dp">
             <TextView
                 android:layout_marginTop="7dp"
                 android:layout_marginLeft="5dp"
@@ -34,38 +36,25 @@
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
             <Spinner
+
                 android:layout_marginTop="2dp"
                 android:layout_marginLeft="5dp"
                 android:id="@+id/spin_product_price_list"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp">
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
 
             </Spinner>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_gravity="bottom|left"
-                    android:textSize="14sp"
-                    android:id="@+id/text_product_price"
-                    android:layout_width="0dp"
-                    android:layout_weight=".80"
-                    android:layout_height="wrap_content" />
-                <ImageButton
-                    android:visibility="gone"
-                    android:layout_marginRight="4dp"
-                    android:layout_marginBottom="5dp"
-                    android:id="@+id/btn_product_favourites"
-                    android:layout_gravity="bottom|right"
-                    android:background="@android:color/transparent"
-                    android:src="@mipmap/heartwhite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="bottom|left"
+                android:textSize="14sp"
+                android:id="@+id/text_product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
 
         </LinearLayout>
         <LinearLayout

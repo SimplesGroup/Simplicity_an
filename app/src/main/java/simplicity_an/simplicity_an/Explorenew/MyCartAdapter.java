@@ -32,6 +32,7 @@ import simplicity_an.simplicity_an.CustomVolleyRequest;
 import simplicity_an.simplicity_an.OnLoadMoreListener;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.SigninpageActivity;
+import simplicity_an.simplicity_an.Tamil.Tab_new_newstamil;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
 public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -111,7 +112,7 @@ public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int
         Shopmodelview indexmodel = new Shopmodelview( index );
         return indexmodel;
         case VIEW_TYPE_ITEM_ONE:
-        ViewGroup type_one = (ViewGroup) mInflater.inflate ( R.layout.explore_feed_mycartitem, parent, false );
+        ViewGroup type_one = (ViewGroup) mInflater.inflate ( R.layout.explore_mycart_feed, parent, false );
         Shopmodel_one type_one_model = new Shopmodel_one( type_one );
         return type_one_model;
         case VIEW_TYPE_ITEM_TWO:
@@ -130,7 +131,7 @@ public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int
         }
 
 @Override
-public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
+public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         sharedpreferences = context. getSharedPreferences(mypreference,
         Context.MODE_PRIVATE);
         fontname=sharedpreferences.getString(Fonts.FONT,"");
@@ -175,55 +176,57 @@ public void onClick(View v) {
     context.startActivity(intent);
         }
         });
+
+
         }else if(holder instanceof Shopmodel_one){
-final Shopmodel_one    holders= (Shopmodel_one) holder;
+final Shopmodel_one    holders_one= (Shopmodel_one) holder;
         if (mImageLoader == null)
         mImageLoader = CustomVolleyRequest.getInstance(context).getImageLoader();
 final IndexProductModel data = shopdataList.get(position);
         if (colorcodes.equals("#FFFFFFFF")) {
-        holders.title_category.setTextColor(Color.BLACK);
-        holders.price_item.setTextColor(Color.BLACK);
-        holders.remove_cart.setTextColor(Color.BLACK);
-        holders.add_to_wishlist.setTextColor(Color.BLACK);
-        holders.add_to_cart_plus.setTextColor(Color.BLACK);
-        holders.add_to_cart_count.setTextColor(Color.BLACK);
-        holders.add_to_cart_minus.setTextColor(Color.BLACK);
+            holders_one.title_category.setTextColor(Color.BLACK);
+            holders_one.price_item.setTextColor(Color.BLACK);
+            holders_one.remove_cart.setTextColor(Color.BLACK);
+            holders_one.add_to_wishlist.setTextColor(Color.BLACK);
+            holders_one.add_to_cart_plus.setTextColor(Color.BLACK);
+            holders_one.add_to_cart_count.setTextColor(Color.BLACK);
+            holders_one.add_to_cart_minus.setTextColor(Color.BLACK);
 
 
         } else {
-        holders.title_category.setTextColor(Color.WHITE);
-        holders.price_item.setTextColor(Color.WHITE);
-            holders.remove_cart.setTextColor(Color.WHITE);
-            holders.add_to_wishlist.setTextColor(Color.WHITE);
-            holders.add_to_cart_plus.setTextColor(Color.WHITE);
-            holders.add_to_cart_count.setTextColor(Color.WHITE);
-            holders.add_to_cart_minus.setTextColor(Color.WHITE);
+            holders_one.title_category.setTextColor(Color.WHITE);
+            holders_one.price_item.setTextColor(Color.WHITE);
+            holders_one.remove_cart.setTextColor(Color.WHITE);
+            holders_one.add_to_wishlist.setTextColor(Color.WHITE);
+            holders_one.add_to_cart_plus.setTextColor(Color.WHITE);
+            holders_one.add_to_cart_count.setTextColor(Color.WHITE);
+            holders_one.add_to_cart_minus.setTextColor(Color.WHITE);
         }
         String simplycity_title = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_pala = Typeface.createFromAsset(context.getAssets(), simplycity_title);
         if (fontname.equals("playfair")) {
-        holders.title_category.setTypeface(tf_pala);
-        holders.price_item.setTypeface(tf_pala);
-            holders.remove_cart.setTypeface(tf_pala);
-            holders.add_to_wishlist.setTypeface(tf_pala);
-            holders.add_to_cart_plus.setTypeface(tf_pala);
-            holders.add_to_cart_count.setTypeface(tf_pala);
-            holders.add_to_cart_minus.setTypeface(tf_pala);
+            holders_one.title_category.setTypeface(tf_pala);
+            holders_one.price_item.setTypeface(tf_pala);
+            holders_one.remove_cart.setTypeface(tf_pala);
+            holders_one.add_to_wishlist.setTypeface(tf_pala);
+            holders_one.add_to_cart_plus.setTypeface(tf_pala);
+            holders_one.add_to_cart_count.setTypeface(tf_pala);
+            holders_one.add_to_cart_minus.setTypeface(tf_pala);
 
         } else {
         Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
-        holders.title_category.setTypeface(sanf);
-        holders.price_item.setTypeface(sanf);
-            holders.remove_cart.setTypeface(sanf);
-            holders.add_to_wishlist.setTypeface(sanf);
-            holders.add_to_cart_plus.setTypeface(sanf);
-            holders.add_to_cart_count.setTypeface(sanf);
-            holders.add_to_cart_minus.setTypeface(sanf);
+            holders_one.title_category.setTypeface(sanf);
+            holders_one.price_item.setTypeface(sanf);
+            holders_one.remove_cart.setTypeface(sanf);
+            holders_one.add_to_wishlist.setTypeface(sanf);
+            holders_one.add_to_cart_plus.setTypeface(sanf);
+            holders_one.add_to_cart_count.setTypeface(sanf);
+            holders_one.add_to_cart_minus.setTypeface(sanf);
 
         }
 
 
-        holders.title_category.setText(data.getProduct_title());
+            holders_one.title_category.setText(data.getProduct_title());
         List<IndexProductModel>list=data.getPricelist();
         List<String>item=new ArrayList<>();
             final ArrayList<String>qtylist=new ArrayList<>();
@@ -239,88 +242,80 @@ final ArrayList<String>priceitem=new ArrayList<>();
             qtylist.add(qid);
 
         }
-        holders.product_image.setImageUrl(data.getImage(), mImageLoader);
-            if (colorcodes.equals("#FFFFFFFF")) {
-                holders.price_spinner.getBackground().setColorFilter(context.getResources().getColor(R.color.Black), PorterDuff.Mode.SRC_ATOP);
-
-            }else {
-                holders.price_spinner.getBackground().setColorFilter(context.getResources().getColor(R.color.whitecolor), PorterDuff.Mode.SRC_ATOP);
-
-            }
-
-        ArrayAdapter<String> adapter =
-        new ArrayAdapter<String>(context, R.layout.explore_my_spinner_style, item)
-        {
-
-public View getView(int position, View convertView, ViewGroup parent) {
-        View v = super.getView(position, convertView, parent);
-
-        ((TextView) v).setTextSize(16);
-        if (colorcodes.equals("#FFFFFFFF")) {
-        ((TextView) v).setTextColor(
-        context.getResources().getColorStateList(R.color.Black)
-        );
-        }else {
-        ((TextView) v).setTextColor(
-        context.getResources().getColorStateList(R.color.white)
-        );
-        }
+            holders_one.product_image.setImageUrl(data.getImage(), mImageLoader);
 
 
-        holders.product_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ProductDetail.class);
-                intent.putExtra("MAIN_CAT_ID", data.getMain_category_id());
-                intent.putExtra("PRO_ID",data.getProduct_id());
 
-                context.startActivity(intent);
-            }
-        });
+            ArrayAdapter<String> adapter =
+                    new ArrayAdapter<String>(context, R.layout.explore_my_spinner_style, item)
+                    {
 
+                        public View getView(int position, View convertView, ViewGroup parent) {
+                            View v = super.getView(position, convertView, parent);
 
-        return v;
-        }
-
-public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        View v = super.getDropDownView(position, convertView, parent);
-        //v.setBackgroundResource(R.drawable.spinner_bg);
-        if (colorcodes.equals("#FFFFFFFF")) {
-        v.setBackgroundColor(Color.WHITE);
-        ((TextView) v).setTextColor(
-        context. getResources().getColorStateList(R.color.Black)
-        );
-
-        }else {
-        v.setBackgroundColor(Color.BLACK);
-        ((TextView) v).setTextColor(
-        context. getResources().getColorStateList(R.color.white)
-        );
-
-        }
+                            ((TextView) v).setTextSize(14);
+                            if (colorcodes.equals("#262626")) {
+                                ((TextView) v).setTextColor(
+                                        context.getResources().getColorStateList(R.color.whitecolor));
+                            }else {
+                                ((TextView) v).setTextColor(
+                                        context.getResources().getColorStateList(R.color.Black));
 
 
-        //((TextView) v).setTypeface(fontStyle);
-        ((TextView) v).setGravity(Gravity.CENTER);
 
-        return v;
-        }
-        };
+                            }
+
+                            return v;
+                        }
+
+                        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                            View v = super.getDropDownView(position, convertView, parent);
+                            //v.setBackgroundResource(R.drawable.spinner_bg);
+                            if (colorcodes.equals("#262626")) {
+                                v.setBackgroundColor(Color.BLACK);
+                                ((TextView) v).setTextColor(
+                                        context. getResources().getColorStateList(R.color.whitecolor)
+                                );
+
+                            }else {
+                                v.setBackgroundColor(Color.WHITE);
+                                ((TextView) v).setTextColor(
+                                        context. getResources().getColorStateList(R.color.Black)
+                                );
+                            }
 
 
+                            //((TextView) v).setTypeface(fontStyle);
+                            ((TextView) v).setGravity(Gravity.CENTER);
+
+                            return v;
+                        }
+                    };
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            holders_one.price_spinner.setAdapter(adapter);
+
+            holders_one.product_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ProductDetail.class);
+                    intent.putExtra("MAIN_CAT_ID", data.getMain_category_id());
+                    intent.putExtra("PRO_ID",data.getProduct_id());
+
+                    context.startActivity(intent);
+                }
+            });
 
         // Drop down layout style - list view with radio button
         // dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        holders.price_spinner.setAdapter(adapter);
-        holders.price_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            holders_one.price_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 @Override
 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String item = parent.getItemAtPosition(position).toString();
         String price=priceitem.get(position);
-        holders.price_item.setText(price);
+    holders_one.price_item.setText(price);
 
     qtyid=qtylist.get(position);
         }
@@ -331,17 +326,31 @@ public void onNothingSelected(AdapterView<?> parent) {
         }
         });
 
-      holders.remove_cart.setText("Remove");
-      holders.add_to_wishlist.setText("Add to Wishlist");
 
-      holders.add_to_cart_plus.setOnClickListener(new View.OnClickListener() {
+            holders_one.add_to_cart_count.setText(data.getCount());
+            holders_one.remove_cart.setText("Remove");
+            holders_one.add_to_wishlist.setText("Add to Wishlist");
+            if(data.getVisit_list()==1){
+               holders_one.add_to_wishlist.setTextColor(Color.RED);
+            }else {
+
+            }
+
+            holders_one.remove_cart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    RemoveAt(position);
+                }
+            });
+            holders_one.add_to_cart_plus.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
 
           }
       });
 
-holders.add_to_cart_minus.setOnClickListener(new View.OnClickListener() {
+            holders_one.add_to_cart_minus.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
 
@@ -535,6 +544,15 @@ public void setLoaded() {
 public int getItemCount() {
         return shopdataList.size();
         }
+
+
+    public void RemoveAt(int positions){
+shopdataList.remove(positions);
+notifyItemRemoved(positions);
+notifyItemRangeChanged(positions,shopdataList.size());
+MyCartAdapter.this.notifyDataSetChanged();
+    }
+
 public void data(List<IndexProductModel> lists){
   this.shopdataList.clear();
     notifyDataSetChanged();

@@ -159,7 +159,7 @@ cartViewPresenter=new CartServiceRequest(this);
         }
 
         addmore_product_text.setText("Add more Products");
-       total_price_text.setText("Rs.");
+
         String simplycity_title = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_pala = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
         if (fontname.equals("playfair")) {
@@ -261,6 +261,9 @@ cartViewPresenter=new CartServiceRequest(this);
             recyclerView.setVisibility(View.GONE);
            textView_Noresult.setVisibility(View.VISIBLE);
         }else {
+            IndexProductModel model=mycartlistss.get(0);
+
+            total_price_text.setText(model.getMycarttotalitem()+" Product Total Price -"+"Rs."+model.getMycart_netprice());
             myCartAdapter.data(mycartlistss);
             textView_Noresult.setVisibility(View.GONE);
 

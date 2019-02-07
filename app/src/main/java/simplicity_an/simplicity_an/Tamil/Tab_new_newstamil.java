@@ -597,6 +597,8 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                         for (int j = 0; j < arr.length(); j++) {
                             ItemModel models=new ItemModel();
                             JSONObject object = (JSONObject) arr.get(j);
+                            String qtypeeve=object.getString("qtypemain");
+                            Log.e("Response",qtypeeve);
                             String imageeve = object.isNull("image") ? null : object
                                     .getString("image");
                             models.setImage(imageeve);
@@ -611,27 +613,11 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                             models.setYoutubelink(object.getString("youtube_link"));
                             models.setPlayurl(object.getString("radio_file"));
                             Log.e("LIST",object.getString("title"));
-                           /* models.setQtype(object.getString("qtype"));
-                            models.setLikescount(object.getInt("likes_count"));
-                            models.setCommentscount(object.getInt("commentscount"));
-                            //  model.setFavcount(obj.getInt("fav"));
-                            models.setSharingurl(object.getString("sharingurl"));
-                           // model.setQtypemain(obj.getString("qtypemain"));
-                            models.setSubqueuetitle(subtitle);
-                            models.setAds(object.getString("url"));
-                            String reporternameeve = object.isNull("reporter_name") ? null : object
-                                    .getString("reporter_name");
-                            models.setEditername(reporternameeve);
-                            String shortdesceve = object.isNull("short_description") ? null : object
-                                    .getString("short_description");
-                            models.setShortdescription(shortdesceve);
-                            // model.setEditername(obj.getString("reporter_name"));
-                            // model.setShortdescription(obj.getString("short_description"));
-                            // model.setDislikecount(obj.getInt("dislikes_count"));
-                            models.setCounttype(object.getInt("like_type"));
-
-                            models.setPlayurl(object.getString("radio_file"));
-                            models.setYoutubelink(object.getString("youtube_link"));*/
+                            models.setQtypemain(qtypeeve);
+                            String qtypeseve = obj.isNull("qtype") ? null : obj
+                                    .getString("qtype");
+                            model.setQtype(qtypeseve);
+                            models.setQtype(qtypeseve);
                             events.add(models);
 
 
@@ -643,6 +629,8 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
 
                             JSONObject object = (JSONObject) arr.get(j);
                             ItemModel models = new ItemModel();
+                            String qtypeeve=object.getString("qtypemain");
+                            Log.e("Response",qtypeeve);
                             String imageeve = object.isNull("image") ? null : object
                                     .getString("image");
                             models.setImage(imageeve);
@@ -656,8 +644,11 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                             models.setSubqueuetitle(s);
                             models.setYoutubelink(object.getString("youtube_link"));
                             models.setPlayurl(object.getString("radio_file"));
-
-
+                            models.setQtypemain(qtypeeve);
+                            String qtypeseve = obj.isNull("qtype") ? null : obj
+                                    .getString("qtype");
+                            model.setQtype(qtypeseve);
+                            models.setQtype(qtypeseve);
                             /*String imagebey = object.isNull("image") ? null : object
                                     .getString("image");
                             models.setImage(imagebey);
@@ -696,6 +687,8 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                         for (int j = 0; j < arr.length(); j++) {
                             ItemModel models=new ItemModel();
                             JSONObject object = (JSONObject) arr.get(j);
+                            String qtypeeve=object.getString("qtypemain");
+                            Log.e("Response",qtypeeve);
                             String imageeve = object.isNull("image") ? null : object
                                     .getString("image");
                             models.setImage(imageeve);
@@ -709,6 +702,13 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                             models.setSubqueuetitle(s);
                             models.setYoutubelink(object.getString("youtube_link"));
                             models.setPlayurl(object.getString("radio_file"));
+                            String qtypemainvideo = obj.isNull("qtypemain") ? null : obj
+                                    .getString("qtypemain");
+                            models.setQtypemain(qtypemainvideo);
+                            String qtypeseve = obj.isNull("qtype") ? null : obj
+                                    .getString("qtype");
+                            model.setQtype(qtypeseve);
+                            models.setQtype(qtypeseve);
                             /*String imagevid = object.isNull("image") ? null : object
                                     .getString("image");
                             models.setImage(imagevid);
@@ -752,7 +752,8 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                         for (int j = 0; j < arr.length(); j++) {
                             ItemModel models=new ItemModel();
                             JSONObject object = (JSONObject) arr.get(j);
-
+                            String qtypeeve=object.getString("qtypemain");
+                            Log.e("Response",qtypeeve);
                             String imageeve = object.isNull("image") ? null : object
                                     .getString("image");
                             models.setImage(imageeve);
@@ -766,7 +767,11 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                             models.setSubqueuetitle(s);
                             models.setYoutubelink(object.getString("youtube_link"));
                             models.setPlayurl(object.getString("radio_file"));
-
+                            models.setQtypemain(qtypeeve);
+                            String qtypeseve = obj.isNull("qtype") ? null : obj
+                                    .getString("qtype");
+                            model.setQtype(qtypeseve);
+                            models.setQtype(qtypeseve);
                            /* String imagespl = object.isNull("image") ? null : object
                                     .getString("image");
                             models.setImage(imagespl);
@@ -805,7 +810,8 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                         for (int j = 0; j < arr.length(); j++) {
                             ItemModel models=new ItemModel();
                             JSONObject object = (JSONObject) arr.get(j);
-
+                            String qtypeeve=object.getString("qtypemain");
+                            Log.e("Response",qtypeeve);
                             String imageeve = object.isNull("image") ? null : object
                                     .getString("image");
                             models.setImage(imageeve);
@@ -819,7 +825,11 @@ public class Tab_new_newstamil extends Fragment implements ChangeFont {
                             models.setSubqueuetitle(s);
                             models.setYoutubelink(object.getString("youtube_link"));
                             models.setPlayurl(object.getString("radio_file"));
-
+                            models.setQtypemain(qtypeeve);
+                            String qtypeseve = obj.isNull("qtype") ? null : obj
+                                    .getString("qtype");
+                            model.setQtype(qtypeseve);
+                            models.setQtype(qtypeseve);
                             /*String imagepht = object.isNull("image") ? null : object
                                     .getString("image");
                             models.setImage(imagepht);
@@ -2332,6 +2342,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
 
                 for(int j=0;j<list.size();j++){
                     title=list.get(j).getSubqueuetitle();
+
                 }
 
                 horizontalbeyond.text_title.setText(title);

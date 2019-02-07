@@ -45,11 +45,14 @@ public CartServiceRequest(CartInterface cartInterfaceview){
 
                     JSONObject object=new JSONObject(response.toString());
 
-                    JSONArray product_array=object.getJSONArray("result");
+                    JSONObject product_array=object.getJSONObject("result");
+                    String data=product_array.optString("cart_list");
+                    int totalcartitem=product_array.optInt("total_cart_item");
+                    int total_net_price_cart=product_array.getInt("net_price");
+                    JSONArray cart_array = new JSONArray(data.toString());
 
-
-                    for (int i = 0; i < product_array.length(); i++) {
-                        JSONObject obj = (JSONObject) product_array.get(i);
+                    for (int i = 0; i < cart_array.length(); i++) {
+                        JSONObject obj = (JSONObject) cart_array.get(i);
                            Log.e("Response", "mycart" + obj.getString("product_title"));
                         IndexProductModel model = new IndexProductModel();
                         String imageeve = obj.isNull("image") ? null : obj
@@ -67,6 +70,8 @@ public CartServiceRequest(CartInterface cartInterfaceview){
                         model.setVisit_list(obj.getInt("visit_list"));
                         model.setQty_id(obj.getString("qty_id"));
                         model.setItem_arrayname("product");
+                        model.setMycart_netprice(total_net_price_cart);
+                        model.setMycarttotalitem(totalcartitem);
                         JSONArray pricelistarray=obj.getJSONArray("price_list");
 
                         List<IndexProductModel>price=new ArrayList<>();

@@ -280,7 +280,7 @@ holders.product_image.setImageUrl(data.getImage(), mImageLoader);
                         }
                     };
 
-           ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, item);
+
 
             // Drop down layout style - list view with radio button
           adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
