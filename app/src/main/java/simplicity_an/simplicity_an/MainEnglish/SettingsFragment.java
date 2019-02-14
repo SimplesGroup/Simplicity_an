@@ -599,6 +599,7 @@ public class SettingsFragment extends Fragment {
             contact.setTextColor(Color.BLACK);
             privacy.setTextColor(Color.BLACK);
             language.setTextColor(Color.BLACK);
+            lgin_out.setTextColor(Color.BLACK);
  //                 languagedata.setTextColor(Color.BLACK);
             location.setTextColor(Color.BLACK);
             locationdata.setTextColor(Color.BLACK);

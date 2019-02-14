@@ -15,7 +15,7 @@ private String stonename,stonecut,stonecolor,stoneclarity,stoneweight,stoneprice
     private int quantity_id,offer_price;
     private int visit_list,cart_list;
 private String count,cart_id,qty_id;
-    private  String item_arrayname;
+    private  String item_arrayname,visit_list_id;
 
     private int mycarttotalitem,mycart_netprice;
     private List<IndexProductModel>pricelist;
@@ -23,6 +23,14 @@ private String count,cart_id,qty_id;
 
     public int getMycarttotalitem() {
         return mycarttotalitem;
+    }
+
+    public String getVisit_list_id() {
+        return visit_list_id;
+    }
+
+    public void setVisit_list_id(String visit_list_id) {
+        this.visit_list_id = visit_list_id;
     }
 
     public void setMycarttotalitem(int mycarttotalitem) {

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="5dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:layout_width="0dp"
+                android:layout_weight=".25"
+                android:id="@+id/product_imgae"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:layout_height="100dp" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight=".75"
+                android:layout_width="0dp"
+                android:layout_height="100dp">
+                <TextView
+                    android:layout_marginTop="7dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center|left"
+                    android:id="@+id/text_product_title"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@android:color/transparent">
+                    <Spinner
+                        style="@style/Widget.AppCompat.DropDownItem.Spinner"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/spin_product_price_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp">
+
+                    </Spinner>
+                </RelativeLayout>
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="bottom|left"
+                    android:textSize="14sp"
+                    android:id="@+id/text_product_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="14dp"
+                android:id="@+id/text_remove"
+                android:background="@color/searchviewhintcolor"
+                android:padding="7dp"
+                android:layout_weight=".40"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="3dp"
+                android:textSize="14dp"
+                android:id="@+id/text_Addtowhishlist"
+                android:background="@color/searchviewhintcolor"
+                android:padding="7dp"
+                android:layout_weight=".60"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

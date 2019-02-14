@@ -177,7 +177,27 @@ private TextView mycart_text,cart_count_text,wishlist_text;
             }
         });
 
+wishlist_text.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        if (sharedpreferences.contains(MYUSERID)) {
 
+            myprofileid = sharedpreferences.getString(MYUSERID, "");
+            myprofileid = myprofileid.replaceAll("\\D+","");
+        }
+        if(myprofileid!=null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            MyWishList frag;
+            frag = new MyWishList();
+            frag.show(ft, "txn_tag");
+        }else {
+            Intent signin=new Intent(getApplicationContext(),SigninpageActivity.class);
+            signin.putExtra("ACTIVITY","EXP");
+            startActivity(signin);
+
+        }
+    }
+});
 
 
         if (colorcodes != null) {

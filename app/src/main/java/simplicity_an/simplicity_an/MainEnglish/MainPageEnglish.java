@@ -318,9 +318,6 @@ LinearLayout footer;
             @Override
             public void onClick(View v) {
 
-
-
-
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 ShopFragment fragment = new ShopFragment();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
