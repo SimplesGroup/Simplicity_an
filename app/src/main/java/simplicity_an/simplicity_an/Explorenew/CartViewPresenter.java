@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface CartViewPresenter {
    public List<IndexProductModel> getMycart(Context context, final String lang, final String rtype, final String userid, final String cartid, final String qtyid, final String count);
+   public List<IndexProductModel> getMycartupdate(Context context,  final String rtype,final String lang, final String userid, final String cartid, final String qtyid, final String count);
+
 }

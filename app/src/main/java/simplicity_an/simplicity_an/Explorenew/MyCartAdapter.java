@@ -309,6 +309,9 @@ final ArrayList<String>priceitem=new ArrayList<>();
         // dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
+            int cnt=Integer.parseInt(data.getCount().toString());
+
+            holders_one.price_spinner.setSelection(cnt-1);
 
             holders_one.price_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 @Override
@@ -318,6 +321,24 @@ public void onItemSelected(AdapterView<?> parent, View view, int position, long 
     holders_one.price_item.setText(price);
 
     qtyid=qtylist.get(position);
+
+
+
+
+    String counts=    holders_one.add_to_cart_count.getText().toString();
+    int count=Integer.parseInt(counts) + 1;
+    int datacount=Integer.parseInt(data.getCount());
+if(position > datacount) {
+    CartViewPresenter cartViewPresenter = new CartServiceRequest();
+    cartViewPresenter.getMycartupdate(context, "updatecartitem", "1", myprofileid, data.getCart_id(), qtyid, String.valueOf(count));
+
+    holders_one.add_to_cart_count.setText(String.valueOf(count).toString());
+
+    holders_one.price_item.setText(price);
+    holders_one.price_spinner.setSelection(count-1);
+}else {
+
+}
         }
 
 @Override
@@ -339,6 +360,8 @@ public void onNothingSelected(AdapterView<?> parent) {
             holders_one.remove_cart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    CartViewPresenter cartViewPresenter=new CartServiceRequest();
+                    cartViewPresenter.getMycartupdate(context,"removecartitem","1",myprofileid,data.getCart_id(),"","");
 
                     RemoveAt(position);
                 }
@@ -347,13 +370,32 @@ public void onNothingSelected(AdapterView<?> parent) {
           @Override
           public void onClick(View v) {
 
+          String counts=    holders_one.add_to_cart_count.getText().toString();
+          int count=Integer.parseInt(counts) + 1;
+
+            CartViewPresenter cartViewPresenter=new CartServiceRequest();
+            cartViewPresenter.getMycartupdate(context,"updatecartitem","1",myprofileid,data.getCart_id(),qtyid,String.valueOf(count));
+
+            holders_one.add_to_cart_count.setText(String.valueOf(count).toString());
+            String price=priceitem.get(count);
+            holders_one.price_item.setText(price);
+            holders_one.price_spinner.setSelection(count-1);
           }
       });
 
             holders_one.add_to_cart_minus.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
+        String counts=    holders_one.add_to_cart_count.getText().toString();
+        int count=Integer.parseInt(counts) - 1;
 
+        CartViewPresenter cartViewPresenter=new CartServiceRequest();
+        cartViewPresenter.getMycartupdate(context,"updatecartitem","1",myprofileid,data.getCart_id(),qtyid,String.valueOf(count));
+
+        holders_one.add_to_cart_count.setText(String.valueOf(count).toString());
+        String price=priceitem.get(count);
+        holders_one.price_item.setText(price);
+        holders_one.price_spinner.setSelection(count-1);
     }
 });
 
