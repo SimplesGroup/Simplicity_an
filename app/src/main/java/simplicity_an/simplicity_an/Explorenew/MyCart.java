@@ -5,6 +5,7 @@ package simplicity_an.simplicity_an.Explorenew;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -42,7 +43,7 @@ public class MyCart extends DialogFragment implements CartInterface {
     String fontname,myprofileid,colorcodes;
 
     private CartViewPresenter cartViewPresenter;
-
+private CartShippingPresenter cartShippingPresenter;
     private TextView mycart_titile_text,total_price_text,addmore_product_text;
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -212,6 +213,15 @@ cartViewPresenter=new CartServiceRequest(this);
 
             }
         });
+
+        addmore_product_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ship=new Intent(getActivity(),ShippingAddress.class);
+                startActivity(ship);
+            }
+        });
+
         getData();
         return root;
     }
