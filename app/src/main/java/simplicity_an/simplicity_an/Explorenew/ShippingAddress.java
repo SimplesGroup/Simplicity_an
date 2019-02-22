@@ -2,6 +2,7 @@ package simplicity_an.simplicity_an.Explorenew;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -192,6 +193,15 @@ cartShippingPresenter=new CartAddresspresenterImpl(this);
         recyclerView.setLayoutManager(layoutManager);
         shippingAddressAdapter= new ShippingAddressAdapter(getApplicationContext(), shippingaddressarraylist);
         recyclerView.setAdapter(shippingAddressAdapter);
+
+        add_new_location_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent add_address=new Intent(getApplicationContext(),AddNewshippingAddress.class);
+                startActivity(add_address);
+            }
+        });
+
         getData();
 
     }
