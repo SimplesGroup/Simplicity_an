@@ -93,7 +93,7 @@ android:visibility="gone"
         android:textColor="@color/white"
         android:layout_gravity="center"
         android:layout_toLeftOf="@+id/centerdivider"
-        android:textSize="11sp"
+        android:textSize="13sp"
         android:id="@+id/textView_sourcename"/>
     <TextView
 

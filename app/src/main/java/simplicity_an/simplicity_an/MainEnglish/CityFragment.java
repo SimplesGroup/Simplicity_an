@@ -699,6 +699,10 @@ Log.e("RES",response.toString());
             language_title.setTypeface(tf_pala);
             date_text.setTypeface(tf_pala);
             line_vertical_textview.setTypeface(tf_pala);
+            language_title.setTextSize(14);
+            date_text.setTextSize(14);
+            line_vertical_textview.setTextSize(14);
+
         }else {
             Typeface sanf=Typeface.createFromAsset(getActivity().getAssets(),Fonts.sanfranciscobold);
             title_coimbatore.setTypeface(sanf);

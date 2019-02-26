@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -44,7 +45,8 @@ public class MyCart extends DialogFragment implements CartInterface {
 
     private CartViewPresenter cartViewPresenter;
 private CartShippingPresenter cartShippingPresenter;
-    private TextView mycart_titile_text,total_price_text,addmore_product_text;
+    private TextView mycart_titile_text,total_price_text,back_text,checkout_text;
+    private String totalcartprice;
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
 private RelativeLayout main_complist_layout;
@@ -52,6 +54,7 @@ private RelativeLayout main_complist_layout;
     private MyCartAdapter myCartAdapter;
     private List<IndexProductModel>mycartlist=new ArrayList<>();
     private TextView textView_Noresult;
+    private LinearLayout cartlayout;
     public MyCart() {
 
     }
@@ -91,9 +94,11 @@ private RelativeLayout main_complist_layout;
 cartViewPresenter=new CartServiceRequest(this);
 
         main_complist_layout = (RelativeLayout)root. findViewById(R.id.shop_layouts);
+        cartlayout=(LinearLayout)root. findViewById(R.id.cart_layout);
        mycart_titile_text=(TextView)root.findViewById(R.id.mycart_title_shop);
         total_price_text=(TextView)root.findViewById(R.id.total_cartcount_price_shop);
-        addmore_product_text=(TextView)root.findViewById(R.id.add_more_products_shop);
+        back_text=(TextView)root.findViewById(R.id.total_cartcount_back);
+        checkout_text=(TextView)root.findViewById(R.id.total_cartcount_checkout) ;
         textView_Noresult=(TextView)root.findViewById(R.id.text_noresultfound_shop) ;
         if (colorcodes != null) {
             if (colorcodes.equals("#FFFFFFFF")) {
@@ -105,7 +110,7 @@ cartViewPresenter=new CartServiceRequest(this);
                 gd.setCornerRadius(0f);
 
                 main_complist_layout.setBackgroundDrawable(gd);
-
+                cartlayout.setBackgroundColor(Color.BLACK);
 
             } else {
                 int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
@@ -116,6 +121,7 @@ cartViewPresenter=new CartServiceRequest(this);
                 gd.setCornerRadius(0f);
 
                 main_complist_layout.setBackgroundDrawable(gd);
+                cartlayout.setBackgroundColor(getActivity().getResources().getColor(R.color.themedark));
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(backgroundcolor, "#262626");
 
@@ -131,6 +137,7 @@ cartViewPresenter=new CartServiceRequest(this);
             gd.setCornerRadius(0f);
 
             main_complist_layout.setBackgroundDrawable(gd);
+            cartlayout.setBackgroundColor(getActivity().getResources().getColor(R.color.themedark));
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(backgroundcolor, "#262626");
 
@@ -144,9 +151,10 @@ cartViewPresenter=new CartServiceRequest(this);
         if (colorcodes.equals("#262626")) {
             Log.e("Response",colorcodes+"theme");
             mycart_titile_text.setTextColor(Color.WHITE);
-            addmore_product_text.setTextColor(Color.WHITE);
+            back_text.setTextColor(Color.WHITE);
             total_price_text.setTextColor(Color.WHITE);
             textView_Noresult.setTextColor(Color.WHITE);
+            checkout_text.setTextColor(Color.WHITE);
 
 
 
@@ -154,26 +162,39 @@ cartViewPresenter=new CartServiceRequest(this);
             Log.e("Response",colorcodes+"theme");
 
             mycart_titile_text.setTextColor(Color.BLACK);
-            addmore_product_text.setTextColor(Color.BLACK);
+            back_text.setTextColor(Color.BLACK);
             total_price_text.setTextColor(Color.BLACK);
             textView_Noresult.setTextColor(Color.BLACK);
+            checkout_text.setTextColor(Color.BLACK);
         }
 
-        addmore_product_text.setText("Add more Products");
-
+        back_text.setText("Back");
+        checkout_text.setText("Checkout");
         String simplycity_title = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_pala = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
         if (fontname.equals("playfair")) {
             mycart_titile_text.setTypeface(tf_pala);
-            addmore_product_text.setTypeface(tf_pala);
+            back_text.setTypeface(tf_pala);
             total_price_text.setTypeface(tf_pala);
             textView_Noresult.setTypeface(tf_pala);
+            checkout_text.setTypeface(tf_pala);
+            mycart_titile_text.setTextSize(24);
+            textView_Noresult.setTextSize(22);
+            total_price_text.setTextSize(19);
+            back_text.setTextSize(19);
+            checkout_text.setTextSize(19);
         } else {
             Typeface sanf = Typeface.createFromAsset(getActivity().getAssets(), Fonts.sanfranciscobold);
           mycart_titile_text.setTypeface(sanf);
-            addmore_product_text.setTypeface(sanf);
+            back_text.setTypeface(sanf);
             total_price_text.setTypeface(sanf);
             textView_Noresult.setTypeface(sanf);
+            checkout_text.setTypeface(sanf);
+            mycart_titile_text.setTextSize(23);
+            textView_Noresult.setTextSize(16);
+            total_price_text.setTextSize(15);
+            back_text.setTextSize(15);
+            checkout_text.setTextSize(15);
         }
         pdialog = new ProgressDialog(getActivity());
         pdialog.show();
@@ -214,14 +235,21 @@ cartViewPresenter=new CartServiceRequest(this);
             }
         });
 
-        addmore_product_text.setOnClickListener(new View.OnClickListener() {
+
+        checkout_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent ship=new Intent(getActivity(),ShippingAddress.class);
-                startActivity(ship);
+                Intent in =new Intent(getActivity(),ShippingAddress.class);
+                in.putExtra("TOTALCOST",totalcartprice);
+                startActivity(in);
             }
         });
-
+back_text.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        MyCart.this.dismiss();
+    }
+});
         getData();
         return root;
     }
@@ -272,8 +300,8 @@ cartViewPresenter=new CartServiceRequest(this);
            textView_Noresult.setVisibility(View.VISIBLE);
         }else {
             IndexProductModel model=mycartlistss.get(0);
-
-            total_price_text.setText(model.getMycarttotalitem()+" Product Total Price -"+"Rs."+model.getMycart_netprice());
+            totalcartprice=String.valueOf(model.getMycart_netprice());
+            total_price_text.setText("Total Price -"+model.getMycart_netprice());
             myCartAdapter.data(mycartlistss);
             textView_Noresult.setVisibility(View.GONE);
 

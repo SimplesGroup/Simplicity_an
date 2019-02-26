@@ -158,10 +158,11 @@ final IndexProductModel data = shopdataList.get(position);
         Typeface tf_pala = Typeface.createFromAsset(context.getAssets(), simplycity_title);
         if (fontname.equals("playfair")) {
         holders.title_category.setTypeface(tf_pala);
-
+            holders.title_category.setTextSize(22);
         } else {
         Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
         holders.title_category.setTypeface(sanf);
+            holders.title_category.setTextSize(17);
 
 
         }
@@ -196,11 +197,14 @@ final IndexProductModel data = shopdataList.get(position);
         if (fontname.equals("playfair")) {
         holders.title_category.setTypeface(tf_pala);
         holders.price_item.setTypeface(tf_pala);
-
+            holders.title_category.setTextSize(21);
+            holders.price_item.setTextSize(21);
         } else {
         Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
         holders.title_category.setTypeface(sanf);
         holders.price_item.setTypeface(sanf);
+            holders.title_category.setTextSize(16);
+            holders.price_item.setTextSize(16);
 
         }
 
@@ -370,12 +374,14 @@ final IndexProductModel data = shopdataList.get(position);
         if (fontname.equals("playfair")) {
         holders.title_category.setTypeface(tf_pala);
         holders.price_item.setTypeface(tf_pala);
-
+            holders.title_category.setTextSize(21);
+            holders.price_item.setTextSize(21);
         } else {
         Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
         holders.title_category.setTypeface(sanf);
         holders.price_item.setTypeface(sanf);
-
+            holders.title_category.setTextSize(16);
+            holders.price_item.setTextSize(16);
         }
 
         holders.product_image.setImageUrl(data.getImage(),mImageLoader);
@@ -388,6 +394,7 @@ final IndexProductModel data = shopdataList.get(position);
         IndexProductModel model=list.get(i);
 
        // String item_price=model.getPrice();
+            holders.price_item.setVisibility(View.VISIBLE);
         String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
         holders.price_item.setText(item_price);
 
@@ -431,12 +438,14 @@ final IndexProductModel data = shopdataList.get(position);
         if (fontname.equals("playfair")) {
         holders.title_category_withoutspin.setTypeface(tf_pala);
         holders.price_item_withoutspin.setTypeface(tf_pala);
-
+            holders.title_category_withoutspin.setTextSize(23);
+            holders.price_item_withoutspin.setTextSize(22);
         } else {
         Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
         holders.title_category_withoutspin.setTypeface(sanf);
         holders.price_item_withoutspin.setTypeface(sanf);
-
+            holders.title_category_withoutspin.setTextSize(17);
+            holders.price_item_withoutspin.setTextSize(16);
         }
 
         holders.title_category_withoutspin.setText(data.getProduct_title());

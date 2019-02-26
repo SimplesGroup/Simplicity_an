@@ -21,6 +21,8 @@
 <color name="textfade">#CCCCCC</color>
     <color name="input_register">#888888</color>
     <color name="input_register_hint">#5e6266</color>
+
+    <color name="themedark">#262626</color>
     <color name="whitecolor">#ffffff</color>
 
     <color name="theme1">#383838</color>

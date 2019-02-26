@@ -68,6 +68,9 @@ private CartShippingPresenter cartShippingPresenter;
 
 cartShippingPresenter=new CartAddresspresenterImpl(this);
 
+Intent get=getIntent();
+String totalprice=get.getStringExtra("TOTALCOST");
+
 
         if (colorcodes != null) {
             if (colorcodes.equals("#FFFFFFFF")) {
@@ -137,7 +140,7 @@ cartShippingPresenter=new CartAddresspresenterImpl(this);
         textView_Noresult.setText("No Result Found");
         back_textview.setText("BACK");
         continue_textview.setText("CONTINUE");
-        totalcost_textview.setText("Total : ");
+        totalcost_textview.setText("Total : "+totalprice);
         textView_Noresult.setVisibility(View.GONE);
         if (colorcodes.equals("#FFFFFFFF")) {
             shippingtitle_text.setTextColor(Color.BLACK);
@@ -202,9 +205,28 @@ cartShippingPresenter=new CartAddresspresenterImpl(this);
             }
         });
 
+        back_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        addmore_products_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         getData();
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     private void getData(){
 
         cartShippingPresenter.getAddress(getApplicationContext(),"shipping_address_list",myprofileid);

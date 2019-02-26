@@ -157,11 +157,12 @@ final IndexProductModel data = shopdataList.get(position);
         Typeface tf_pala = Typeface.createFromAsset(context.getAssets(), simplycity_title);
         if (fontname.equals("playfair")) {
         holders.title_category.setTypeface(tf_pala);
+            holders.title_category.setTextSize(22);
 
         } else {
         Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
         holders.title_category.setTypeface(sanf);
-
+            holders.title_category.setTextSize(17);
 
         }
         holders.title_category.setText(data.getCategory_title());
@@ -213,6 +214,11 @@ final IndexProductModel data = shopdataList.get(position);
             holders_one.add_to_cart_count.setTypeface(tf_pala);
             holders_one.add_to_cart_minus.setTypeface(tf_pala);
 
+            holders_one.title_category.setTextSize(21);
+            holders_one.price_item.setTextSize(21);
+            holders_one.remove_cart.setTextSize(22);
+            holders_one.add_to_wishlist.setTextSize(22);
+
         } else {
         Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
             holders_one.title_category.setTypeface(sanf);
@@ -222,7 +228,10 @@ final IndexProductModel data = shopdataList.get(position);
             holders_one.add_to_cart_plus.setTypeface(sanf);
             holders_one.add_to_cart_count.setTypeface(sanf);
             holders_one.add_to_cart_minus.setTypeface(sanf);
-
+            holders_one.title_category.setTextSize(16);
+            holders_one.price_item.setTextSize(16);
+            holders_one.remove_cart.setTextSize(16);
+            holders_one.add_to_wishlist.setTextSize(16);
         }
 
 
@@ -245,14 +254,13 @@ final ArrayList<String>priceitem=new ArrayList<>();
             holders_one.product_image.setImageUrl(data.getImage(), mImageLoader);
 
 
-
             ArrayAdapter<String> adapter =
                     new ArrayAdapter<String>(context, R.layout.explore_my_spinner_style, item)
                     {
 
                         public View getView(int position, View convertView, ViewGroup parent) {
                             View v = super.getView(position, convertView, parent);
-
+                            v.setBackgroundColor(Color.TRANSPARENT);
                             ((TextView) v).setTextSize(14);
                             if (colorcodes.equals("#262626")) {
                                 ((TextView) v).setTextColor(
@@ -272,15 +280,16 @@ final ArrayList<String>priceitem=new ArrayList<>();
                             View v = super.getDropDownView(position, convertView, parent);
                             //v.setBackgroundResource(R.drawable.spinner_bg);
                             if (colorcodes.equals("#262626")) {
-                                v.setBackgroundColor(Color.BLACK);
+                                // v.setBackgroundColor(Color.BLACK);
                                 ((TextView) v).setTextColor(
-                                        context. getResources().getColorStateList(R.color.whitecolor)
+                                        context.getResources().getColorStateList(R.color.Black)
                                 );
 
+
                             }else {
-                                v.setBackgroundColor(Color.WHITE);
+                                //  v.setBackgroundColor(Color.WHITE);
                                 ((TextView) v).setTextColor(
-                                        context. getResources().getColorStateList(R.color.Black)
+                                        context. getResources().getColorStateList(R.color.white)
                                 );
                             }
 
@@ -423,12 +432,14 @@ final IndexProductModel data = shopdataList.get(position);
         if (fontname.equals("playfair")) {
         holders.title_category.setTypeface(tf_pala);
         holders.price_item.setTypeface(tf_pala);
-
+            holders.title_category.setTextSize(21);
+            holders.price_item.setTextSize(21);
         } else {
         Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
         holders.title_category.setTypeface(sanf);
         holders.price_item.setTypeface(sanf);
-
+            holders.title_category.setTextSize(16);
+            holders.price_item.setTextSize(16);
         }
 
         holders.product_image.setImageUrl(data.getImage(),mImageLoader);
@@ -484,12 +495,14 @@ final IndexProductModel data = shopdataList.get(position);
         if (fontname.equals("playfair")) {
         holders.title_category_withoutspin.setTypeface(tf_pala);
         holders.price_item_withoutspin.setTypeface(tf_pala);
-
+            holders.title_category_withoutspin.setTextSize(23);
+            holders.price_item_withoutspin.setTextSize(22);
         } else {
         Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
         holders.title_category_withoutspin.setTypeface(sanf);
         holders.price_item_withoutspin.setTypeface(sanf);
-
+            holders.title_category_withoutspin.setTextSize(17);
+            holders.price_item_withoutspin.setTextSize(16);
         }
 
         holders.title_category_withoutspin.setText(data.getProduct_title());

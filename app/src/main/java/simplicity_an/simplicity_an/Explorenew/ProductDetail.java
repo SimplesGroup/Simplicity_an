@@ -75,6 +75,9 @@ NetworkImageView product_image;
 ImageLoader mImageLoader;
 
 String maincateegoryid,categoryid,companyid,productsid,qtyid;
+
+    private LinearLayout cartlayout;
+    private TextView back_text,cart_count_text,cartname_text,wishlist_text;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +101,14 @@ String maincateegoryid,categoryid,companyid,productsid,qtyid;
         Intent get=getIntent();
         maincatid=get.getStringExtra("MAIN_CAT_ID");
         productid=get.getStringExtra("PRO_ID");
+
+
+        cartlayout=(LinearLayout) findViewById(R.id.cart_layout);
+        back_text=(TextView)findViewById(R.id.back_textview) ;
+        cart_count_text=(TextView)findViewById(R.id.cart_main_count) ;
+        cartname_text=(TextView) findViewById(R.id.title_shop_mycartcount_textview);
+        wishlist_text=(TextView)findViewById(R.id.wishlist_textview) ;
+
 
         product_image=(NetworkImageView)findViewById(R.id.img_product_detail) ;
         spinner_pricelist=(Spinner)findViewById(R.id.spin_qty_list_detail);
@@ -142,7 +153,7 @@ String maincateegoryid,categoryid,companyid,productsid,qtyid;
                 gd.setCornerRadius(0f);
 
                 main_complist_layout.setBackgroundDrawable(gd);
-
+                cartlayout.setBackgroundColor(Color.BLACK);
 
             } else {
                 int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
@@ -153,6 +164,7 @@ String maincateegoryid,categoryid,companyid,productsid,qtyid;
                 gd.setCornerRadius(0f);
 
                 main_complist_layout.setBackgroundDrawable(gd);
+                cartlayout.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.themedark));
                 // city.setBackgroundColor(getResources().getColor(R.color.theme1button));
                /* fabplus.setBackgroundResource(R.color.theme1button);
                 fabinnerplus.setBackgroundResource(R.color.theme1button);
@@ -172,6 +184,7 @@ String maincateegoryid,categoryid,companyid,productsid,qtyid;
             gd.setCornerRadius(0f);
 
             main_complist_layout.setBackgroundDrawable(gd);
+            cartlayout.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.themedark));
 
             /*fabplus.setBackgroundResource(R.color.theme1button);
             fabinnerplus.setBackgroundResource(R.color.theme1button);
@@ -186,7 +199,9 @@ String maincateegoryid,categoryid,companyid,productsid,qtyid;
 
         addtocart.setText("ADD TO CART");
         whishlist.setText("WHISHLIST");
-
+        back_text.setText("Back");
+        cartname_text.setText("My Cart");
+        wishlist_text.setText("Wish List");
         if (colorcodes.equals("#FFFFFFFF")) {
 
             textView_price.setTextColor(Color.BLACK);
@@ -209,7 +224,9 @@ String maincateegoryid,categoryid,companyid,productsid,qtyid;
             addtocart.setTextColor(Color.BLACK);
             whishlist.setTextColor(Color.BLACK);
 
-
+            back_text.setTextColor(Color.WHITE);
+            cartname_text.setTextColor(Color.WHITE);
+            wishlist_text.setTextColor(Color.WHITE);
         } else {
             textView_price.setTextColor(Color.WHITE);
             textView_title_label.setTextColor(Color.WHITE);
@@ -230,6 +247,11 @@ String maincateegoryid,categoryid,companyid,productsid,qtyid;
             productdetails_materialprice.setTextColor(Color.WHITE);
             addtocart.setTextColor(Color.WHITE);
             whishlist.setTextColor(Color.WHITE);
+
+            back_text.setTextColor(Color.WHITE);
+            cartname_text.setTextColor(Color.WHITE);
+            wishlist_text.setTextColor(Color.WHITE);
+
         }
         String simplycity_title = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_pala = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title);
@@ -255,6 +277,37 @@ String maincateegoryid,categoryid,companyid,productsid,qtyid;
             addtocart.setTypeface(tf_pala);
             whishlist.setTypeface(tf_pala);
 
+            back_text.setTypeface(tf_pala);
+            cartname_text.setTypeface(tf_pala);
+            wishlist_text.setTypeface(tf_pala);
+
+
+
+            textView_price.setTextSize(21);
+            textView_title_label.setTextSize(21);
+            textView_title.setTextSize(21);
+            textView_description_label.setTextSize(21);
+            textView_description.setTextSize(21);
+            productdetails_jewel_label.setTextSize(21);
+
+            productdetails_title_label.setTextSize(21);
+            productdetails_desc_label.setTextSize(21);
+            productdetails_wastage_label.setTextSize(21);
+            productdetails_netweight_label.setTextSize(21);
+            productdetails_materialprice_label.setTextSize(21);
+            productdetails_title.setTextSize(21);
+            productdetails_desc.setTextSize(21);
+            productdetails_wastage.setTextSize(21);
+            productdetails_netweight.setTextSize(21);
+            productdetails_materialprice.setTextSize(21);
+
+
+            back_text.setTextSize(19);
+            cartname_text.setTextSize(19);
+            wishlist_text.setTextSize(19);
+
+
+
         } else {
             Typeface sanf = Typeface.createFromAsset(getApplicationContext().getAssets(), Fonts.sanfranciscobold);
             textView_price.setTypeface(sanf);
@@ -277,6 +330,39 @@ String maincateegoryid,categoryid,companyid,productsid,qtyid;
 
             addtocart.setTypeface(sanf);
             whishlist.setTypeface(sanf);
+
+            back_text.setTypeface(sanf);
+            cartname_text.setTypeface(sanf);
+            wishlist_text.setTypeface(sanf);
+
+
+
+            textView_price.setTextSize(16);
+            textView_title_label.setTextSize(16);
+            textView_title.setTextSize(16);
+            textView_description_label.setTextSize(16);
+            textView_description.setTextSize(16);
+            productdetails_jewel_label.setTextSize(16);
+
+            productdetails_title_label.setTextSize(16);
+            productdetails_desc_label.setTextSize(16);
+            productdetails_wastage_label.setTextSize(16);
+            productdetails_netweight_label.setTextSize(16);
+            productdetails_materialprice_label.setTextSize(16);
+            productdetails_title.setTextSize(16);
+            productdetails_desc.setTextSize(16);
+            productdetails_wastage.setTextSize(16);
+            productdetails_netweight.setTextSize(16);
+            productdetails_materialprice.setTextSize(16);
+
+
+            back_text.setTextSize(15);
+            cartname_text.setTextSize(15);
+            wishlist_text.setTextSize(15);
+
+
+
+
         }
 
         pdialog = new ProgressDialog(this);

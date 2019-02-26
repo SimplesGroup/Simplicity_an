@@ -47,8 +47,44 @@
                 ></View>
         </LinearLayout>
 
-        <android.support.v4.widget.SwipeRefreshLayout
+
+
+        <RelativeLayout
+            android:id="@+id/mycart_layout"
             android:layout_below="@+id/footerline"
+            android:background="@color/whitefood"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="5dp"
+                android:text="My Cart"
+                android:id="@+id/title_shop_mycartcount_textview"
+                android:textColor="@android:color/black"
+                android:textSize="17dp"
+                android:textAlignment="center"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_toRightOf="@+id/title_shop_mycartcount_textview"
+                android:id="@+id/cart_main_count"
+                android:minWidth="22dp"
+                android:minHeight="22dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0"
+                android:background="@drawable/batgetext"
+                android:gravity="center"
+                android:shadowColor="@android:color/white"
+                android:shadowRadius="10.0"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"/>
+        </RelativeLayout>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/mycart_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/swipe_shop">

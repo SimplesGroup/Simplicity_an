@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -52,6 +53,8 @@ public class MyWishList extends DialogFragment implements WishListInterface {
     private TextView textView_Noresult;
 
  private    WishListPresenter wishListPresenter;
+    private TextView total_price_text,back_text,checkout_text;
+    private LinearLayout cartlayout;
     public MyWishList() {
 
     }
@@ -89,8 +92,11 @@ public class MyWishList extends DialogFragment implements WishListInterface {
         }
         wishListPresenter=new WishListPresenterImplementation(this);
         main_complist_layout = (RelativeLayout)root. findViewById(R.id.wishlist_layouts);
+        cartlayout=(LinearLayout)root. findViewById(R.id.cart_layout);
         wishlist_titile_text=(TextView)root.findViewById(R.id.mywishlist_title);
-        gotocart_text=(TextView)root.findViewById(R.id.gotocart_wishlist);
+        total_price_text=(TextView)root.findViewById(R.id.total_wishlist_price_shop);
+        back_text=(TextView)root.findViewById(R.id.wishlist_back);
+        checkout_text=(TextView)root.findViewById(R.id.total_wishlist_checkout) ;
         textView_Noresult=(TextView)root.findViewById(R.id.text_noresultfound_wishlist) ;
         if (colorcodes != null) {
             if (colorcodes.equals("#FFFFFFFF")) {
@@ -102,7 +108,7 @@ public class MyWishList extends DialogFragment implements WishListInterface {
                 gd.setCornerRadius(0f);
 
                 main_complist_layout.setBackgroundDrawable(gd);
-
+                cartlayout.setBackgroundColor(Color.BLACK);
 
             } else {
                 int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
@@ -113,6 +119,7 @@ public class MyWishList extends DialogFragment implements WishListInterface {
                 gd.setCornerRadius(0f);
 
                 main_complist_layout.setBackgroundDrawable(gd);
+                cartlayout.setBackgroundColor(getActivity().getResources().getColor(R.color.themedark));
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(backgroundcolor, "#262626");
 
@@ -128,6 +135,7 @@ public class MyWishList extends DialogFragment implements WishListInterface {
             gd.setCornerRadius(0f);
 
             main_complist_layout.setBackgroundDrawable(gd);
+            cartlayout.setBackgroundColor(getActivity().getResources().getColor(R.color.themedark));
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(backgroundcolor, "#262626");
 
@@ -139,33 +147,52 @@ public class MyWishList extends DialogFragment implements WishListInterface {
         if (colorcodes.equals("#262626")) {
             Log.e("Response",colorcodes+"theme");
             wishlist_titile_text.setTextColor(Color.WHITE);
-            gotocart_text.setTextColor(Color.WHITE);
-            textView_Noresult.setTextColor(Color.WHITE);
 
+            textView_Noresult.setTextColor(Color.WHITE);
+            total_price_text.setTextColor(Color.WHITE);
+            back_text.setTextColor(Color.WHITE);
+            checkout_text.setTextColor(Color.WHITE);
 
 
         } else {
             Log.e("Response",colorcodes+"theme");
 
             wishlist_titile_text.setTextColor(Color.BLACK);
-            gotocart_text.setTextColor(Color.BLACK);
+
             textView_Noresult.setTextColor(Color.BLACK);
+            total_price_text.setTextColor(Color.WHITE);
+            back_text.setTextColor(Color.WHITE);
+            checkout_text.setTextColor(Color.WHITE);
         }
         wishlist_titile_text.setText("Wish List");
-        gotocart_text.setText("GO TO CART");
+        back_text.setText("Back");
+        checkout_text.setText("Checkout");
 
         String simplycity_title = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_pala = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
         if (fontname.equals("playfair")) {
             wishlist_titile_text.setTypeface(tf_pala);
-            gotocart_text.setTypeface(tf_pala);
-
+            back_text.setTypeface(tf_pala);
+            total_price_text.setTypeface(tf_pala);
             textView_Noresult.setTypeface(tf_pala);
+            checkout_text.setTypeface(tf_pala);
+            wishlist_titile_text.setTextSize(24);
+            textView_Noresult.setTextSize(22);
+            total_price_text.setTextSize(19);
+            back_text.setTextSize(19);
+            checkout_text.setTextSize(19);
         } else {
             Typeface sanf = Typeface.createFromAsset(getActivity().getAssets(), Fonts.sanfranciscobold);
             wishlist_titile_text.setTypeface(sanf);
-            gotocart_text.setTypeface(sanf);
+            back_text.setTypeface(sanf);
+            total_price_text.setTypeface(sanf);
             textView_Noresult.setTypeface(sanf);
+            checkout_text.setTypeface(sanf);
+            wishlist_titile_text.setTextSize(23);
+            textView_Noresult.setTextSize(16);
+            total_price_text.setTextSize(15);
+            back_text.setTextSize(15);
+            checkout_text.setTextSize(15);
         }
 
         pdialog = new ProgressDialog(getActivity());
@@ -204,6 +231,13 @@ public class MyWishList extends DialogFragment implements WishListInterface {
                     }
                 }, 3000);
 
+            }
+        });
+
+        back_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyWishList.this.dismiss();
             }
         });
 

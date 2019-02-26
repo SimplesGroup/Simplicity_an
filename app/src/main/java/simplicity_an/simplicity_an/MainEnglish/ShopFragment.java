@@ -3,6 +3,7 @@ package simplicity_an.simplicity_an.MainEnglish;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -12,15 +13,18 @@ import android.os.Bundle;
 
 import simplicity_an.simplicity_an.Explorenew.IndexAdapter;
 import simplicity_an.simplicity_an.Explorenew.IndexProductModel;
+import simplicity_an.simplicity_an.Explorenew.MyCart;
 import simplicity_an.simplicity_an.Explorenew.RequestInterface;
 import simplicity_an.simplicity_an.Explorenew.Servicerequest;
 import simplicity_an.simplicity_an.R;
+import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,7 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShopFragment extends Fragment implements RequestInterface {
-    private TextView title_shop;
+    private TextView title_shop,mycart_text,mycart_count_text;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private    List<IndexProductModel> shopDataList ;
@@ -90,6 +94,8 @@ public class ShopFragment extends Fragment implements RequestInterface {
         fontname = sharedpreferences.getString(Fonts.FONT, "");
         requestQueue = Volley.newRequestQueue(getActivity());
         title_shop = (TextView) view.findViewById(R.id.title_shop_textview);
+        mycart_text = (TextView) view.findViewById(R.id.title_shop_mycartcount_textview);
+        mycart_count_text = (TextView) view.findViewById(R.id.cart_main_count);
         shopDataList=new ArrayList<IndexProductModel>();
         datalist=new ArrayList<>();
 
@@ -204,18 +210,27 @@ public class ShopFragment extends Fragment implements RequestInterface {
         title_shop.setText("Shop Essentials");
         if (colorcodes.equals("#FFFFFFFF")) {
             title_shop.setTextColor(Color.BLACK);
+            mycart_text.setTextColor(Color.BLACK);
 
         } else {
             title_shop.setTextColor(Color.WHITE);
+            mycart_text.setTextColor(Color.WHITE);
         }
         String simplycity_title = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_pala = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
         if (fontname.equals("playfair")) {
             title_shop.setTypeface(tf_pala);
+            mycart_text.setTypeface(tf_pala);
+            title_shop.setTextSize(24);
+            mycart_text.setTextSize(24);
+
 
         } else {
             Typeface sanf = Typeface.createFromAsset(getActivity().getAssets(), Fonts.sanfranciscobold);
             title_shop.setTypeface(sanf);
+            mycart_text.setTypeface(sanf);
+            title_shop.setTextSize(20);
+            mycart_text.setTextSize(17);
 
 
         }
@@ -228,7 +243,27 @@ public class ShopFragment extends Fragment implements RequestInterface {
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_shop);
 //RecyclerLayouts();
 
+mycart_text.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        if (sharedpreferences.contains(MYUSERID)) {
 
+            myprofileid = sharedpreferences.getString(MYUSERID, "");
+            myprofileid = myprofileid.replaceAll("\\D+","");
+        }
+        if(myprofileid!=null) {
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+            MyCart frag;
+            frag = new MyCart();
+            frag.show(ft, "txn_tag");
+        }else {
+            Intent signin=new Intent(getActivity(),SigninpageActivity.class);
+            signin.putExtra("ACTIVITY","EXP");
+            startActivity(signin);
+
+        }
+    }
+});
 
 
         shopAdapter = new IndexAdapter(getActivity(), shopDataList);

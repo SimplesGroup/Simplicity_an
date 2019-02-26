@@ -22,6 +22,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -65,8 +66,8 @@ public class CompanyList extends AppCompatActivity implements RequestInterface.C
     String title_name_item,category_id;
 private TextView textView_Noresult;
 
-
-private TextView mycart_text,cart_count_text,wishlist_text;
+private LinearLayout cartlayout;
+private TextView mycart_text,cart_count_text,cartname_text,wishlist_text;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,9 +98,11 @@ private TextView mycart_text,cart_count_text,wishlist_text;
 
         main_complist_layout = (RelativeLayout) findViewById(R.id.shop_layout);
 
-        mycart_text=(TextView)findViewById(R.id.mycart_textview) ;
+        cartlayout=(LinearLayout) findViewById(R.id.cart_layout);
+        mycart_text=(TextView)findViewById(R.id.back_textview) ;
         cart_count_text=(TextView)findViewById(R.id.cart_main_count) ;
-        wishlist_text=(TextView)findViewById(R.id.buynow_textview) ;
+        cartname_text=(TextView) findViewById(R.id.title_shop_mycartcount_textview);
+        wishlist_text=(TextView)findViewById(R.id.wishlist_textview) ;
 
         search = (android.support.v7.widget.SearchView) findViewById(R.id.searchview_main);
         search.setActivated(true);
@@ -158,6 +161,12 @@ private TextView mycart_text,cart_count_text,wishlist_text;
         mycart_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               onBackPressed();
+            }
+        });
+        cartname_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 if (sharedpreferences.contains(MYUSERID)) {
 
                     myprofileid = sharedpreferences.getString(MYUSERID, "");
@@ -210,7 +219,7 @@ wishlist_text.setOnClickListener(new View.OnClickListener() {
                 gd.setCornerRadius(0f);
 
                 main_complist_layout.setBackgroundDrawable(gd);
-
+                cartlayout.setBackgroundColor(Color.BLACK);
 
             } else {
                 int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
@@ -221,6 +230,7 @@ wishlist_text.setOnClickListener(new View.OnClickListener() {
                 gd.setCornerRadius(0f);
 
                 main_complist_layout.setBackgroundDrawable(gd);
+                cartlayout.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.themedark));
                 // city.setBackgroundColor(getResources().getColor(R.color.theme1button));
                /* fabplus.setBackgroundResource(R.color.theme1button);
                 fabinnerplus.setBackgroundResource(R.color.theme1button);
@@ -240,7 +250,7 @@ wishlist_text.setOnClickListener(new View.OnClickListener() {
             gd.setCornerRadius(0f);
 
             main_complist_layout.setBackgroundDrawable(gd);
-
+            cartlayout.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.themedark));
             /*fabplus.setBackgroundResource(R.color.theme1button);
             fabinnerplus.setBackgroundResource(R.color.theme1button);
             fabsearch.setBackgroundResource(R.color.theme1button);*/
@@ -254,25 +264,53 @@ wishlist_text.setOnClickListener(new View.OnClickListener() {
         title_shop.setText(title_name_item);
         textView_Noresult.setText("No Result Found");
         textView_Noresult.setVisibility(View.GONE);
+        mycart_text.setText("Back");
+        cartname_text.setText("My Cart");
+        wishlist_text.setText("Wish List");
         if (colorcodes.equals("#FFFFFFFF")) {
             title_shop.setTextColor(Color.BLACK);
             textView_Noresult.setTextColor(Color.BLACK);
-
+            mycart_text.setTextColor(Color.WHITE);
+            cartname_text.setTextColor(Color.WHITE);
+            wishlist_text.setTextColor(Color.WHITE);
         } else {
             title_shop.setTextColor(Color.WHITE);
             textView_Noresult.setTextColor(Color.WHITE);
+            mycart_text.setTextColor(Color.WHITE);
+            cartname_text.setTextColor(Color.WHITE);
+            wishlist_text.setTextColor(Color.WHITE);
         }
         String simplycity_title = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_pala = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title);
         if (fontname.equals("playfair")) {
             title_shop.setTypeface(tf_pala);
             textView_Noresult.setTypeface(tf_pala);
+            mycart_text.setTypeface(tf_pala);
+            cartname_text.setTypeface(tf_pala);
+            wishlist_text.setTypeface(tf_pala);
+
+
+            title_shop.setTextSize(24);
+            textView_Noresult.setTextSize(22);
+            mycart_text.setTextSize(19);
+            cartname_text.setTextSize(19);
+            wishlist_text.setTextSize(19);
+
 
         } else {
             Typeface sanf = Typeface.createFromAsset(getApplicationContext().getAssets(), Fonts.sanfranciscobold);
             title_shop.setTypeface(sanf);
             textView_Noresult.setTypeface(sanf);
+            mycart_text.setTypeface(sanf);
+            cartname_text.setTypeface(sanf);
+            wishlist_text.setTypeface(sanf);
 
+
+            title_shop.setTextSize(23);
+            textView_Noresult.setTextSize(16);
+            mycart_text.setTextSize(15);
+            cartname_text.setTextSize(15);
+            wishlist_text.setTextSize(15);
 
         }
 

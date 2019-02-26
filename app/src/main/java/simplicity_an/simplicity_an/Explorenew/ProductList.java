@@ -12,6 +12,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -37,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import simplicity_an.simplicity_an.R;
+import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
 public class ProductList extends AppCompatActivity implements RequestInterface.Productlist{
@@ -74,6 +77,9 @@ public class ProductList extends AppCompatActivity implements RequestInterface.P
     Spinner spinner_subcategory,spinner_lowcategory;
     private ArrayAdapter<String> adapter,lowcatadapter;
     String low_id,sub_id;
+
+    private LinearLayout cartlayout;
+    private TextView mycart_text,cart_count_text,cartname_text,wishlist_text;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +110,14 @@ public class ProductList extends AppCompatActivity implements RequestInterface.P
         ids_sub=new ArrayList<>();
         title_low=new ArrayList<>();
         ids_low=new ArrayList<>();
+
+
+        cartlayout=(LinearLayout) findViewById(R.id.cart_layout);
+        mycart_text=(TextView)findViewById(R.id.back_textview) ;
+        cart_count_text=(TextView)findViewById(R.id.cart_main_count) ;
+        cartname_text=(TextView) findViewById(R.id.title_shop_mycartcount_textview);
+        wishlist_text=(TextView)findViewById(R.id.wishlist_textview) ;
+
 
         servicerequest=new Servicerequest(this);
 
@@ -179,7 +193,7 @@ public class ProductList extends AppCompatActivity implements RequestInterface.P
                 gd.setCornerRadius(0f);
 
                 main_complist_layout.setBackgroundDrawable(gd);
-
+                cartlayout.setBackgroundColor(Color.BLACK);
 
             } else {
                 int[] colors = {Color.parseColor("#262626"), Color.parseColor("#FF000000")};
@@ -190,6 +204,7 @@ public class ProductList extends AppCompatActivity implements RequestInterface.P
                 gd.setCornerRadius(0f);
 
                 main_complist_layout.setBackgroundDrawable(gd);
+                cartlayout.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.themedark));
                 // city.setBackgroundColor(getResources().getColor(R.color.theme1button));
                /* fabplus.setBackgroundResource(R.color.theme1button);
                 fabinnerplus.setBackgroundResource(R.color.theme1button);
@@ -209,6 +224,7 @@ public class ProductList extends AppCompatActivity implements RequestInterface.P
             gd.setCornerRadius(0f);
 
             main_complist_layout.setBackgroundDrawable(gd);
+            cartlayout.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.themedark));
 
             /*fabplus.setBackgroundResource(R.color.theme1button);
             fabinnerplus.setBackgroundResource(R.color.theme1button);
@@ -223,27 +239,110 @@ public class ProductList extends AppCompatActivity implements RequestInterface.P
         title_shop.setText(title_name_item);
         textView_Noresult.setText("No Result Found");
         textView_Noresult.setVisibility(View.GONE);
+        mycart_text.setText("Back");
+        cartname_text.setText("My Cart");
+        wishlist_text.setText("Wish List");
         if (colorcodes.equals("#FFFFFFFF")) {
             title_shop.setTextColor(Color.BLACK);
             textView_Noresult.setTextColor(Color.BLACK);
+            mycart_text.setTextColor(Color.WHITE);
+            cartname_text.setTextColor(Color.WHITE);
+            wishlist_text.setTextColor(Color.WHITE);
+
 
         } else {
             title_shop.setTextColor(Color.WHITE);
             textView_Noresult.setTextColor(Color.WHITE);
+            mycart_text.setTextColor(Color.WHITE);
+            cartname_text.setTextColor(Color.WHITE);
+            wishlist_text.setTextColor(Color.WHITE);
         }
         String simplycity_title = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_pala = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title);
         if (fontname.equals("playfair")) {
             title_shop.setTypeface(tf_pala);
             textView_Noresult.setTypeface(tf_pala);
+            mycart_text.setTypeface(tf_pala);
+            cartname_text.setTypeface(tf_pala);
+            wishlist_text.setTypeface(tf_pala);
+
+
+            title_shop.setTextSize(24);
+            textView_Noresult.setTextSize(22);
+            mycart_text.setTextSize(19);
+            cartname_text.setTextSize(19);
+            wishlist_text.setTextSize(19);
 
         } else {
             Typeface sanf = Typeface.createFromAsset(getApplicationContext().getAssets(), Fonts.sanfranciscobold);
             title_shop.setTypeface(sanf);
             textView_Noresult.setTypeface(sanf);
+            mycart_text.setTypeface(sanf);
+            cartname_text.setTypeface(sanf);
+            wishlist_text.setTypeface(sanf);
 
+
+            title_shop.setTextSize(23);
+            textView_Noresult.setTextSize(16);
+            mycart_text.setTextSize(15);
+            cartname_text.setTextSize(15);
+            wishlist_text.setTextSize(15);
 
         }
+
+
+        mycart_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        cartname_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sharedpreferences.contains(MYUSERID)) {
+
+                    myprofileid = sharedpreferences.getString(MYUSERID, "");
+                    myprofileid = myprofileid.replaceAll("\\D+","");
+                }
+                if(myprofileid!=null) {
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    MyCart frag;
+                    frag = new MyCart();
+                    frag.show(ft, "txn_tag");
+                }else {
+                    Intent signin=new Intent(getApplicationContext(),SigninpageActivity.class);
+                    signin.putExtra("ACTIVITY","EXP");
+                    startActivity(signin);
+
+                }
+            }
+        });
+
+        wishlist_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sharedpreferences.contains(MYUSERID)) {
+
+                    myprofileid = sharedpreferences.getString(MYUSERID, "");
+                    myprofileid = myprofileid.replaceAll("\\D+","");
+                }
+                if(myprofileid!=null) {
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    MyWishList frag;
+                    frag = new MyWishList();
+                    frag.show(ft, "txn_tag");
+                }else {
+                    Intent signin=new Intent(getApplicationContext(),SigninpageActivity.class);
+                    signin.putExtra("ACTIVITY","EXP");
+                    startActivity(signin);
+
+                }
+            }
+        });
+
+
+
 
         pdialog = new ProgressDialog(this);
         pdialog.show();
@@ -480,11 +579,14 @@ if(listsubcat.size()==0){
         title_sub.add(title_data);
         ids_sub.add(id_data);
     }
-    if (colorcodes.equals("#FFFFFFFF")) {
-        spinner_subcategory.getBackground().setColorFilter(getApplicationContext().getResources().getColor(R.color.Black), PorterDuff.Mode.SRC_ATOP);
+
+    if (colorcodes.equals("#262626")) {
+        spinner_subcategory.getBackground().setColorFilter(getApplicationContext().getResources().getColor(R.color.whitecolor), PorterDuff.Mode.SRC_ATOP);
+
 
     }else {
-        spinner_subcategory.getBackground().setColorFilter(getApplicationContext().getResources().getColor(R.color.whitecolor), PorterDuff.Mode.SRC_ATOP);
+        spinner_subcategory.getBackground().setColorFilter(getApplicationContext().getResources().getColor(R.color.Black), PorterDuff.Mode.SRC_ATOP);
+
 
     }
 
@@ -494,14 +596,16 @@ if(listsubcat.size()==0){
             View v = super.getView(position, convertView, parent);
 
             ((TextView) v).setTextSize(16);
-            if (colorcodes.equals("#FFFFFFFF")) {
-                ((TextView) v).setTextColor(
-                        getApplicationContext().getResources().getColorStateList(R.color.Black)
-                );
-            } else {
+            if (colorcodes.equals("#262626")) {
                 ((TextView) v).setTextColor(
                         getApplicationContext().getResources().getColorStateList(R.color.white)
                 );
+
+            } else {
+                ((TextView) v).setTextColor(
+                        getApplicationContext().getResources().getColorStateList(R.color.Black)
+                );
+
             }
 
             return v;
@@ -510,19 +614,21 @@ if(listsubcat.size()==0){
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
             View v = super.getDropDownView(position, convertView, parent);
             //v.setBackgroundResource(R.drawable.spinner_bg);
-            if (colorcodes.equals("#FFFFFFFF")) {
-                v.setBackgroundColor(Color.WHITE);
+            if (colorcodes.equals("#262626")) {
+               // v.setBackgroundColor(Color.BLACK);
                 ((TextView) v).setTextColor(
                         getApplicationContext().getResources().getColorStateList(R.color.Black)
                 );
-            } else {
-                v.setBackgroundColor(Color.BLACK);
+
+
+            }else {
+              //  v.setBackgroundColor(Color.WHITE);
                 ((TextView) v).setTextColor(
-                        getApplicationContext().getResources().getColorStateList(R.color.white)
+                        getApplicationContext(). getResources().getColorStateList(R.color.white)
                 );
             }
 
-            ((TextView) v).setGravity(Gravity.CENTER);
+                ((TextView) v).setGravity(Gravity.CENTER);
 
             return v;
         }
@@ -542,10 +648,10 @@ if(listsubcat.size()==0){
 
         if(listlowcat.size()==0){
 
-            spinner_lowcategory.setVisibility(View.GONE);
+            //spinner_lowcategory.setVisibility(View.GONE);
 
         }else {
-            if (colorcodes.equals("#FFFFFFFF")) {
+           if (colorcodes.equals("#FFFFFFFF")) {
                 spinner_lowcategory.getBackground().setColorFilter(getApplicationContext().getResources().getColor(R.color.Black), PorterDuff.Mode.SRC_ATOP);
 
             }else {
@@ -586,15 +692,17 @@ title_low.add("CATEGORY");
                 public View getDropDownView(int position, View convertView, ViewGroup parent) {
                     View v = super.getDropDownView(position, convertView, parent);
                     //v.setBackgroundResource(R.drawable.spinner_bg);
-                    if (colorcodes.equals("#FFFFFFFF")) {
-                        v.setBackgroundColor(Color.WHITE);
+                    if (colorcodes.equals("#262626")) {
+                        // v.setBackgroundColor(Color.BLACK);
                         ((TextView) v).setTextColor(
                                 getApplicationContext().getResources().getColorStateList(R.color.Black)
                         );
-                    } else {
-                        v.setBackgroundColor(Color.BLACK);
+
+
+                    }else {
+                        //  v.setBackgroundColor(Color.WHITE);
                         ((TextView) v).setTextColor(
-                                getApplicationContext().getResources().getColorStateList(R.color.white)
+                                getApplicationContext(). getResources().getColorStateList(R.color.white)
                         );
                     }
 

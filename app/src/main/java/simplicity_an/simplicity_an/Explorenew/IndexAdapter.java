@@ -165,10 +165,12 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             Typeface tf_pala = Typeface.createFromAsset(context.getAssets(), simplycity_title);
             if (fontname.equals("playfair")) {
                 holders.title_category.setTypeface(tf_pala);
+                holders.title_category.setTextSize(22);
 
             } else {
                 Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
                 holders.title_category.setTypeface(sanf);
+                holders.title_category.setTextSize(17);
 
 
             }
@@ -202,11 +204,15 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             if (fontname.equals("playfair")) {
                 holders.title_category.setTypeface(tf_pala);
                 holders.price_item.setTypeface(tf_pala);
+                holders.title_category.setTextSize(21);
+                holders.price_item.setTextSize(21);
 
             } else {
                 Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
                 holders.title_category.setTypeface(sanf);
                 holders.price_item.setTypeface(sanf);
+                holders.title_category.setTextSize(16);
+                holders.price_item.setTextSize(16);
 
             }
 
@@ -358,15 +364,20 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
             if (fontname.equals("playfair")) {
                 holders.title_category.setTypeface(tf_pala);
                 holders.price_item.setTypeface(tf_pala);
+                holders.title_category.setTextSize(21);
+                holders.price_item.setTextSize(21);
 
             } else {
                 Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
                 holders.title_category.setTypeface(sanf);
                 holders.price_item.setTypeface(sanf);
+                holders.title_category.setTextSize(16);
+                holders.price_item.setTextSize(16);
 
             }
 
             holders.product_image.setImageUrl(data.getImage(),mImageLoader);
+            holders.price_item.setVisibility(View.VISIBLE);
             if(data.getProduct_id()!=null){
 
                 holders.title_category.setText(data.getProduct_title());
@@ -374,6 +385,8 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
                         List<IndexProductModel>list=data.getPricelist();
                 for(int i=0;i< list.size();i++){
                     IndexProductModel model=list.get(i);
+
+
 
                     String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
                     holders.price_item.setText(item_price);
@@ -409,11 +422,15 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
             if (fontname.equals("playfair")) {
                 holders.title_category_withoutspin.setTypeface(tf_pala);
                 holders.price_item_withoutspin.setTypeface(tf_pala);
+                holders.title_category_withoutspin.setTextSize(23);
+                holders.price_item_withoutspin.setTextSize(22);
 
             } else {
                 Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
                 holders.title_category_withoutspin.setTypeface(sanf);
                 holders.price_item_withoutspin.setTypeface(sanf);
+                holders.title_category_withoutspin.setTextSize(17);
+                holders.price_item_withoutspin.setTextSize(16);
 
             }
 
