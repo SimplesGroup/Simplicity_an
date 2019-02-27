@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -48,6 +49,8 @@ private CartShippingPresenter cartShippingPresenter;
     private int requestCount = 1;
     private List<ShippingModel>shippingaddressarraylist=new ArrayList<>();
     private ShippingAddressAdapter shippingAddressAdapter;
+
+    private LinearLayout cartlayout;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +68,7 @@ private CartShippingPresenter cartShippingPresenter;
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
         fontname=sharedpreferences.getString(Fonts.FONT,"");
         main_cartaddress_layout=(RelativeLayout)findViewById(R.id.main_layout_explore_cartaddress);
-
+        cartlayout=(LinearLayout) findViewById(R.id.cart_layout);
 cartShippingPresenter=new CartAddresspresenterImpl(this);
 
 Intent get=getIntent();
@@ -80,8 +83,11 @@ String totalprice=get.getStringExtra("TOTALCOST");
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
                 gd.setCornerRadius(0f);
-
                 main_cartaddress_layout.setBackgroundDrawable(gd);
+                cartlayout.setBackgroundColor(Color.BLACK);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(backgroundcolor, "#FFFFFFFF");
+                editor.commit();
 
 
             } else {
@@ -93,6 +99,7 @@ String totalprice=get.getStringExtra("TOTALCOST");
                 gd.setCornerRadius(0f);
 
                 main_cartaddress_layout.setBackgroundDrawable(gd);
+                cartlayout.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.themedark));
                 // city.setBackgroundColor(getResources().getColor(R.color.theme1button));
                /* fabplus.setBackgroundResource(R.color.theme1button);
                 fabinnerplus.setBackgroundResource(R.color.theme1button);
@@ -112,7 +119,7 @@ String totalprice=get.getStringExtra("TOTALCOST");
             gd.setCornerRadius(0f);
 
             main_cartaddress_layout.setBackgroundDrawable(gd);
-
+            cartlayout.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.themedark));
             /*fabplus.setBackgroundResource(R.color.theme1button);
             fabinnerplus.setBackgroundResource(R.color.theme1button);
             fabsearch.setBackgroundResource(R.color.theme1button);*/
@@ -128,14 +135,12 @@ String totalprice=get.getStringExtra("TOTALCOST");
         shippingtitle_text=(TextView)findViewById(R.id.cart_title) ;
         your_delivery_location_text=(TextView)findViewById(R.id.your_delivery_location_title);
         add_new_location_text=(TextView)findViewById(R.id.your_delivery_location_Addnew);
-        addmore_products_textview=(TextView)findViewById(R.id.explore_cartaddress_addmore);
-        back_textview=(TextView)findViewById(R.id.explore_cartaddress_back);
-        totalcost_textview=(TextView)findViewById(R.id.totalcost_address_textview);
-        continue_textview=(TextView)findViewById(R.id.continue_address_textview);
-
+        totalcost_textview=(TextView)findViewById(R.id.total_address_price_shop);
+        continue_textview=(TextView)findViewById(R.id.total_address_checkout);
+        back_textview=(TextView)findViewById(R.id.total_address_back) ;
         shippingtitle_text.setText("Shipping Address");
         your_delivery_location_text.setText("Your Delivery Location");
-        addmore_products_textview.setText("ADD MORE PRODUCTS");
+
         add_new_location_text.setText("ADD NEW");
         textView_Noresult.setText("No Result Found");
         back_textview.setText("BACK");
@@ -147,20 +152,20 @@ String totalprice=get.getStringExtra("TOTALCOST");
             textView_Noresult.setTextColor(Color.BLACK);
             your_delivery_location_text.setTextColor(Color.BLACK);
             add_new_location_text.setTextColor(Color.BLACK);
-            addmore_products_textview.setTextColor(Color.BLACK);
-            back_textview.setTextColor(Color.BLACK);
-            totalcost_textview.setTextColor(Color.BLACK);
-            continue_textview.setTextColor(Color.BLACK);
+
+            back_textview.setTextColor(Color.WHITE);
+            totalcost_textview.setTextColor(Color.WHITE);
+            continue_textview.setTextColor(Color.WHITE);
 
         } else {
             shippingtitle_text.setTextColor(Color.WHITE);
             textView_Noresult.setTextColor(Color.WHITE);
             your_delivery_location_text.setTextColor(Color.WHITE);
             add_new_location_text.setTextColor(Color.WHITE);
-            addmore_products_textview.setTextColor(Color.WHITE);
+
             back_textview.setTextColor(Color.WHITE);
-            totalcost_textview.setTextColor(Color.BLACK);
-            continue_textview.setTextColor(Color.BLACK);
+            totalcost_textview.setTextColor(Color.WHITE);
+            continue_textview.setTextColor(Color.WHITE);
         }
         String simplycity_title = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_pala = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title);
@@ -169,10 +174,18 @@ String totalprice=get.getStringExtra("TOTALCOST");
             textView_Noresult.setTypeface(tf_pala);
             your_delivery_location_text.setTypeface(tf_pala);
             add_new_location_text.setTypeface(tf_pala);
-            addmore_products_textview.setTypeface(tf_pala);
+
             back_textview.setTypeface(tf_pala);
             totalcost_textview.setTypeface(tf_pala);
             continue_textview.setTypeface(tf_pala);
+
+            shippingtitle_text.setTextSize(24);
+            textView_Noresult.setTextSize(22);
+            your_delivery_location_text.setTextSize(20);
+            add_new_location_text.setTextSize(20);
+            totalcost_textview.setTextSize(19);
+            back_textview.setTextSize(19);
+            continue_textview.setTextSize(19);
 
         } else {
             Typeface sanf = Typeface.createFromAsset(getApplicationContext().getAssets(), Fonts.sanfranciscobold);
@@ -180,10 +193,18 @@ String totalprice=get.getStringExtra("TOTALCOST");
             textView_Noresult.setTypeface(sanf);
             your_delivery_location_text.setTypeface(sanf);
             add_new_location_text.setTypeface(sanf);
-            addmore_products_textview.setTypeface(sanf);
+
             back_textview.setTypeface(sanf);
             totalcost_textview.setTypeface(sanf);
             continue_textview.setTypeface(sanf);
+
+            shippingtitle_text.setTextSize(23);
+            textView_Noresult.setTextSize(16);
+            your_delivery_location_text.setTextSize(15);
+            add_new_location_text.setTextSize(15);
+            totalcost_textview.setTextSize(15);
+            back_textview.setTextSize(15);
+            continue_textview.setTextSize(15);
 
         }
 
@@ -206,12 +227,6 @@ String totalprice=get.getStringExtra("TOTALCOST");
         });
 
         back_textview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        addmore_products_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

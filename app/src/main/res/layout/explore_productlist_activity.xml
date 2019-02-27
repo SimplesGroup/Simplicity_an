@@ -137,6 +137,7 @@
             android:layout_weight=".33"
             android:layout_height="fill_parent" />
         <RelativeLayout
+            android:layout_gravity="center|center_horizontal"
             android:gravity="center|center_horizontal"
             android:layout_centerInParent="true"
             android:layout_width="0dp"

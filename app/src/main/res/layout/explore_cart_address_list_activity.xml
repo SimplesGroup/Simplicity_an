@@ -72,177 +72,56 @@
 
             </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="5dp"
 
-                android:layout_height="45dp">
-                <TextView
-                    android:id="@+id/explore_cartaddress_addmore"
-                    android:textColor="@android:color/white"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:textAlignment="center"
-                    android:gravity="center|center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:textSize="14dp"
-                    android:layout_weight=".70"
-                    android:background="@color/whitefood"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    />
-                <TextView
-                    android:id="@+id/explore_cartaddress_back"
-                    android:textColor="@android:color/white"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:textAlignment="center"
-                    android:gravity="center|center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/whitefood"
-                    android:textSize="14dp"
-                    android:layout_weight=".30"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    />
-            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
     <TextView
-
         android:id="@+id/text_noresultfound_cartaddress"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <LinearLayout
-        android:layout_alignParentBottom="true"
-        android:layout_width="fill_parent"
-        android:id="@+id/cart_layout"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:background="@android:color/white"
 
-        android:layout_above="@+id/footer">
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/totalcost_address_textview"
-            android:layout_gravity="end"
-            android:gravity="start|center|center_horizontal"
-            android:layout_marginLeft="12sp"
-            android:textColor="@android:color/black"
-            android:text="Total: "
-            android:layout_weight=".33"
-            android:layout_height="fill_parent" />
-        <RelativeLayout
-            android:gravity="center|center_horizontal"
-            android:layout_centerInParent="true"
-            android:layout_width="0dp"
-            android:layout_weight=".33"
+    <LinearLayout
+        android:id="@+id/cart_layout"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <LinearLayout
+            android:background="@color/searchviewhintcolor"
+            android:padding="5dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:id="@+id/cart_main_count"
-                android:minWidth="25dp"
-
-                android:minHeight="25dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                android:layout_centerInParent="true"
-                android:text="0"
-                android:background="@drawable/batgetext"
-                android:gravity="center"
-                android:shadowColor="@android:color/white"
-                android:shadowRadius="10.0"
-                android:textColor="@android:color/white"
-                android:textSize="10sp"/>
-        </RelativeLayout>
-        <TextView
-            android:textColor="@android:color/black"
-            android:layout_width="wrap_content"
-            android:id="@+id/continue_address_textview"
-            android:text="CONTINUE"
-            android:gravity="center|center_horizontal"
-            android:layout_gravity="left"
-            android:layout_weight=".33"
-            android:layout_height="fill_parent" />
-    </LinearLayout>
-    <LinearLayout android:id="@+id/footer"
-        android:visibility="gone"
-        android:layout_width="fill_parent"
-        android:layout_height="62dp"
-        android:orientation="horizontal"
-        android:background="#FF000000"
-
-        android:layout_alignParentBottom="true">
-        <ImageButton android:id="@+id/btn_ex_back"
-            android:layout_marginRight="1dp"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:src="@mipmap/news"
-            android:background="@drawable/buttonselector"
-            android:gravity="center_horizontal"
-            android:layout_weight="1"
-            />
-
-        <ImageButton android:id="@+id/btn_ex_happening"
-            android:layout_margin="1dp"
-            android:background="@drawable/buttonselector"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:src="@mipmap/events"
-            android:gravity="center_horizontal"
-            />
-        <ImageButton android:id="@+id/btn_ex_search"
-            android:layout_margin="1dp"
-
-            android:background="@drawable/buttonselector"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:src="@mipmap/explore"
-            android:gravity="center_horizontal" />
-        <ImageButton android:id="@+id/btn_ex_entertainment"
-            android:layout_margin="1dp"
-            android:background="@drawable/buttonselector"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:src="@mipmap/specials"
-            android:gravity="center_horizontal"
-            />
-        <RelativeLayout
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <ImageButton android:id="@+id/btn_ex_more"
-                android:layout_margin="1dp"
-                android:background="@drawable/buttonselector"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/more"
-                android:gravity="center_horizontal"
-                />
+                android:id="@+id/total_address_back"
+                android:text="Back"
+                android:layout_gravity="left|center"
+                android:layout_marginLeft="10dp"
+                android:textSize="14dp"
+                android:layout_weight=".33"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
             <TextView
-                android:id="@+id/text_batchvalue_main"
-                android:minWidth="20dp"
-                android:visibility="gone"
-                android:minHeight="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/total_address_price_shop"
                 android:layout_gravity="center"
-                android:layout_alignTop="@id/btn_artcileprofile"
-                android:layout_centerInParent="true"
-                android:layout_alignRight="@id/btn_artcileprofile"
-                android:background="@drawable/batgetext"
-                android:gravity="center"
-                android:shadowColor="@android:color/white"
-                android:shadowRadius="10.0"
-                android:textColor="@android:color/white"
-                android:textSize="10sp"/>
-        </RelativeLayout>
+
+                android:textAlignment="center"
+                android:textSize="14dp"
+                android:layout_weight=".33"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/total_address_checkout"
+                android:text="Continue"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="10dp"
+               android:gravity="right"
+                android:textSize="14dp"
+                android:layout_weight=".33"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

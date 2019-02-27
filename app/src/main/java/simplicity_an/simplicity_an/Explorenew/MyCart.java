@@ -255,22 +255,7 @@ back_text.setOnClickListener(new View.OnClickListener() {
     }
     private void getData() {
 
-       /* if (myprofileid != null) {
 
-            servicerequest.getCompanylist("1","company_list",String.valueOf(requestCount),myprofileid,"",category_id,getApplicationContext());
-
-        } else if (search_value != null) {
-
-            servicerequest.getCompanylist("1","company_list",String.valueOf(requestCount),"",search_value,category_id,getApplicationContext());
-
-        } else if (myprofileid != null && search_value != null) {
-
-            servicerequest.getCompanylist("1","company_list",String.valueOf(requestCount),myprofileid,search_value,category_id,getApplicationContext());
-        } else {
-
-            servicerequest.getCompanylist("1","company_list",String.valueOf(requestCount),"","",category_id,getApplicationContext());
-
-        }*/
      mycartlist=   cartViewPresenter.getMycart(getActivity(),"1","cartlist",myprofileid,"","","");
         pdialog.dismiss();
         requestCount++;

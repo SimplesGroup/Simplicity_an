@@ -209,6 +209,8 @@ public class AddNewshippingAddress extends AppCompatActivity implements Cartaddr
             landmark_edit.setTypeface(tf_pala);
             state_edit.setTypeface(tf_pala);
 
+            title_textview.setTextSize(24);
+
         } else {
             Typeface sanf = Typeface.createFromAsset(getApplicationContext().getAssets(), Fonts.sanfranciscobold);
 
@@ -224,6 +226,7 @@ public class AddNewshippingAddress extends AppCompatActivity implements Cartaddr
             landmark_edit.setTypeface(sanf);
             state_edit.setTypeface(sanf);
 
+            title_textview.setTextSize(23);
         }
 
     }

@@ -106,6 +106,12 @@ public class ShippingAddressAdapter  extends RecyclerView.Adapter<RecyclerView.V
                 userViewHolder.shippingaddress_continue_textview.setTypeface(tf_pala);
                 userViewHolder.edit_address.setTypeface(tf_pala);
                 userViewHolder.delete_address.setTypeface(tf_pala);
+
+                userViewHolder.name_textview.setTextSize(19);
+                userViewHolder.shippingaddress_textview.setTextSize(19);
+                userViewHolder.shippingaddress_continue_textview.setTextSize(19);
+
+
             } else {
                 Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
 
@@ -114,6 +120,11 @@ public class ShippingAddressAdapter  extends RecyclerView.Adapter<RecyclerView.V
                 userViewHolder.shippingaddress_continue_textview.setTypeface(sanf);
                 userViewHolder.edit_address.setTypeface(sanf);
                 userViewHolder.delete_address.setTypeface(sanf);
+
+
+                userViewHolder.name_textview.setTextSize(15);
+                userViewHolder.shippingaddress_textview.setTextSize(15);
+                userViewHolder.shippingaddress_continue_textview.setTextSize(15);
 
             }
 

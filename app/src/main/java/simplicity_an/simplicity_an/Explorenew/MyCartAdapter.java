@@ -214,10 +214,10 @@ final IndexProductModel data = shopdataList.get(position);
             holders_one.add_to_cart_count.setTypeface(tf_pala);
             holders_one.add_to_cart_minus.setTypeface(tf_pala);
 
-            holders_one.title_category.setTextSize(21);
-            holders_one.price_item.setTextSize(21);
-            holders_one.remove_cart.setTextSize(22);
-            holders_one.add_to_wishlist.setTextSize(22);
+            holders_one.title_category.setTextSize(20);
+            holders_one.price_item.setTextSize(20);
+            holders_one.remove_cart.setTextSize(20);
+            holders_one.add_to_wishlist.setTextSize(20);
 
         } else {
         Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
