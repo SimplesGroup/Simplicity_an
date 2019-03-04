@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import simplicity_an.simplicity_an.Explorenew.PaymentGateway.Paymentactivity;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
@@ -47,6 +48,8 @@ private RelativeLayout view_line_one,view_line_two;
     private LinearLayout cartlayout;
 
     private PaymentPresenter paymentPresenter;
+
+    private String netpayment;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -298,6 +301,10 @@ pay_textview.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
 
+        Intent in=new Intent(getApplicationContext(), Paymentactivity.class);
+        in.putExtra("AMOUNT",netpayment);
+        startActivity(in);
+
     }
 });
 
@@ -335,6 +342,7 @@ Log.e("Response",placeorderlist.toString());
             unique_value_title.setText(String.valueOf(model.getUnique_price()).toString());
             deliverycharges_textview.setText(String.valueOf(model.getDelivery_charges()).toString());
             total_pricevalue_textview.setText(String.valueOf(model.getNet_price()).toString());
+            netpayment=String.valueOf(model.getNet_price()).toString();
 
             }
 

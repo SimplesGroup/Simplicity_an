@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="simplicity_an.simplicity_an">
     <uses-permission android:name="android.permission.INTERNET" />
 
 
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-
+    <uses-sdk tools:overrideLibrary="com.razorpay"/>
 
    
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -45,6 +46,10 @@
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
         <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_test_P2cEfupaNILFWw"
+            />
         <activity
             android:name=".SplashScreen"
             android:theme="@style/Splash"
@@ -55,6 +60,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name=".Explorenew.PaymentGateway.Paymentactivity"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:label="@string/app_name"
