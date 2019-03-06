@@ -179,10 +179,19 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             holders.category_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, CompanyList.class);
-                    intent.putExtra("ITEM_NAME", data.getCategory_title());
-                    intent.putExtra("CAT_ID",data.getCategory_id());
-                    context.startActivity(intent);
+                    if(data.getCategory_title().equals("Doctor on Call")){
+                        Intent intent = new Intent(context, DoctoronCallActivity.class);
+                        intent.putExtra("ITEM_NAME", data.getCategory_title());
+                        intent.putExtra("URL", data.getUrl());
+                        context.startActivity(intent);
+
+
+                    }else {
+                        Intent intent = new Intent(context, CompanyList.class);
+                        intent.putExtra("ITEM_NAME", data.getCategory_title());
+                        intent.putExtra("CAT_ID", data.getCategory_id());
+                        context.startActivity(intent);
+                    }
                 }
             });
         }else if(holder instanceof Shopmodel_one){
@@ -211,8 +220,8 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
                 holders.title_category.setTypeface(sanf);
                 holders.price_item.setTypeface(sanf);
-                holders.title_category.setTextSize(16);
-                holders.price_item.setTextSize(16);
+                holders.title_category.setTextSize(18);
+                holders.price_item.setTextSize(18);
 
             }
 
@@ -249,7 +258,7 @@ holders.product_image.setImageUrl(data.getImage(), mImageLoader);
                         public View getView(int position, View convertView, ViewGroup parent) {
                             View v = super.getView(position, convertView, parent);
 
-                            ((TextView) v).setTextSize(16);
+                            ((TextView) v).setTextSize(17);
                             if (colorcodes.equals("#FFFFFFFF")) {
                                 ((TextView) v).setTextColor(
                                         context.getResources().getColorStateList(R.color.Black));
@@ -266,18 +275,19 @@ holders.product_image.setImageUrl(data.getImage(), mImageLoader);
                        public View getDropDownView(int position, View convertView, ViewGroup parent) {
                             View v = super.getDropDownView(position, convertView, parent);
                             //v.setBackgroundResource(R.drawable.spinner_bg);
-                           if (colorcodes.equals("#FFFFFFFF")) {
-                               v.setBackgroundColor(Color.WHITE);
+                           if (colorcodes.equals("#262626")) {
+                               // v.setBackgroundColor(Color.BLACK);
                                ((TextView) v).setTextColor(
-                                       context. getResources().getColorStateList(R.color.Black)
+                                       context.getResources().getColorStateList(R.color.Black)
                                );
+
+
                            }else {
-                               v.setBackgroundColor(Color.BLACK);
+                               //  v.setBackgroundColor(Color.WHITE);
                                ((TextView) v).setTextColor(
                                        context. getResources().getColorStateList(R.color.white)
                                );
                            }
-
 
                             //((TextView) v).setTypeface(fontStyle);
                             ((TextView) v).setGravity(Gravity.CENTER);
@@ -371,8 +381,8 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
                 Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
                 holders.title_category.setTypeface(sanf);
                 holders.price_item.setTypeface(sanf);
-                holders.title_category.setTextSize(16);
-                holders.price_item.setTextSize(16);
+                holders.title_category.setTextSize(18);
+                holders.price_item.setTextSize(18);
 
             }
 
@@ -429,8 +439,8 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
                 Typeface sanf = Typeface.createFromAsset(context.getAssets(), Fonts.sanfranciscobold);
                 holders.title_category_withoutspin.setTypeface(sanf);
                 holders.price_item_withoutspin.setTypeface(sanf);
-                holders.title_category_withoutspin.setTextSize(17);
-                holders.price_item_withoutspin.setTextSize(16);
+                holders.title_category_withoutspin.setTextSize(18);
+                holders.price_item_withoutspin.setTextSize(18);
 
             }
 

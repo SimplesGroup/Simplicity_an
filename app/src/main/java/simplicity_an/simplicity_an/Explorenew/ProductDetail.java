@@ -413,7 +413,12 @@ recyclerView_stone.setAdapter(productdetailstoneAdapter);
             }
         });
 
-
+back_text.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        onBackPressed();
+    }
+});
 
 
     }
@@ -442,7 +447,10 @@ recyclerView_stone.setAdapter(productdetailstoneAdapter);
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     public void dissmissDialog() {
         // TODO Auto-generated method stub

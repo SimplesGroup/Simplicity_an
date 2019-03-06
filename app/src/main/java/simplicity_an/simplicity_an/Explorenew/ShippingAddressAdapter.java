@@ -11,12 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import simplicity_an.simplicity_an.CustomVolleyRequest;
@@ -42,11 +44,15 @@ public class ShippingAddressAdapter  extends RecyclerView.Adapter<RecyclerView.V
     public static final String MYUSERID= "myprofileid";
     public static final String backgroundcolor = "color";
     String myprofileid,colorcodes,fontname;
+    public boolean ischeck=false;
+    private String address_id;
 
     public ShippingAddressAdapter(Context mContext, List<ShippingModel> productEnglishList){
         this.context = mContext;
         this.shopdataList = productEnglishList;
     }
+
+
     public int getItemViewType(int position) {
         return shopdataList.get(position) != null ? VIEW_TYPE_ITEM : VIEW_TYPE_LOADING;
     }
@@ -88,14 +94,14 @@ public class ShippingAddressAdapter  extends RecyclerView.Adapter<RecyclerView.V
                 userViewHolder.shippingaddress_continue_textview.setTextColor(Color.BLACK);
                 userViewHolder.edit_address.setTextColor(Color.BLACK);
                 userViewHolder.delete_address.setTextColor(Color.BLACK);
-                userViewHolder.usethis_checkbox.setBackgroundColor(Color.BLACK);
+                //userViewHolder.usethis_checkbox.setBackgroundColor(Color.BLACK);
             } else {
                 userViewHolder.name_textview.setTextColor(Color.WHITE);
                 userViewHolder.shippingaddress_textview.setTextColor(Color.WHITE);
                 userViewHolder.shippingaddress_continue_textview.setTextColor(Color.WHITE);
                 userViewHolder.edit_address.setTextColor(Color.WHITE);
                 userViewHolder.delete_address.setTextColor(Color.WHITE);
-                userViewHolder.usethis_checkbox.setBackgroundColor(Color.WHITE);
+                //userViewHolder.usethis_checkbox.setBackgroundColor(Color.WHITE);
             }
             String simplycity_title = "fonts/playfairDisplayRegular.ttf";
             Typeface tf_pala = Typeface.createFromAsset(context.getAssets(), simplycity_title);
@@ -130,10 +136,37 @@ public class ShippingAddressAdapter  extends RecyclerView.Adapter<RecyclerView.V
 
             userViewHolder.name_textview.setText(itemmodel.getName());
             userViewHolder.shippingaddress_textview.setText(itemmodel.getAddress());
-            userViewHolder.shippingaddress_continue_textview.setText(itemmodel.getLandmark()+"/n"+itemmodel.getState());
+            userViewHolder.shippingaddress_continue_textview.setText(itemmodel.getLandmark()+"\n"+itemmodel.getState());
             userViewHolder.delete_address.setText("Delete");
             userViewHolder.edit_address.setText("Edit");
 
+userViewHolder.delete_address.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+    CartShippingPresenter    cartShippingPresenter=new CartAddresspresenterImpl();
+
+    cartShippingPresenter.getAddressdeleteandactive(context,"shipping_address_remove",myprofileid,itemmodel.getId());
+    }
+});
+userViewHolder.usethis_checkbox.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        if(userViewHolder.usethis_checkbox.isChecked()){
+            ischeck=true;
+            address_id=itemmodel.getId();
+        }else {
+            ischeck=false;
+            address_id=itemmodel.getId();
+        }
+    }
+});
+userViewHolder.edit_address.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+
+    }
+
+});
 
 
         }else if (holder instanceof LoadingViewHolder) {
@@ -148,6 +181,14 @@ public class ShippingAddressAdapter  extends RecyclerView.Adapter<RecyclerView.V
         notifyItemRangeChanged(positions,shopdataList.size());
         ShippingAddressAdapter.this.notifyDataSetChanged();
     }
+
+public boolean isCheckeds(){
+
+        return ischeck;
+}
+public String AddressId(){
+        return address_id;
+}
 
     public void data(List<ShippingModel> lists){
         this.shopdataList.clear();
@@ -179,8 +220,8 @@ public class ShippingAddressAdapter  extends RecyclerView.Adapter<RecyclerView.V
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar1);
         }
     }
-    static class UserViewHolder extends RecyclerView.ViewHolder {
-        CheckBox usethis_checkbox;
+    static class UserViewHolder extends RecyclerView.ViewHolder   {
+      public   CheckBox usethis_checkbox;
         TextView name_textview,shippingaddress_textview,shippingaddress_continue_textview;
         TextView edit_address,delete_address;
 
@@ -197,5 +238,7 @@ public class ShippingAddressAdapter  extends RecyclerView.Adapter<RecyclerView.V
 
 
         }
+
+
     }
 }

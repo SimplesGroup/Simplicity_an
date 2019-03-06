@@ -20,6 +20,15 @@ private String count,cart_id,qty_id;
     private int mycarttotalitem,mycart_netprice;
     private List<IndexProductModel>pricelist;
     private List<IndexProductModel>stonelist;
+    private int cart_count;
+
+    public int getCart_count() {
+        return cart_count;
+    }
+
+    public void setCart_count(int cart_count) {
+        this.cart_count = cart_count;
+    }
 
     public int getMycarttotalitem() {
         return mycarttotalitem;

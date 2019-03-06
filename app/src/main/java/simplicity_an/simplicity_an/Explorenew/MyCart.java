@@ -239,7 +239,7 @@ cartViewPresenter=new CartServiceRequest(this);
         checkout_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in =new Intent(getActivity(),CartPaymentPage.class);
+                Intent in =new Intent(getActivity(),ShippingAddress.class);
                 in.putExtra("TOTALCOST",totalcartprice);
                 startActivity(in);
             }

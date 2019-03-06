@@ -29,6 +29,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -380,13 +381,13 @@ mycart_text.setOnClickListener(new View.OnClickListener() {
 
         datalist=listdata;
         shopAdapter.data(shopDataList);
-       /* for(int i=0;i<shopDataList.size();i++){
-            IndexProductModel model=shopDataList.get(i);
+        for(int i=0;i<listdata.size();i++){
+            IndexProductModel model=listdata.get(i);
 
-            Log.e("search",model.getMain_category_id().toString());
+          Log.e("Response","cartcount"+String.valueOf(model.getCart_count()).toString());
+            mycart_count_text.setText(String.valueOf(model.getCart_count()).toString());
 
-            //Toast.makeText(getActivity(),model.getMain_category_id(),Toast.LENGTH_LONG).show();
-        }*/
+        }
 
 
 

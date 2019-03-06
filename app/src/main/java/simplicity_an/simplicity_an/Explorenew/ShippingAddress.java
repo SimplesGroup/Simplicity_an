@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.Volley;
 
@@ -72,7 +73,7 @@ private CartShippingPresenter cartShippingPresenter;
 cartShippingPresenter=new CartAddresspresenterImpl(this);
 
 Intent get=getIntent();
-String totalprice=get.getStringExtra("TOTALCOST");
+final String totalprice=get.getStringExtra("TOTALCOST");
 
 
         if (colorcodes != null) {
@@ -168,7 +169,7 @@ String totalprice=get.getStringExtra("TOTALCOST");
             continue_textview.setTextColor(Color.WHITE);
         }
         String simplycity_title = "fonts/playfairDisplayRegular.ttf";
-        Typeface tf_pala = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title);
+        final Typeface tf_pala = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title);
         if (fontname.equals("playfair")) {
             shippingtitle_text.setTypeface(tf_pala);
             textView_Noresult.setTypeface(tf_pala);
@@ -233,6 +234,30 @@ String totalprice=get.getStringExtra("TOTALCOST");
             }
         });
 
+        continue_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+      boolean isdata=shippingAddressAdapter.isCheckeds();
+      if(isdata==true){
+          Log.e("Response","Checked");
+          String address_ids=shippingAddressAdapter.AddressId();
+          Log.e("Response","Checked"+address_ids);
+          Intent in =new Intent(getApplicationContext(),CartPaymentPage.class);
+          in.putExtra("TOTALCOST",totalprice);
+          in.putExtra("ADDRESS_ID",address_ids);
+          startActivity(in);
+
+      }else {
+          Toast.makeText(getApplicationContext(),"Select your delivery Address",Toast.LENGTH_SHORT).show();
+      }
+
+
+            }
+        });
+
         getData();
 
     }
@@ -244,7 +269,7 @@ String totalprice=get.getStringExtra("TOTALCOST");
 
     private void getData(){
 
-        cartShippingPresenter.getAddress(getApplicationContext(),"shipping_address_list",myprofileid);
+        shippingaddressarraylist=   cartShippingPresenter.getAddress(getApplicationContext(),"shipping_address_list",myprofileid);
         pdialog.dismiss();
         shippingAddressAdapter.notifyDataSetChanged();
 
@@ -265,6 +290,7 @@ String totalprice=get.getStringExtra("TOTALCOST");
     public void Shippingadress(List<ShippingModel> shippingaddresslist) {
         Log.e("Response","start");
         Log.e("Response",shippingaddresslist.toString());
+        shippingaddressarraylist=shippingaddresslist;
         if(shippingaddresslist.size()==0){
             recyclerView.setVisibility(View.GONE);
             textView_Noresult.setVisibility(View.VISIBLE);

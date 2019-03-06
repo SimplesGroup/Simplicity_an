@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -159,12 +160,21 @@ public class AddNewshippingAddress extends AppCompatActivity implements Cartaddr
 
                 final String address=address1+address2;
 
+                if(name!=null&&phone!=null && address!=null &&locations!=null && pincodes!=null &&landmark!=null &&email!=null && state!=null){
+
+
+
+
                 pdialog.show();
                 pdialog.setContentView(R.layout.custom_progressdialog);
                 pdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+
                 cartShippingPresenter.Addressupdateornew(getApplicationContext(),"shipping_address",myprofileid,name,phone,email,address,locations,pincodes,landmark,state,"");
                 dissmissDialog();
+                }else {
+                    Toast.makeText(getApplicationContext(),"Please fill All fields",Toast.LENGTH_LONG).show();
+                }
             }
         });
 

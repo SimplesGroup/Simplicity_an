@@ -62,7 +62,8 @@ public Servicerequest(RequestInterface.Productlist requestProductlists){
         StringRequest request=new StringRequest(Request.Method.POST, Configurl.exploreurl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-              //  Log.e("Response","shops"+response.toString());
+
+                 Log.e("Response","shops"+response.toString());
                 categorylist.clear();
                 productlist.clear();
                 companylist.clear();
@@ -81,7 +82,7 @@ public Servicerequest(RequestInterface.Productlist requestProductlists){
                     String datas=jsonObject.optString("category");
                     String company_data=jsonObject.optString("company");
                     String product_data=jsonObject.optString("product");
-
+                    int cart_count=jsonObject.getInt("cart_count");
 
                    // if(cat_count!=0) {
 
@@ -110,10 +111,11 @@ public Servicerequest(RequestInterface.Productlist requestProductlists){
 
                             }
 
-
+                    model.setCart_count(cart_count);
 
                             categorylist.add(model);
                         }
+
                   // }
 
                     if (product_count!=0){
@@ -139,6 +141,7 @@ public Servicerequest(RequestInterface.Productlist requestProductlists){
                             model.setVisit_list(obj.getInt("visit_list"));
                             model.setCart_list(obj.getInt("cart_list"));
                             model.setItem_arrayname("product");
+                            model.setCart_count(cart_count);
                         JSONArray pricelistarray=obj.getJSONArray("price_list");
 
                         List<IndexProductModel>price=new ArrayList<>();
@@ -270,7 +273,7 @@ requestInterface.Send(list);
                     String datas=jsonObject.optString("category");
                     String company_data=jsonObject.optString("company");
                     String product_data=jsonObject.optString("product");
-
+                    int cart_count=jsonObject.getInt("cart_count");
 
                     // if(cat_count!=0) {
 
@@ -299,7 +302,7 @@ requestInterface.Send(list);
 
                         }
 
-
+                        model.setCart_count(cart_count);
 
                         categorylist.add(model);
                     }
@@ -328,6 +331,7 @@ requestInterface.Send(list);
                             model.setVisit_list(obj.getInt("visit_list"));
                             model.setCart_list(obj.getInt("cart_list"));
                             model.setItem_arrayname("product");
+                            model.setCart_count(cart_count);
                             JSONArray pricelistarray=obj.getJSONArray("price_list");
 
                             List<IndexProductModel>price=new ArrayList<>();
@@ -374,6 +378,7 @@ requestInterface.Send(list);
                             model.setDescription(obj.getString("description"));
                             model.setUrl(obj.getString("url"));
                             model.setItem_arrayname("company");
+                            model.setCart_count(cart_count);
                             companylist.add(model);
                         }
                     }
@@ -459,7 +464,7 @@ requestInterface.Send(list);
                     String datas=jsonObject.optString("category");
                     String company_data=jsonObject.optString("company");
                     String product_data=jsonObject.optString("product");
-
+                    int cart_count=jsonObject.getInt("cart_count");
 
                     // if(cat_count!=0) {
 
@@ -487,7 +492,7 @@ requestInterface.Send(list);
 
 
                         }
-
+                        model.setCart_count(cart_count);
 
 
                         categorylist.add(model);
@@ -517,6 +522,7 @@ requestInterface.Send(list);
                             model.setVisit_list(obj.getInt("visit_list"));
                             model.setCart_list(obj.getInt("cart_list"));
                             model.setItem_arrayname("product");
+                            model.setCart_count(cart_count);
                             JSONArray pricelistarray=obj.getJSONArray("price_list");
 
                             List<IndexProductModel>price=new ArrayList<>();
@@ -563,6 +569,7 @@ requestInterface.Send(list);
                             model.setDescription(obj.getString("description"));
                             model.setUrl(obj.getString("url"));
                             model.setItem_arrayname("company");
+                            model.setCart_count(cart_count);
                             companylist.add(model);
                         }
                     }

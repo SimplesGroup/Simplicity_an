@@ -258,16 +258,19 @@ public View getView(int position, View convertView, ViewGroup parent) {
 public View getDropDownView(int position, View convertView, ViewGroup parent) {
         View v = super.getDropDownView(position, convertView, parent);
         //v.setBackgroundResource(R.drawable.spinner_bg);
-        if (colorcodes.equals("#FFFFFFFF")) {
-        v.setBackgroundColor(Color.WHITE);
+    if (colorcodes.equals("#262626")) {
+        // v.setBackgroundColor(Color.BLACK);
         ((TextView) v).setTextColor(
-        context. getResources().getColorStateList(R.color.Black)
+                context.getResources().getColorStateList(R.color.Black)
         );
-        }else {
-        v.setBackgroundColor(Color.BLACK);
+
+
+    }else {
+        //  v.setBackgroundColor(Color.WHITE);
         ((TextView) v).setTextColor(
-        context. getResources().getColorStateList(R.color.white)
+                context. getResources().getColorStateList(R.color.white)
         );
+
         }
 
 

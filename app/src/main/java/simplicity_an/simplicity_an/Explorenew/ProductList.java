@@ -535,7 +535,13 @@ private void getSubcat(){
     public void Sendproductlist(List<IndexProductModel> listdata) {
         datalist=listdata;
         shopDataList.addAll(listdata);
+        for(int i=0;i<shopDataList.size();i++){
+            IndexProductModel model=shopDataList.get(i);
 
+            Log.e("Response","cartcount"+String.valueOf(model.getCart_count()).toString());
+            cart_count_text.setText(String.valueOf(model.getCart_count()).toString());
+
+        }
 
         if(shopDataList.size()==0){
             recyclerView.setVisibility(View.GONE);
