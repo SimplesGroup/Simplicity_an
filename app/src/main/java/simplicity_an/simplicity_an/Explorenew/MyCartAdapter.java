@@ -245,8 +245,18 @@ final ArrayList<String>priceitem=new ArrayList<>();
         String item_qty=model.getQuantity()+" "+model.getMeasurement();
         item.add(item_qty);
 
-            String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
-        priceitem.add(item_price);
+            int offerprice=model.getOffer_price();
+            String offertext=model.getOffer_type_text();
+            if(offerprice<=0){
+                String item_price=model.getPrice();
+                priceitem.add(item_price);
+            }else {
+
+                String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
+                priceitem.add(item_price);
+            }
+
+
             String qid=String.valueOf(model.getQuantity_id());
             qtylist.add(qid);
 
@@ -452,8 +462,15 @@ final IndexProductModel data = shopdataList.get(position);
         IndexProductModel model=list.get(i);
 
        // String item_price=model.getPrice();
-        String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
-        holders.price_item.setText(item_price);
+            int offerprice=model.getOffer_price();
+            String offertext=model.getOffer_type_text();
+            if(offerprice<=0){
+
+            }else {
+
+                String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
+                holders.price_item.setText(item_price);
+            }
 
         }
 
@@ -485,10 +502,11 @@ final IndexProductModel data = shopdataList.get(position);
         if (colorcodes.equals("#FFFFFFFF")) {
         holders.title_category_withoutspin.setTextColor(Color.BLACK);
         holders.price_item_withoutspin.setTextColor(Color.BLACK);
-
+            holders.add_to_cart_withoutspin.setTextColor(Color.BLACK);
         } else {
         holders.title_category_withoutspin.setTextColor(Color.WHITE);
         holders.price_item_withoutspin.setTextColor(Color.WHITE);
+            holders.add_to_cart_withoutspin.setTextColor(Color.WHITE);
         }
         String simplycity_title = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_pala = Typeface.createFromAsset(context.getAssets(), simplycity_title);
@@ -513,8 +531,15 @@ final IndexProductModel data = shopdataList.get(position);
         String item_qty=model.getQuantity()+" "+model.getMeasurement();
 
       //  String item_price=model.getPrice();
-            String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
-        holders.price_item_withoutspin.setText(item_price);
+            int offerprice=model.getOffer_price();
+            String offertext=model.getOffer_type_text();
+            if(offerprice<=0){
+
+            }else {
+
+                String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
+                holders.price_item_withoutspin.setText(item_price);
+            }
 
         }
         holders.product_image_withoutspin.setImageUrl(data.getImage(), mImageLoader);

@@ -203,10 +203,11 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 holders.title_category.setTextColor(Color.BLACK);
                 holders.price_item.setTextColor(Color.BLACK);
 
-
+                holders.add_to_cart.setTextColor(Color.BLACK);
             } else {
                 holders.title_category.setTextColor(Color.WHITE);
                 holders.price_item.setTextColor(Color.WHITE);
+                holders.add_to_cart.setTextColor(Color.WHITE);
             }
             String simplycity_title = "fonts/playfairDisplayRegular.ttf";
             Typeface tf_pala = Typeface.createFromAsset(context.getAssets(), simplycity_title);
@@ -236,8 +237,18 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         String item_qty=model.getQuantity()+" "+model.getMeasurement();
                         item.add(item_qty);
 
-                        String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
-                        priceitem.add(item_price);
+                        int offerprice=model.getOffer_price();
+                        String offertext=model.getOffer_type_text();
+                        if(offerprice<=0){
+                            String item_price=model.getPrice();
+                            priceitem.add(item_price);
+                        }else {
+
+                            String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
+                            priceitem.add(item_price);
+                        }
+
+
                         String qid=String.valueOf(model.getQuantity_id());
                         qtylist.add(qid);
 
@@ -306,6 +317,9 @@ holders.product_image.setImageUrl(data.getImage(), mImageLoader);
             holders.price_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    ((TextView) holders.price_spinner.getSelectedView()).setBackgroundColor(context.getResources()
+                            .getColor(R.color.input_register));
                     String item = parent.getItemAtPosition(position).toString();
                     String price=priceitem.get(position);
                     holders.price_item.setText(price );
@@ -398,8 +412,15 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
 
 
 
-                    String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
-                    holders.price_item.setText(item_price);
+                    int offerprice=model.getOffer_price();
+                    String offertext=model.getOffer_type_text();
+                    if(offerprice<=0){
+
+                    }else {
+
+                        String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
+                        holders.price_item.setText(item_price);
+                    }
 
                 }
 
@@ -422,10 +443,12 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
             if (colorcodes.equals("#FFFFFFFF")) {
                 holders.title_category_withoutspin.setTextColor(Color.BLACK);
                 holders.price_item_withoutspin.setTextColor(Color.BLACK);
+                holders.add_to_cart_withoutspin.setTextColor(Color.BLACK);
 
             } else {
                 holders.title_category_withoutspin.setTextColor(Color.WHITE);
                 holders.price_item_withoutspin.setTextColor(Color.WHITE);
+                holders.add_to_cart_withoutspin.setTextColor(Color.WHITE);
             }
             String simplycity_title = "fonts/playfairDisplayRegular.ttf";
             Typeface tf_pala = Typeface.createFromAsset(context.getAssets(), simplycity_title);
@@ -452,8 +475,15 @@ holders.wishlist_btn.setOnClickListener(new View.OnClickListener() {
                 String item_qty=model.getQuantity()+" "+model.getMeasurement();
 
                 //String item_price=model.getPrice();
-                String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
-                holders.price_item_withoutspin.setText(item_price);
+                int offerprice=model.getOffer_price();
+                String offertext=model.getOffer_type_text();
+                if(offerprice<=0){
+
+                }else {
+
+                    String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
+                    holders.price_item_withoutspin.setText(item_price);
+                }
 
             }
             holders.product_image_withoutspin.setImageUrl(data.getImage(), mImageLoader);

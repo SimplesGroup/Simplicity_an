@@ -235,8 +235,18 @@ final ArrayList<String>priceitem=new ArrayList<>();
         String item_qty=model.getQuantity()+" "+model.getMeasurement();
         item.add(item_qty);
 
-            String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
-        priceitem.add(item_price);
+            int offerprice=model.getOffer_price();
+            String offertext=model.getOffer_type_text();
+            if(offerprice<=0){
+                String item_price=model.getPrice();
+                priceitem.add(item_price);
+            }else {
+
+                String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
+                priceitem.add(item_price);
+            }
+
+
             String qid=String.valueOf(model.getQuantity_id());
             qtylist.add(qid);
 
@@ -400,9 +410,15 @@ final IndexProductModel data = shopdataList.get(position);
         IndexProductModel model=list.get(i);
 
        // String item_price=model.getPrice();
-        String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
-        holders.price_item.setText(item_price);
+            int offerprice=model.getOffer_price();
+            String offertext=model.getOffer_type_text();
+            if(offerprice<=0){
 
+            }else {
+
+                String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
+                holders.price_item.setText(item_price);
+            }
         }
 
 
@@ -463,8 +479,15 @@ final IndexProductModel data = shopdataList.get(position);
         String item_qty=model.getQuantity()+" "+model.getMeasurement();
 
       //  String item_price=model.getPrice();
-            String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
-        holders.price_item_withoutspin.setText(item_price);
+            int offerprice=model.getOffer_price();
+            String offertext=model.getOffer_type_text();
+            if(offerprice<=0){
+
+            }else {
+
+                String item_price=model.getPrice()+" "+model.getOffer_type_text()+" "+model.getOffer_price();
+                holders.price_item_withoutspin.setText(item_price);
+            }
 
         }
         holders.product_image_withoutspin.setImageUrl(data.getImage(), mImageLoader);
