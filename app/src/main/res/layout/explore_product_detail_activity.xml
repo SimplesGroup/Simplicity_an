@@ -25,7 +25,7 @@
             android:layout_height="220dp" />
 
             <RelativeLayout
-                android:background="@color/searchviewhintcolor"
+                android:background="@color/input_register_hint"
                 android:layout_width="match_parent"
                 android:layout_height="45dp">
                 <TextView
@@ -49,7 +49,7 @@
             <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/except_jewel_description"
-                android:background="@color/searchviewhintcolor"
+                android:background="@color/input_register_hint"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -107,7 +107,7 @@
             <RelativeLayout
                 android:id="@+id/textView_product_details_jewel_layout_label"
                 android:layout_marginTop="5dp"
-                android:background="@color/searchviewhintcolor"
+                android:background="@color/input_register_hint"
                 android:layout_width="match_parent"
                 android:layout_height="45dp">
                 <TextView
@@ -121,7 +121,7 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:background="@color/searchviewhintcolor"
+                android:background="@color/input_register_hint"
                 android:layout_marginTop="5dp"
                 android:id="@+id/textView_product_details_jewel_layout"
                 android:orientation="vertical"
@@ -338,14 +338,14 @@ android:layout_gravity="bottom"
     android:layout_width="match_parent"
     android:layout_height="45dp">
     <Button
-        android:background="@color/searchviewhintcolor"
+        android:background="@color/input_register_hint"
         android:id="@+id/btn_addtocart"
         android:layout_marginRight="2dp"
         android:layout_weight=".50"
         android:layout_width="0dp"
         android:layout_height="match_parent" />
     <Button
-        android:background="@color/searchviewhintcolor"
+        android:background="@color/input_register_hint"
         android:id="@+id/btn_addtovisitlist"
         android:layout_marginLeft="2dp"
         android:layout_weight=".50"
