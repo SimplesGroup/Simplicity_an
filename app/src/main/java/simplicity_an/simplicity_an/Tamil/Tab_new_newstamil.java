@@ -1775,7 +1775,7 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                                     intent.putExtra("ID", ids);
                                     startActivity(intent);
                                 }else if(type.equals("article")){
-                                    Intent intent = new Intent(getActivity(), TamilArticledescription.class);
+                                    Intent intent = new Intent(getActivity(), Columnsdetailpage.class);
                                     intent.putExtra("ID", ids);
                                     startActivity(intent);
 

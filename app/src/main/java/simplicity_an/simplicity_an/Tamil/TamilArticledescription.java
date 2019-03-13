@@ -566,7 +566,7 @@ if(myprofileid!=null){
     commentbox.setVisibility(View.GONE);
 }
 
-        comment.setOnClickListener(new View.OnClickListener() {
+       /* comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(myprofileid!=null) {
@@ -588,7 +588,7 @@ if(myprofileid!=null){
                     finish();
                 }
             }
-        });
+        });*/
 
     }
 

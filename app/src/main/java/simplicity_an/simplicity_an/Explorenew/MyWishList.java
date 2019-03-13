@@ -60,7 +60,7 @@ public class MyWishList extends DialogFragment implements WishListInterface {
     }
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(android.support.v4.app.DialogFragment.STYLE_NORMAL, R.style.MY_DIALOG);
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.MY_DIALOGCart);
     }
 
 

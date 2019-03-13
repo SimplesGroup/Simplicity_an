@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp">
         <LinearLayout
-            android:background="@color/searchviewhintcolor"
+            android:background="@color/whitefood"
             android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

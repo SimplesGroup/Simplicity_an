@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@android:color/transparent"
+    android:background="@color/whitefood"
     android:layout_marginBottom="5dp"
     android:layout_height="wrap_content">
     <LinearLayout
@@ -38,13 +38,15 @@
                     android:layout_height="wrap_content" />
 
                 <Spinner
-                    android:layout_marginTop="2dp"
+
+                    android:layout_margin="5dp"
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_marginTop="3dp"
                     android:layout_marginLeft="5dp"
                     android:id="@+id/spin_product_price_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp">
 
-                </Spinner>
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"></Spinner>
 
                 <TextView
                     android:layout_marginTop="5dp"
@@ -69,7 +71,7 @@
                     android:paddingBottom="5dp"
                     android:paddingLeft="24dp"
                     android:paddingRight="24dp"
-                    android:background="@color/searchviewhintcolor"
+                    android:background="@color/whitefood"
                     android:layout_marginTop="4dp"
                     android:layout_gravity="center|center_vertical"
                     android:text="+"
@@ -83,7 +85,7 @@
                     android:paddingBottom="5dp"
                     android:paddingLeft="24dp"
                     android:paddingRight="24dp"
-                    android:background="@color/searchviewhintcolor"
+                    android:background="@color/whitefood"
                     android:layout_marginTop="4dp"
                     android:layout_gravity="center"
 
@@ -96,7 +98,7 @@
                     android:paddingBottom="5dp"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
-                    android:background="@color/searchviewhintcolor"
+                    android:background="@color/whitefood"
                     android:layout_marginTop="4dp"
                     android:layout_gravity="center"
                     android:text="-"
@@ -113,7 +115,7 @@
             <TextView
                 android:textSize="14dp"
                 android:id="@+id/text_remove"
-                android:background="@color/searchviewhintcolor"
+                android:background="@color/whitefood"
                 android:padding="7dp"
                 android:layout_weight=".40"
                 android:layout_width="0dp"
@@ -122,7 +124,7 @@
                 android:layout_marginLeft="3dp"
                 android:textSize="14dp"
                 android:id="@+id/text_Addtowhishlist"
-                android:background="@color/searchviewhintcolor"
+                android:background="@color/whitefood"
                 android:padding="7dp"
                 android:layout_weight=".60"
                 android:layout_width="0dp"

@@ -47,7 +47,7 @@
         android:id="@+id/cart_layout"
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:background="@color/searchviewhintcolor"
+        android:background="@color/whitefood"
         android:layout_width="match_parent"
         android:layout_height="40dp">
         <LinearLayout

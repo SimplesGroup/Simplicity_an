@@ -19,8 +19,8 @@
     <color name="notificationcolor">#891703</color>
     <color name="eventcolor">#B5FCFBFB</color>
 <color name="textfade">#CCCCCC</color>
-    <color name="input_register">#5e6266</color>
-    <color name="input_register_hint">#5e6266</color>
+    <color name="input_register">#14ffffff</color>
+    <color name="input_register_hint">#14ffffff</color>
 <color name="input_regist">#888888</color>
     <color name="themedark">#262626</color>
     <color name="whitecolor">#ffffff</color>

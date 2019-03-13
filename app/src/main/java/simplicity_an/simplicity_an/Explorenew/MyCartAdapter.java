@@ -263,6 +263,13 @@ final ArrayList<String>priceitem=new ArrayList<>();
         }
             holders_one.product_image.setImageUrl(data.getImage(), mImageLoader);
 
+            if (colorcodes.equals("#262626")) {
+                holders_one.price_spinner.getBackground().setColorFilter(context.getResources().getColor(R.color.whitecolor), PorterDuff.Mode.SRC_ATOP);
+
+            }else {
+                holders_one.price_spinner.getBackground().setColorFilter(context.getResources().getColor(R.color.Black), PorterDuff.Mode.SRC_ATOP);
+            }
+
 
             ArrayAdapter<String> adapter =
                     new ArrayAdapter<String>(context, R.layout.explore_my_spinner_style, item)
@@ -270,17 +277,17 @@ final ArrayList<String>priceitem=new ArrayList<>();
 
                         public View getView(int position, View convertView, ViewGroup parent) {
                             View v = super.getView(position, convertView, parent);
-                            v.setBackgroundColor(Color.TRANSPARENT);
-                            ((TextView) v).setTextSize(14);
+
+                            ((TextView) v).setTextSize(17);
                             if (colorcodes.equals("#262626")) {
+                             //  v.setBackgroundColor(Color.BLACK);
                                 ((TextView) v).setTextColor(
-                                        context.getResources().getColorStateList(R.color.whitecolor));
+                                        context.getResources().getColorStateList(R.color.white)
+                                );
                             }else {
                                 ((TextView) v).setTextColor(
-                                        context.getResources().getColorStateList(R.color.Black));
-
-
-
+                                        context.getResources().getColorStateList(R.color.Black)
+                                );
                             }
 
                             return v;
@@ -304,12 +311,15 @@ final ArrayList<String>priceitem=new ArrayList<>();
                             }
 
 
+
+
                             //((TextView) v).setTypeface(fontStyle);
                             ((TextView) v).setGravity(Gravity.CENTER);
 
                             return v;
                         }
                     };
+
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             holders_one.price_spinner.setAdapter(adapter);
 
@@ -335,7 +345,7 @@ final ArrayList<String>priceitem=new ArrayList<>();
             holders_one.price_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 @Override
 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String item = parent.getItemAtPosition(position).toString();
+
         String price=priceitem.get(position);
     holders_one.price_item.setText(price);
 

@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_marginBottom="5dp"
-    android:background="@android:color/transparent"
+    android:background="@color/whitefood"
     android:layout_height="wrap_content">
     <LinearLayout
         android:orientation="vertical"
@@ -64,7 +64,7 @@
             <TextView
                 android:textSize="14dp"
                 android:id="@+id/text_remove"
-                android:background="@color/searchviewhintcolor"
+                android:background="@color/whitefood"
                 android:padding="7dp"
                 android:layout_weight=".40"
                 android:layout_width="0dp"
@@ -73,7 +73,7 @@
                 android:layout_marginLeft="3dp"
                 android:textSize="14dp"
                 android:id="@+id/text_Addtowhishlist"
-                android:background="@color/searchviewhintcolor"
+                android:background="@color/whitefood"
                 android:padding="7dp"
                 android:layout_weight=".60"
                 android:layout_width="0dp"
