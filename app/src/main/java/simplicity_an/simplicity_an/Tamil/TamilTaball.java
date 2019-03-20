@@ -89,6 +89,7 @@ import simplicity_an.simplicity_an.Tamil.Activity.FoodAndCookDescriptionPagetami
 import simplicity_an.simplicity_an.Tamil.Activity.Govtdescriptiontamil;
 import simplicity_an.simplicity_an.Tamil.Activity.Healthdescriptiontamil;
 import simplicity_an.simplicity_an.Tamil.Activity.JobsDetailPagetamil;
+import simplicity_an.simplicity_an.Tamil.Activity.PhotoStoriesDetailTamil;
 import simplicity_an.simplicity_an.Tamil.Activity.ReportNewsOrComplaintsTamil;
 import simplicity_an.simplicity_an.Tamil.Activity.ScienceandTechnologyDescriptiontamil;
 import simplicity_an.simplicity_an.Tamil.Activity.TamilEventsDescription;
@@ -1826,7 +1827,7 @@ public class TamilTaball extends Fragment implements ChangeFont {
                     public void OnItemClick(View view, int position) {
                         switch (view.getId()) {
                             case R.id.listlayout_taball:
-                                Intent photostory=new Intent(getActivity(),PhotoStoriesDetail.class);
+                                Intent photostory=new Intent(getActivity(),PhotoStoriesDetailTamil.class);
                                 photostory.putExtra("Image", itemmodel.getId());
                                 photostory.putExtra("TITLE",itemmodel.getTitle());
                                 photostory.putExtra("DATE",itemmodel.getPdate());

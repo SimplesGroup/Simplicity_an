@@ -197,7 +197,8 @@ public class Farmingdescriptiontamil extends AppCompatActivity {
 
 
         if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+            int[] colors = { Color.parseColor("#262626"),Color.parseColor("#FF000000")};
+
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
@@ -211,7 +212,7 @@ public class Farmingdescriptiontamil extends AppCompatActivity {
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#FF000000")};
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -235,7 +236,7 @@ public class Farmingdescriptiontamil extends AppCompatActivity {
 
                         mainlayout.setBackgroundDrawable(gd);
                     } else {
-                        int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+                        int[] colors = { Color.parseColor("#262626"),Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -250,7 +251,7 @@ public class Farmingdescriptiontamil extends AppCompatActivity {
                         editor.commit();
                     }
                 }else {
-                    int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+                    int[] colors = { Color.parseColor("#262626"),Color.parseColor("#FF000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,

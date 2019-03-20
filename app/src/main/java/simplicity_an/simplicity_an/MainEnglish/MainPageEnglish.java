@@ -319,7 +319,7 @@ LinearLayout footer;
             public void onClick(View v) {
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                ShopFragment fragment = new ShopFragment();
+                SettingsFragment fragment = new SettingsFragment();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frame_layout, fragment);
                 fragmentTransaction.commit();

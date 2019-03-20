@@ -1,4 +1,4 @@
-package simplicity_an.simplicity_an;
+package simplicity_an.simplicity_an.Tamil.Activity;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -40,13 +40,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Cache;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
@@ -57,13 +55,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import simplicity_an.simplicity_an.Articledescription;
+import simplicity_an.simplicity_an.DividerItemDecoration;
+import simplicity_an.simplicity_an.MySingleton;
+import simplicity_an.simplicity_an.OnLoadMoreListener;
+import simplicity_an.simplicity_an.R;
+import simplicity_an.simplicity_an.SigninpageActivity;
 import simplicity_an.simplicity_an.Utils.Configurl;
 import simplicity_an.simplicity_an.Utils.Fonts;
 
@@ -71,7 +74,7 @@ import simplicity_an.simplicity_an.Utils.Fonts;
  * Created by KuppuSamy on 8/10/2017.
  */
 
-public class PhotoStoriesDetail extends AppCompatActivity {
+public class PhotoStoriesDetailTamil extends AppCompatActivity {
     NetworkImageView post_view_image_big;
 
     String images_to_load;
@@ -307,20 +310,19 @@ public class PhotoStoriesDetail extends AppCompatActivity {
             }
         }
 
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
+share.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
 
-                sendIntent.putExtra(Intent.EXTRA_TEXT, title_share + "\n" + shareurl + "\n" + "\n" + "\n" + "Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, title_share + "\n" + shareurl + "\n" + "\n" + "\n" + "Receive instant updates by installing Simplicity for iPhone/iPad,Android and Windows 10(desktop & Mobile)(http://goo.gl/Sv3vfc)");
 
-                sendIntent.setType("text/plain");
-                startActivity(Intent.createChooser(sendIntent, "Share using"));
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, "Share using"));
 
-            }
-        });
-
+    }
+});
 
 
         if(myprofileid!=null) {
@@ -379,7 +381,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                                   param.put("Key", "Simplicity");
                                   param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
                                   param.put("rtype", "comment");
-                                  param.put("language", "1");
+                                  param.put("language", "2");
                                   param.put("id", likes_to_load);
                                   param.put("user_id", myprofileid);
                                   param.put("comment", description_comment);
@@ -426,19 +428,23 @@ public class PhotoStoriesDetail extends AppCompatActivity {
 
             photostory_title = (TextView) findViewById(R.id.title);
             photostory_date = (TextView) findViewById(R.id.date);
+        if(fontname.equals("playfair")){
 
-
-        if(fontname.equals("sanfrancisco")){
-            String playfair ="fonts/Oxygen-Bold.ttf";
-            tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
-
-            photostory_title.setTextSize(20);
-            photostory_title.setLineSpacing(0,1f);
+            String playfa ="fonts/TAU_Elango_Madhavi.TTF";
+            tf = Typeface.createFromAsset(getApplicationContext().getAssets(), playfa);
+            photostory_date.setTypeface(tf);
+            photostory_title.setTypeface(tf);
+            photostory_title.setTextSize(27);
         }else {
-            String playfair = "fonts/playfairDisplayRegular.ttf";
-            tf_play = Typeface.createFromAsset(getApplicationContext().getAssets(), playfair);
+            String play = "fonts/MUKTAMALAR-BOLD.TTF";
+            tf= Typeface.createFromAsset(getApplicationContext().getAssets(), play);
+            photostory_date.setTypeface(tf);
+            photostory_title.setTypeface(tf);
 
+            photostory_title.setTextSize(22);
         }
+
+
         photostory_date.setTypeface(tf);
         photostory_title.setTypeface(tf_play);
         if(colorcodes.equals( "#FFFFFFFF")){
@@ -503,6 +509,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                                 photostory_title.setTypeface(tf_play);
                                 photostory_date.setText(Html.fromHtml(object.getString("photo_credit")) +"\n"+Html.fromHtml(object.getString("date")));
 
+
                                 title_share=object.getString("title");
                                 shareurl=object.getString("sharingurl");
 
@@ -559,7 +566,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                    Map<String,String>param=new HashMap<>();
                    param.put("Key","Simplicity");
                    param.put("Token","8d83cef3923ec6e4468db1b287ad3fa7");
-                   param.put("language","1");
+                   param.put("language","2");
                    param.put("rtype","photostories");
                    param.put("id",likes_to_load);
                    if(myprofileid!=null){
@@ -636,6 +643,9 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                     }, 2000);
                 }
             });
+
+
+
 
 
 
@@ -978,7 +988,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                 param.put("Key", "Simplicity");
                 param.put("Token", "8d83cef3923ec6e4468db1b287ad3fa7");
                 param.put("rtype", "viewcomment");
-                param.put("language","1");
+                param.put("language","2");
                 param.put("qtype","photostories");
                 param.put("id",likes_to_load);
 
@@ -1157,7 +1167,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                 String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                 Typeface seguiregular = Typeface.createFromAsset(getApplicationContext().getAssets(), simplycity_title_fontPath);
                 if (mImageLoader == null)
-                    mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getApplicationContext()).getImageLoader();
+                    mImageLoader = MySingleton.getInstance(getApplicationContext()).getImageLoader();
 
 
                ItemModels itemmodel = commentlist.get(position);
@@ -1628,7 +1638,7 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                     String simplycity_title_fontPath = "fonts/Lora-Regular.ttf";;
                     Typeface seguiregular = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title_fontPath);
                     if (mImageLoader == null)
-                        mImageLoader = simplicity_an.simplicity_an.MySingleton.getInstance(getActivity()).getImageLoader();
+                        mImageLoader = MySingleton.getInstance(getActivity()).getImageLoader();
 
 
                    ItemModels itemmodel = commentlist.get(position);
@@ -1643,8 +1653,8 @@ public class PhotoStoriesDetail extends AppCompatActivity {
                     userViewHolder.imageview.setImageUrl(itemmodel.getProfilepic(), mImageLoader);
                     // userViewHolder.im.setVisibility(View.VISIBLE);
 
-                } else if (holder instanceof Articledescription.MyDialogFragment.LoadingViewHolder) {
-                    Articledescription.MyDialogFragment.LoadingViewHolder loadingViewHolder = (Articledescription.MyDialogFragment.LoadingViewHolder) holder;
+                } else if (holder instanceof LoadingViewHolder) {
+                    LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
                     loadingViewHolder.progressBar.setIndeterminate(true);
                 }
 

@@ -23,6 +23,7 @@ import java.util.List;
 import simplicity_an.simplicity_an.PhotoStoriesDetail;
 import simplicity_an.simplicity_an.R;
 import simplicity_an.simplicity_an.Tab_new_news;
+import simplicity_an.simplicity_an.Tamil.Activity.PhotoStoriesDetailTamil;
 import simplicity_an.simplicity_an.Tamil.Tab_new_newstamil;
 
 public class HorizontalPhotostoryadaptertamil extends RecyclerView.Adapter<HorizontalPhotostoryadaptertamil.Userview> {
@@ -77,7 +78,7 @@ public class HorizontalPhotostoryadaptertamil extends RecyclerView.Adapter<Horiz
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent photostory=new Intent(conxt,PhotoStoriesDetail.class);
+                Intent photostory=new Intent(conxt,PhotoStoriesDetailTamil.class);
                 photostory.putExtra("Image", model.getId());
                 photostory.putExtra("TITLE",model.getTitle());
                 photostory.putExtra("DATE",model.getPdate());
@@ -87,7 +88,7 @@ public class HorizontalPhotostoryadaptertamil extends RecyclerView.Adapter<Horiz
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent photostory=new Intent(conxt,PhotoStoriesDetail.class);
+                Intent photostory=new Intent(conxt,PhotoStoriesDetailTamil.class);
                 photostory.putExtra("Image", model.getId());
                 photostory.putExtra("TITLE",model.getTitle());
                 photostory.putExtra("DATE",model.getPdate());

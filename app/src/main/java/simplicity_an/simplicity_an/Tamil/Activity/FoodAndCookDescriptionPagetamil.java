@@ -198,11 +198,13 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
 
 
         if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+            int[] colors = { Color.parseColor("#262626"),Color.parseColor("#FF000000")};
+
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
             gd.setCornerRadius(0f);
+
 
             mainlayout.setBackgroundDrawable(gd);
 
@@ -212,11 +214,13 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+                int[] colors = { Color.parseColor("#262626"),Color.parseColor("#FF000000")};
+
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
                 gd.setCornerRadius(0f);
+
 
                 mainlayout.setBackgroundDrawable(gd);
 
@@ -236,12 +240,13 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
 
                         mainlayout.setBackgroundDrawable(gd);
                     } else {
-                        int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+                        int[] colors = { Color.parseColor("#262626"),Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
                                 colors);
                         gd.setCornerRadius(0f);
+
 
                         mainlayout.setBackgroundDrawable(gd);
 
@@ -251,12 +256,13 @@ String URL="http://simpli-city.in/request2.php?rtype=food&key=simples&id=";
                         editor.commit();
                     }
                 }else {
-                    int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+                    int[] colors = { Color.parseColor("#262626"),Color.parseColor("#FF000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
                             colors);
                     gd.setCornerRadius(0f);
+
 
                     mainlayout.setBackgroundDrawable(gd);
 

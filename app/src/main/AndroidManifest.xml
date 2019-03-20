@@ -63,6 +63,11 @@
         </activity>
         <activity
             android:label="@string/app_name"
+            android:name=".Tamil.Activity.PhotoStoriesDetailTamil"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:label="@string/app_name"
             android:name=".Explorenew.DoctoronCallActivity"
             android:screenOrientation="portrait" >
         </activity>

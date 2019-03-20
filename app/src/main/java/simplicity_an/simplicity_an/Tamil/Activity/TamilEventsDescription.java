@@ -205,7 +205,8 @@ ProgressDialog pdialog;
 
 
         if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+            int[] colors = { Color.parseColor("#262626"),Color.parseColor("#FF000000")};
+
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
@@ -219,7 +220,8 @@ ProgressDialog pdialog;
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+                int[] colors = { Color.parseColor("#262626"),Color.parseColor("#FF000000")};
+
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
@@ -243,7 +245,7 @@ ProgressDialog pdialog;
 
                         mainlayout.setBackgroundDrawable(gd);
                     } else {
-                        int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+                        int[] colors = { Color.parseColor("#262626"),Color.parseColor("#FF000000")};
 
                         GradientDrawable gd = new GradientDrawable(
                                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -258,7 +260,7 @@ ProgressDialog pdialog;
                         editor.commit();
                     }
                 }else {
-                    int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+                    int[] colors = { Color.parseColor("#262626"),Color.parseColor("#FF000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,

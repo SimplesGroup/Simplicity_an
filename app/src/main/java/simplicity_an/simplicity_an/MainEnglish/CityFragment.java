@@ -281,7 +281,7 @@ settings_button.setOnClickListener(new View.OnClickListener() {
 
 
             } else {
-                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#FF000000")};
 
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
@@ -300,7 +300,7 @@ settings_button.setOnClickListener(new View.OnClickListener() {
 
             }
         }else{
-           int[] colors = {Color.parseColor("#262626"),  Color.parseColor("#00000000")};
+           int[] colors = {Color.parseColor("#262626"),  Color.parseColor("#FF000000")};
 
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,

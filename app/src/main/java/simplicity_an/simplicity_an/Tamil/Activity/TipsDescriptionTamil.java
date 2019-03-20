@@ -172,11 +172,13 @@ public class TipsDescriptionTamil extends AppCompatActivity {
         fontname=sharedpreferences.getString(Fonts.FONT,"");
         mainlayout=(RelativeLayout)findViewById(R.id.version_main_layout);
         if(colorcodes.length()==0){
-            int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+            int[] colors = { Color.parseColor("#262626"),Color.parseColor("#FF000000")};
+
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     colors);
             gd.setCornerRadius(0f);
+
 
             mainlayout.setBackgroundDrawable(gd);
 
@@ -186,11 +188,13 @@ public class TipsDescriptionTamil extends AppCompatActivity {
         }else {
             if(colorcodes.equalsIgnoreCase("004")){
                 Log.e("Msg","hihihi"+colorcodes);
-                int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+                int[] colors = { Color.parseColor("#262626"),Color.parseColor("#FF000000")};
+
                 GradientDrawable gd = new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
                         colors);
                 gd.setCornerRadius(0f);
+
 
                 mainlayout.setBackgroundDrawable(gd);
 
@@ -200,21 +204,23 @@ public class TipsDescriptionTamil extends AppCompatActivity {
             }else {
 
                 if(colorcodes!=null){
-                    int[] colors = {Color.parseColor(colorcodes), Color.parseColor("#FF000000"), Color.parseColor("#FF000000")};
+                    int[] colors = { Color.parseColor("#262626"),Color.parseColor("#FF000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
                             colors);
                     gd.setCornerRadius(0f);
+
 
                     mainlayout.setBackgroundDrawable(gd);
                 }else {
-                    int[] colors = {Color.parseColor("#262626"),Color.parseColor("#00000000")};
+                    int[] colors = { Color.parseColor("#262626"),Color.parseColor("#FF000000")};
 
                     GradientDrawable gd = new GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
                             colors);
                     gd.setCornerRadius(0f);
+
 
                     mainlayout.setBackgroundDrawable(gd);
 

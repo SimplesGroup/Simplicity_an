@@ -654,7 +654,7 @@ public class EntertainmentFragmentTamil extends Fragment  {
                         params.put("rtype","playerid_new");
                         params.put("phone","android");
                         params.put("player_id",playerid);
-                        params.put("language","1");
+                        params.put("language","2");
                         return params;
                     }
                 };

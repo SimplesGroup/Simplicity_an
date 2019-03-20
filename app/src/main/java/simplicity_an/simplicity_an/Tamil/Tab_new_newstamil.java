@@ -88,6 +88,7 @@ import simplicity_an.simplicity_an.Tamil.Activity.FoodAndCookDescriptionPagetami
 import simplicity_an.simplicity_an.Tamil.Activity.Govtdescriptiontamil;
 import simplicity_an.simplicity_an.Tamil.Activity.Healthdescriptiontamil;
 import simplicity_an.simplicity_an.Tamil.Activity.JobsDetailPagetamil;
+import simplicity_an.simplicity_an.Tamil.Activity.PhotoStoriesDetailTamil;
 import simplicity_an.simplicity_an.Tamil.Activity.ScienceandTechnologyDescriptiontamil;
 import simplicity_an.simplicity_an.Tamil.Activity.TamilNewsDescription;
 import simplicity_an.simplicity_an.Tamil.Activity.TipsDescriptionTamil;
@@ -1788,7 +1789,8 @@ public   class Horizontalphotostory extends RecyclerView.ViewHolder{
                                     intent.putExtra("ID", ids);
                                     startActivity(intent);
                                 }else if(type.equals("food")||type.equals("foodtip")){
-                                    if(qtype.equals("Food & Cooking")){
+
+                                    if(type.equals("food")){
                                         Intent intent = new Intent(getActivity(), FoodAndCookDescriptionPagetamil.class);
                                         intent.putExtra("ID", ids);
                                         startActivity(intent);
@@ -2641,7 +2643,7 @@ if(itemmodel.getAlbum()==null){
                     public void OnItemClick(View view, int position) {
                         switch (view.getId()) {
                             case R.id.listlayout_taball:
-                                Intent photostory=new Intent(getActivity(),PhotoStoriesDetail.class);
+                                Intent photostory=new Intent(getActivity(),PhotoStoriesDetailTamil.class);
                                 photostory.putExtra("Image", itemmodel.getId());
                                 photostory.putExtra("TITLE",itemmodel.getTitle());
                                 photostory.putExtra("DATE",itemmodel.getPdate());

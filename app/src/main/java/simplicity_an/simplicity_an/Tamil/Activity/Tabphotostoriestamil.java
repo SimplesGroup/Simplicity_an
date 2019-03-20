@@ -1692,7 +1692,7 @@ userViewHolder.shortdescription.setTypeface(seguiregular);
                     public void OnItemClick(View view, int position) {
                         switch (view.getId()) {
                             case R.id.listlayout_taball:
-                                Intent photostory=new Intent(getActivity(),PhotoStoriesDetail.class);
+                                Intent photostory=new Intent(getActivity(),PhotoStoriesDetailTamil.class);
                                 photostory.putExtra("Image", itemmodel.getId());
                                 photostory.putExtra("TITLE",itemmodel.getTitle());
                                 photostory.putExtra("DATE",itemmodel.getPdate());
