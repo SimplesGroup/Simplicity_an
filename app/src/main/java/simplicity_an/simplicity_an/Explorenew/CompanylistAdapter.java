@@ -180,6 +180,19 @@ public void onClick(View v) {
     context.startActivity(intent);
         }
         });
+
+        holders.title_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProductList.class);
+                intent.putExtra("ITEM_NAME", data.getCategory_title());
+                intent.putExtra("CAT_ID",data.getCategory_id());
+                intent.putExtra("COMP_ID",data.getCompany_id());
+                context.startActivity(intent);
+            }
+        });
+
+
         }else if(holder instanceof Shopmodel_one){
 final Shopmodel_one    holders= (Shopmodel_one) holder;
         if (mImageLoader == null)
@@ -210,7 +223,16 @@ final IndexProductModel data = shopdataList.get(position);
             holders.price_item.setTextSize(16);
 
         }
-
+            holders.title_category.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ProductList.class);
+                    intent.putExtra("ITEM_NAME", data.getCategory_title());
+                    intent.putExtra("CAT_ID",data.getCategory_id());
+                    intent.putExtra("COMP_ID",data.getCompany_id());
+                    context.startActivity(intent);
+                }
+            });
 
         holders.title_category.setText(data.getProduct_title());
         List<IndexProductModel>list=data.getPricelist();
@@ -416,7 +438,16 @@ final IndexProductModel data = shopdataList.get(position);
         context.startActivity(intent);
     }
 });
-
+            holders.title_category.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ProductList.class);
+                    intent.putExtra("ITEM_NAME", data.getCategory_title());
+                    intent.putExtra("CAT_ID",data.getCategory_id());
+                    intent.putExtra("COMP_ID",data.getCompany_id());
+                    context.startActivity(intent);
+                }
+            });
 
         }
 
@@ -491,7 +522,16 @@ final IndexProductModel data = shopdataList.get(position);
                 }
             });
 
-
+            holders.title_category_withoutspin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ProductList.class);
+                    intent.putExtra("ITEM_NAME", data.getCategory_title());
+                    intent.putExtra("CAT_ID",data.getCategory_id());
+                    intent.putExtra("COMP_ID",data.getCompany_id());
+                    context.startActivity(intent);
+                }
+            });
         }
         }
 
