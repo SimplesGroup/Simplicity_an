@@ -11,11 +11,13 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.onesignal.OneSignal;
 
 import simplicity_an.simplicity_an.MainEnglish.MainPageEnglish;
 import simplicity_an.simplicity_an.MainTamil.MainPageTamil;
+import simplicity_an.simplicity_an.Utils.Check_Internet;
 import simplicity_an.simplicity_an.Walkthrough.Aboutapp;
 
 
@@ -38,6 +40,8 @@ public class SplashScreen extends Activity{
     String url_change_lang="http://simpli-city.in/request2.php?rtype=updatelanguage&key=simples";
     String playerid;
     Dialog dialog;
+    boolean net_conn=false;
+
     protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
          /*try {
@@ -80,6 +84,17 @@ public class SplashScreen extends Activity{
 
             }
         });
+
+        Check_Internet internet=new Check_Internet();
+      net_conn=  internet.isNetworkConnected(getApplicationContext());
+
+      if(net_conn==true){
+          Toast.makeText(getApplicationContext(),"net connnected",Toast.LENGTH_SHORT).show();
+      }else {
+          Toast.makeText(getApplicationContext(),"not Connected",Toast.LENGTH_SHORT).show();
+      }
+
+
         new Handler().postDelayed(new Runnable() {
 
             /*

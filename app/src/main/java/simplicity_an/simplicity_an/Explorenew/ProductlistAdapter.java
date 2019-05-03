@@ -178,6 +178,18 @@ public void onClick(View v) {
     context.startActivity(intent);
         }
         });
+
+        holders.title_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProductDetail.class);
+                intent.putExtra("MAIN_CAT_ID", data.getMain_category_id());
+                intent.putExtra("PRO_ID",data.getProduct_id());
+
+                context.startActivity(intent);
+            }
+        });
+
         }else if(holder instanceof Shopmodel_one){
 final Shopmodel_one    holders= (Shopmodel_one) holder;
         if (mImageLoader == null)
@@ -334,6 +346,9 @@ public void onNothingSelected(AdapterView<?> parent) {
         }
         });
 
+
+
+
         holders.add_to_cart.setOnClickListener(new View.OnClickListener() {
 @Override
 public void onClick(View v) {
@@ -441,6 +456,18 @@ holders.product_image.setOnClickListener(new View.OnClickListener() {
     }
 });
 
+        holders.title_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProductDetail.class);
+                intent.putExtra("MAIN_CAT_ID", data.getMain_category_id());
+                intent.putExtra("PRO_ID",data.getProduct_id());
+
+                context.startActivity(intent);
+            }
+        });
+
+
         }
 
         else if (holder instanceof Shopmodel_three){
@@ -498,6 +525,17 @@ final IndexProductModel data = shopdataList.get(position);
         holders.product_image_withoutspin.setImageUrl(data.getImage(), mImageLoader);
 
 holders.product_image_withoutspin.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(context, ProductDetail.class);
+        intent.putExtra("MAIN_CAT_ID", data.getMain_category_id());
+        intent.putExtra("PRO_ID",data.getProduct_id());
+
+        context.startActivity(intent);
+    }
+});
+
+holders.title_category_withoutspin.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(context, ProductDetail.class);

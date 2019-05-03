@@ -194,6 +194,26 @@ public class IndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     }
                 }
             });
+
+            holders.title_category.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(data.getCategory_title().equals("Doctor on Call")){
+                        Intent intent = new Intent(context, DoctoronCallActivity.class);
+                        intent.putExtra("ITEM_NAME", data.getCategory_title());
+                        intent.putExtra("URL", data.getUrl());
+                        context.startActivity(intent);
+
+
+                    }else {
+                        Intent intent = new Intent(context, CompanyList.class);
+                        intent.putExtra("ITEM_NAME", data.getCategory_title());
+                        intent.putExtra("CAT_ID", data.getCategory_id());
+                        context.startActivity(intent);
+                    }
+                }
+            });
+
         }else if(holder instanceof Shopmodel_one){
             final Shopmodel_one    holders= (Shopmodel_one) holder;
             if (mImageLoader == null)
