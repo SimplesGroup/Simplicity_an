@@ -42,7 +42,7 @@ public class AddNewshippingAddress extends AppCompatActivity implements Cartaddr
     TextView title_textview;
     EditText name_edit,phone_edit,email_edit,address_one_edit,address_two_edit,location_edit,pincode_edit,landmark_edit,state_edit;
     Button back_button,save_button;
-
+String language_data;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +60,7 @@ public class AddNewshippingAddress extends AppCompatActivity implements Cartaddr
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
         fontname=sharedpreferences.getString(Fonts.FONT,"");
+        language_data=sharedpreferences.getString(Language,"");
         main_cartaddress_layout=(RelativeLayout)findViewById(R.id.explore_add_new_address);
         cartShippingPresenter=new CartAddresspresenterImpl(this);
 
@@ -120,7 +121,11 @@ public class AddNewshippingAddress extends AppCompatActivity implements Cartaddr
 
         title_textview=(TextView)findViewById(R.id.city_title);
 
-        title_textview.setText("Update Address");
+            if (language_data.equals("English")) {
+                title_textview.setText("Update Address");
+            }else {
+                title_textview.setText("முகவரி அப்டேட் செய்ய");
+            }
         name_edit=(EditText)findViewById(R.id.username);
        // name_edit.setText(my_profilename);
         location_edit=(EditText)findViewById(R.id.location);

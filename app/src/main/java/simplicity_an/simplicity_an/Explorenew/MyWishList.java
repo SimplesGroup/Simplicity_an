@@ -40,8 +40,8 @@ public class MyWishList extends DialogFragment implements WishListInterface {
     ProgressDialog pdialog;
     public static final String USERNAME= "myprofilename";
     public static final String USERIMAGE= "myprofileimage";
-
-    String fontname,myprofileid,colorcodes;
+    public static final String Language = "lamguage";
+    String fontname,myprofileid,colorcodes,language_data,language_value;
 
     private TextView wishlist_titile_text,gotocart_text;
     RecyclerView recyclerView;
@@ -85,6 +85,7 @@ public class MyWishList extends DialogFragment implements WishListInterface {
 
         fontname=sharedpreferences.getString(Fonts.FONT,"");
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        language_data=sharedpreferences.getString(Language,"");
         if (sharedpreferences.contains(MYUSERID)) {
 
             myprofileid=sharedpreferences.getString(MYUSERID,"");
@@ -164,9 +165,20 @@ public class MyWishList extends DialogFragment implements WishListInterface {
             back_text.setTextColor(Color.WHITE);
             checkout_text.setTextColor(Color.WHITE);
         }
-        wishlist_titile_text.setText("Wish List");
-        back_text.setText("Back");
-        checkout_text.setText("Checkout");
+
+        if(language_data.equals("English")) {
+            language_value = "1";
+            wishlist_titile_text.setText("Wish List");
+
+            back_text.setText("Back");
+            checkout_text.setText("Checkout");
+        }else {
+            language_value = "2";
+
+            wishlist_titile_text.setText("விருப்பப் பட்டியல்");
+            back_text.setText("பின்செல்");
+            checkout_text.setText("சரிபார்த்து அனுப்ப");
+        }
 
         String simplycity_title = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_pala = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
@@ -247,7 +259,7 @@ public class MyWishList extends DialogFragment implements WishListInterface {
     private void getData() {
 
 
-        mywishlist=   wishListPresenter.MyWishList(getActivity(),"wishlist","1",myprofileid,"");
+        mywishlist=   wishListPresenter.MyWishList(getActivity(),"wishlist",language_value,myprofileid,"");
         pdialog.dismiss();
         requestCount++;
        // myCartAdapter.notifyDataSetChanged();

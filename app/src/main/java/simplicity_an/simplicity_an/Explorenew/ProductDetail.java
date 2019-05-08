@@ -50,7 +50,7 @@ public class ProductDetail extends AppCompatActivity implements RequestInterface
     public static final String MYUSERID= "myprofileid";
     public static final String GcmId = "gcmid";
     public static final String Language = "lamguage";
-    String playerid,fontname;
+    String playerid,fontname,language_data;
     RelativeLayout main_complist_layout;
     private int requestCount = 1;
 RequestQueue requestQueue;
@@ -75,6 +75,7 @@ NetworkImageView product_image;
 ImageLoader mImageLoader;
 
 String maincateegoryid,categoryid,companyid,productsid,qtyid;
+String language_value;
 
     private LinearLayout cartlayout;
     private TextView back_text,cart_count_text,cartname_text,wishlist_text;
@@ -94,6 +95,7 @@ String maincateegoryid,categoryid,companyid,productsid,qtyid;
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
         fontname=sharedpreferences.getString(Fonts.FONT,"");
+        language_data=sharedpreferences.getString(Language,"");
         main_complist_layout=(RelativeLayout)findViewById(R.id.shop_layout);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         servicerequest=new Servicerequest(this);
@@ -197,11 +199,22 @@ String maincateegoryid,categoryid,companyid,productsid,qtyid;
 
         }
 
-        addtocart.setText("ADD TO CART");
-        whishlist.setText("WHISHLIST");
-        back_text.setText("Back");
-        cartname_text.setText("My Cart");
-        wishlist_text.setText("Wish List");
+
+        if(language_data.equals("English")) {
+language_value="1";
+            addtocart.setText("ADD TO CART");
+            whishlist.setText("WHISHLIST");
+            back_text.setText("Back");
+            cartname_text.setText("My Cart");
+            wishlist_text.setText("Wish List");
+        }else {
+            language_value="2";
+            addtocart.setText("கார்ட்டில் சேர்க்க");
+            whishlist.setText("விருப்ப பட்டியிலில் சேர்க்க");
+            back_text.setText("பின்செல்");
+            cartname_text.setText("மை கார்ட்");
+
+        }
         if (colorcodes.equals("#FFFFFFFF")) {
 
             textView_price.setTextColor(Color.BLACK);
@@ -386,7 +399,7 @@ recyclerView_stone.setAdapter(productdetailstoneAdapter);
                     myprofileid = myprofileid.replaceAll("\\D+","");
                 }
                 if(myprofileid!=null){
-                   List<AddtocartMsg> result=   servicerequest.AddtocartandWhishlist("1","addtocart",myprofileid,maincateegoryid,categoryid,companyid,productsid,qtyid,getApplicationContext());
+                   List<AddtocartMsg> result=   servicerequest.AddtocartandWhishlist(language_value,"addtocart",myprofileid,maincateegoryid,categoryid,companyid,productsid,qtyid,getApplicationContext());
 
                         addtocart.setTextColor(Color.RED);
 
@@ -403,7 +416,7 @@ recyclerView_stone.setAdapter(productdetailstoneAdapter);
             @Override
             public void onClick(View v) {
                 if(myprofileid!=null){
-                    servicerequest.AddtocartandWhishlist("1","addtowishlist",myprofileid,maincateegoryid,categoryid,companyid,productsid,qtyid,getApplicationContext());
+                    servicerequest.AddtocartandWhishlist(language_value,"addtowishlist",myprofileid,maincateegoryid,categoryid,companyid,productsid,qtyid,getApplicationContext());
 
                 }else {
                     Intent sign=new Intent(getApplicationContext(),SigninpageActivity.class);
@@ -431,12 +444,12 @@ back_text.setOnClickListener(new View.OnClickListener() {
         if (myprofileid != null) {
 
 
-            servicerequest.getProductDetail("1","product_details",myprofileid,maincatid,productid,getApplicationContext());
+            servicerequest.getProductDetail(language_value,"product_details",myprofileid,maincatid,productid,getApplicationContext());
 
         }
         else {
 
-            servicerequest.getProductDetail("1","product_details","",maincatid,productid,getApplicationContext());
+            servicerequest.getProductDetail(language_value,"product_details","",maincatid,productid,getApplicationContext());
 
         }
 
@@ -481,7 +494,11 @@ back_text.setOnClickListener(new View.OnClickListener() {
 if(model.getWastage()!=null || model.getNetweight()!=null || model.getMaterial_price()!=null){
 
     productdetail_label_layout.setVisibility(View.VISIBLE);
-    productdetails_jewel_label.setText("PRODUCT DETAILS");
+    if(language_data.equals("English")) {
+        productdetails_jewel_label.setText("PRODUCT DETAILS");
+    }else {
+        productdetails_jewel_label.setText("பொருட்களின் விபரம்");
+    }
 
 }else {
     productdetail_label_layout.setVisibility(View.GONE);
@@ -489,8 +506,11 @@ if(model.getWastage()!=null || model.getNetweight()!=null || model.getMaterial_p
 }
 
 if(model.getWastage()!=null){
-
-    productdetails_wastage_label.setText("Wastage");
+    if(language_data.equals("English")) {
+        productdetails_wastage_label.setText("Wastage");
+    }else {
+        productdetails_wastage_label.setText("தேவையற்றவை");
+    }
     productdetails_wastage.setText(model.getWastage());
 
 }else {
@@ -498,8 +518,11 @@ if(model.getWastage()!=null){
     productdetails_wastage.setVisibility(View.GONE);
 }
             if(model.getNetweight()!=null){
-
-                productdetails_netweight_label.setText("Net Weight");
+                if(language_data.equals("English")) {
+                    productdetails_netweight_label.setText("Net Weight");
+                }else {
+                    productdetails_netweight_label.setText("நிகர எடை");
+                }
                 productdetails_netweight.setText(model.getNetweight());
 
             }else {
@@ -507,8 +530,11 @@ if(model.getWastage()!=null){
                 productdetails_netweight.setVisibility(View.GONE);
             }
             if(model.getMaterial_price()!=null){
-
-                productdetails_materialprice_label.setText("Material Price");
+                if(language_data.equals("English")) {
+                    productdetails_materialprice_label.setText("Material Price");
+                }else {
+                    productdetails_materialprice_label.setText("பொருள் விலை");
+                }
                 productdetails_materialprice.setText(model.getMaterial_price());
 
             }else {
@@ -540,9 +566,15 @@ if(pricelist.size()==0){
         mImageLoader = CustomVolleyRequest.getInstance(this).getImageLoader();
 
     product_image.setImageUrl(model.getImage(), mImageLoader);
-    productdetails_title_label.setText("Title");
+    if(language_data.equals("English")) {
+        productdetails_title_label.setText("Title");
+        productdetails_desc_label.setText("Description");
+    }else {
+        productdetails_title_label.setText("(தலைப்பு");
+        productdetails_desc_label.setText("விரிவாக்கம்");
+    }
     productdetails_title.setText(model.getProduct_title());
-    productdetails_desc_label.setText("Description");
+
     productdetails_desc.setText(model.getProduct_description());
 
 
@@ -609,7 +641,11 @@ if(pricelist.size()==0){
             String item = parent.getItemAtPosition(position).toString();
 
             String price=priceitem.get(position);
-           textView_price.setText("Price Rs. "+price);
+            if(language_data.equals("English")) {
+                textView_price.setText("Price Rs. " + price);
+            }else {
+                textView_price.setText("விலை " + price);
+            }
 
             qtyid=qtylist.get(position);
         }

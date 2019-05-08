@@ -33,7 +33,7 @@ import simplicity_an.simplicity_an.Utils.Fonts;
 public class ShippingAddress  extends AppCompatActivity implements Cartaddressinterface {
     SharedPreferences sharedpreferences;
     public static final String backgroundcolor = "color";
-    String activity,contentid,colorcodes;
+    String activity,contentid,colorcodes,language_data;
     public static final String mypreference = "mypref";
     String myprofileid,cartcounts;
     public static final String MYUSERID= "myprofileid";
@@ -68,6 +68,7 @@ private CartShippingPresenter cartShippingPresenter;
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
         fontname=sharedpreferences.getString(Fonts.FONT,"");
+        language_data=sharedpreferences.getString(Language,"");
         main_cartaddress_layout=(RelativeLayout)findViewById(R.id.main_layout_explore_cartaddress);
         cartlayout=(LinearLayout) findViewById(R.id.cart_layout);
 cartShippingPresenter=new CartAddresspresenterImpl(this);
@@ -139,14 +140,26 @@ final String totalprice=get.getStringExtra("TOTALCOST");
         totalcost_textview=(TextView)findViewById(R.id.total_address_price_shop);
         continue_textview=(TextView)findViewById(R.id.total_address_checkout);
         back_textview=(TextView)findViewById(R.id.total_address_back) ;
-        shippingtitle_text.setText("Shipping Address");
-        your_delivery_location_text.setText("Your Delivery Location");
 
-        add_new_location_text.setText("ADD NEW");
-        textView_Noresult.setText("No Result Found");
-        back_textview.setText("BACK");
-        continue_textview.setText("CONTINUE");
-        totalcost_textview.setText("Total : "+totalprice);
+        if(language_data.equals("English")) {
+            shippingtitle_text.setText("Shipping Address");
+            your_delivery_location_text.setText("Your Delivery Location");
+
+            add_new_location_text.setText("ADD NEW");
+            textView_Noresult.setText("No Result Found");
+            back_textview.setText("BACK");
+            continue_textview.setText("CONTINUE");
+            totalcost_textview.setText("Total : " + totalprice);
+        }else {
+            shippingtitle_text.setText("டெலிவரி முகவரி");
+            your_delivery_location_text.setText("Your Delivery Location");
+
+            add_new_location_text.setText("புதிய முகவரியை சேர்க்க");
+            textView_Noresult.setText("No Result Found");
+            back_textview.setText("பின்செல்");
+            continue_textview.setText("தொடர்க");
+            totalcost_textview.setText("மொத்தம் : " + totalprice);
+        }
         textView_Noresult.setVisibility(View.GONE);
         if (colorcodes.equals("#FFFFFFFF")) {
             shippingtitle_text.setTextColor(Color.BLACK);

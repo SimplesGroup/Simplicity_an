@@ -40,13 +40,13 @@ public class MyCart extends DialogFragment implements CartInterface {
     ProgressDialog pdialog;
     public static final String USERNAME= "myprofilename";
     public static final String USERIMAGE= "myprofileimage";
-
+    public static final String Language = "lamguage";
     String fontname,myprofileid,colorcodes;
 
     private CartViewPresenter cartViewPresenter;
 private CartShippingPresenter cartShippingPresenter;
     private TextView mycart_titile_text,total_price_text,back_text,checkout_text;
-    private String totalcartprice;
+    private String totalcartprice,language_data,language_value;
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
 private RelativeLayout main_complist_layout;
@@ -86,6 +86,7 @@ private RelativeLayout main_complist_layout;
 
         fontname=sharedpreferences.getString(Fonts.FONT,"");
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        language_data=sharedpreferences.getString(Language,"");
         if (sharedpreferences.contains(MYUSERID)) {
 
             myprofileid=sharedpreferences.getString(MYUSERID,"");
@@ -167,9 +168,15 @@ cartViewPresenter=new CartServiceRequest(this);
             textView_Noresult.setTextColor(Color.BLACK);
             checkout_text.setTextColor(Color.BLACK);
         }
-
-        back_text.setText("Back");
-        checkout_text.setText("Checkout");
+        if(language_data.equals("English")) {
+            language_value = "1";
+            back_text.setText("Back");
+            checkout_text.setText("Checkout");
+        }else {
+back_text.setText("பின்செல்");
+            checkout_text.setText("சரிபார்த்து அனுப்ப");
+                language_value="2";
+        }
         String simplycity_title = "fonts/playfairDisplayRegular.ttf";
         Typeface tf_pala = Typeface.createFromAsset(getActivity().getAssets(), simplycity_title);
         if (fontname.equals("playfair")) {
@@ -256,7 +263,7 @@ back_text.setOnClickListener(new View.OnClickListener() {
     private void getData() {
 
 
-     mycartlist=   cartViewPresenter.getMycart(getActivity(),"1","cartlist",myprofileid,"","","");
+     mycartlist=   cartViewPresenter.getMycart(getActivity(),language_value,"cartlist",myprofileid,"","","");
         pdialog.dismiss();
         requestCount++;
         myCartAdapter.notifyDataSetChanged();
@@ -286,7 +293,11 @@ back_text.setOnClickListener(new View.OnClickListener() {
         }else {
             IndexProductModel model=mycartlistss.get(0);
             totalcartprice=String.valueOf(model.getMycart_netprice());
-            total_price_text.setText("Total Price -"+model.getMycart_netprice());
+            if (language_data.equals("English")) {
+                total_price_text.setText("Total Price -" + model.getMycart_netprice());
+            }else {
+                total_price_text.setText("மொத்த விலை -" + model.getMycart_netprice());
+            }
             myCartAdapter.data(mycartlistss);
             textView_Noresult.setVisibility(View.GONE);
 
