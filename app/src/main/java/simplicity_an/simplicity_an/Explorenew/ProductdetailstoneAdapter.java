@@ -23,6 +23,8 @@ Context context;
     public static final String mypreference = "mypref";
     public static final String MYUSERID= "myprofileid";
     public static final String backgroundcolor = "color";
+    public static final String Language = "lamguage";
+    String language_data,language_value;
     String myprofileid,colorcodes,fontname;
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private  TextView stone_label,stone_name_label,stone_cut_label,stone_color_label,stone_clarity_label;
@@ -73,6 +75,13 @@ Context context;
                 Context.MODE_PRIVATE);
         fontname=sharedpreferences.getString(Fonts.FONT,"");
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        language_data=sharedpreferences.getString(Language,"");
+
+        if(language_data.equals("English")){
+            language_value="1";
+        }else{
+            language_value="2";
+        }
 
         if (colorcodes.equals("#FFFFFFFF")) {
 
@@ -142,20 +151,36 @@ Context context;
         }
 
 
+if (language_data.equals("English")) {
+    holder.stone_label.setText("STONE DETAILS");
+    holder.stone_name_label.setText("Stone name");
+    holder.stone_cut_label.setText("Stone Cut");
+    holder.stone_color_label.setText("Stone Color");
+    holder.stone_clarity_label.setText("Stone Clarity");
+    holder.stone_weight_label.setText("Carat Weight");
+    holder.stone_price_label.setText("Stone Price");
+    holder.stone_name.setText(stone_model.getStonename());
+    holder.stone_cut.setText(stone_model.getStonecut());
+    holder.stone_color.setText(stone_model.getStonecolor());
+    holder.stone_clarity.setText(stone_model.getStoneclarity());
+    holder.stone_weight.setText(stone_model.getStoneweight());
+    holder.stone_price.setText(stone_model.getStoneprice());
+}else{
+    holder.stone_label.setText("ஸ்டோன் விபரம்");
+    holder.stone_name_label.setText("ஸ்டோன் பெயர்");
+    holder.stone_cut_label.setText("ஸ்டோன் கட்");
+    holder.stone_color_label.setText("ஸ்டோன் கலர்");
+    holder.stone_clarity_label.setText("ஸ்டோன் கிளாரிட்டி");
+    holder.stone_weight_label.setText("காரட் வெயிட்");
+    holder.stone_price_label.setText("ஸ்டோன் விலை");
+    holder.stone_name.setText(stone_model.getStonename());
+    holder.stone_cut.setText(stone_model.getStonecut());
+    holder.stone_color.setText(stone_model.getStonecolor());
+    holder.stone_clarity.setText(stone_model.getStoneclarity());
+    holder.stone_weight.setText(stone_model.getStoneweight());
+    holder.stone_price.setText(stone_model.getStoneprice());
+}
 
-        holder.stone_label.setText("STONE DETAILS");
-       holder.stone_name_label.setText("Stone name");
-       holder.stone_cut_label.setText("Stone Cut");
-       holder.stone_color_label.setText("Stone Color");
-       holder.stone_clarity_label.setText("Stone Clarity");
-       holder.stone_weight_label.setText("Carat Weight");
-       holder.stone_price_label.setText("Stone Price");
-        holder.stone_name.setText(stone_model.getStonename());
-        holder.stone_cut.setText(stone_model.getStonecut());
-        holder.stone_color.setText(stone_model.getStonecolor());
-        holder.stone_clarity.setText(stone_model.getStoneclarity());
-        holder.stone_weight.setText(stone_model.getStoneweight());
-        holder.stone_price.setText(stone_model.getStoneprice());
 
 
     }

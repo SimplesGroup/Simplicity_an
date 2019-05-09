@@ -35,7 +35,8 @@ public class CartPaymentPage extends AppCompatActivity implements PaymentInterfa
     ProgressDialog pdialog;
     public static final String USERNAME= "myprofilename";
     public static final String USERIMAGE= "myprofileimage";
-
+    public static final String Language = "lamguage";
+    String language_data,language_value;
     String fontname,myprofileid,colorcodes;
 
     private RelativeLayout main_layout;
@@ -62,6 +63,7 @@ private RelativeLayout view_line_one,view_line_two;
 
         fontname=sharedpreferences.getString(Fonts.FONT,"");
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
+        language_data=sharedpreferences.getString(Language,"");
         if (sharedpreferences.contains(MYUSERID)) {
 
             myprofileid=sharedpreferences.getString(MYUSERID,"");
@@ -124,9 +126,19 @@ view_line_one=(RelativeLayout) findViewById(R.id.line_separter_one_pay);
         paymentPresenter.getMycartPayment(getApplicationContext(),"place_order_view",myprofileid);
 
         title_textview=(TextView)findViewById(R.id.city_title);
-        title_textview.setText("Shipping & Delivery");
         deliverytype_textview=(TextView)findViewById(R.id.your_delivery_location_title);
-        deliverytype_textview.setText("Standard Delivery");
+
+        if(language_data.equals("English")) {
+            language_value="1";
+            title_textview.setText("Shipping & Delivery");
+
+            deliverytype_textview.setText("Standard Delivery");
+        }else {
+            language_value="2";
+            title_textview.setText("ஷிப்பிங் & டெலிவரி");
+
+            deliverytype_textview.setText("நிலையான டெலிவரி");
+        }
 
         back_tocart_textview=(TextView)findViewById(R.id.back_textview);
         total_product_items_textview=(TextView)findViewById(R.id.explore_pay_products);
@@ -197,14 +209,25 @@ view_line_one=(RelativeLayout) findViewById(R.id.line_separter_one_pay);
 
 
         }
-
-        back_tocart_textview.setText("Back");
-        delivery_textview.setText("Delivery charges");
-        total_textview.setText("Net Price");
-        unique_textview.setText("Unique Price");
-        discount_textview.setText("Discount");
-        price_textview.setText("Price");
-        total_product_items_textview.setText("Products");
+        if(language_data.equals("English")) {
+            back_tocart_textview.setText("Back");
+            delivery_textview.setText("Delivery charges");
+            total_textview.setText("Net Price");
+            unique_textview.setText("Unique Price");
+            discount_textview.setText("Discount");
+            price_textview.setText("Price");
+            total_product_items_textview.setText("Products");
+            pay_textview.setText("Pay");
+        }else {
+            back_tocart_textview.setText("பின்செல்");
+            delivery_textview.setText("டெலிவரி சார்ஜ்");
+            total_textview.setText("நிகர விலை");
+            unique_textview.setText("தனித்த விலை");
+            discount_textview.setText("தள்ளுபடி");
+            price_textview.setText("விலை");
+            total_product_items_textview.setText("பொருட்கள்");
+            pay_textview.setText("ரொக்கம் செலுத்த");
+        }
 
 
         String simplycity_title = "fonts/playfairDisplayRegular.ttf";

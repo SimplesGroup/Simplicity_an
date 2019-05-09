@@ -60,11 +60,13 @@ public class ShopFragment extends Fragment implements RequestInterface {
     public static final String mypreference = "mypref";
     public static final String MYUSERID = "myprofileid";
     public static final String backgroundcolor = "color";
+    public static final String Language = "lamguage";
     String myprofileid, colorcodes, fontname;
     RelativeLayout mainlayout;
     ProgressDialog pdialog;
     private String search_value;
     private Servicerequest servicerequest;
+    String language_data,language_value;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,6 +95,7 @@ public class ShopFragment extends Fragment implements RequestInterface {
         }
         colorcodes = sharedpreferences.getString(backgroundcolor, "");
         fontname = sharedpreferences.getString(Fonts.FONT, "");
+        language_data=sharedpreferences.getString(Language,"");
         requestQueue = Volley.newRequestQueue(getActivity());
         title_shop = (TextView) view.findViewById(R.id.title_shop_textview);
         mycart_text = (TextView) view.findViewById(R.id.title_shop_mycartcount_textview);
@@ -208,7 +211,14 @@ public class ShopFragment extends Fragment implements RequestInterface {
 
 
         }
-        title_shop.setText("Shop Essentials");
+        if(language_data.equals("English")){
+            language_value="1";
+            title_shop.setText("Shop Essentials");
+        }else {
+            language_value="2";
+            title_shop.setText("Shop Essentials");
+        }
+
         if (colorcodes.equals("#FFFFFFFF")) {
             title_shop.setTextColor(Color.BLACK);
             mycart_text.setTextColor(Color.BLACK);
@@ -316,18 +326,18 @@ mycart_text.setOnClickListener(new View.OnClickListener() {
 
         //    Servicerequest servicerequest = new Servicerequest(getActivity());
         if (myprofileid != null) {
-            shopDataList = servicerequest.index("1", "index", String.valueOf(requestCount), myprofileid, "", getActivity());
+            shopDataList = servicerequest.index(language_value, "index", String.valueOf(requestCount), myprofileid, "", getActivity());
 
         } else if (search_value != null) {
-            shopDataList = servicerequest.index("1", "index", String.valueOf(requestCount), "", search_value, getActivity());
+            shopDataList = servicerequest.index(language_value, "index", String.valueOf(requestCount), "", search_value, getActivity());
 
 
         } else if (myprofileid != null && search_value != null) {
-            shopDataList = servicerequest.index("1", "index", String.valueOf(requestCount), myprofileid, search_value, getActivity());
+            shopDataList = servicerequest.index(language_value, "index", String.valueOf(requestCount), myprofileid, search_value, getActivity());
 
         } else {
 
-            shopDataList = servicerequest.index("1", "index", String.valueOf(requestCount), "", "", getActivity());
+            shopDataList = servicerequest.index(language_value, "index", String.valueOf(requestCount), "", "", getActivity());
         }
 
         pdialog.dismiss();

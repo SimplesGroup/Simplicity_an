@@ -55,7 +55,8 @@ public static final String mypreference = "mypref";
 public static final String MYUSERID= "myprofileid";
 public static final String backgroundcolor = "color";
         String myprofileid,colorcodes,fontname;
-
+    public static final String Language = "lamguage";
+    String language_data,language_value;
     String qtyid;
 public WishListAdapter(Context mContext, List<IndexProductModel> productEnglishList){
         this.context = mContext;
@@ -140,6 +141,14 @@ public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, fina
         myprofileid = sharedpreferences.getString(MYUSERID, "");
         myprofileid = myprofileid.replaceAll("\\D+","");
     }
+    language_data=sharedpreferences.getString(Language,"");
+
+    if(language_data.equals("English")){
+        language_value="1";
+    }else{
+        language_value="2";
+    }
+
         if (holder instanceof Shopmodelview) {
         Shopmodelview    holders= (Shopmodelview) holder;
         if (mImageLoader == null)
@@ -356,9 +365,13 @@ if(item.size()>1){
 
 
 
-
-            holders_one.remove_cart.setText("Remove");
-            holders_one.add_to_wishlist.setText("GO TO CART");
+            if(language_data.equals("English")) {
+                holders_one.remove_cart.setText("Remove");
+                holders_one.add_to_wishlist.setText("GO TO CART");
+            }else {
+                holders_one.remove_cart.setText("நீக்கு");
+                holders_one.add_to_wishlist.setText("கார்ட்டிற்குள் செல்ல");
+            }
             if(data.getVisit_list()==1){
                holders_one.add_to_wishlist.setTextColor(Color.RED);
             }else {
@@ -515,6 +528,13 @@ holders.product_image_withoutspin.setOnClickListener(new View.OnClickListener() 
         context.startActivity(intent);
     }
 });
+
+
+            if(language_data.equals("English")){
+                holders.add_to_cart_withoutspin.setText("Add");
+            }else {
+                holders.add_to_cart_withoutspin.setText("சேர்");
+            }
             holders.add_to_cart_withoutspin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -523,9 +543,18 @@ holders.product_image_withoutspin.setOnClickListener(new View.OnClickListener() 
                         myprofileid = sharedpreferences.getString(MYUSERID, "");
                         myprofileid = myprofileid.replaceAll("\\D+","");
                     }
+
+                    language_data=sharedpreferences.getString(Language,"");
+                    if(language_data.equals("English")){
+                        language_value="1";
+                    }else{
+                        language_value="2";
+                    }
+
+
                     if(myprofileid!=null){
                         Servicerequest servicerequest=new Servicerequest();
-                        List<AddtocartMsg> result = servicerequest.AddtocartandWhishlist("1","addtocart",myprofileid,data.getMain_category_id(),data.getCategory_id(),data.getCompany_id(),data.getProduct_id(),qtyid,context);
+                        List<AddtocartMsg> result = servicerequest.AddtocartandWhishlist(language_value,"addtocart",myprofileid,data.getMain_category_id(),data.getCategory_id(),data.getCompany_id(),data.getProduct_id(),qtyid,context);
                         holders.add_to_cart_withoutspin.setTextColor(Color.RED);
                         /*List<String> result = servicerequest.AddtocartandWhishlist("1","addtocart",myprofileid,data.getMain_category_id(),data.getCategory_id(),data.getCompany_id(),data.getProduct_id(),qtyid,context);
 

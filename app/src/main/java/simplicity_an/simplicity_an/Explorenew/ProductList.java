@@ -77,7 +77,7 @@ public class ProductList extends AppCompatActivity implements RequestInterface.P
     Spinner spinner_subcategory,spinner_lowcategory;
     private ArrayAdapter<String> adapter,lowcatadapter;
     String low_id,sub_id;
-
+    String language_data,language_value;
     private LinearLayout cartlayout;
     private TextView mycart_text,cart_count_text,cartname_text,wishlist_text;
     @Override
@@ -96,6 +96,7 @@ public class ProductList extends AppCompatActivity implements RequestInterface.P
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
         fontname=sharedpreferences.getString(Fonts.FONT,"");
+        language_data=sharedpreferences.getString(Language,"");
         main_complist_layout=(RelativeLayout)findViewById(R.id.shop_layout);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         title_shop = (TextView) findViewById(R.id.title_shop_textview);
@@ -239,9 +240,17 @@ public class ProductList extends AppCompatActivity implements RequestInterface.P
         title_shop.setText(title_name_item);
         textView_Noresult.setText("No Result Found");
         textView_Noresult.setVisibility(View.GONE);
-        mycart_text.setText("Back");
-        cartname_text.setText("My Cart");
-        wishlist_text.setText("Wish List");
+        if(language_data.equals("English")) {
+            language_value="1";
+            mycart_text.setText("Back");
+            cartname_text.setText("My Cart");
+            wishlist_text.setText("Wish List");
+        }else {
+            language_value="2";
+            mycart_text.setText("பின்செல்");
+            cartname_text.setText("மை கார்ட்");
+            wishlist_text.setText("விருப்பப் பட்டியல்");
+        }
         if (colorcodes.equals("#FFFFFFFF")) {
             title_shop.setTextColor(Color.BLACK);
             textView_Noresult.setTextColor(Color.BLACK);
@@ -408,14 +417,14 @@ public class ProductList extends AppCompatActivity implements RequestInterface.P
                     String item = parent.getItemAtPosition(position).toString();
                      sub_id=ids_sub.get(position-1).toString();
                     Log.e("ID",sub_id);
-                    servicerequest.getProductlistLowcategory("1","low_category_list",sub_id,getApplicationContext());
+                    servicerequest.getProductlistLowcategory(language_value,"low_category_list",sub_id,getApplicationContext());
 
                     productAdapter.Listitem();
                     shopDataList.clear();
                     datalist.clear();
                     productAdapter.notifyDataSetChanged();
                     requestCount=1;
-                   servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),"","",category_id,company_id,sub_id,"",getApplicationContext());
+                   servicerequest.getProductlist(language_value,"product_list",String.valueOf(requestCount),"","",category_id,company_id,sub_id,"",getApplicationContext());
 
                 }
 
@@ -443,7 +452,7 @@ spinner_lowcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedList
             shopDataList.clear();
             datalist.clear();
             productAdapter.notifyDataSetChanged();
-           servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),"","",category_id,company_id,sub_id,low_id,getApplicationContext());
+           servicerequest.getProductlist(language_value,"product_list",String.valueOf(requestCount),"","",category_id,company_id,sub_id,low_id,getApplicationContext());
 
         }
 
@@ -465,21 +474,21 @@ spinner_lowcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedList
         if (myprofileid != null) {
 
 
-            servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),myprofileid,"",category_id,company_id,"","",getApplicationContext());
+            servicerequest.getProductlist(language_value,"product_list",String.valueOf(requestCount),myprofileid,"",category_id,company_id,"","",getApplicationContext());
 
         } else if (search_value != null) {
 
-            servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),"",search_value,category_id,company_id,"","",getApplicationContext());
+            servicerequest.getProductlist(language_value,"product_list",String.valueOf(requestCount),"",search_value,category_id,company_id,"","",getApplicationContext());
 
 
         } else if (myprofileid != null && search_value != null) {
 
-            servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),myprofileid,search_value,category_id,company_id,"","",getApplicationContext());
+            servicerequest.getProductlist(language_value,"product_list",String.valueOf(requestCount),myprofileid,search_value,category_id,company_id,"","",getApplicationContext());
 
         }
         else {
 
-            servicerequest.getProductlist("1","product_list",String.valueOf(requestCount),"","",category_id,company_id,"","",getApplicationContext());
+            servicerequest.getProductlist(language_value,"product_list",String.valueOf(requestCount),"","",category_id,company_id,"","",getApplicationContext());
         }
 
         pdialog.dismiss();
@@ -489,7 +498,7 @@ spinner_lowcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedList
 
     }
 private void getSubcat(){
-    servicerequest.getProductlistSubcategory("1","sub_category_list",category_id,company_id,getApplicationContext());
+    servicerequest.getProductlistSubcategory(language_value,"sub_category_list",category_id,company_id,getApplicationContext());
 
 }
 

@@ -43,6 +43,8 @@ public class ShippingAddressAdapter  extends RecyclerView.Adapter<RecyclerView.V
     public static final String mypreference = "mypref";
     public static final String MYUSERID= "myprofileid";
     public static final String backgroundcolor = "color";
+    public static final String Language = "lamguage";
+    String language_data,language_value;
     String myprofileid,colorcodes,fontname;
     public boolean ischeck=false;
     private String address_id;
@@ -79,6 +81,7 @@ public class ShippingAddressAdapter  extends RecyclerView.Adapter<RecyclerView.V
                     Context.MODE_PRIVATE);
             fontname=sharedpreferences.getString(Fonts.FONT,"");
             colorcodes=sharedpreferences.getString(backgroundcolor,"");
+            language_data=sharedpreferences.getString(Language,"");
             if (sharedpreferences.contains(MYUSERID)) {
 
                 myprofileid = sharedpreferences.getString(MYUSERID, "");
@@ -137,8 +140,13 @@ public class ShippingAddressAdapter  extends RecyclerView.Adapter<RecyclerView.V
             userViewHolder.name_textview.setText(itemmodel.getName());
             userViewHolder.shippingaddress_textview.setText(itemmodel.getAddress());
             userViewHolder.shippingaddress_continue_textview.setText(itemmodel.getLandmark()+"\n"+itemmodel.getState());
-            userViewHolder.delete_address.setText("Delete");
-            userViewHolder.edit_address.setText("Edit");
+            if(language_data.equals("English")) {
+                userViewHolder.delete_address.setText("Delete");
+                userViewHolder.edit_address.setText("Edit");
+            }else {
+                userViewHolder.delete_address.setText("முகவரியை நீக்கு");
+                userViewHolder.edit_address.setText("முகவரியை திருத்தம் செய்ய");
+            }
 
 userViewHolder.delete_address.setOnClickListener(new View.OnClickListener() {
     @Override

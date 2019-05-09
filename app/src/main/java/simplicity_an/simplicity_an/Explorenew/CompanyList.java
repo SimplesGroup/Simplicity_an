@@ -68,6 +68,7 @@ private TextView textView_Noresult;
 
 private LinearLayout cartlayout;
 private TextView mycart_text,cart_count_text,cartname_text,wishlist_text;
+    String language_data,language_value;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +85,7 @@ private TextView mycart_text,cart_count_text,cartname_text,wishlist_text;
         }
         colorcodes=sharedpreferences.getString(backgroundcolor,"");
         fontname=sharedpreferences.getString(Fonts.FONT,"");
+        language_data=sharedpreferences.getString(Language,"");
         main_complist_layout=(RelativeLayout)findViewById(R.id.shop_layout);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         title_shop = (TextView) findViewById(R.id.title_shop_textview);
@@ -264,9 +266,18 @@ wishlist_text.setOnClickListener(new View.OnClickListener() {
         title_shop.setText(title_name_item);
         textView_Noresult.setText("No Result Found");
         textView_Noresult.setVisibility(View.GONE);
-        mycart_text.setText("Back");
-        cartname_text.setText("My Cart");
-        wishlist_text.setText("Wish List");
+
+        if(language_data.equals("English")) {
+            language_value="1";
+            mycart_text.setText("Back");
+            cartname_text.setText("My Cart");
+            wishlist_text.setText("Wish List");
+        }else {
+            language_value="2";
+            mycart_text.setText("பின்செல்");
+            cartname_text.setText("மை கார்ட்");
+            wishlist_text.setText("விருப்பப் பட்டியல்");
+        }
         if (colorcodes.equals("#FFFFFFFF")) {
             title_shop.setTextColor(Color.BLACK);
             textView_Noresult.setTextColor(Color.BLACK);
@@ -369,18 +380,18 @@ wishlist_text.setOnClickListener(new View.OnClickListener() {
         //    Servicerequest servicerequest = new Servicerequest(getActivity());
         if (myprofileid != null) {
 
-            servicerequest.getCompanylist("1","company_list",String.valueOf(requestCount),myprofileid,"",category_id,getApplicationContext());
+            servicerequest.getCompanylist(language_value,"company_list",String.valueOf(requestCount),myprofileid,"",category_id,getApplicationContext());
 
         } else if (search_value != null) {
 
-            servicerequest.getCompanylist("1","company_list",String.valueOf(requestCount),"",search_value,category_id,getApplicationContext());
+            servicerequest.getCompanylist(language_value,"company_list",String.valueOf(requestCount),"",search_value,category_id,getApplicationContext());
 
         } else if (myprofileid != null && search_value != null) {
 
-            servicerequest.getCompanylist("1","company_list",String.valueOf(requestCount),myprofileid,search_value,category_id,getApplicationContext());
+            servicerequest.getCompanylist(language_value,"company_list",String.valueOf(requestCount),myprofileid,search_value,category_id,getApplicationContext());
         } else {
 
-            servicerequest.getCompanylist("1","company_list",String.valueOf(requestCount),"","",category_id,getApplicationContext());
+            servicerequest.getCompanylist(language_value,"company_list",String.valueOf(requestCount),"","",category_id,getApplicationContext());
 
         }
 
